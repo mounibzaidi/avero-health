@@ -1,70 +1,192 @@
-import type { BlockId, Fiche } from "@medguides/schema";
+import { SECTION_TITLE, URGENCY_LABEL, type Protocol } from "@medguides/schema";
 import { breakpoint, size } from "@medguides/ui-tokens";
 import { useRouter } from "expo-router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Linking, Pressable, ScrollView, Text, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { t } from "@/strings/fr";
-import { BookOpenIcon, CaretLeftIcon, CaretRightIcon, CheckIcon, StethoscopeIcon, WarningIcon } from "@/ui/Icons";
-import { useColors } from "@/ui/theme";
+import {
+  BookOpenIcon, CaretLeftIcon, CheckIcon, ClipboardTextIcon, HospitalIcon, type Icon, PillIcon, QuotesIcon, StethoscopeIcon, UsersThreeIcon, WarningIcon,
+} from "@/ui/Icons";
 import { Logo } from "@/ui/Logo";
 import { SearchField } from "@/ui/SearchField";
-import { CONTROL_STYLE, Heading } from "@/ui/ui";
+import { useColors } from "@/ui/theme";
+import { Body, CONTROL_STYLE, Heading } from "@/ui/ui";
 
-import brandsMeta from "../../../../content/shared/dz_brands.meta.json";
-import { BLOCK_ICON, BLOCK_LABEL, BlockBody, CHIP_LABEL, ShareAdvice } from "./blocks";
-import { blocks, sub, type Cited } from "./model";
-import { StepCard } from "./parts";
-import { SourceCard } from "./SourceCard";
-import { SourceSheet } from "./SourceSheet";
+import { Medications } from "./Medications";
+import { Card, ItemCard, ItemRows, RoseCard, SourcesCtx, Tag } from "./parts";
+import { Pathway } from "./Pathway";
 import { StarButton } from "./StarButton";
 
+type SectionId = "red_box" | "assess" | "treat" | "advise" | "refer_follow" | "sources";
+
+const ICON: Record<SectionId, Icon> = {
+  red_box: WarningIcon, assess: StethoscopeIcon, treat: PillIcon, advise: UsersThreeIcon, refer_follow: HospitalIcon, sources: BookOpenIcon,
+};
+
+/** Screen order of the doc: red box first; "pathologie" puts Conseiller before Traiter. */
+const ORDER: Record<Protocol["meta"]["template"], SectionId[]> = {
+  urgence: ["red_box", "assess", "treat", "advise", "refer_follow", "sources"],
+  pathologie: ["red_box", "assess", "advise", "treat", "refer_follow", "sources"],
+};
+
 const dateFr = (iso: string) => new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
-/** What a jump leaves above a block: the bar of chips and a little air (phone), a little air (wide). */
+/** What a jump leaves above a section: the bar of chips and a little air (phone), a little air (wide). */
 const BAR = 60;
 const AIR_WIDE = 16;
 
-/** A fiche (ProtocolV4 shell). Phone: header, sticky jump bar, the blocks of the display map, footer.
- * Wide (from 1100 px): sidebar 264 (logo, search, "Sur cette page"), content 860, source column 340. */
-export function FicheScreen({ id, fiche: f }: { id: string; fiche: Fiche }) {
+/** Sections with something to show. Empty means not applicable: hidden. */
+function visible(f: Protocol): SectionId[] {
+  const has: Record<SectionId, boolean> = {
+    red_box: f.red_box.signs.length + f.red_box.actions.length > 0,
+    assess: f.assess.ask.length + f.assess.examine.length + f.assess.tests.length + f.assess.pathway.nodes.length > 0,
+    treat: f.treat.medications.length + f.treat.actions.length + f.treat.do_not.length > 0,
+    advise: f.advise.length > 0,
+    refer_follow: f.refer_follow.refer.length + f.refer_follow.follow_up.length > 0,
+    sources: f.sources.length > 0,
+  };
+  return ORDER[f.meta.template].filter((s) => has[s]);
+}
+
+/** The red box: when to call the SAMU or send to urgences, and what to do meanwhile. Red border, never folded. */
+function RedBox({ f }: { f: Protocol }) {
+  const c = useColors();
+  return (
+    <View className="rounded-card border-2 border-flag bg-surface px-[18px] pb-[6px] pt-4">
+      <View className="flex-row items-center gap-2 pb-[2px]">
+        <WarningIcon size={19} color={c.warn} weight="fill" />
+        <Text className="min-w-0 flex-1 text-[15.5px] font-bold leading-[21px] text-flag">{t("f_red_signs")}</Text>
+      </View>
+      <ItemRows items={f.red_box.signs} rule="border-flag/15" />
+      {f.red_box.actions.length ? (
+        <>
+          <Text className="border-t border-flag/15 pt-3 text-[13px] font-bold uppercase text-flag" style={{ letterSpacing: 0.4 }}>{t("f_meanwhile")}</Text>
+          <ItemRows items={f.red_box.actions} rule="border-flag/15" />
+        </>
+      ) : null}
+    </View>
+  );
+}
+
+function ReferFollow({ f }: { f: Protocol }) {
+  const { refer, follow_up } = f.refer_follow;
+  return (
+    <>
+      {refer.length ? (
+        <Card title={t("f_refer")}>
+          {refer.map((r, i) => (
+            <View key={r.id} className={`gap-[3px] py-3 ${i ? "border-t border-line" : ""}`}>
+              <Body className="text-[13px] leading-[18px] text-soft">{t("f_if", { c: r.criteria })}</Body>
+              <Body className="text-[14.5px] leading-[21px]">
+                <Text className="font-bold">{t("f_refer_line", { u: r.urgency ? URGENCY_LABEL[r.urgency] : "" })}</Text>
+                {r.destination ? ` : ${r.destination}` : ""}
+              </Body>
+              <Tag evidence={r.evidence} strength={r.strength} />
+            </View>
+          ))}
+        </Card>
+      ) : null}
+      {follow_up.length ? (
+        <Card title={t("f_follow")}>
+          <View className="flex-row border-b border-line pb-2 pt-1">
+            <Text className="w-[30%] pe-3 text-[12px] font-bold uppercase text-muted">{t("f_when")}</Text>
+            <Text className="flex-1 text-[12px] font-bold uppercase text-muted">{t("f_what")}</Text>
+          </View>
+          {follow_up.map((x, i) => (
+            <View key={x.id} className={`flex-row py-3 ${i ? "border-t border-line" : ""}`}>
+              <Body className="w-[30%] pe-3 text-[14px] font-semibold leading-[20px]">{x.when}</Body>
+              <View className="min-w-0 flex-1 gap-[3px]">
+                <Body className="text-[14px] leading-[20px]">{x.what}</Body>
+                <Tag evidence={x.evidence} strength={null} />
+              </View>
+            </View>
+          ))}
+        </Card>
+      ) : null}
+    </>
+  );
+}
+
+function Sources({ f }: { f: Protocol }) {
+  return (
+    <Card>
+      {f.sources.map((s, i) => (
+        <View key={s.id} className={`gap-1 py-3 ${i ? "border-t border-line" : ""}`}>
+          <Text className="text-[13px] font-bold text-ink">{s.organisation}</Text>
+          <Body className="text-[13.5px] leading-[19px]">{s.title}</Body>
+          <Text className="text-[12px] leading-[17px] text-soft">{s.citation}</Text>
+          {s.url ? (
+            <Pressable accessibilityRole="link" onPress={() => void Linking.openURL(s.url!)} className="min-h-9 justify-center self-start active:opacity-60">
+              <Text className="text-[13px] font-semibold text-accent">{t("f_open_source")}</Text>
+            </Pressable>
+          ) : null}
+        </View>
+      ))}
+    </Card>
+  );
+}
+
+function SectionBody({ id, f }: { id: SectionId; f: Protocol }) {
+  switch (id) {
+    case "red_box":
+      return <RedBox f={f} />;
+    case "assess":
+      return (
+        <>
+          <ItemCard title={t("f_ask")} items={f.assess.ask} />
+          <ItemCard title={t("f_examine")} items={f.assess.examine} />
+          <ItemCard title={t("f_tests")} items={f.assess.tests} />
+          <Pathway pathway={f.assess.pathway} />
+        </>
+      );
+    case "treat":
+      return (
+        <>
+          <Medications items={f.treat.medications} />
+          <ItemCard title={t("f_other_actions")} items={f.treat.actions} />
+          <RoseCard title={t("f_do_not")} items={f.treat.do_not} />
+        </>
+      );
+    case "advise":
+      return <Card><ItemRows items={f.advise} /></Card>;
+    case "refer_follow":
+      return <ReferFollow f={f} />;
+    case "sources":
+      return <Sources f={f} />;
+  }
+}
+
+/** A fiche of Protocol v1.1, one screen for both templates. Phone: header, sticky jump bar, the sections, footer.
+ * Wide (from 1100 px): sidebar 264 (logo, search, "Sur cette page"), then the content. */
+export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
   const router = useRouter();
   const c = useColors();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const wide = width >= breakpoint.ficheWide;
   const [q, setQ] = useState("");
-  const view = useMemo(() => blocks(f), [f]);
-  const ids = view.map((b) => b.id);
-
-  const [sheet, setSheet] = useState<Cited | null>(null);
-  const open = useCallback((cited: Cited) => setSheet(cited), []);
-  const closeSheet = useCallback(() => setSheet(null), []);
-  const [folded, setFolded] = useState<BlockId | null>(null); // the collapsed block that is open (one at a time)
-  const [active, setActive] = useState<BlockId | null>(null);
+  const ids = visible(f);
+  const [active, setActive] = useState<SectionId | null>(null);
   const scroll = useRef<ScrollView>(null);
   const bodyY = useRef(0);
-  const blockY = useRef<Partial<Record<BlockId, number>>>({});
+  const sectionY = useRef<Partial<Record<SectionId, number>>>({});
   const chips = useRef<ScrollView>(null);
-  const chipX = useRef<Partial<Record<BlockId, number>>>({});
+  const chipX = useRef<Partial<Record<SectionId, number>>>({});
 
   const urgent = f.meta.template === "urgence";
-  const ok = f.meta.status === "published" && !!f.meta.reviewer;
-  const src = f.meta.sources[0];
-  const hasBrands = f.sections["7_traitement"].posologies.some((p) => p.algerie.brands.length);
+  const ok = f.meta.status === "published" && f.review.clinical_approval && !!f.review.reviewer;
   const current = active && ids.includes(active) ? active : ids[0];
-  const openSource = () => (src?.url ? void Linking.openURL(src.url) : undefined);
+  const label = (s: SectionId) => (s === "red_box" ? t("f_red_chip") : SECTION_TITLE[s]);
 
   const offset = wide ? AIR_WIDE : BAR;
-  const jump = (b: BlockId) => {
-    setActive(b);
-    if (view.find((x) => x.id === b)?.mode === "collapsed") setFolded(b);
-    setTimeout(() => scroll.current?.scrollTo({ y: Math.max(0, bodyY.current + (blockY.current[b] ?? 0) - offset), animated: true }), 0);
+  const jump = (s: SectionId) => {
+    setActive(s);
+    setTimeout(() => scroll.current?.scrollTo({ y: Math.max(0, bodyY.current + (sectionY.current[s] ?? 0) - offset), animated: true }), 0);
   };
-  // The block at the top of the screen: its chip is the one lit.
   const track = (y: number) => {
     let cur = ids[0];
-    for (const b of ids) if (bodyY.current + (blockY.current[b] ?? Infinity) <= y + offset + 24) cur = b;
+    for (const s of ids) if (bodyY.current + (sectionY.current[s] ?? Infinity) <= y + offset + 24) cur = s;
     if (cur !== current) setActive(cur);
   };
   useEffect(() => {
@@ -72,9 +194,6 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Fiche }) {
   }, [current]);
 
   const column = wide ? "" : "mx-auto w-full max-w-[720px] px-5";
-  const steps = view.find((b) => b.id === "etapes");
-  const suivi = view.find((b) => b.id === "suivi");
-  const conseils = (suivi && sub(suivi, "conseils_patient")?.lines) ?? [];
 
   const head = (
     <View className={`gap-3 pb-3 ${wide ? "" : "pt-2"} ${column}`}>
@@ -97,29 +216,29 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Fiche }) {
           <StethoscopeIcon size={15} color={urgent ? c.warn : c.soft} />
           <Text className={`text-[13px] ${urgent ? "font-semibold text-flag" : "text-soft"}`}>{urgent ? t("p_urgence") : f.meta.specialite}</Text>
         </View>
-        {src ? (
-          <Pressable accessibilityRole="link" disabled={!src.url} onPress={openSource} className="min-w-0 shrink flex-row items-center gap-[6px] active:opacity-60">
-            <BookOpenIcon size={15} color={c.soft} />
-            <Text className="shrink text-[13px] text-soft" numberOfLines={1}>{src.citation}</Text>
-          </Pressable>
+        {f.scope.population ? (
+          <View className="flex-row items-center gap-[6px]">
+            <ClipboardTextIcon size={15} color={c.soft} />
+            <Text className="text-[13px] text-soft">{f.scope.population}</Text>
+          </View>
         ) : null}
       </View>
     </View>
   );
 
-  // The jump bar: one chip per block shown. It stays at the top while the page scrolls.
-  const bar = wide ? (
+  const chipBar = wide ? (
     <View />
   ) : (
     <View className="border-b border-line bg-bg">
       <ScrollView ref={chips} horizontal showsHorizontalScrollIndicator={false} accessibilityRole="tablist" className="mx-auto w-full max-w-[720px] grow-0" contentContainerClassName="gap-2 px-5 py-2">
-        {ids.map((b) => {
-          const on = b === current;
+        {ids.map((s) => {
+          const on = s === current;
+          const Glyph = ICON[s];
           return (
-            <Pressable key={b} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => jump(b)} onLayout={(e) => (chipX.current[b] = e.nativeEvent.layout.x)}
+            <Pressable key={s} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => jump(s)} onLayout={(e) => (chipX.current[s] = e.nativeEvent.layout.x)}
               className={`min-h-10 flex-row items-center gap-[6px] rounded-full px-3 active:opacity-70 ${on ? "bg-tint" : "border border-line bg-surface"}`}>
-              {BLOCK_ICON[b]({ size: 14, color: on ? c.accentink : c.soft })}
-              <Text className={`text-[13px] ${on ? "font-semibold text-accentink" : "font-medium text-soft"}`}>{t(CHIP_LABEL[b] ?? BLOCK_LABEL[b])}</Text>
+              <Glyph size={14} color={s === "red_box" ? c.warn : on ? c.accentink : c.soft} />
+              <Text className={`text-[13px] ${on ? "font-semibold text-accentink" : "font-medium text-soft"}`}>{label(s)}</Text>
             </Pressable>
           );
         })}
@@ -127,33 +246,24 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Fiche }) {
     </View>
   );
 
+  const section = (s: SectionId, body: ReactNode) => {
+    const Glyph = ICON[s];
+    return (
+      <View key={s} className="gap-3" onLayout={(e) => (sectionY.current[s] = e.nativeEvent.layout.y)}>
+        {s !== "red_box" ? (
+          <View className="flex-row items-center gap-2">
+            <Glyph size={18} color={c.accent} />
+            <Heading className="text-[17px] font-semibold leading-[22px]">{SECTION_TITLE[s]}</Heading>
+          </View>
+        ) : null}
+        {body}
+      </View>
+    );
+  };
+
   const page = (
     <View className={`gap-7 pt-4 ${column}`} onLayout={(e) => (bodyY.current = e.nativeEvent.layout.y)}>
-      {view.map((b) => (
-        <View key={b.id} className="gap-3" onLayout={(e) => (blockY.current[b.id] = e.nativeEvent.layout.y)}>
-          {b.mode === "collapsed" ? (
-            <StepCard on={folded === b.id} onToggle={() => setFolded(folded === b.id ? null : b.id)} title={t(BLOCK_LABEL[b.id])} count={b.notCovered ? undefined : b.count}
-              badge={<View className="h-[28px] w-[28px] items-center justify-center rounded-full bg-tint">{BLOCK_ICON[b.id]({ size: 15, color: c.accentink })}</View>}>
-              <View className="gap-3 py-3">
-                <BlockBody b={b} f={f} open={open} all />
-              </View>
-            </StepCard>
-          ) : (
-            <>
-              <View className="flex-row items-center gap-2">
-                {BLOCK_ICON[b.id]({ size: 18, color: b.id === "a_eviter" ? c.warn : c.accent })}
-                <View className="min-w-0 flex-1 flex-row flex-wrap items-baseline gap-x-2">
-                  <Heading className={`text-[17px] font-semibold leading-[22px] ${b.id === "a_eviter" ? "text-flag" : ""}`}>{t(BLOCK_LABEL[b.id])}</Heading>
-                  {b.id === "etapes" ? <Text className="text-[13px] text-soft">{t(urgent ? "p_etapes_urgence" : "p_etapes_chronique")}</Text> : null}
-                </View>
-                {b.id === "etapes" && steps ? <Text className="text-[13px] text-soft">{t("p_steps_n", { n: steps.count })}</Text> : null}
-              </View>
-              <BlockBody b={b} f={f} open={open} />
-              {b.id === "suivi" ? <ShareAdvice f={f} lines={conseils} /> : null}
-            </>
-          )}
-        </View>
-      ))}
+      {ids.map((s) => section(s, <SectionBody id={s} f={f} />))}
       <View className="gap-[6px]">
         {ok ? (
           <View className="flex-row items-start gap-2">
@@ -161,7 +271,7 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Fiche }) {
               <CheckIcon size={14} color={c.accent} weight="bold" />
             </View>
             <Text className="min-w-0 flex-1 text-[13px] leading-[19px] text-soft">
-              {`${t("p_verified_by", { name: f.meta.reviewer!, date: f.meta.reviewed_at ? dateFr(f.meta.reviewed_at) : "" })} · v${f.meta.version}`}
+              {`${t("p_verified_by", { name: f.review.reviewer!, date: f.review.reviewed_at ? dateFr(f.review.reviewed_at) : "" })} · v${f.meta.version}`}
             </Text>
           </View>
         ) : (
@@ -170,19 +280,15 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Fiche }) {
             <Text className="text-[11px] font-semibold text-caution">{t("p_review_pending", { v: f.meta.version })}</Text>
           </View>
         )}
-        {src?.url && !wide ? (
-          <Pressable accessibilityRole="link" onPress={openSource} className="min-h-11 flex-row items-center gap-1 self-start active:opacity-60">
-            <Text className="text-[13px] font-semibold text-accent">{t("p_full_guideline")}</Text>
-            <CaretRightIcon size={13} color={c.accent} weight="bold" />
-          </Pressable>
-        ) : null}
-        {hasBrands ? <Text className="text-[11px] leading-[16px] text-soft">{t("dz_source", { source: brandsMeta.source })}</Text> : null}
-        <Text className="text-[11px] font-medium text-soft">{t("not_clinical_judgement")}</Text>
+        {f.treat.medications.some((m) => m.local_availability.brands.length) ? <Text className="text-[11px] leading-[16px] text-soft">{t("dz_source")}</Text> : null}
+        <View className="flex-row items-center gap-1">
+          <QuotesIcon size={11} color={c.soft} />
+          <Text className="text-[11px] font-medium text-soft">{t("not_clinical_judgement")}</Text>
+        </View>
       </View>
     </View>
   );
 
-  const sheetView = sheet ? <SourceSheet fiche={f} cited={sheet} onClose={closeSheet} /> : null;
   const scroller = (
     <ScrollView ref={scroll} className="flex-1" stickyHeaderIndices={[1]} onScroll={(e) => track(e.nativeEvent.contentOffset.y)} scrollEventThrottle={64}
       contentContainerStyle={
@@ -191,50 +297,41 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Fiche }) {
           : { paddingTop: insets.top, paddingBottom: 28 + insets.bottom }
       }>
       {head}
-      {bar}
+      {chipBar}
       {page}
     </ScrollView>
   );
 
-  // Wide screens: the library's sidebar (logo, search, the blocks), the fiche, the source column.
-  if (wide) {
-    return (
-      <View className="flex-1 flex-row bg-bg">
-        <View className="w-[264px] border-e border-edge/[0.06] bg-panel px-5 py-[22px]">
-          <Pressable accessibilityRole="link" onPress={() => router.push("/")} className="self-start">
-            <Logo />
-          </Pressable>
-          <View className="h-[22px]" />
-          <SearchField compact value={q} onChange={setQ} onSubmit={() => q.trim() && router.push(`/?q=${encodeURIComponent(q.trim())}`)} />
-          <View className="h-[26px]" />
-          <Text className="ps-1 text-[13px] font-medium text-soft">{t("on_this_page")}</Text>
-          <View className="h-[6px]" />
-          {ids.map((b) => {
-            const on = b === current;
-            return (
-              <Pressable key={b} accessibilityRole="link" accessibilityState={{ selected: on }} onPress={() => jump(b)} style={on ? CONTROL_STYLE : undefined}
-                className={`flex-row items-center gap-2 rounded-lg border px-[10px] py-2 ${on ? "border-edge/[0.07] bg-surface" : "border-transparent hover:bg-surface/60"}`}>
-                {BLOCK_ICON[b]({ size: 15, color: on ? c.accent : c.soft })}
-                <Text className={`text-[14px] ${on ? "font-medium text-ink" : "text-soft"}`} numberOfLines={1}>{t(BLOCK_LABEL[b])}</Text>
-              </Pressable>
-            );
-          })}
-        </View>
-        {scroller}
-        <ScrollView className="w-[340px] grow-0">
-          <View className="gap-3 py-9 pe-8">
-            <SourceCard fiche={f} />
-          </View>
-        </ScrollView>
-        {sheetView}
-      </View>
-    );
-  }
-
   return (
-    <View className="flex-1 bg-bg">
-      {scroller}
-      {sheetView}
-    </View>
+    <SourcesCtx.Provider value={f.sources}>
+      {wide ? (
+        <View className="flex-1 flex-row bg-bg">
+          <View className="w-[264px] border-e border-edge/[0.06] bg-panel px-5 py-[22px]">
+            <Pressable accessibilityRole="link" onPress={() => router.push("/")} className="self-start">
+              <Logo />
+            </Pressable>
+            <View className="h-[22px]" />
+            <SearchField compact value={q} onChange={setQ} onSubmit={() => q.trim() && router.push(`/?q=${encodeURIComponent(q.trim())}`)} />
+            <View className="h-[26px]" />
+            <Text className="ps-1 text-[13px] font-medium text-soft">{t("on_this_page")}</Text>
+            <View className="h-[6px]" />
+            {ids.map((s) => {
+              const on = s === current;
+              const Glyph = ICON[s];
+              return (
+                <Pressable key={s} accessibilityRole="link" accessibilityState={{ selected: on }} onPress={() => jump(s)} style={on ? CONTROL_STYLE : undefined}
+                  className={`flex-row items-center gap-2 rounded-lg border px-[10px] py-2 ${on ? "border-edge/[0.07] bg-surface" : "border-transparent hover:bg-surface/60"}`}>
+                  <Glyph size={15} color={s === "red_box" ? c.warn : on ? c.accent : c.soft} />
+                  <Text className={`text-[14px] ${on ? "font-medium text-ink" : "text-soft"}`} numberOfLines={1}>{label(s)}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+          {scroller}
+        </View>
+      ) : (
+        <View className="flex-1 bg-bg">{scroller}</View>
+      )}
+    </SourcesCtx.Provider>
   );
 }

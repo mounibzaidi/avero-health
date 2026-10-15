@@ -6,7 +6,6 @@ import { t } from "@/strings/fr";
 import { SearchField } from "@/ui/SearchField";
 import { Body, Heading, joinMeta, Muted, Skeleton, SURFACE_STYLE } from "@/ui/ui";
 
-import brandsMeta from "../../../../content/shared/dz_brands.meta.json";
 
 /** One product: the brand name, its DCI as the list writes it, then form, strength and pack. A product not sold
  * in officine says "(usage hospitalier)". */
@@ -48,7 +47,7 @@ export function MedicamentsScreen() {
         </View>
       }
       ListEmptyComponent={loading ? null : <Muted className="px-1 py-2 text-[14px] leading-[20px]">{t("meds_empty")}</Muted>}
-      ListFooterComponent={<Muted className="px-1 pt-3 text-[12px] leading-[17px]">{t("dz_source", { source: brandsMeta.source })}</Muted>}
+      ListFooterComponent={<Muted className="px-1 pt-3 text-[12px] leading-[17px]">{t("dz_source")}</Muted>}
     />
   );
 }

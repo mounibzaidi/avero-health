@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { AccessibilityInfo, Animated, Platform, Text, View, type TextProps } from "react-native";
+import { AccessibilityInfo, Animated, Platform, Pressable, Text, View, type TextProps } from "react-native";
 
 import { shadow } from "@medguides/ui-tokens";
 
@@ -75,3 +75,20 @@ export const Skeleton = ({ className = "" }: { className?: string }) => (
     <View className={`rounded-md bg-line ${className}`} />
   </Pulse>
 );
+
+/** One choice among a few (a segmented control). */
+export function Segments({ labels, value, onChange, dense }: { labels: string[]; value: number; onChange: (i: number) => void; dense?: boolean }) {
+  return (
+    <View accessibilityRole="tablist" className="flex-row rounded-full bg-panel p-[3px]">
+      {labels.map((label, i) => {
+        const on = i === value;
+        return (
+          <Pressable key={label} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => onChange(i)}
+            style={on ? CONTROL_STYLE : undefined} className={`min-h-10 items-center justify-center rounded-full active:opacity-70 ${dense ? "flex-auto px-[6px]" : "flex-1 px-2"} ${on ? "bg-surface" : ""}`}>
+            <Text className={`text-center ${dense ? "text-[12.5px] leading-[15px]" : "text-[13px]"} ${on ? "font-semibold text-ink" : "font-medium text-soft"}`} numberOfLines={2}>{label}</Text>
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+}

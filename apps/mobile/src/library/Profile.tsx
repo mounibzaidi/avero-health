@@ -1,9 +1,8 @@
 import { ScrollView, View } from "react-native";
 
-import { Segments } from "@/fiche/parts";
 import { t } from "@/strings/fr";
 import { useTheme } from "@/ui/theme";
-import { Heading, Muted } from "@/ui/ui";
+import { Heading, Muted, Segments } from "@/ui/ui";
 
 /** Profil: the theme for now. The account joins it with sign-in (step 9). */
 export function ProfileScreen() {

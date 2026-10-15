@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { elements, Fiche, type Element } from "@medguides/schema";
+import { allItems, validateStructure, type Protocol } from "@medguides/schema";
 import { useQuery } from "@tanstack/react-query";
 
 import SYNONYMS from "../../../../shared/search-synonyms.json";
@@ -9,12 +9,12 @@ import { supabase } from "./supabase";
  * The published fiches, available offline. The library is small (tens of fiches, tens of KB each), so
  * it is kept in AsyncStorage: the copy on the device shows at once, then this launch compares the
  * published versions with it and downloads only the new or changed fiches. Without a network it keeps
- * showing what it has. A fiche that does not parse (another schema) is left out, never shown half.
+ * showing what it has. A fiche that is not a Protocol v1.1 is left out, never shown half.
  */
 
-export type Library = { fiches: Record<string, { version: number; content: Fiche }>; syncedAt: string | null; offline: boolean };
+export type Library = { fiches: Record<string, { version: number; content: Protocol }>; syncedAt: string | null; offline: boolean };
 
-const CACHE_KEY = "medguides.library.v1";
+const CACHE_KEY = "medguides.library.v1.1"; // v1.1: fiches of Protocol Schema v1.1 only
 const EMPTY: Library = { fiches: {}, syncedAt: null, offline: false };
 
 async function readCache(): Promise<Library> {
@@ -38,8 +38,8 @@ async function load(): Promise<Library> {
     const fresh = await supabase.from("published_fiches").select("subject_id,version,content").in("subject_id", stale);
     if (fresh.error) return { ...cached, offline: true };
     for (const r of fresh.data as { subject_id: string; version: number; content: unknown }[]) {
-      const parsed = Fiche.safeParse(r.content);
-      if (parsed.success) fiches[r.subject_id] = { version: r.version, content: parsed.data };
+      const { protocol } = validateStructure(r.content);
+      if (protocol) fiches[r.subject_id] = { version: r.version, content: protocol };
     }
   }
   const lib = { fiches, syncedAt: new Date().toISOString(), offline: false };
@@ -53,7 +53,7 @@ export function useLibrary() {
   return { data: live.data ?? cache.data, loading: !live.data && !cache.data, syncing: live.isFetching, refetch: live.refetch };
 }
 
-export type Entry = { id: string; fiche: Fiche };
+export type Entry = { id: string; fiche: Protocol };
 export const entries = (lib: Library | undefined): Entry[] =>
   Object.entries(lib?.fiches ?? {})
     .map(([id, f]) => ({ id, fiche: f.content }))
@@ -116,13 +116,13 @@ export function searchFiches(all: Entry[], query: string): Entry[] {
   const typed = tokens(query);
   if (!typed.length) return [];
   return all
-    .map((e) => ({ e, score: titleScore(e.fiche.meta.title, typed, [...e.fiche.meta.synonymes, ...e.fiche.meta.motifs]) }))
+    .map((e) => ({ e, score: titleScore(e.fiche.meta.title, typed, e.fiche.meta.motifs) }))
     .filter((x) => x.score > 0)
     .sort((a, b) => b.score - a.score || a.e.fiche.meta.title.localeCompare(b.e.fiche.meta.title, "fr"))
     .map((x) => x.e);
 }
 
-export type LineHit = { entry: Entry; line: Element };
+export type LineHit = { entry: Entry; line: { id: string; text: string } };
 
 /** Lines whose text (with its fiche title) holds every word of the query, at least one in the line itself. */
 export function searchLines(all: Entry[], query: string, limit = 8): LineHit[] {
@@ -131,10 +131,11 @@ export function searchLines(all: Entry[], query: string, limit = 8): LineHit[] {
   const hits: LineHit[] = [];
   for (const entry of all) {
     const title = fold(entry.fiche.meta.title);
-    for (const { el } of elements(entry.fiche)) {
-      const text = fold(el.text);
+    const lines = [...allItems(entry.fiche), ...entry.fiche.treat.medications.map((m) => ({ id: m.id, text: m.inn }))];
+    for (const line of lines) {
+      const text = fold(line.text);
       if (words.every((w) => `${title} ${text}`.includes(w)) && words.some((w) => text.includes(w))) {
-        hits.push({ entry, line: el });
+        hits.push({ entry, line });
         if (hits.length >= limit) return hits;
       }
     }
