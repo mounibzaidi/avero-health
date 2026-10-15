@@ -1,0 +1,143 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { elements, Fiche, type Element } from "@medguides/schema";
+import { useQuery } from "@tanstack/react-query";
+
+import SYNONYMS from "../../../../shared/search-synonyms.json";
+import { supabase } from "./supabase";
+
+/**
+ * The published fiches, available offline. The library is small (tens of fiches, tens of KB each), so
+ * it is kept in AsyncStorage: the copy on the device shows at once, then this launch compares the
+ * published versions with it and downloads only the new or changed fiches. Without a network it keeps
+ * showing what it has. A fiche that does not parse (another schema) is left out, never shown half.
+ */
+
+export type Library = { fiches: Record<string, { version: number; content: Fiche }>; syncedAt: string | null; offline: boolean };
+
+const CACHE_KEY = "medguides.library.v1";
+const EMPTY: Library = { fiches: {}, syncedAt: null, offline: false };
+
+async function readCache(): Promise<Library> {
+  try {
+    const raw = await AsyncStorage.getItem(CACHE_KEY);
+    return raw ? { ...EMPTY, ...(JSON.parse(raw) as Partial<Library>) } : EMPTY;
+  } catch {
+    return EMPTY;
+  }
+}
+
+async function load(): Promise<Library> {
+  const cached = await readCache();
+  const index = await supabase.from("published_fiches").select("subject_id,version");
+  if (index.error) return { ...cached, offline: true };
+
+  const live = new Map((index.data as { subject_id: string; version: number }[]).map((r) => [r.subject_id, r.version]));
+  const fiches = Object.fromEntries(Object.entries(cached.fiches).filter(([id]) => live.has(id)));
+  const stale = [...live].filter(([id, v]) => cached.fiches[id]?.version !== v).map(([id]) => id);
+  if (stale.length) {
+    const fresh = await supabase.from("published_fiches").select("subject_id,version,content").in("subject_id", stale);
+    if (fresh.error) return { ...cached, offline: true };
+    for (const r of fresh.data as { subject_id: string; version: number; content: unknown }[]) {
+      const parsed = Fiche.safeParse(r.content);
+      if (parsed.success) fiches[r.subject_id] = { version: r.version, content: parsed.data };
+    }
+  }
+  const lib = { fiches, syncedAt: new Date().toISOString(), offline: false };
+  await AsyncStorage.setItem(CACHE_KEY, JSON.stringify({ fiches, syncedAt: lib.syncedAt })).catch(() => {});
+  return lib;
+}
+
+export function useLibrary() {
+  const cache = useQuery({ queryKey: ["library-cache"], queryFn: readCache, staleTime: Infinity });
+  const live = useQuery({ queryKey: ["library"], queryFn: () => load().catch(async () => ({ ...(await readCache()), offline: true })), staleTime: Infinity, networkMode: "always" });
+  return { data: live.data ?? cache.data, loading: !live.data && !cache.data, syncing: live.isFetching, refetch: live.refetch };
+}
+
+export type Entry = { id: string; fiche: Fiche };
+export const entries = (lib: Library | undefined): Entry[] =>
+  Object.entries(lib?.fiches ?? {})
+    .map(([id, f]) => ({ id, fiche: f.content }))
+    .sort((a, b) => a.fiche.meta.title.localeCompare(b.fiche.meta.title, "fr"));
+
+/** Specialties that hold a fiche, alphabetical. */
+export const specialites = (all: Entry[]) => [...new Set(all.map((e) => e.fiche.meta.specialite))].sort((a, b) => a.localeCompare(b, "fr"));
+
+// ─── Search: accents, synonyms and acronyms, typos (ported from the old lib/fiches.ts) ───────
+
+const fold = (s: string) => s.toLowerCase().replace(/œ/g, "oe").replace(/æ/g, "ae").normalize("NFKD").replace(/\p{M}/gu, "").replace(/\*\*/g, "");
+const tokens = (s: string) => fold(s).split(/[^a-z0-9]+/).filter(Boolean);
+/** shared/search-synonyms.json: groups of terms that mean the same thing (AVC, accident vasculaire cérébral, stroke). */
+const GROUPS = (SYNONYMS.groups as string[][]).map((g) => g.map((term) => tokens(term)));
+
+/** Edit distance (insert, delete, replace, swap of neighbours), or more than `max` as soon as it is certain. */
+function distance(a: string, b: string, max: number): number {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let prev2: number[] = [];
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      let d = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d = Math.min(d, prev2[j - 2] + 1);
+      row.push(d);
+    }
+    if (Math.min(...row) > max) return max + 1;
+    prev2 = prev;
+    prev = row;
+  }
+  return prev[b.length];
+}
+
+/** 2 when the typed word begins the token, 1 within a typo (one from 4 letters, two from 8), 0 otherwise. */
+function wordScore(word: string, token: string): number {
+  if (token.startsWith(word)) return 2;
+  const max = word.length >= 8 ? 2 : word.length >= 4 ? 1 : 0;
+  if (!max) return 0;
+  return distance(word, token, max) <= max || (token.length > word.length && distance(word, token.slice(0, word.length), max) <= max) ? 1 : 0;
+}
+
+/** 0 when a word of the query matches nothing; higher for the title's own words than for synonyms, and for beginnings than for typos. */
+function titleScore(title: string, words: string[], given: string[]): number {
+  const own = tokens(title);
+  const text = ` ${own.join(" ")} `;
+  const synonyms = [...GROUPS.filter((g) => g.some((term) => text.includes(` ${term.join(" ")} `))).flat(2), ...given.flatMap(tokens)];
+  let total = 0;
+  for (const w of words) {
+    const best = Math.max(0, ...own.map((tk) => wordScore(w, tk) * 2), ...synonyms.map((tk) => wordScore(w, tk)));
+    if (!best) return 0;
+    total += best;
+  }
+  return total;
+}
+
+/** Fiches whose title matches (words, synonyms, acronyms, typos), best first. Filters as one types. */
+export function searchFiches(all: Entry[], query: string): Entry[] {
+  const typed = tokens(query);
+  if (!typed.length) return [];
+  return all
+    .map((e) => ({ e, score: titleScore(e.fiche.meta.title, typed, [...e.fiche.meta.synonymes, ...e.fiche.meta.motifs]) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score || a.e.fiche.meta.title.localeCompare(b.e.fiche.meta.title, "fr"))
+    .map((x) => x.e);
+}
+
+export type LineHit = { entry: Entry; line: Element };
+
+/** Lines whose text (with its fiche title) holds every word of the query, at least one in the line itself. */
+export function searchLines(all: Entry[], query: string, limit = 8): LineHit[] {
+  const words = fold(query).split(/\s+/).filter((w) => w.length > 1);
+  if (!words.length) return [];
+  const hits: LineHit[] = [];
+  for (const entry of all) {
+    const title = fold(entry.fiche.meta.title);
+    for (const { el } of elements(entry.fiche)) {
+      const text = fold(el.text);
+      if (words.every((w) => `${title} ${text}`.includes(w)) && words.some((w) => text.includes(w))) {
+        hits.push({ entry, line: el });
+        if (hits.length >= limit) return hits;
+      }
+    }
+  }
+  return hits;
+}

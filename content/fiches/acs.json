@@ -1,0 +1,1715 @@
+{
+ "kind": "fiche",
+ "meta": {
+  "title": "Syndrome coronarien aigu : conduite à tenir",
+  "topic_id": "acs",
+  "template": "urgence",
+  "audience": [
+   "urgences"
+  ],
+  "version": "1",
+  "status": "published",
+  "reviewer": "Mounib Zaidi",
+  "reviewed_at": "2026-10-04T12:16:57+00:00",
+  "siblings": [],
+  "sources": [
+   {
+    "source_id": "esc-2023-sca",
+    "type": "full_guideline",
+    "title": "2023 ESC Guidelines for the management of acute coronary syndromes",
+    "citation": "Byrne RA et al. Eur Heart J 2023;44:3720-3826. doi:10.1093/eurheartj/ehad191",
+    "licence": "usage personnel et éducatif uniquement ; reproduction et traduction soumises à autorisation écrite de l'ESC (journals.permissions@oup.com)",
+    "language": "en",
+    "page_offset": 3719
+   },
+   {
+    "source_id": "rms-2024-sca",
+    "type": "update_only",
+    "title": "Prise en charge du syndrome coronarien aigu. Recommandations 2023 de la Société européenne de cardiologie",
+    "citation": "Planchat A et al. Rev Med Suisse 2024;20:1026-31. doi:10.53738/REVMED.2024.20.875.1026",
+    "licence": "copyright, usage interne",
+    "language": "fr",
+    "page_offset": 1024
+   }
+  ],
+  "excluded_by_audience": [
+   "imagerie intravasculaire",
+   "revascularisation pluritronculaire",
+   "dissection coronarienne spontanée",
+   "évaluation fonctionnelle des segments non coupables",
+   "assistance mécanique / ECMO"
+  ],
+  "motifs": [],
+  "synonymes": [],
+  "specialite": "Cardiovasculaire"
+ },
+ "sections": {
+  "1_essentiel": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-001",
+     "text": "STEMI : coronarographie immédiate",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 3,
+      "quote": "Pour les patients avec STEMI, une coronarographie immédiate est indiquée."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-002",
+     "text": "Angioplastie impossible dans les 120 min : fibrinolyse, puis transfert",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 3,
+      "quote": "Si la revascularisation percutanée n'est pas possible dans les 120 minutes au moment du diagnostic, l'administration de fibrinolyse est indiquée"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-003",
+     "text": "NSTEMI à risque élevé : coronarographie pendant l'hospitalisation, plus obligatoirement dans les 24 h",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 4,
+      "quote": "une coronarographie est désormais recommandée au cours du séjour hospitalier mais pas obligatoirement dans les 24 heures après admission"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    }
+   ]
+  },
+  "2_presentation": {
+   "state": "filled",
+   "signes_typiques": [
+    {
+     "id": "sca-004",
+     "text": "Équivalents de douleur thoracique : dyspnée, douleur épigastrique, douleur du bras gauche ou droit, du cou ou de la mâchoire",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 16,
+      "quote": "Chest pain-equivalent symptoms include dyspnoea, epigastric pain, and pain in the left or right arm or neck/jaw."
+     },
+     "translated": true,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-005",
+     "text": "Signes d'alerte : douleur thoracique prolongée (> 15 min) ou récidivante dans l'heure",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 17,
+      "quote": "red flag symptoms such as prolonged chest pain (>15 min) and/or recurrent pain within 1 h"
+     },
+     "translated": true,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    }
+   ],
+   "formes_trompeuses": [
+    {
+     "id": "sca-006",
+     "text": "Ne plus parler de douleur « atypique » : classer la douleur en cardiaque, possiblement cardiaque ou probablement non cardiaque",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 16,
+      "quote": "Chest pain descriptors should be classified as cardiac, possibly cardiac, and likely non-cardiac."
+     },
+     "translated": true,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ],
+   "examen_clinique": [
+    {
+     "id": "sca-007",
+     "text": "Rechercher tous les pouls, mesurer la PA aux deux bras, ausculter cœur et poumons, rechercher des signes d'IC ou de bas débit",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 18,
+      "quote": "Focused physical examination should include checking for the presence of all major pulses, measurement of blood pressure in both arms, auscultation of the heart and lungs, and assessing for signs of HF or circulatory compromise."
+     },
+     "translated": true,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ],
+   "criteres_diagnostiques": [],
+   "diagnostics_differentiels": []
+  },
+  "3_champ": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-008",
+     "text": "Spectre : angor instable, infarctus avec ou sans sus-décalage ST, choc cardiogène, arrêt cardiaque",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 7,
+      "quote": "englobe un spectre de conditions incluant l'angor instable"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "low",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ]
+  },
+  "4_gravite": {
+   "state": "filled",
+   "signes_de_gravite": [
+    {
+     "id": "sca-009",
+     "text": "Instabilité hémodynamique ou choc cardiogénique",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 3,
+      "quote": "La catégorie de risque « très élevé » concerne toujours les patients avec instabilité hémodynamique ou choc cardiogénique"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-010",
+     "text": "Douleur thoracique récurrente ou réfractaire, insuffisance cardiaque aiguë ischémique, arythmie menaçante, arrêt cardiaque, complication mécanique, modifications ECG récurrentes",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 4,
+      "quote": "une insuffisance cardiaque aiguë présumée secondaire à une ischémie myocardique en cours, des arythmies menaçant la vie, un arrêt cardiaque, des complications mécaniques et/ou des changements dynamiques récurrents de l'ECG"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    }
+   ],
+   "gestes_immediats": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-011",
+      "text": "ECG 12 dérivations au premier contact médical, objectif < 10 min",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 19,
+       "quote": "Twelve-lead ECG recording and interpretation is recommended as soon as possible at the point of FMC, with a target of <10 min."
+      },
+      "translated": true,
+      "grade": "I B",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:16:58+00:00"
+      }
+     },
+     {
+      "id": "sca-012",
+      "text": "Constantes vitales dès le premier contact, en même temps que l'ECG",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 18,
+       "quote": "Prompt assessment of vital signs is recommended at first medical contact (FMC), at the same time as acquisition of an initial ECG"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null
+     },
+     {
+      "id": "sca-013",
+      "text": "Aspirine : dose de charge 150 à 300 mg per os (ou 75 à 250 mg IV)",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 39,
+       "quote": "Aspirin is recommended for all patients without contraindications at an initial oral LD of 150–300 mg (or 75–250 mg i.v.)"
+      },
+      "translated": true,
+      "grade": "I A",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:16:58+00:00"
+      }
+     },
+     {
+      "id": "sca-014",
+      "text": "Anticoagulation parentérale dès le diagnostic",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 39,
+       "quote": "Parenteral anticoagulation is recommended for all patients with ACS at the time of diagnosis."
+      },
+      "translated": true,
+      "grade": "I A",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:16:58+00:00"
+      }
+     },
+     {
+      "id": "sca-015",
+      "text": "Oxygène uniquement si SaO2 < 90 %",
+      "type": "conditional",
+      "condition": "SaO2 < 90 %",
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 26,
+       "quote": "Oxygen is recommended in patients with hypoxaemia (SaO 2 <90%)."
+      },
+      "translated": true,
+      "grade": "I C",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:16:58+00:00"
+      }
+     },
+     {
+      "id": "sca-016",
+      "text": "Douleur : opioïdes IV à envisager",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 26,
+       "quote": "Intravenous opioids should be considered to relieve pain."
+      },
+      "translated": true,
+      "grade": "IIa C",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null
+     },
+     {
+      "id": "sca-017",
+      "text": "Dérivé nitré sublingual possible pour soulager l'ischémie",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 25,
+       "quote": "Sublingual nitrate may be helpful to relieve ischaemic symptoms."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null
+     },
+     {
+      "id": "sca-018",
+      "text": "Suspicion de STEMI : transfert direct vers un centre de cardiologie interventionnelle",
+      "type": "conditional",
+      "condition": "Suspicion de STEMI",
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 26,
+       "quote": "It is recommended that EMS transfer patients with suspected STEMI to a PCI-capable centre, bypassing non-PCI centres."
+      },
+      "translated": true,
+      "grade": "I C",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:16:58+00:00"
+      }
+     }
+    ]
+   },
+   "decision_initiale": {
+    "state": "non_traité",
+    "elements": []
+   }
+  },
+  "5_conduite": {
+   "state": "filled",
+   "nodes": [
+    {
+     "node": "STEMI",
+     "branches": [
+      {
+       "id": "sca-019",
+       "text": "Revascularisation en moins de 60 min si admis dans un centre avec salle de cathétérisme, moins de 90 min si transféré",
+       "type": "conditional",
+       "condition": null,
+       "order": null,
+       "source": {
+        "source_id": "rms-2024-sca",
+        "page": 3,
+        "quote": "dans les 60 minutes si le patient est admis dans un centre avec salle de cathétérisme cardiaque, et en moins de 90 minutes si le patient est transféré depuis un autre centre"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:16:58+00:00"
+       }
+      },
+      {
+       "id": "sca-020",
+       "text": "Angioplastie impossible en moins de 120 min : fibrinolyse",
+       "type": "conditional",
+       "condition": "Angioplastie impossible < 120 min",
+       "order": null,
+       "source": {
+        "source_id": "rms-2024-sca",
+        "page": 3,
+        "quote": "Si la revascularisation percutanée n'est pas possible dans les 120 minutes au moment du diagnostic, l'administration de fibrinolyse est indiquée"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:16:58+00:00"
+       }
+      }
+     ]
+    },
+    {
+     "node": "SCA sans sus-décalage ST : niveau de risque",
+     "branches": [
+      {
+       "id": "sca-021",
+       "text": "Risque très élevé : coronarographie immédiate",
+       "type": "conditional",
+       "condition": "Critères de risque très élevé",
+       "order": null,
+       "source": {
+        "source_id": "rms-2024-sca",
+        "page": 7,
+        "quote": "à très haut risque (avec instabilité hémodynamique), une coronarographie immédiate est recommandée"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:16:58+00:00"
+       }
+      },
+      {
+       "id": "sca-022",
+       "text": "Risque élevé (NSTEMI avéré, GRACE > 140, modifications ECG dynamiques) : coronarographie pendant l'hospitalisation",
+       "type": "conditional",
+       "condition": "Risque élevé",
+       "order": null,
+       "source": {
+        "source_id": "rms-2024-sca",
+        "page": 4,
+        "quote": "infarctus du myocarde sans élévation du segment ST (NSTEMI) avéré, score de risque GRACE > 140 ou modifications ECG dynamiques"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:16:58+00:00"
+       }
+      },
+      {
+       "id": "sca-023",
+       "text": "Risque non élevé : coronarographie sélective ou examen non invasif",
+       "type": "conditional",
+       "condition": "Risque non élevé",
+       "order": null,
+       "source": {
+        "source_id": "rms-2024-sca",
+        "page": 4,
+        "quote": "Une coronarographie sélective ou un examen non invasif sont recommandés pour la catégorie de risque « non élevé »"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "medium",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null
+      }
+     ]
+    },
+    {
+     "node": "Situations particulières",
+     "branches": [
+      {
+       "id": "sca-024",
+       "text": "Arrêt cardiaque réanimé sans sus-décalage ST ni choc : pas de coronarographie en urgence",
+       "type": "conditional",
+       "condition": "Arrêt cardiaque réanimé, ni ST+ ni choc",
+       "order": null,
+       "source": {
+        "source_id": "rms-2024-sca",
+        "page": 5,
+        "quote": "pour les patients avec arrêt cardiaque réanimé sans sus-décalage du segment ST ni choc cardiogène, une coronarographie en urgence n'est pas indiquée"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:16:58+00:00"
+       }
+      },
+      {
+       "id": "sca-025",
+       "text": "Choc cardiogène et atteinte pluritronculaire : angioplastie immédiate limitée à l'artère responsable",
+       "type": "conditional",
+       "condition": "Choc cardiogène, atteinte pluritronculaire",
+       "order": null,
+       "source": {
+        "source_id": "rms-2024-sca",
+        "page": 6,
+        "quote": "il est recommandé de limiter l'angioplastie percutanée immédiate à l'artère liée à l'infarctus"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "medium",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null
+      }
+     ]
+    }
+   ]
+  },
+  "6_examens": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-026",
+     "text": "Troponine hypersensible à l'admission et à 1 h (ou 0 et 2 h si non faisable)",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 2,
+      "quote": "à l'admission et à 1 heure (0/1 heure) ou, si ceci n'est pas faisable, à l'admission et à 2 heures (0/2 heures)"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-027",
+     "text": "Ni inclusion ni exclusion : troponine à 3 h, échocardiographie si nécessaire",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 2,
+      "quote": "avec une mesure supplémentaire du taux de troponine à 3 heures et, si nécessaire, une échocardiographie"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "sca-028",
+     "text": "Préférer le dosage en laboratoire central au test rapide",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 2,
+      "quote": "Les troponines mesurées par tests automatisés dans des laboratoires centralisés sont toujours préférées aux tests « point of care »"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "sca-029",
+     "text": "Coroscanner : indication passée de classe I à IIa",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 2,
+      "quote": "Le scanner coronarien (ou coro-CT) en cas de suspicion de NSTE-SCA est passé d'une indication de classe I à une classe IIa"
+     },
+     "translated": false,
+     "grade": "IIa",
+     "risk": "low",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ]
+  },
+  "7_traitement": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-030",
+     "text": "DAPT pendant 1 an, puis aspirine seule : stratégie par défaut",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 6,
+      "quote": "une DAPT d'un an, suivie d'aspirine seule reste la stratégie par défaut"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-031",
+     "text": "Inhibiteur puissant du P2Y12 : préférer le prasugrel",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 6,
+      "quote": "une préférence est donnée au prasugrel (classe IIa)"
+     },
+     "translated": false,
+     "grade": "IIa",
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-032",
+     "text": "STEMI avec angioplastie primaire : prétraitement par P2Y12 envisageable",
+     "type": "conditional",
+     "condition": "STEMI, angioplastie primaire",
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 6,
+      "quote": "Le prétraitement est à présent rétrogradé à une classe IIb"
+     },
+     "translated": false,
+     "grade": "IIb",
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "sca-033",
+     "text": "Sujet âgé, surtout si risque hémorragique élevé : clopidogrel envisageable",
+     "type": "conditional",
+     "condition": "Sujet âgé, risque hémorragique élevé",
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 3,
+      "quote": "Chez les patients âgés, surtout en cas de risque hémorragique élevé, le clopidogrel comme inhibiteur du P2Y12 peut être considéré"
+     },
+     "translated": false,
+     "grade": "IIb",
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "sca-034",
+     "text": "Déjà sous hypolipémiant : intensifier pendant l'hospitalisation",
+     "type": "conditional",
+     "condition": "Hypolipémiant avant l'admission",
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 3,
+      "quote": "L'intensification du traitement hypolipémiant pendant le séjour hospitalier du SCA chez les patients déjà sous traitement hypolipémiant avant l'admission est recommandée"
+     },
+     "translated": false,
+     "grade": "I",
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "dd5e86d7",
+     "text": "Ticagrelor : Charge = 2 comprimés de 90 mg",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": null,
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "local_adaptation",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [
+      "drug_dci",
+      "dose",
+      "route",
+      "administration",
+      "duree_frequence"
+     ],
+     "refs": [],
+     "attached_to": [
+      "sca-037"
+     ],
+     "delai": null,
+     "reviewer": "Mounib Zaidi",
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "9c64f0fb",
+     "text": "Prasugrel : Pas de comprimé de charge : 60 mg = 6 comprimés de 10 mg. Contre-indiqué si antécédent d'AVC.",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": null,
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "local_adaptation",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [
+      "drug_dci",
+      "dose",
+      "route",
+      "administration",
+      "duree_frequence"
+     ],
+     "refs": [],
+     "attached_to": [
+      "sca-038"
+     ],
+     "delai": null,
+     "reviewer": "Mounib Zaidi",
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "6798a495",
+     "text": "Fondaparinux : Cité par d'autres guides ; non disponible en Algérie. Aucune présentation enregistrée (nomenclature août 2026). non précisé dans la source : dose, route, source.",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": null,
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "local_adaptation",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [
+      "drug_dci",
+      "dose",
+      "route",
+      "administration",
+      "duree_frequence"
+     ],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "reviewer": "Mounib Zaidi",
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "1eceae0d",
+     "text": "Fibrinolytique (ténectéplase) : Elaxim 50 mg (ténectéplase, présentation adaptée au STEMI ; Metalyse 25 mg est réservé à l'AVC). non précisé dans la source : dose (annexe en ligne, tableau S10).",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": null,
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "local_adaptation",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [
+      "drug_dci",
+      "dose",
+      "route",
+      "administration",
+      "duree_frequence"
+     ],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "reviewer": "Mounib Zaidi",
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    }
+   ],
+   "contre_indications": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-035",
+      "text": "Prasugrel : contre-indiqué en cas d'antécédent d'AVC",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "esc-2023-sca",
+       "page": 32,
+       "quote": "Prior stroke is a contraindication for prasugrel."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:16:58+00:00"
+      }
+     }
+    ]
+   },
+   "posologies": [
+    {
+     "id": "sca-036",
+     "drug_dci": "acide acétylsalicylique",
+     "dose": "charge 150-300 mg PO ou 75-250 mg IV, puis 75-100 mg/j",
+     "dose_max": null,
+     "route": "PO ou IV",
+     "administration": null,
+     "frequency_or_duration": "1 fois par jour au long cours",
+     "condition": null,
+     "risk": "high",
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 32,
+      "quote": "Aspirin LD of 150–300 mg orally or 75–250 mg i.v. if oral ingestion is not possible, followed by oral MD of 75–100 mg o.d."
+     },
+     "translated": true,
+     "missing": [
+      "administration"
+     ],
+     "titration": null,
+     "algerie": {
+      "brands": [
+       {
+        "brand": "Kardegic 75 mg, 160 mg",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       },
+       {
+        "brand": "Aspec, Aspicard, Aspinova, Acepral Cardio 100 mg",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       },
+       {
+        "brand": "Aspigal inj (0,5 g d'aspirine par flacon)",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       }
+      ],
+      "statut": "Enregistré"
+     },
+     "note": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-037",
+     "drug_dci": "ticagrelor",
+     "dose": "charge 180 mg, puis 90 mg x 2/j",
+     "dose_max": null,
+     "route": "PO",
+     "administration": null,
+     "frequency_or_duration": "12 mois sauf risque hémorragique élevé",
+     "condition": null,
+     "risk": "high",
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 32,
+      "quote": "Ticagrelor LD of 180 mg orally, followed by an MD of 90 mg b.i.d."
+     },
+     "translated": true,
+     "missing": [
+      "administration"
+     ],
+     "titration": null,
+     "algerie": {
+      "brands": [
+       {
+        "brand": "Brilique 90 mg",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       },
+       {
+        "brand": "Plaxelor 90 mg",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       }
+      ],
+      "statut": "Enregistré"
+     },
+     "note": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-038",
+     "drug_dci": "prasugrel",
+     "dose": "charge 60 mg, puis 10 mg/j (5 mg/j si < 60 kg ou ≥ 75 ans)",
+     "dose_max": null,
+     "route": "PO",
+     "administration": null,
+     "frequency_or_duration": "12 mois sauf risque hémorragique élevé",
+     "condition": "Patient naïf de P2Y12 allant à l'angioplastie",
+     "risk": "high",
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 32,
+      "quote": "Prasugrel LD of 60 mg orally, followed by an MD of 10 mg o.d."
+     },
+     "translated": true,
+     "missing": [
+      "administration"
+     ],
+     "titration": null,
+     "algerie": {
+      "brands": [
+       {
+        "brand": "Pergus 5 mg, 10 mg",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       }
+      ],
+      "statut": "Enregistré"
+     },
+     "note": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-039",
+     "drug_dci": "clopidogrel",
+     "dose": "charge 300-600 mg, puis 75 mg/j",
+     "dose_max": null,
+     "route": "PO",
+     "administration": null,
+     "frequency_or_duration": "12 mois sauf risque hémorragique élevé",
+     "condition": null,
+     "risk": "high",
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 32,
+      "quote": "Clopidogrel LD of 300–600 mg orally, followed by an MD of 75 mg o.d."
+     },
+     "translated": true,
+     "missing": [
+      "administration"
+     ],
+     "titration": null,
+     "algerie": {
+      "brands": [
+       {
+        "brand": "Plavix 300 mg (usage hospitalier)",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       },
+       {
+        "brand": "Plavix, Dazil, Pidogrel, génériques 75 mg",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       }
+      ],
+      "statut": "Enregistré"
+     },
+     "note": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-040",
+     "drug_dci": "héparine non fractionnée",
+     "dose": "bolus IV 70-100 U/kg puis perfusion (TCA 60-80 s)",
+     "dose_max": null,
+     "route": "IV",
+     "administration": null,
+     "frequency_or_duration": "",
+     "condition": null,
+     "risk": "high",
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 32,
+      "quote": "UFH Initial treatment: i.v. bolus 70–100 U/kg followed by i.v. infusion titrated to achieve an aPTT of 60–80 s."
+     },
+     "translated": true,
+     "missing": [
+      "administration",
+      "duree_frequence"
+     ],
+     "titration": null,
+     "algerie": {
+      "brands": [
+       {
+        "brand": "Nevparin 25 000 UI/5 mL",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       }
+      ],
+      "statut": "Enregistré"
+     },
+     "note": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-041",
+     "drug_dci": "énoxaparine",
+     "dose": "1 mg/kg x 2/j SC (1 mg/kg x 1/j si ClCr < 30 mL/min)",
+     "dose_max": null,
+     "route": "SC",
+     "administration": null,
+     "frequency_or_duration": "au moins 2 jours, jusqu'à stabilisation",
+     "condition": null,
+     "risk": "high",
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 32,
+      "quote": "Enoxaparin Initial treatment: for treatment of ACS 1 mg/kg b.i.d. subcutaneously for a minimum of 2 days and continued until clinical stabilization."
+     },
+     "translated": true,
+     "missing": [
+      "administration"
+     ],
+     "titration": null,
+     "algerie": {
+      "brands": [
+       {
+        "brand": "Lovenox, Lomoh, Theranox, Varenox (2000 à 8000 UI)",
+        "form": "",
+        "dosage": "",
+        "hospital": false
+       }
+      ],
+      "statut": "Enregistré"
+     },
+     "note": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-042",
+     "drug_dci": "rivaroxaban",
+     "dose": "2,5 mg",
+     "dose_max": null,
+     "route": "PO",
+     "administration": null,
+     "frequency_or_duration": "2 fois par jour, au long cours, avec aspirine",
+     "condition": "Risque ischémique élevé sans risque hémorragique, après 12 mois",
+     "risk": "high",
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 6,
+      "quote": "la combinaison d'aspirine et de rivaroxaban 2,5 mg 2 ×/jour doivent être considérées pour les patients à risque ischémique élevé mais sans risque hémorragique"
+     },
+     "translated": false,
+     "missing": [
+      "administration"
+     ],
+     "titration": null,
+     "algerie": {
+      "brands": [],
+      "statut": null
+     },
+     "note": "Algérie : Aucune présentation 2,5 mg enregistrée (nomenclature août 2026 : 10, 15 et 20 mg uniquement)",
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    }
+   ]
+  },
+  "8_ne_pas_faire": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-043",
+     "text": "Prétraitement par P2Y12 dans le SCA sans sus-décalage avant coronarographie",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 6,
+      "quote": "Chez les patients avec NSTE-SCA bénéficiant d'une coronarographie, le prétraitement par inhibiteur du P2Y12 n'est pas recommandé"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-044",
+     "text": "DAPT de moins d'un mois, ou désescalade pendant le premier mois",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 6,
+      "quote": "Une DAPT abrégée de moins d'un mois et une désescalade de la DAPT le premier mois ne sont jamais recommandées"
+     },
+     "translated": false,
+     "grade": "III",
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-045",
+     "text": "Pas d'oxygène systématique si SaO2 > 90 %",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 26,
+      "quote": "Routine oxygen is not recommended in patients without hypoxaemia (SaO 2 >90%)."
+     },
+     "translated": true,
+     "grade": "III A",
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-046",
+     "text": "Ne pas utiliser le soulagement par la trinitrine comme test diagnostique",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 25,
+      "quote": "a reduction in chest pain after nitroglycerine administration can be misleading and is not recommended as a diagnostic manoeuvre."
+     },
+     "translated": true,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    }
+   ]
+  },
+  "9_orientation": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-047",
+     "text": "Après fibrinolyse : transfert immédiat si échec, dans les 2 à 24 h si réponse",
+     "type": "conditional",
+     "condition": "Fibrinolyse réalisée",
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 3,
+      "quote": "soit immédiatement en cas d'échec de la fibrinolyse soit dans les 2 à 24 heures en cas de réponse à cette dernière"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    }
+   ]
+  },
+  "10_surveillance": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-048",
+     "text": "Monitorage ECG continu et défibrillateur disponible dès que possible",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 19,
+      "quote": "Continuous ECG monitoring and the availability of defibrillator capacity is recommended as soon as possible in all patients with suspected STEMI"
+     },
+     "translated": true,
+     "grade": "I B",
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    }
+   ]
+  },
+  "11_suivi": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-049",
+     "text": "Après 12 mois : aspirine seule par défaut",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 6,
+      "quote": "Le traitement antithrombotique à long terme (après 12 mois) par défaut reste l'aspirine en monothérapie"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:16:58+00:00"
+     }
+    },
+    {
+     "id": "sca-050",
+     "text": "Polypill de prévention secondaire pour améliorer l'observance",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 6,
+      "quote": "La « polypill » incluant les traitements de prévention secondaire recommandés entre dans les recommandations (classe IIa)"
+     },
+     "translated": false,
+     "grade": "IIa",
+     "risk": "low",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "sca-051",
+     "text": "Statine à forte dose le plus tôt possible, quel que soit le LDL initial",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 68,
+      "quote": "It is recommended that high-dose statin therapy is initiated or continued as early as possible, regardless of initial LDL-C values."
+     },
+     "translated": true,
+     "grade": "I A",
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "sca-052",
+     "text": "Objectif LDL < 0,55 g/L et baisse ≥ 50 %",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 68,
+      "quote": "It is recommended to aim to achieve an LDL-C level of <1.4 mmol/L (<55 mg/dL) and to reduce LDL-C by ≥50% from baseline."
+     },
+     "translated": true,
+     "grade": "I A",
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "sca-053",
+     "text": "Bêtabloquant si FEVG ≤ 40 %",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 69,
+      "quote": "Beta-blockers are recommended in ACS patients with LVEF ≤40% regardless of HF symptoms."
+     },
+     "translated": true,
+     "grade": "I A",
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "sca-054",
+     "text": "Réadaptation cardiaque pour tous",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "esc-2023-sca",
+      "page": 68,
+      "quote": "It is recommended that all ACS patients participate in a medically supervised, structured, comprehensive, multidisciplinary exercise-based cardiac rehabilitation and prevention programme."
+     },
+     "translated": true,
+     "grade": "I A",
+     "risk": "low",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ],
+   "conseils_patient": []
+  },
+  "12_ordonnance": {
+   "state": "sans_objet",
+   "elements": []
+  },
+  "13_definitions": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "sca-055",
+     "text": "DAPT : double anti-agrégation plaquettaire",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "rms-2024-sca",
+      "page": 3,
+      "quote": "DAPT : double anti-agrégation plaquettaire"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "low",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ]
+  }
+ }
+}

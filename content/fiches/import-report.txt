@@ -1,0 +1,52 @@
+IMPORT REPORT
+
+Source: ../carryover
+
+== stroke (content/protocols/stroke/e61174cfe7/v0001.json, v1): 82 content strings, 82 found verbatim, 0 not found
+   - meta.sources has-2025-avc-parcours: no field for 'note' ('Les indications et posologies de la thrombolyse renvoient aux recommandations HA')
+   - 3efe57f4 (local adaptation, no dose fields, was under posologies): imported as a 7_traitement line, attached to nothing (no posologie of that drug)
+   - 12_ordonnance absent from the v1 urgence order: imported as sans_objet (hidden), to confirm by the reviewer
+   - meta.saved_at not kept: '2026-10-04T12:21:55+00:00'
+   - meta.imported_from not kept: 'fichier fourni par le relecteur (version 0.1), 2026-10-04'
+   - meta.published_as_given not kept: 'publié tel quel à la demande du relecteur, sans passer les contrôles automatiques'
+
+== acs (content/protocols/acs/32b53e31a1/v0001.json, v1): 174 content strings, 174 found verbatim, 0 not found
+   - posologie sca-042: algerie.statut 'Aucune présentation 2,5 mg enregistrée (nomenclature août 2026 : 10, 15 et 20 mg uniquement)' has no label (Q15); kept in note, statut null
+   - dd5e86d7 (local adaptation, no dose fields, was under posologies): imported as a 7_traitement line, attached to ['sca-037']
+   - 9c64f0fb (local adaptation, no dose fields, was under posologies): imported as a 7_traitement line, attached to ['sca-038']
+   - 6798a495 (local adaptation, no dose fields, was under posologies): imported as a 7_traitement line, attached to nothing (no posologie of that drug)
+   - 1eceae0d (local adaptation, no dose fields, was under posologies): imported as a 7_traitement line, attached to nothing (no posologie of that drug)
+   - 12_ordonnance absent from the v1 urgence order: imported as sans_objet (hidden), to confirm by the reviewer
+   - meta.saved_at not kept: '2026-10-04T12:16:57+00:00'
+   - meta.imported_from not kept: 'fichier fourni par le relecteur (version 0.2), 2026-10-04'
+   - meta.published_as_given not kept: 'publié tel quel à la demande du relecteur, sans passer les contrôles automatiques'
+   - dose line 'Acide acétylsalicylique : charge 150-300 mg PO ou 75-250 mg IV, puis 7': no text field on a posologie; every word of it is in that posologie's fields
+   - dose line 'Ticagrelor : charge 180 mg, puis 90 mg x 2/j': no text field on a posologie; every word of it is in that posologie's fields
+   - dose line 'Prasugrel : charge 60 mg, puis 10 mg/j (5 mg/j si < 60 kg ou ≥ 75 ans)': no text field on a posologie; every word of it is in that posologie's fields
+   - dose line 'Clopidogrel : charge 300-600 mg, puis 75 mg/j': no text field on a posologie; every word of it is in that posologie's fields
+   - dose line 'Héparine non fractionnée : bolus IV 70-100 U/kg puis perfusion (TCA 60': no text field on a posologie; every word of it is in that posologie's fields
+   - dose line 'Énoxaparine : 1 mg/kg x 2/j SC (1 mg/kg x 1/j si ClCr < 30 mL/min)': no text field on a posologie; every word of it is in that posologie's fields
+   - dose line 'Rivaroxaban : 2,5 mg': no text field on a posologie; every word of it is in that posologie's fields
+
+== eclampsia (content/protocols/eclampsia/220e69e1/as_given.json, skill): 220 content strings, 220 found verbatim, 0 not found
+   - posologie eclampsie-pos08: route empty in the source file; reviewer to fill from the quote
+   - posologie eclampsie-pos09: route empty in the source file; reviewer to fill from the quote
+   - posologie eclampsie-pos10: route empty in the source file; reviewer to fill from the quote
+   - posologie eclampsie-pos11: route empty in the source file; reviewer to fill from the quote
+   - 11 posologies had no id; given eclampsie-pos01 to -pos11 in file order
+   - meta.published_as_given not kept: "publié tel quel à la demande de l'utilisateur, sans contrôles automatiques ni relecture"
+   - meta.topic_id is 'eclampsie' but the topic is 'eclampsia' in topics.yaml; kept as in the file
+   v4 draft content/protocols/eclampsie.json: 12 quote(s) not in as_given.json (NOT imported, for review):
+     · 'Administrer le MgSO4 en dose d’entretien : en perfusion continue de 1 g à 2 g par heure pendant 48 heures'
+     · 'Renouveler la seringue toutes les 6H pendant 48 heures'
+     · 'A renouveler pour couvrir les 48h'
+     · 'Faiblesse Musculaire, Flush Cutané ; 3. Nausées, Vomissement'
+     · 'Somnolence , 5. Diplopie Ou Troubles De L’élocution'
+     · 'Paralysie ; 7. Arrêt Respiratoire, arrêt cardiaque.'
+     · 'Perfuser du gluconate de calcium : 1 g dans 50 ml de SSI à faire passer en 10 mn (antagoniste du magnésium)'
+     · 'Intubation orotrachéale + ventilation assistée'
+     · 'munie de deux voies d’abord veineux'
+     · 'sous MgSO4 en dose d’entretien et sous traitement antihypertenseur'
+     · 'Sous oxygène'
+     · 'accompagnée d’un médecin ou éventuellement d’une sage-femme'
+

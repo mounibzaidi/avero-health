@@ -1,0 +1,32 @@
+# French search words -> English, to query PubMed from a French search ("maladie rénale chronique").
+# Vocabulary only (names of diseases and organs), no clinical content. Longest phrases are matched first.
+# A topic's own English names (topics.yaml: en, synonyms) are used before this list.
+
+terms:
+  "maladie rénale chronique": "chronic kidney disease"
+  "insuffisance rénale chronique": "chronic kidney disease"
+  "insuffisance rénale aiguë": "acute kidney injury"
+  "insuffisance cardiaque": "heart failure"
+  "embolie pulmonaire": "pulmonary embolism"
+  "thrombose veineuse profonde": "deep vein thrombosis"
+  "maladie thromboembolique veineuse": "venous thromboembolism"
+  "syndrome coronarien aigu": "acute coronary syndrome"
+  "infarctus du myocarde": "myocardial infarction"
+  "fibrillation atriale": "atrial fibrillation"
+  "hypertension artérielle": "hypertension"
+  "accident vasculaire cérébral": "stroke"
+  "diabète de type 2": "type 2 diabetes"
+  "diabète": "diabetes"
+  "bronchopneumopathie chronique obstructive": "COPD"
+  "asthme": "asthma"
+  "pneumonie": "pneumonia"
+  "sepsis": "sepsis"
+  "méningite": "meningitis"
+  "cardiovasculaire": "cardiovascular"
+  "cardiaque": "cardiac"
+  "rénale": "kidney"
+  "rénal": "kidney"
+  "pulmonaire": "pulmonary"
+  "aiguë": "acute"
+  "aigu": "acute"
+  "chronique": "chronic"

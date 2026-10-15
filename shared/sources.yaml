@@ -1,0 +1,104 @@
+# Protocols: crawler sources
+# reuse: open        = openly licensed or public domain, can store and structure
+#        check       = reuse terms unclear, read them before storing text
+#        link_only   = restrictive licence, store link + metadata, not content
+# verify: true = domain from memory, confirm it before crawling
+# priority: 1 = crawl first, 2 = next, 3 = later
+# added: true = added to the original list (important for Algerian practice or for a topic in topics.yaml)
+# region: where the source's documents come from, for the ranking (scraper/doc_kinds.py origin_of):
+#         dz, fr, eu (Europe, UK included), na (USA, Canada), maghreb, intl. None (PMC): read from each title
+# note: anything to know before crawling (filled by scraper/check_sources.py where it found something)
+# start: optional page to start crawling from, for a site without a sitemap (default: its home page)
+# Crawler etiquette: respect robots.txt, rate-limit (1 request / few seconds), identify your user agent.
+
+maghreb:
+  - { id: dz-ministry,  name: "Ministère de la Santé (Algérie)",               lang: fr,    scope: "National programmes, circulars",          url: "https://sante.gov.dz",  region: dz, reuse: check, priority: 1, manual: "pas de page de recommandations (notes et arrêtés seulement) : ajout manuel" }
+  - { id: dz-insp,      name: "Institut National de Santé Publique (Algérie)", lang: fr,    scope: "Public health, surveillance, programmes", url: "https://www.insp.dz",       region: dz, reuse: check, priority: 1, manual: "pas de page listant les conduites à tenir : ajout manuel" }
+  - { id: dz-pasteur,   name: "Institut Pasteur d'Algérie",                    lang: fr,    scope: "Vaccination, rabies post-exposure, scorpion and snake antivenoms", url: "https://www.pasteur.dz/fr/", region: dz, reuse: check, priority: 1, added: true }
+  - { id: dz-cnt,       name: "Centre National de Toxicologie (Algérie)",      lang: fr,    scope: "Poisoning, scorpion envenomation, CO",    url: "https://www.cnt.dz",        region: dz, reuse: check, priority: 2, added: true }
+  - { id: tn-ineas,     name: "INEAS (Tunisie)",                               lang: fr,    scope: "Tunisian national guidelines, HAS-style", url: "https://www.ineas.tn",      region: maghreb, reuse: check, priority: 1, verify: true, note: "check 2026-09-29: home page answers 404 to our crawler; find the guidelines section URL by hand" }
+  - { id: ma-sante,     name: "Ministère de la Santé (Maroc)",                 lang: fr,    scope: "National programmes and protocols",       url: "https://www.sante.gov.ma",  region: maghreb, reuse: check, priority: 3, verify: true, added: true, note: "check 2026-09-29: connection refused; domain to confirm" }
+
+international:
+  - { id: who,          name: "World Health Organization",                     lang: "en,fr", scope: "All; many docs also in French",         url: "https://www.who.int",       region: intl, reuse: open,  priority: 1, note: "robots.txt blocks AI crawlers by name (CCBot); our crawler is allowed, but read their terms on AI use before storing text" }
+  - { id: who-iris,     name: "WHO IRIS repository",                           lang: "en,fr", scope: "Full-text WHO publications",            url: "https://iris.who.int",      region: intl, reuse: open,  priority: 1 }
+  - { id: who-afro,     name: "WHO Regional Office for Africa",                lang: "en,fr", scope: "Algeria's WHO region: regional programmes, outbreaks", url: "https://www.afro.who.int", region: intl, reuse: open, priority: 2, added: true }
+  - { id: who-emro,     name: "WHO Regional Office for the Eastern Mediterranean", lang: "en,fr,ar", scope: "Tunisia and Morocco's region; Arabic material", url: "https://www.emro.who.int", region: intl, reuse: open, priority: 3, added: true, note: "robots.txt blocks AI crawlers by name (GPTBot, CCBot); our crawler is allowed, but read their terms on AI use before storing text" }
+  - { id: msf,          name: "MSF Medical Guidelines",                        lang: "en,fr", scope: "Clinical, essential drugs, low-resource settings; includes envenomations", url: "https://medicalguidelines.msf.org", region: intl, reuse: check, priority: 1, note: "robots.txt blocks AI crawlers by name (GPTBot, ClaudeBot, anthropic-ai, CCBot, Google-Extended); our crawler is allowed, but read their terms on AI use before storing text" }
+  - { id: cdc,          name: "CDC (US)",                                      lang: en,    scope: "Infections, vaccination, public health",  url: "https://www.cdc.gov",       region: na, reuse: open,  priority: 2 }
+  - { id: pmc,          name: "PubMed Central open access",                    lang: "en,fr", scope: "Practice guidelines published open access (licence per article)", url: "https://pmc.ncbi.nlm.nih.gov", reuse: check, priority: 1, added: true, note: "already collected by scraper/pmc.py; only CC licences allowing adaptation; robots.txt disallows crawling the site: collect only through the E-utilities API and the open-access S3 bucket (scraper/pmc.py); robots.txt blocks AI crawlers by name (GPTBot, ClaudeBot, anthropic-ai, CCBot, Google-Extended); our crawler is allowed, but read their terms on AI use before storing text" }
+  - { id: ilcor,        name: "ILCOR (resuscitation science)",                 lang: en,    scope: "Cardiac arrest, first aid: consensus on science", url: "https://www.ilcor.org", region: intl, reuse: check, priority: 2, added: true }
+
+france_national:
+  - { id: has,          name: "Haute Autorité de Santé",                       lang: fr,    scope: "All; fiches mémo, recommandations",       url: "https://www.has-sante.fr",  region: fr, reuse: check, priority: 1 }
+  - { id: cnge,         name: "Collège National des Généralistes Enseignants", lang: fr,    scope: "General practice",                       url: "https://www.cnge.fr", region: fr, reuse: check, priority: 2, added: true, manual: "pas de page de recommandations trouvée sur le site : ajout manuel" }
+  - { id: hcsp,         name: "Haut Conseil de la santé publique",             lang: fr,    scope: "Vaccination, infections, public health opinions", url: "https://www.hcsp.fr", region: fr, reuse: check, priority: 2, added: true }
+  - { id: ansm,         name: "ANSM",                                          lang: fr,    scope: "Drug safety, dosing alerts",              url: "https://ansm.sante.fr",     region: fr, reuse: check, priority: 2, listing: "https://ansm.sante.fr/documents/reference/recommandations-pour-les-medicaments", link_pattern: '/uploads/.*\.pdf$' }
+  - { id: spf,          name: "Santé publique France",                         lang: fr,    scope: "Public health, vaccination",              url: "https://www.santepubliquefrance.fr", region: fr, reuse: check, priority: 3, note: "check 2026-09-29: server dropped the connection; retry" }
+  - { id: cmg,          name: "Collège de la Médecine Générale",               lang: fr,    scope: "General practice",                        url: "https://www.cmg.fr",        region: fr, reuse: check, priority: 2 }
+  - { id: sfmg,         name: "Société Française de Médecine Générale",        lang: fr,    scope: "General practice",                        url: "https://www.sfmg.fr",      region: fr, reuse: check, priority: 3 }
+  - { id: antibioclic,  name: "Antibioclic",                                   lang: fr,    scope: "Free French tool for antibiotic choice in general practice, per infection; widely used by French GPs", url: "https://antibioclic.com", region: fr, reuse: check, priority: 2, added: true, note: "robots.txt blocks AI crawlers by name (GPTBot, ClaudeBot, CCBot, Google-Extended); our crawler is allowed, but read their terms on AI use before storing text" }
+  - { id: antipoison,   name: "Centres antipoison (France)",                   lang: fr,    scope: "Poisoning, envenomation",                 url: "https://centres-antipoison.net", region: fr, reuse: check, priority: 3, added: true }
+
+france_societies:
+  emergency_icu:
+    - { id: sfmu,       name: "Société Française de Médecine d'Urgence",       lang: fr,    scope: "Emergency medicine",                      url: "https://www.sfmu.org",      region: fr, reuse: check, priority: 1, note: "robots.txt blocks AI crawlers by name (GPTBot, ClaudeBot, anthropic-ai, CCBot, Google-Extended); our crawler is allowed, but read their terms on AI use before storing text" }
+    - { id: srlf,       name: "Société de Réanimation de Langue Française",    lang: fr,    scope: "Intensive care",                          url: "https://www.srlf.org",      region: fr, reuse: check, priority: 2 }
+    - { id: sfar,       name: "Société Française d'Anesthésie et de Réanimation", lang: fr, scope: "Anaesthesia, ICU, some emergencies",      url: "https://sfar.org",          region: fr, reuse: check, priority: 2 }
+    - { id: gfrup,      name: "GFRUP (réanimation et urgences pédiatriques)",  lang: fr,    scope: "Paediatric emergencies and ICU",          url: "https://gfrup.sfpediatrie.com",      region: fr, reuse: check, priority: 2, added: true, note: "hosted by the Société Française de Pédiatrie" }
+  infections:
+    - { id: spilf,      name: "SPILF (infectiologie)",                         lang: fr,    scope: "Antibiotics, common infections",          url: "https://www.infectiologie.com", region: fr, reuse: check, priority: 1, listing: "https://www.infectiologie.com/fr/recommandations.html", link_pattern: '/UserFiles/File/.*\.pdf$' }
+  cardio_vascular:
+    - { id: sfc,        name: "Société Française de Cardiologie",              lang: fr,    scope: "Cardiology",                              url: "https://sfcardio.fr",       region: fr, reuse: check, priority: 2, listing: "https://www.sfcardio.fr/nos-publications/documents-de-consensus/", link_pattern: '(\.pdf$|/documents-de-consensus/[^/?#]+/?$|consensus)' }
+    - { id: sfnv,       name: "Société Française Neurovasculaire",             lang: fr,    scope: "Stroke",                                  url: "https://www.societe-francaise-neurovasculaire.fr", region: fr, reuse: check, priority: 3 }
+  respiratory:
+    - { id: splf,       name: "Société de Pneumologie de Langue Française",    lang: fr,    scope: "Asthma, COPD, pneumonia",                 url: "https://splf.fr",           region: fr, reuse: check, priority: 2, listing: "https://splf.fr/les-recommandations-splf/", listing_more: ["https://splf.fr/documents/archives-recommandations/"], link_pattern: '^https://splf\.fr/[^/?#]*(recommandation|guide|actualisation|consensus)[^/?#]*/?$' }
+  metabolic:
+    - { id: sfd,        name: "Société Francophone du Diabète",                lang: fr,    scope: "Diabetes",                                url: "https://www.sfdiabete.org", region: fr, reuse: check, priority: 1 }
+    - { id: sfe,        name: "Société Française d'Endocrinologie",            lang: fr,    scope: "Thyroid, endocrine",                      url: "https://www.sfendocrino.org", region: fr, reuse: check, priority: 3 }
+    - { id: sfndt,      name: "Société Francophone de Néphrologie, Dialyse et Transplantation", lang: fr, scope: "Kidney, electrolytes", url: "https://www.sfndt.org",      region: fr, reuse: check, priority: 3 }
+  other:
+    - { id: snfge,      name: "SNFGE (gastro-entérologie)",                    lang: fr,    scope: "GI, H. pylori, GI bleeding",              url: "https://www.snfge.org",     region: fr, reuse: check, priority: 2 }
+    - { id: sfn,        name: "Société Française de Neurologie",               lang: fr,    scope: "Neurology, epilepsy, headache",           url: "https://www.sf-neuro.org",  region: fr, reuse: check, priority: 3 }
+    - { id: sfp,        name: "Société Française de Pédiatrie",                lang: fr,    scope: "Paediatrics",                             url: "https://www.sfpediatrie.com", region: fr, reuse: check, priority: 2 }
+    - { id: cngof,      name: "CNGOF (gynécologie-obstétrique)",               lang: fr,    scope: "Obstetrics, contraception",               url: "https://www.cngof.fr",      region: fr, reuse: check, priority: 2 }
+    - { id: sfdermato,  name: "Société Française de Dermatologie",             lang: fr,    scope: "Skin",                                    url: "https://www.sfdermato.org", region: fr, reuse: check, priority: 3 }
+    - { id: sfgg,       name: "Société Française de Gériatrie et Gérontologie", lang: fr,   scope: "Older patients",                          url: "https://sfgg.org",          region: fr, reuse: check, priority: 3 }
+    - { id: sfa,        name: "Société Française d'Allergologie",              lang: fr,    scope: "Anaphylaxis, allergy",                    url: "https://sfa.lesallergies.fr", region: fr, reuse: check, priority: 2, added: true }
+    - { id: sforl,      name: "Société Française d'ORL",                       lang: fr,    scope: "Sore throat, otitis, sinusitis",          url: "https://www.sforl.org",     region: fr, reuse: check, priority: 3, added: true }
+    - { id: sfr,        name: "Société Française de Rhumatologie",             lang: fr,    scope: "Gout, low back pain, osteoarthritis",     url: "https://www.larhumatologie.fr", region: fr, reuse: check, priority: 3, added: true }
+
+francophone_other:
+  - { id: inesss,       name: "INESSS (Québec)",                               lang: fr,    scope: "Guides d'usage optimal, very practical",  url: "https://www.inesss.qc.ca",  region: na, reuse: check, priority: 2 }
+  - { id: kce,          name: "KCE (Belgique)",                                lang: "fr,en", scope: "Health technology and practice guidelines", url: "https://kce.fgov.be",   region: eu, reuse: check, priority: 3 }
+  - { id: ebpracticenet, name: "EBPracticeNet (Belgique)",                     lang: "fr,nl", scope: "Primary care guidelines, Belgian adaptation", url: "https://ebpnet.be", region: eu, reuse: check, priority: 3, added: true }
+
+english_societies:
+  emergency_resus:
+    - { id: erc,        name: "European Resuscitation Council",                lang: en,    scope: "Cardiac arrest, resuscitation",           url: "https://www.erc.edu",       region: eu, reuse: check, priority: 1, note: "check 2026-09-29: no answer from this network over IPv4 or IPv6 (Cloudflare); retry from another network. PMC holds only the 2010 guidelines (link only)" }
+    - { id: resus-uk,   name: "Resuscitation Council UK",                      lang: en,    scope: "Anaphylaxis (reference algorithm), resuscitation", url: "https://www.resus.org.uk", region: eu, reuse: check, priority: 2, added: true }
+    - { id: ssc,        name: "Surviving Sepsis Campaign (SCCM)",              lang: en,    scope: "Sepsis",                                  url: "https://www.sccm.org",      region: na, reuse: check, priority: 2 }
+    - { id: eaaci,      name: "EAACI (allergy)",                               lang: en,    scope: "Anaphylaxis, allergy",                    url: "https://www.eaaci.org",     region: eu, reuse: check, priority: 1 }
+    - { id: wao,        name: "World Allergy Organization",                    lang: en,    scope: "Anaphylaxis",                             url: "https://www.worldallergy.org", region: intl, reuse: check, priority: 2 }
+    - { id: wses,       name: "World Society of Emergency Surgery",            lang: en,    scope: "Trauma, abdominal emergencies (guidelines published open access)", url: "https://www.wses.org.uk", region: intl, reuse: check, priority: 3, added: true }
+  cardio_vascular:
+    - { id: esc,        name: "European Society of Cardiology",                lang: en,    scope: "Cardiology (ESC 2024 hypertension)",      url: "https://www.escardio.org",  region: eu, reuse: link_only, priority: 2, note: "robots.txt blocks AI crawlers by name (GPTBot, ClaudeBot, Google-Extended); our crawler is allowed, but read their terms on AI use before storing text" }
+    - { id: eso,        name: "European Stroke Organisation",                  lang: en,    scope: "Stroke",                                  url: "https://eso-stroke.org",    region: eu, reuse: check, priority: 3 }
+  respiratory:
+    - { id: gina,       name: "Global Initiative for Asthma (GINA)",           lang: en,    scope: "Asthma",                                  url: "https://ginasthma.org",     region: intl, reuse: check, priority: 1 }
+    - { id: gold,       name: "GOLD (COPD)",                                   lang: en,    scope: "COPD",                                    url: "https://goldcopd.org",      region: intl, reuse: check, priority: 2 }
+  metabolic_renal:
+    - { id: ada,        name: "American Diabetes Association (Standards of Care)", lang: en, scope: "Diabetes",                               url: "https://professional.diabetes.org", region: na, reuse: check, priority: 2, note: "diabetesjournals.org is behind a Cloudflare bot wall (403); professional.diabetes.org answers. Standards of Care in PMC only up to 2012 (CC BY-NC-ND)" }
+    - { id: ispad,      name: "ISPAD (paediatric diabetes)",                   lang: en,    scope: "Diabetic ketoacidosis in children, type 1 diabetes", url: "https://www.ispad.org", region: intl, reuse: check, priority: 2, added: true }
+    - { id: idf,        name: "International Diabetes Federation",             lang: "en,fr", scope: "Diabetes, including low-resource settings", url: "https://idf.org",       region: intl, reuse: check, priority: 3, added: true }
+    - { id: kdigo,      name: "KDIGO",                                         lang: en,    scope: "Kidney disease, AKI",                     url: "https://kdigo.org",         region: intl, reuse: check, priority: 3 }
+  infections:
+    - { id: idsa,       name: "Infectious Diseases Society of America",        lang: en,    scope: "Infections",                              url: "https://www.idsociety.org", region: na, reuse: check, priority: 3 }
+    - { id: escmid,     name: "ESCMID",                                        lang: en,    scope: "Infections, antimicrobials",              url: "https://www.escmid.org",    region: eu, reuse: check, priority: 3 }
+  other:
+    - { id: ilae,       name: "International League Against Epilepsy",         lang: en,    scope: "Epilepsy, status epilepticus",            url: "https://www.ilae.org",      region: intl, reuse: check, priority: 3, note: "check 2026-09-29: Cloudflare bot wall (403): not crawled; nothing recent in PMC open access" }
+    - { id: figo,       name: "FIGO",                                          lang: en,    scope: "Obstetrics, PPH, pre-eclampsia",          url: "https://www.figo.org",      region: intl, reuse: check, priority: 3, note: "robots.txt blocks AI crawlers by name (GPTBot, ClaudeBot, anthropic-ai, CCBot, Google-Extended); our crawler is allowed, but read their terms on AI use before storing text" }
+
+uk_reference:
+  - { id: nice,         name: "NICE",                                          lang: en,    scope: "All; reuse outside the UK needs permission", url: "https://www.nice.org.uk", region: eu, reuse: link_only, priority: 3 }
+  - { id: sign,         name: "SIGN (Scotland)",                               lang: en,    scope: "All",                                     url: "https://www.sign.ac.uk",    region: eu, reuse: check, priority: 3 }

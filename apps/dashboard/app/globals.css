@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@import "@medguides/ui-tokens/theme.css";
+
+/* Same tokens as the app (Q5). Light by default; data-theme="dark" on <html> switches. */
+html,
+body {
+  background: rgb(var(--c-bg));
+  color: rgb(var(--c-ink));
+}
+
+body {
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--c-accent) / 0.7);
+  outline-offset: 2px;
+}
+
+/* Quote highlight inside the pdf.js text layer (PdfViewer). The layer's text is transparent over the rendered
+   page, so the mark paints a translucent band behind the real glyphs. */
+.pdf-page .textLayer mark {
+  background: color-mix(in srgb, #ffe58a 70%, transparent);
+  color: transparent;
+  border-radius: 2px;
+  padding: 1px 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #ffe58a 70%, transparent);
+}
+/* Everything the fiche already takes from the page: a quieter green, under the line being read. */
+.pdf-page .textLayer mark.used {
+  background: rgb(var(--c-accent) / 0.22);
+  box-shadow: 0 0 0 2px rgb(var(--c-accent) / 0.22);
+}

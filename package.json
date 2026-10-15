@@ -1,0 +1,25 @@
+{
+  "name": "medguides",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "mobile": "npm run web --workspace @medguides/mobile",
+    "dashboard": "npm run dev --workspace @medguides/dashboard",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "tokens:check": "npm run check --workspace @medguides/ui-tokens",
+    "test": "npm run test --workspaces --if-present",
+    "content:import": "python3 -I tools/import/import_content.py ../carryover && python3 -I tools/import/make_seed.py && npm run validate-content --workspace @medguides/schema",
+    "api": "cd services/api && .venv/bin/uvicorn app.main:app --port 8000",
+    "db:sql": "services/api/.venv/bin/python -I tools/db/run_sql.py"
+  },
+  "overrides": {
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native-reanimated": "4.5.1",
+    "react-native-worklets": "0.10.1"
+  }
+}

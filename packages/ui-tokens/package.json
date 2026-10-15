@@ -1,0 +1,17 @@
+{
+  "name": "@medguides/ui-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "main": "tokens.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": { "types": "./index.d.ts", "default": "./tokens.js" },
+    "./tailwind-preset": "./tailwind-preset.js",
+    "./theme.css": "./theme.css",
+    "./fonts/*": "./fonts/*"
+  },
+  "scripts": {
+    "build": "node scripts/build-css.js",
+    "check": "node scripts/build-css.js --check"
+  }
+}

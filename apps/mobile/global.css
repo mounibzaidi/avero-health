@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Inter, bundled (packages/ui-tokens/fonts). Web serves it from public/fonts; native embeds it with
+   the expo-font config plugin in app.json. */
+@font-face { font-family: "Inter"; font-weight: 400; font-display: swap; src: url("/fonts/Inter_400Regular.ttf") format("truetype"); }
+@font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url("/fonts/Inter_500Medium.ttf") format("truetype"); }
+@font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url("/fonts/Inter_600SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Inter"; font-weight: 700; font-display: swap; src: url("/fonts/Inter_700Bold.ttf") format("truetype"); }
+
+@layer base {
+  html, body, [class*="css-text"], [class*="css-textinput"] {
+    font-family: "Inter", system-ui, sans-serif !important;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Doses, transfer criteria, target values. Placed after the Inter rule so it wins on web. */
+  .font-mono, .font-mono * { font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important; }
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+  /* Visible keyboard focus everywhere (web). */
+  *:focus-visible {
+    outline: 2px solid rgb(var(--c-accent) / 0.7);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+  /* Text fields show focus with their own teal border; a second ring around them reads as a double frame. */
+  input:focus-visible, textarea:focus-visible { outline: none; }
+  /* Quiet scrollbars that match the surfaces. */
+  * { scrollbar-width: thin; scrollbar-color: rgb(var(--c-line)) transparent; }
+}
+
+/* Primary control (PrimaryButton): flat teal with a soft teal shadow. Hover deepens it slightly; press sinks it. */
+.btn-primary {
+  box-shadow: 0 6px 14px -4px rgb(var(--c-btn) / 0.22), 0 1px 2px rgb(var(--c-btn) / 0.16);
+  transition: filter 140ms ease, transform 100ms ease;
+}
+.btn-primary:hover { filter: brightness(0.94); }
+.btn-primary:active { transform: scale(0.98); }
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary, .btn-primary:active { transition: none; transform: none; }
+}
+
+/* Loading: a light sweep across placeholder lines. Stops under reduced motion. */
+.shimmer {
+  background-image: linear-gradient(90deg, rgb(var(--c-line)) 0%, rgb(var(--c-surface)) 45%, rgb(var(--c-accent) / 0.18) 50%, rgb(var(--c-surface)) 55%, rgb(var(--c-line)) 100%);
+  background-size: 220% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+@keyframes shimmer { from { background-position: 110% 0; } to { background-position: -110% 0; } }
+@media (prefers-reduced-motion: reduce) { .shimmer { animation: none; } }

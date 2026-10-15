@@ -1,0 +1,38 @@
+# Issuing bodies of clinical guidelines: how a search result is attributed to one.
+# Order of evidence: a title pattern (the body names itself), then an author (a collective name), then the journal.
+# `region` feeds the origin-first ranking (dz, fr, eu, na, intl). Edit freely: nothing else holds a copy.
+
+bodies:
+  - { id: esc,    name: "ESC",            region: eu, title: ['\bESC\b', 'European Society of Cardiology'], authors: ['ESC Scientific Document Group'], journals: ["Eur Heart J"] }
+  - { id: aha-acc, name: "AHA/ACC",       region: na, title: ['\bAHA\b', '\bACC\b', 'American Heart Association', 'American College of Cardiology'], authors: ['Joint Committee on Clinical Practice Guidelines'], journals: ["Circulation", "J Am Coll Cardiol"] }
+  - { id: ers,    name: "ERS",            region: eu, title: ['\bERS\b', 'European Respiratory Society'], journals: ["Eur Respir J"] }
+  - { id: ats,    name: "ATS",            region: na, title: ['\bATS\b', 'American Thoracic Society'], journals: ["Am J Respir Crit Care Med"] }
+  - { id: chest,  name: "CHEST",          region: na, title: ['\bCHEST\b', 'American College of Chest Physicians'], journals: ["Chest"] }
+  - { id: kdigo,  name: "KDIGO",          region: intl, title: ['\bKDIGO\b'], journals: ["Kidney Int", "Kidney Int Suppl (2011)"] }
+  - { id: era,    name: "ERA",            region: eu, title: ['\bERA\b', 'European Renal Association'], journals: ["Nephrol Dial Transplant"] }
+  - { id: esh,    name: "ESH",            region: eu, title: ['\bESH\b', 'European Society of Hypertension'], journals: ["J Hypertens"] }
+  - { id: ada,    name: "ADA",            region: na, title: ['\bADA\b', 'American Diabetes Association', 'Standards of Care in Diabetes'], journals: ["Diabetes Care"] }
+  - { id: easd,   name: "EASD",           region: eu, title: ['\bEASD\b'], journals: ["Diabetologia"] }
+  - { id: idsa,   name: "IDSA",           region: na, title: ['\bIDSA\b', 'Infectious Diseases Society of America'], journals: ["Clin Infect Dis"] }
+  - { id: escmid, name: "ESCMID",         region: eu, title: ['\bESCMID\b'], journals: ["Clin Microbiol Infect"] }
+  - { id: ssc,    name: "Surviving Sepsis Campaign", region: intl, title: ['Surviving Sepsis Campaign'], journals: ["Crit Care Med", "Intensive Care Med"] }
+  - { id: eso,    name: "ESO",            region: eu, title: ['\bESO\b', 'European Stroke Organisation'], journals: ["Eur Stroke J"] }
+  - { id: aha-asa, name: "AHA/ASA",       region: na, title: ['\bASA\b', 'American Stroke Association'], journals: ["Stroke"] }
+  - { id: erc,    name: "ERC",            region: eu, title: ['\bERC\b', 'European Resuscitation Council'], journals: ["Resuscitation"] }
+  - { id: gold,   name: "GOLD",           region: intl, title: ['\bGOLD\b', 'Global Initiative for Chronic Obstructive Lung Disease'] }
+  - { id: gina,   name: "GINA",           region: intl, title: ['\bGINA\b', 'Global Initiative for Asthma'] }
+  - { id: nice,   name: "NICE",           region: eu, title: ['\bNICE\b', 'National Institute for Health and Care Excellence'] }
+  - { id: who,    name: "OMS",            region: intl, title: ['\bWHO\b', 'World Health Organization'] }
+  - { id: isth,   name: "ISTH",           region: intl, title: ['\bISTH\b'], journals: ["J Thromb Haemost"] }
+  - { id: asco,   name: "ASCO",           region: na, title: ['\bASCO\b'], journals: ["J Clin Oncol"] }
+  - { id: esmo,   name: "ESMO",           region: eu, title: ['\bESMO\b'], journals: ["Ann Oncol"] }
+  # French and Algerian bodies (also checked through their own listing pages, sources.yaml)
+  - { id: has,    name: "HAS",            region: fr, title: ['Haute Autorité de Santé', '\bHAS\b'] }
+  - { id: splf,   name: "SPLF",           region: fr, title: ['\bSPLF\b', 'Société de Pneumologie de Langue Française'], journals: ["Rev Mal Respir", "Respir Med Res"] }
+  - { id: spilf,  name: "SPILF",          region: fr, title: ['\bSPILF\b'], journals: ["Infect Dis Now", "Med Mal Infect"] }
+  - { id: sfc,    name: "SFC",            region: fr, title: ['Société Française de Cardiologie', 'French Society of Cardiology'], journals: ["Arch Cardiovasc Dis"] }
+  - { id: sfar,   name: "SFAR",           region: fr, title: ['\bSFAR\b'], journals: ["Anaesth Crit Care Pain Med"] }
+  - { id: sfmu,   name: "SFMU",           region: fr, title: ['\bSFMU\b'], journals: ["Ann Fr Med Urgence"] }
+  - { id: cnge,   name: "CNGE",           region: fr, title: ['\bCNGE\b'], journals: ["Exercer"] }
+  - { id: ansm,   name: "ANSM",           region: fr, title: ['\bANSM\b'] }
+  - { id: dz-ministere, name: "Ministère de la Santé (Algérie)", region: dz, title: ['Algérie', 'Algeria'] }

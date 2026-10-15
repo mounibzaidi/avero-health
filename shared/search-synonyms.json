@@ -1,0 +1,33 @@
+{
+  "_note": "Search synonyms and acronyms. Each group lists terms that mean the same thing: a fiche whose title contains one of them is found by any of the others. Copied to app/src/lib/search-synonyms.json by `npm run sync:synonyms` in app/.",
+  "groups": [
+    ["AVC", "accident vasculaire cérébral", "infarctus cérébral", "stroke", "AIT", "accident ischémique transitoire"],
+    ["HTA", "hypertension artérielle", "hypertension", "tension"],
+    ["OAP", "œdème aigu du poumon", "œdème aigu pulmonaire", "œdème pulmonaire"],
+    ["SCA", "syndrome coronarien aigu", "infarctus", "angor instable"],
+    ["IDM", "infarctus du myocarde", "infarctus", "STEMI", "NSTEMI"],
+    ["EP", "embolie pulmonaire"],
+    ["TVP", "thrombose veineuse profonde", "phlébite"],
+    ["MTEV", "maladie thromboembolique veineuse"],
+    ["ACR", "arrêt cardiaque", "arrêt cardiorespiratoire", "arrêt cardio-respiratoire", "RCP"],
+    ["IC", "insuffisance cardiaque"],
+    ["FA", "fibrillation atriale", "fibrillation auriculaire", "ACFA"],
+    ["BPCO", "bronchopneumopathie chronique obstructive"],
+    ["AAG", "asthme aigu grave", "crise d'asthme"],
+    ["DT2", "diabète de type 2", "diabète"],
+    ["DT1", "diabète de type 1", "diabète"],
+    ["ACD", "acidocétose diabétique", "acidocétose"],
+    ["IRA", "insuffisance rénale aiguë"],
+    ["IRC", "insuffisance rénale chronique", "MRC", "maladie rénale chronique"],
+    ["HSA", "hémorragie sous-arachnoïdienne", "hémorragie méningée"],
+    ["TC", "traumatisme crânien"],
+    ["EME", "état de mal épileptique", "convulsions"],
+    ["PNA", "pyélonéphrite aiguë", "pyélonéphrite"],
+    ["IU", "infection urinaire", "cystite"],
+    ["PAC", "pneumonie aiguë communautaire", "pneumonie", "pneumopathie"],
+    ["choc anaphylactique", "anaphylaxie", "allergie grave"],
+    ["pré-éclampsie", "prééclampsie", "toxémie gravidique", "éclampsie"],
+    ["hypoglycémie", "hypo"],
+    ["envenimation scorpionique", "piqûre de scorpion", "scorpion"]
+  ]
+}

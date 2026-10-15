@@ -1,0 +1,178 @@
+# Protocols: predefined topics. The single list the crawler matches sources against, the dashboard
+# seeds subjects from, and the app groups protocols by. Edit here; nothing else holds a copy.
+#
+# priority: 1 = build first (demo), 2 = next, 3 = later
+# local_program: true = check Algerian Ministry of Health / INSP sources first (not crawled yet:
+#   the matcher flags these topics so a person looks there before using a foreign guideline)
+# keywords_fr: extra French terms and acronyms. Acronyms (all capitals) match as whole words only.
+# exclude: terms that make a catalogue entry wrong for this topic even when a name matches.
+# synonyms: other names of the topic, in French or English ("hypertensive crisis" for a hypertensive emergency):
+#   a title that has one names the topic, like fr and en. British and American spellings and plurals
+#   already match each other (dyslipidaemia / dyslipidemia, emergency / emergencies): no need to list both.
+# broader: a broader topic whose documents treat this one as a chapter ("hypertension" for a hypertensive
+#   emergency). A document that names nothing closer is kept for it, low in the list, and says so.
+# neighbors: terms of a neighbouring topic ("chronic coronary" for an acute coronary topic): a result whose
+#   title has one stays in the list but loses points (scraper/doc_kinds.py rank), so it sinks below the topic's own.
+# fiche: the topic's own fiche: its title and its clinical moment (one fiche = one clinical moment). The planner
+#   (backend/factory/plan.py) keeps the pages of this moment and proposes sibling fiches when it holds too much.
+# elsewhere: what belongs to another topic's fiche, {topic id: [terms]}: a line or a page that has one of the
+#   terms is left out of this topic's fiches (post-cardiac-arrest care is not an acute coronary fiche).
+# audience: specialist = keep interventional, surgical and device recommendations (left out by default: the
+#   fiches are for general practitioners and emergency physicians).
+# expect: ids of shared/sources.yaml whose guidance this topic cannot do without (ERC for cardiac arrest).
+#   When a search cannot read one of them, or finds nothing there, the dashboard says so in red: such a
+#   source is never silently missing.
+
+groups:
+  emergencies:
+    cardiovascular: Cardiovasculaire
+    respiratory: Respiratoire
+    shock-infection: Choc et infection
+    neurological: Neurologie
+    metabolic: Métabolique
+    gastrointestinal: Digestif
+    toxicology-envenomation: Toxicologie et envenimations
+    trauma-environment: Traumatologie
+    obstetric: Obstétrique
+    paediatric: Pédiatrie
+    psychiatric: Psychiatrie
+  gp_consultations:
+    cardiometabolic: Cardiométabolique
+    infections: Infections
+    respiratory: Respiratoire
+    digestive: Digestif
+    musculoskeletal: Rhumatologie
+    neuro-mental: Neurologie et santé mentale
+    haematology: Hématologie
+    skin: Dermatologie
+    women-children-prevention: Femme, enfant, prévention
+    symptoms: Motifs de consultation
+
+emergencies:
+  cardiovascular:
+    - { id: cardiac-arrest,        en: "Cardiac arrest (adult ALS)",           fr: "Arrêt cardio-respiratoire",            keywords_fr: ["ACR", "réanimation cardio-pulmonaire", "RCP", "arrêt cardiaque"], priority: 1, expect: ["erc"] }
+    - { id: acs,                   en: "Acute coronary syndrome / STEMI",       fr: "Syndrome coronarien aigu",             keywords_fr: ["SCA", "infarctus du myocarde", "IDM", "ST+"],               priority: 1,
+        fiche: { title: "SCA : premières heures (médecine générale et urgences)", moment: "les premières heures, du premier contact médical à l'orientation : reconnaître, évaluer, premiers gestes et premiers traitements, appeler et transférer" },
+        elsewhere: { cardiac-arrest: ["cardiac arrest", "arrêt cardiaque", "arrêt cardio", "OHCA", "resuscitated", "resuscitation", "réanimé", "réanimation cardio", "temperature control", "contrôle de la température", "neurological prognos", "pronostic neurologique", "comatose", "coma"] },
+        neighbors: ["chronic coronary", "coronarien chronique", "coronaropathie stable", "stable coronary", "stable angina", "angor stable", "lipid", "lipidique", "réadaptation", "rehabilitation", "discharge"] }
+    - { id: acute-heart-failure,   en: "Acute heart failure / pulmonary oedema",fr: "Insuffisance cardiaque aiguë",         keywords_fr: ["OAP", "œdème aigu du poumon"],                              priority: 2, neighbors: ["chronic", "chronique", "CKD", "kidney", "rénale", "weaning", "sevrage", "fraction d'éjection préservée", "preserved ejection"], synonyms: ["acute decompensated heart failure", "décompensation cardiaque", "insuffisance cardiaque décompensée", "cardiogenic pulmonary edema", "choc cardiogénique", "cardiogenic shock"], broader: ["heart failure", "insuffisance cardiaque"] }
+    - { id: tachyarrhythmia,       en: "Tachyarrhythmias (AF, SVT)",            fr: "Tachycardies",                         keywords_fr: ["fibrillation atriale", "FA rapide", "tachycardie supraventriculaire"], priority: 2 }
+    - { id: bradycardia,           en: "Symptomatic bradycardia",               fr: "Bradycardie",                          keywords_fr: ["BAV", "bloc auriculo-ventriculaire"],                       priority: 3, synonyms: ["bradycardia", "bradyarrhythmia", "bradyarythmie", "atrioventricular block", "heart block", "bloc atrioventriculaire"], broader: ["cardiac pacing", "stimulation cardiaque", "troubles de la conduction", "conduction disorders"] }
+    - { id: hypertensive-emergency,en: "Hypertensive emergency",                fr: "Urgence hypertensive",                 keywords_fr: ["poussée hypertensive", "HTA maligne"],                      priority: 1, exclude: ["pulmonaire", "pulmonary", "intracrân", "intracran", "portale", "portal", "oculaire", "ocular", "pregnan", "grossesse", "gravid"], synonyms: ["hypertensive crisis", "crise hypertensive", "hypertensive urgency", "malignant hypertension", "hypertension maligne"], broader: ["hypertension", "hypertension artérielle"] }
+    - { id: pulmonary-embolism,    en: "Pulmonary embolism / venous thromboembolism", fr: "Embolie pulmonaire",            keywords_fr: ["EP", "MTEV", "maladie veineuse thromboembolique", "maladie thromboembolique veineuse", "thrombose veineuse profonde"], priority: 2, exclude: ["prophyla", "péri-opératoire", "peri-operative", "perioperative", "postopératoire", "postoperative", "covid", "burn", "radioembol", "chemoembol", "portal vein", "prevention of venous", "prévention de la maladie", "cancer", "response team"] }
+    - { id: aortic-dissection,     en: "Aortic dissection",                     fr: "Dissection aortique",                  keywords_fr: ["syndrome aortique aigu"],                                   priority: 2, synonyms: ["acute aortic syndrome", "acute aortic dissection", "dissection aortique aiguë"], broader: ["aortic diseases", "maladies de l'aorte", "pathologies de l'aorte"] }
+    - { id: acute-limb-ischaemia,  en: "Acute limb ischaemia",                  fr: "Ischémie aiguë de membre",             keywords_fr: ["ischémie aiguë des membres inférieurs"],                    priority: 2, synonyms: ["acute limb ischemia", "acute arterial occlusion", "ischémie aiguë des membres"], broader: ["peripheral arterial disease", "artériopathie des membres inférieurs", "peripheral arterial and aortic diseases"] }
+  respiratory:
+    - { id: acute-asthma,          en: "Acute severe asthma",                   fr: "Asthme aigu grave",                    keywords_fr: ["AAG", "exacerbation d'asthme"],                             priority: 1, synonyms: ["asthma exacerbation", "asthma attack", "crise d'asthme", "status asthmaticus", "severe asthma", "asthme sévère"], broader: ["asthma", "asthme"] }
+    - { id: copd-exacerbation,     en: "COPD exacerbation",                     fr: "Exacerbation de BPCO",                 keywords_fr: ["décompensation BPCO"],                                      priority: 2, synonyms: ["exacerbation chronic obstructive pulmonary disease", "exacerbation bronchopneumopathie chronique obstructive", "exacerbation BPCO", "COPD exacerbations"], broader: ["COPD", "BPCO", "chronic obstructive pulmonary disease", "bronchopneumopathie chronique obstructive"] }
+    - { id: pneumothorax,          en: "Pneumothorax",                          fr: "Pneumothorax",                         keywords_fr: ["pneumothorax spontané"],                                    priority: 3, synonyms: ["spontaneous pneumothorax"], broader: ["pleural disease", "pathologie pleurale"] }
+  shock-infection:
+    - { id: anaphylaxis,           en: "Anaphylaxis",                           fr: "Anaphylaxie",                          keywords_fr: ["choc anaphylactique", "adrénaline"],                        priority: 1, synonyms: ["anaphylactic shock", "anaphylactic reaction", "réaction anaphylactique"] }
+    - { id: sepsis,                en: "Sepsis and septic shock",               fr: "Sepsis et choc septique",              keywords_fr: ["choc septique", "qSOFA"],                                   priority: 1 }
+    - { id: meningitis,            en: "Acute bacterial meningitis",            fr: "Méningite bactérienne aiguë",          keywords_fr: ["purpura fulminans", "méningite"],                           priority: 2, exclude: ["carcinomat"] }
+    - { id: shock,                 en: "Shock (undifferentiated)",              fr: "État de choc",                         keywords_fr: ["insuffisance circulatoire aiguë", "choc hypovolémique"],    priority: 2, synonyms: ["circulatory shock", "undifferentiated shock", "hypovolemic shock", "états de choc"], neighbors: ["choc septique", "septic shock", "anaphyla", "cardiogénique", "cardiogenic"] }
+    - { id: major-haemorrhage,     en: "Major haemorrhage",                     fr: "Hémorragie grave",                     keywords_fr: ["choc hémorragique", "transfusion massive"],                 priority: 2, synonyms: ["major bleeding", "massive haemorrhage", "haemorrhagic shock", "massive transfusion", "hémorragie massive", "hémorragie importante"], neighbors: ["post-partum", "postpartum", "digestive", "gastrointestinal", "méningée", "subarachnoid"] }
+  neurological:
+    - { id: stroke,                en: "Acute stroke",                          fr: "Accident vasculaire cérébral",         keywords_fr: ["AVC", "thrombolyse"],                                       priority: 1, neighbors: ["rééducation", "réadaptation", "rehabilitation", "hémorragie méningée", "subarachnoid", "prévention vasculaire", "secondary prevention", "parcours de santé", "post-stroke", "post-AVC"] }
+    - { id: status-epilepticus,    en: "Status epilepticus",                    fr: "État de mal épileptique",              keywords_fr: ["EME", "convulsions"],                                       priority: 1 }
+    - { id: head-injury,           en: "Head injury",                           fr: "Traumatisme crânien",                  keywords_fr: ["TC léger", "traumatisme crânien grave"],                    priority: 2 }
+    - { id: subarachnoid-haemorrhage, en: "Subarachnoid haemorrhage",           fr: "Hémorragie sous-arachnoïdienne",       keywords_fr: ["HSA", "hémorragie méningée", "anévrisme rompu"],            priority: 2, synonyms: ["subarachnoid hemorrhage", "aneurysmal subarachnoid haemorrhage", "hémorragie sous-arachnoïdienne anévrismale"] }
+  metabolic:
+    - { id: hypoglycaemia,         en: "Hypoglycaemia",                         fr: "Hypoglycémie",                         keywords_fr: ["hypoglycémie sévère", "resucrage"],                         priority: 1, synonyms: ["severe hypoglycemia", "low blood glucose"], broader: ["diabetes", "diabète"] }
+    - { id: dka-hhs,               en: "DKA and hyperosmolar state",            fr: "Acidocétose diabétique",               keywords_fr: ["ACD", "coma hyperosmolaire"],                               priority: 1, synonyms: ["diabetic ketoacidosis", "acidocétose", "hyperosmolar hyperglycemic state", "hyperglycemic hyperosmolar state", "syndrome hyperosmolaire", "hyperglycemic crisis", "hyperglycemic emergencies", "urgences hyperglycémiques"], broader: ["diabetes", "diabète"] }
+    - { id: hyperkalaemia,         en: "Hyperkalaemia",                         fr: "Hyperkaliémie",                        keywords_fr: ["hyperkaliémie menaçante"],                                  priority: 1, synonyms: ["hyperkalemia", "dyskaliémie"], broader: ["electrolyte disorders", "troubles hydroélectrolytiques", "potassium"] }
+    - { id: hyponatraemia,         en: "Hyponatraemia",                         fr: "Hyponatrémie",                         keywords_fr: ["hyponatrémie sévère"],                                      priority: 3, synonyms: ["hyponatremia", "dysnatrémie"], broader: ["electrolyte disorders", "troubles hydroélectrolytiques", "sodium"] }
+    - { id: aki,                   en: "Acute kidney injury",                   fr: "Insuffisance rénale aiguë",            keywords_fr: ["IRA", "lésion rénale aiguë"],                               priority: 3 }
+  gastrointestinal:
+    - { id: upper-gi-bleed,        en: "Upper GI bleeding",                     fr: "Hémorragie digestive haute",           keywords_fr: ["HDH", "hématémèse", "méléna"],                              priority: 2, synonyms: ["upper gastrointestinal bleeding", "upper gastrointestinal haemorrhage", "gastrointestinal bleeding", "hémorragie digestive", "variceal bleeding", "hémorragie par rupture de varices", "peptic ulcer bleeding", "ulcère hémorragique"] }
+    - { id: appendicitis,          en: "Acute appendicitis",                    fr: "Appendicite aiguë",                    keywords_fr: ["appendicite"],                                              priority: 2, synonyms: ["appendicitis", "appendicite"] }
+    - { id: bowel-obstruction-perforation, en: "Bowel obstruction and perforation", fr: "Occlusion et perforation digestives", keywords_fr: ["occlusion intestinale", "péritonite", "syndrome occlusif"], priority: 2, synonyms: ["bowel obstruction", "intestinal obstruction", "occlusion intestinale aiguë", "gastrointestinal perforation", "perforation digestive", "peritonitis", "péritonite"], broader: ["acute abdomen", "abdomen aigu"] }
+  toxicology-envenomation:
+    - { id: scorpion-envenomation, en: "Scorpion envenomation",                 fr: "Envenimation scorpionique",            keywords_fr: ["piqûre de scorpion"],                                       priority: 1, local_program: true, synonyms: ["scorpion sting", "scorpionism", "scorpionisme", "envenimation scorpionique", "piqûre scorpionique"], broader: ["envenomation", "envenimation"] }
+    - { id: co-poisoning,          en: "Carbon monoxide poisoning",             fr: "Intoxication au monoxyde de carbone",  keywords_fr: ["intoxication CO", "oxygénothérapie hyperbare"],             priority: 1, synonyms: ["carbon monoxide", "monoxyde de carbone"] }
+    - { id: paracetamol-overdose,  en: "Paracetamol overdose",                  fr: "Intoxication au paracétamol",          keywords_fr: ["N-acétylcystéine"],                                         priority: 2, synonyms: ["paracetamol poisoning", "acetaminophen overdose", "acetaminophen poisoning", "acetaminophen toxicity", "surdosage en paracétamol", "intoxication paracétamol"], broader: ["poisoning", "intoxication médicamenteuse", "intoxications médicamenteuses"] }
+    - { id: organophosphates,      en: "Organophosphate poisoning",             fr: "Intoxication aux organophosphorés",    keywords_fr: ["pesticides", "atropine"],                                   priority: 2, synonyms: ["organophosphorus poisoning", "organophosphate", "organophosphorés", "pesticide poisoning", "intoxication aux pesticides"], broader: ["poisoning", "intoxications"] }
+    - { id: snakebite,             en: "Snakebite",                             fr: "Envenimation ophidienne",              keywords_fr: ["morsure de serpent", "vipère"],                             priority: 3, synonyms: ["snake bite", "snakebite envenoming", "snake envenoming", "morsure de serpent", "envenimation vipérine", "morsure de vipère"], broader: ["envenomation", "envenimation", "antivenom"] }
+    - { id: rabies-pep,            en: "Rabies post-exposure prophylaxis",      fr: "Prophylaxie post-exposition rage",     keywords_fr: ["morsure animale", "vaccin antirabique", "rage"],            priority: 1, local_program: true, synonyms: ["rabies", "rage humaine", "rabies vaccine", "rabies immunoglobulin"] }
+    - { id: acute-poisoning,       en: "Severe acute poisoning",                fr: "Intoxication aiguë grave",             keywords_fr: ["intoxication médicamenteuse volontaire", "IMV", "toxidrome"], priority: 2, synonyms: ["acute poisoning", "poisoning", "overdose", "intoxication aiguë", "intoxications graves", "intoxications aiguës"], neighbors: ["paracétamol", "paracetamol", "acetaminophen", "monoxyde de carbone", "carbon monoxide", "organophosph", "pesticide"] }
+  trauma-environment:
+    - { id: burns,                 en: "Burns",                                 fr: "Brûlures",                             keywords_fr: ["brûlure grave", "Parkland"],                                priority: 2 }
+  obstetric:
+    - { id: pph,                   en: "Postpartum haemorrhage",                fr: "Hémorragie du post-partum",            keywords_fr: ["HPP"],                                                      priority: 2 }
+    - { id: eclampsia,             en: "Pre-eclampsia / eclampsia",             fr: "Prééclampsie et éclampsie",            keywords_fr: ["sulfate de magnésium"],                                     priority: 2 }
+    - { id: ectopic-pregnancy,     en: "Ectopic pregnancy",                     fr: "Grossesse extra-utérine",              keywords_fr: ["GEU"],                                                      priority: 2, synonyms: ["grossesse ectopique", "tubal pregnancy"], broader: ["early pregnancy bleeding", "métrorragies du premier trimestre", "early pregnancy loss"] }
+  paediatric:
+    - { id: febrile-seizure,       en: "Febrile seizure",                       fr: "Convulsions fébriles",                 keywords_fr: ["convulsion hyperthermique"],                                priority: 2, synonyms: ["febrile convulsion", "crise fébrile", "convulsion fébrile", "crises convulsives fébriles"], broader: ["seizures in children", "convulsions de l'enfant"] }
+    - { id: child-dehydration,     en: "Acute dehydration in children",         fr: "Déshydratation aiguë de l'enfant",     keywords_fr: ["SRO", "solution de réhydratation orale"],                   priority: 1, synonyms: ["dehydration in children", "déshydratation de l'enfant", "déshydratation du nourrisson", "oral rehydration", "réhydratation orale"], broader: ["gastroenteritis", "gastro-entérite", "diarrhoea", "diarrhée"] }
+    - { id: bronchiolitis,         en: "Bronchiolitis",                         fr: "Bronchiolite",                         keywords_fr: ["bronchiolite du nourrisson"],                               priority: 3 }
+  psychiatric:
+    - { id: suicidal-crisis,       en: "Suicidal crisis and psychiatric emergencies", fr: "Crise suicidaire et urgences psychiatriques", keywords_fr: ["crise suicidaire", "risque suicidaire", "agitation aiguë", "urgence psychiatrique"], priority: 2, synonyms: ["suicidal crisis", "suicide risk", "suicidal ideation", "psychiatric emergency", "acute agitation", "tentative de suicide", "idées suicidaires"] }
+
+gp_consultations:
+  cardiometabolic:
+    - { id: hypertension,          en: "Hypertension",                          fr: "Hypertension artérielle",              keywords_fr: ["HTA"],                                                      priority: 1, exclude: ["pulmonaire", "pulmonary", "grossesse", "pregnan", "gravid", "intracrân", "intracran", "portale", "portal"], neighbors: ["urgence hypertensive", "hypertensive emergency", "hypertensive crisis", "poussée hypertensive", "oculaire", "ocular", "enfant", "children", "paediatric", "pediatric", "dialys", "peri-operative", "perioperative", "périopératoire", "HIV", "VIH"] }
+    - { id: type2-diabetes,        en: "Type 2 diabetes",                       fr: "Diabète de type 2",                    keywords_fr: ["DT2", "metformine"],                                        priority: 1, exclude: ["type 1", "gestationnel", "gestational"] }
+    - { id: dyslipidaemia,         en: "Dyslipidaemia",                         fr: "Dyslipidémie",                         keywords_fr: ["hypercholestérolémie", "statines"],                         priority: 2, synonyms: ["dyslipidemia", "hypercholesterolemia", "hyperlipidemia", "hyperlipidémie", "lipid management", "lipid-lowering therapy"], broader: ["cardiovascular risk", "risque cardiovasculaire", "cholesterol", "cholestérol"] }
+    - { id: obesity,               en: "Overweight and obesity",                fr: "Surpoids et obésité",                  keywords_fr: ["IMC"],                                                      priority: 3 }
+    - { id: hypothyroidism,        en: "Hypothyroidism",                        fr: "Hypothyroïdie",                        keywords_fr: ["TSH", "lévothyroxine"],                                     priority: 2 }
+  infections:
+    - { id: pharyngitis,           en: "Sore throat / pharyngitis",             fr: "Angine",                               keywords_fr: ["TDR streptocoque", "pharyngite"],                           priority: 1, exclude: ["angine de poitrine", "angor"] }
+    - { id: common-cold,           en: "Common cold / upper respiratory tract infection", fr: "Rhinopharyngite",          keywords_fr: ["rhume", "infection des voies aériennes supérieures", "IVAS"], priority: 2, synonyms: ["common cold", "upper respiratory tract infection", "URTI", "rhinopharyngite aiguë", "nasopharyngitis"], broader: ["infections respiratoires hautes", "upper respiratory tract infections"] }
+    - { id: otitis-media,          en: "Acute otitis media",                    fr: "Otite moyenne aiguë",                  keywords_fr: ["OMA"],                                                      priority: 2 }
+    - { id: sinusitis,             en: "Acute sinusitis",                       fr: "Sinusite aiguë",                       keywords_fr: ["rhinosinusite"],                                            priority: 2, synonyms: ["sinusitis", "sinusite", "rhinosinusitis", "rhinosinusite"], broader: ["upper respiratory tract infections", "infections respiratoires hautes"] }
+    - { id: cap,                   en: "Community-acquired pneumonia",          fr: "Pneumonie aiguë communautaire",        keywords_fr: ["PAC"],                                                      priority: 1 }
+    - { id: uti,                   en: "Cystitis and pyelonephritis",           fr: "Infections urinaires",                 keywords_fr: ["cystite", "pyélonéphrite", "dysurie", "brûlures mictionnelles"],                                 priority: 1 }
+    - { id: gastroenteritis,       en: "Acute gastroenteritis",                 fr: "Gastro-entérite aiguë",                keywords_fr: ["diarrhée aiguë", "vomissements"],                                           priority: 1, synonyms: ["gastroenteritis", "gastro-entérite", "gastroentérite", "acute diarrhoea", "infectious diarrhea", "diarrhée infectieuse"], broader: ["diarrhoea", "diarrhée"] }
+    - { id: tuberculosis,          en: "Tuberculosis",                          fr: "Tuberculose",                          keywords_fr: ["PNLT", "antituberculeux"],                                  priority: 2, local_program: true }
+    - { id: cutaneous-leishmaniasis,en: "Cutaneous leishmaniasis",              fr: "Leishmaniose cutanée",                 keywords_fr: ["clou de Biskra"],                                           priority: 3, local_program: true, synonyms: ["leishmaniasis", "leishmaniose"] }
+    - { id: brucellosis,           en: "Brucellosis",                           fr: "Brucellose",                           keywords_fr: ["fièvre de Malte"],                                          priority: 3, local_program: true }
+  respiratory:
+    - { id: asthma-chronic,        en: "Asthma (long-term management)",         fr: "Asthme",                               keywords_fr: ["traitement de fond"],                                       priority: 2 }
+    - { id: copd,                  en: "COPD",                                  fr: "BPCO",                                 keywords_fr: ["bronchopneumopathie chronique obstructive"],                priority: 2 }
+  digestive:
+    - { id: gerd-dyspepsia,        en: "GERD and dyspepsia",                    fr: "RGO et dyspepsie",                     keywords_fr: ["reflux gastro-œsophagien", "IPP"],                          priority: 2 }
+    - { id: h-pylori,              en: "H. pylori",                             fr: "Helicobacter pylori",                  keywords_fr: ["éradication H. pylori"],                                    priority: 2 }
+  musculoskeletal:
+    - { id: low-back-pain,         en: "Low back pain",                         fr: "Lombalgie",                            keywords_fr: ["lombalgie commune", "lombosciatique", "douleur lombaire"],                      priority: 2 }
+    - { id: osteoarthritis,        en: "Osteoarthritis",                        fr: "Arthrose",                             keywords_fr: ["gonarthrose", "coxarthrose"],                               priority: 3 }
+    - { id: gout,                  en: "Gout",                                  fr: "Goutte",                               keywords_fr: ["crise de goutte", "allopurinol"],                           priority: 3 }
+  neuro-mental:
+    - { id: headache-migraine,     en: "Headache and migraine",                 fr: "Céphalées et migraine",                keywords_fr: ["migraine", "céphalée de tension"],                          priority: 2 }
+    - { id: depression,            en: "Depression",                            fr: "Dépression",                           keywords_fr: ["épisode dépressif caractérisé"],                            priority: 2 }
+    - { id: anxiety,               en: "Anxiety disorders",                     fr: "Troubles anxieux",                     keywords_fr: ["anxiété généralisée"],                                      priority: 3 }
+    - { id: insomnia,              en: "Insomnia",                              fr: "Insomnie",                             keywords_fr: ["troubles du sommeil"],                                      priority: 3 }
+  haematology:
+    - { id: iron-deficiency,       en: "Iron deficiency anaemia",               fr: "Anémie ferriprive",                    keywords_fr: ["carence martiale", "ferritine"],                            priority: 2, synonyms: ["iron deficiency", "carence en fer", "carence martiale"], broader: ["anaemia", "anémie"] }
+  skin:
+    - { id: scabies,               en: "Scabies",                               fr: "Gale",                                 keywords_fr: ["ivermectine", "perméthrine"],                               priority: 3, synonyms: ["scabiose", "sarcoptic"], broader: ["ectoparasitoses", "ectoparasites"] }
+    - { id: eczema,                en: "Atopic eczema",                         fr: "Dermatite atopique",                   keywords_fr: ["eczéma"],                                                   priority: 3, synonyms: ["atopic dermatitis", "eczema", "eczéma atopique"] }
+    - { id: tinea,                 en: "Fungal skin infections",                fr: "Mycoses cutanées",                     keywords_fr: ["dermatophytie", "teigne"],                                  priority: 3, synonyms: ["tinea", "dermatophytosis", "dermatophytoses", "dermatophyties", "tinea capitis", "onychomycosis", "onychomycose", "superficial fungal infections", "mycoses superficielles"] }
+  women-children-prevention:
+    - { id: contraception,         en: "Contraception",                         fr: "Contraception",                        keywords_fr: ["pilule", "DIU"],                                            priority: 3 }
+    - { id: pregnancy-follow-up,   en: "Antenatal care",                        fr: "Suivi de grossesse",                   keywords_fr: ["grossesse", "surveillance prénatale", "consultation prénatale"], priority: 2, synonyms: ["antenatal care", "prenatal care", "suivi de la grossesse", "suivi des femmes enceintes"], neighbors: ["extra-utérine", "ectopic", "prééclampsie", "pre-eclampsia", "post-partum", "postpartum"] }
+    - { id: childhood-fever,       en: "Fever in children",                     fr: "Fièvre de l'enfant",                   keywords_fr: ["fièvre du nourrisson"],                                     priority: 2, synonyms: ["febrile child", "febrile infant", "fever without source", "fièvre chez l'enfant", "enfant fébrile", "fièvre aiguë de l'enfant"] }
+    - { id: vaccination-schedule,  en: "National vaccination schedule",         fr: "Calendrier vaccinal",                  keywords_fr: ["calendrier vaccinal national"],                             priority: 1, local_program: true, synonyms: ["immunization schedule", "vaccination schedule", "calendrier des vaccinations", "calendrier de vaccination"], broader: ["vaccination", "immunization"] }
+    - { id: smoking-cessation,     en: "Smoking cessation",                     fr: "Sevrage tabagique",                    keywords_fr: ["substituts nicotiniques"],                                  priority: 3, synonyms: ["tobacco cessation", "tobacco dependence", "arrêt du tabac", "dépendance tabagique", "quitting smoking"], broader: ["tobacco", "tabac", "tabagisme"] }
+  symptoms:
+    - { id: chest-pain,            en: "Chest pain (diagnostic approach)",      fr: "Douleur thoracique",                   keywords_fr: ["douleur thoracique aiguë"],                                 priority: 2, synonyms: ["chest pain", "acute chest pain", "douleurs thoraciques"] }
+    - { id: dyspnoea,              en: "Dyspnoea (diagnostic approach)",        fr: "Dyspnée",                              keywords_fr: ["dyspnée aiguë", "essoufflement"],                           priority: 2, synonyms: ["dyspnea", "breathlessness", "shortness of breath", "détresse respiratoire"] }
+    - { id: fever,                 en: "Fever in adults (diagnostic approach)", fr: "Fièvre de l'adulte",                   keywords_fr: ["fièvre aiguë", "fièvre prolongée"],                         priority: 2, synonyms: ["fever", "fièvre", "fever of unknown origin", "fièvre d'origine indéterminée"], neighbors: ["enfant", "nourrisson", "children", "child", "infant", "fièvre de Malte"] }
+    - { id: cough,                 en: "Cough (diagnostic approach)",           fr: "Toux",                                 keywords_fr: ["toux aiguë", "toux chronique"],                             priority: 2, synonyms: ["cough", "chronic cough", "acute cough"] }
+    - { id: abdominal-pain,        en: "Abdominal pain (diagnostic approach)",  fr: "Douleur abdominale",                   keywords_fr: ["douleur abdominale aiguë", "douleurs abdominales"],         priority: 2, synonyms: ["abdominal pain", "acute abdominal pain", "acute abdomen", "abdomen aigu"] }
+    - { id: vertigo,               en: "Vertigo and dizziness",                 fr: "Vertiges",                             keywords_fr: ["vertige", "VPPB"],                                          priority: 2, synonyms: ["vertigo", "dizziness", "vertige positionnel paroxystique bénin", "benign paroxysmal positional vertigo"] }
+    - { id: syncope,               en: "Syncope",                               fr: "Syncope",                              keywords_fr: ["malaise", "perte de connaissance brève"],                   priority: 2, synonyms: ["syncopes", "transient loss of consciousness", "perte de connaissance"] }
+    - { id: fatigue,               en: "Fatigue",                               fr: "Asthénie",                             keywords_fr: ["fatigue", "fatigue chronique"],                             priority: 3, synonyms: ["fatigue", "tiredness", "asthenia"] }
+    - { id: rash,                  en: "Rash (diagnostic approach)",            fr: "Éruption cutanée",                     keywords_fr: ["exanthème", "éruption fébrile"],                            priority: 3, synonyms: ["rash", "skin rash", "exanthem", "exanthema", "éruptions cutanées"] }
+    - { id: oedema,                en: "Peripheral oedema",                     fr: "Œdèmes des membres inférieurs",        keywords_fr: ["œdème", "OMI"],                                             priority: 3, synonyms: ["oedema", "edema", "peripheral edema", "leg swelling", "œdèmes"], neighbors: ["aigu du poumon", "pulmonary", "cérébral", "cerebral", "Quincke", "angio"] }
+    - { id: palpitations,          en: "Palpitations",                          fr: "Palpitations",                         keywords_fr: ["palpitation"],                                              priority: 3 }
+    - { id: chronic-follow-up,     en: "Prescription renewal and chronic disease follow-up", fr: "Renouvellement d'ordonnance et suivi", keywords_fr: ["renouvellement d'ordonnance", "suivi des maladies chroniques"], priority: 3, synonyms: ["repeat prescription", "prescription renewal", "chronic disease follow-up", "suivi des pathologies chroniques"] }
+
+# Source order the crawler tries (check each source's reuse terms before storing content). The
+# matcher ranks catalogue entries in this order; `catalogue` names the entry's `source` value.
+sources_priority:
+  - { name: "Algerian Ministry of Health / INSP", local_program_only: true, catalogue: null, note: "not crawled yet: look here by hand for local_program topics" }
+  - { name: "WHO", catalogue: ["OMS"], note: "openly licensed, CC BY-NC-SA 3.0 IGO" }
+  - { name: "HAS", catalogue: ["HAS"], note: "French national guidance" }
+  - { name: "French specialty societies", catalogue: ["SFMU", "SPILF", "SFD", "SPLF", "SFAR", "SFC"], note: "link only until a society agrees to reuse" }
+  - { name: "PubMed Central", catalogue: ["PubMed Central"], note: "open-access guidelines; licence checked per article" }
+  - { name: "ESC / NICE", catalogue: null, note: "reference only; restrictive licences, link out rather than copy" }

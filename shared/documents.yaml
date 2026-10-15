@@ -1,0 +1,50 @@
+# Protocols: the registered source documents (gate 1). Read by backend/factory/sources.py.
+# shared/sources.yaml lists the publishers the crawler visits; this file lists the documents the fiches
+# cite, each registered once. A document that is not here has no kind: its fiche shows a gap.
+#
+# id: its path in scraper/downloads/ (the source_id every line cites)
+# kind: what the document may support
+#   national_dz   Ministry, INSP: everything, takes priority for Algeria
+#   guideline     HAS, WHO, societies: indications, decisions, grades (a dose only if stated in full)
+#   product_info  RCP / SmPC: doses, maximum dose, administration, contraindications
+#   register      nomenclature: brand names, strengths, forms only
+# published_date: as printed in the document. Older than 5 years: flagged "ancienne".
+# version, license: empty until read from the document or its publisher's terms.
+
+documents:
+  - id: "has/c_830203-accident-vasculaire-cerebral-prise-en-charge-precoce-alerte-/avc_prise_en_charge_precoce_-_recommandations.pdf"
+    org: HAS
+    title: "Accident vasculaire cérébral : prise en charge précoce (alerte, phase préhospitalière, phase hospitalière initiale, indications de la thrombolyse). Recommandations"
+    version: "Mai 2009"
+    published_date: 2009-05-01
+    url: "https://www.has-sante.fr/jcms/c_830203/fr/accident-vasculaire-cerebral-prise-en-charge-precoce-alerte-phase-prehospitaliere-phase-hospitaliere-initiale-indications-de-la-thrombolyse-intraveineuse-et-de-la-thrombectomie-mecanique"
+    language: fr
+    license: ""
+    kind: guideline
+  - id: "has/c_830203-accident-vasculaire-cerebral-prise-en-charge-precoce-alerte-/traitements_de_la_phase_aigue_de_laccident_vasculaire_cerebral_ischemique_-_recommandations.pdf"
+    org: HAS
+    title: "Recommandations sur les traitements de la phase aiguë de l'accident vasculaire cérébral ischémique"
+    version: "Adoptée par le Collège le 23 octobre 2025"
+    published_date: 2025-10-23
+    url: "https://www.has-sante.fr/jcms/c_830203/fr/accident-vasculaire-cerebral-prise-en-charge-precoce-alerte-phase-prehospitaliere-phase-hospitaliere-initiale-indications-de-la-thrombolyse-intraveineuse-et-de-la-thrombectomie-mecanique"
+    language: fr
+    license: ""
+    kind: guideline
+  - id: "web/www.sfmu.org/recommandations-de-la-sfmu-soci-t-fran-aise-de-m-decine-d-ur/RPC_ACR_ERC_2025_synthese.pdf"
+    org: SFMU
+    title: "Synthèse des recommandations 2025 de l'European Resuscitation Council pour la prise en charge des patients en arrêt cardiaque en France"
+    version: "Ann Fr Med Urgence 2026 ; 16 : 315-326 (accepté le 13 mai 2026)"
+    published_date: 2026-05-13
+    url: "https://www.sfmu.org/fr/publications/recommandations-de-la-sfmu//recommandations-2025-de-l-european-resuscitation-council-pour-la-prise-en-charge-des-patients-en-arret-cardiaque-en-france-/con_id/590"
+    language: fr
+    license: "© SFMU et JLE 2026 : réutilisation à vérifier avant toute publication"
+    kind: guideline
+  - id: uploads/acs/b754d6a8-1026-31_45671.pdf
+    org: Société européenne de cardiologie
+    title: Prise en charge du syndrome coronarien aigu
+    version: ''
+    published_date: 2023-01-01
+    url: ''
+    language: fr
+    license: 'PLANCHAT, Arnaud et al. Prise en charge du syndrome coronarien aigu. Recommandations 2023 de la  Société européenne de cardiologie. In:  Revue médicale suisse 10.53738/REVMED.2024.20.875.1026'
+    kind: guideline

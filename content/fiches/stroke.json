@@ -1,0 +1,1104 @@
+{
+ "kind": "fiche",
+ "meta": {
+  "title": "Accident vasculaire cérébral : reconnaître et orienter en urgence",
+  "topic_id": "stroke",
+  "template": "urgence",
+  "audience": [
+   "urgences"
+  ],
+  "version": "1",
+  "status": "published",
+  "reviewer": "Mounib Zaidi",
+  "reviewed_at": "2026-10-04T12:21:55+00:00",
+  "siblings": [
+   "avc-thrombolyse"
+  ],
+  "sources": [
+   {
+    "source_id": "has-2025-avc-parcours",
+    "type": "full_guideline",
+    "title": "Guide du parcours de santé – Accident vasculaire cérébral de l'adulte",
+    "citation": "HAS, octobre 2025",
+    "licence": "à vérifier (conditions de réutilisation HAS)",
+    "language": "fr"
+   }
+  ],
+  "excluded_by_audience": [],
+  "motifs": [],
+  "synonymes": [],
+  "specialite": "Neurologie"
+ },
+ "sections": {
+  "1_essentiel": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-001",
+     "text": "AVC = urgence : appeler immédiatement le 15, sans passer par le médecin traitant",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 21,
+      "quote": "il faut réagir immédiatement en appelant le 15, sans attendre de consulter le médecin traitant."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-002",
+     "text": "Thrombolyse IV et/ou thrombectomie possibles dans les 4 h 30 après le début des symptômes",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 32,
+      "quote": "Théoriquement, le patient peut bénéficier d'une thrombolyse IV et/ou d'une TM dans les 4 h 30 après le début des symptômes."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-003",
+     "text": "Au-delà : thrombolyse IV jusqu'à 9 h ou thrombectomie jusqu'à 24 h selon l'imagerie",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 33,
+      "quote": "peut bénéficier d'une thrombolyse IV jusqu'à 9 h ou d'une TM jusqu'à 24 h après le début des symptômes"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ]
+  },
+  "2_presentation": {
+   "state": "filled",
+   "signes_typiques": [
+    {
+     "id": "avc-004",
+     "text": "Paralysie faciale : asymétrie du visage ou du sourire",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 20,
+      "quote": "paralysie faciale : asymétrie du visage ou du sourire"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-005",
+     "text": "Hémiplégie : faiblesse d'un bras, d'une main, d'une jambe ou d'un hémicorps",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 20,
+      "quote": "hémiplégie : faiblesse d'un bras, d'une main, d'une jambe ou d'un hémicorps"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-006",
+     "text": "Aphasie : trouble du langage, mots introuvables ou incompris",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 20,
+      "quote": "aphasie : trouble du langage, impossibilité de trouver les mots"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-007",
+     "text": "Amaurose : perte de la vue d'un œil",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 20,
+      "quote": "amaurose : perte de la vue d'un œil"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-008",
+     "text": "Troubles de la marche ou de l'équilibre",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 20,
+      "quote": "troubles de la marche ou de l'équilibre"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-009",
+     "text": "Céphalée intense et soudaine (évoque une hémorragie sous-arachnoïdienne)",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 20,
+      "quote": "céphalées intenses et soudaines (évocatrices d'une hémorragie sous-arachnoïdienne"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ],
+   "formes_trompeuses": [
+    {
+     "id": "avc-010",
+     "text": "Symptômes transitoires (AIT) : faussement rassurants, appeler quand même, risque de récidive élevé dans les 24 h",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 20,
+      "quote": "Les symptômes transitoires durant quelques minutes ou heures sont faussement rassurants et doivent également conduire à l'appel du 15."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ],
+   "examen_clinique": [
+    {
+     "id": "avc-011",
+     "text": "Repérage rapide FAST : visage (faire sourire), bras (lever les deux bras), parole (répéter une phrase)",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 21,
+      "quote": "Demander à la personne de lever les deux bras"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ],
+   "criteres_diagnostiques": [],
+   "diagnostics_differentiels": []
+  },
+  "3_champ": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-012",
+     "text": "Adulte avec suspicion d'AVC ou d'AIT, de l'alerte à la phase hospitalière initiale",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 24,
+      "quote": "Dès l'identification des symptômes par le patient ou son entourage"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "low",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ]
+  },
+  "4_gravite": {
+   "state": "filled",
+   "signes_de_gravite": [
+    {
+     "id": "avc-013",
+     "text": "Niveau de conscience et score NIHSS à recueillir",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 25,
+      "quote": "Signes de gravité : score de sévérité clinique NIHSS"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ],
+   "gestes_immediats": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "avc-014",
+      "text": "Noter la date et l'heure exactes de début des symptômes (sinon : heure où le patient a été vu sans symptôme)",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "has-2025-avc-parcours",
+       "page": 25,
+       "quote": "Date et heure exactes de début des symptômes"
+      },
+      "translated": false,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:21:55+00:00"
+      }
+     },
+     {
+      "id": "avc-015",
+      "text": "Rechercher un traitement anticoagulant : molécule, date et heure de la dernière prise",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "has-2025-avc-parcours",
+       "page": 25,
+       "quote": "Prise de traitements antithrombotiques et particulièrement anticoagulants"
+      },
+      "translated": false,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:21:55+00:00"
+      }
+     },
+     {
+      "id": "avc-016",
+      "text": "Constantes : PA, fréquence cardiaque, saturation, température, et monitoring",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "has-2025-avc-parcours",
+       "page": 31,
+       "quote": "la prise de constantes : pression artérielle (PA), fréquence cardiaque, saturation en oxygène, température (et pose d'un monitoring)"
+      },
+      "translated": false,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:21:55+00:00"
+      }
+     },
+     {
+      "id": "avc-017",
+      "text": "Glycémie capillaire, hémostase, hémogramme et plaquettes",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "has-2025-avc-parcours",
+       "page": 31,
+       "quote": "hémostase, hémogramme et plaquettes et glycémie capillaire"
+      },
+      "translated": false,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null,
+      "checked": {
+       "by": "Mounib Zaidi",
+       "at": "2026-10-04T12:21:55+00:00"
+      }
+     },
+     {
+      "id": "avc-018",
+      "text": "Voie veineuse périphérique",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "has-2025-avc-parcours",
+       "page": 31,
+       "quote": "la pose d'une voie veineuse périphérique"
+      },
+      "translated": false,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null
+     },
+     {
+      "id": "avc-019",
+      "text": "ECG si cela ne retarde pas la prise en charge",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "has-2025-avc-parcours",
+       "page": 31,
+       "quote": "la réalisation d'un électrocardiogramme (ECG) (si cela ne génère pas une perte de temps)"
+      },
+      "translated": false,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "variant_group": null,
+      "missing": [],
+      "refs": [],
+      "attached_to": [],
+      "delai": null
+     }
+    ]
+   },
+   "decision_initiale": {
+    "state": "non_traité",
+    "elements": []
+   }
+  },
+  "5_conduite": {
+   "state": "filled",
+   "nodes": [
+    {
+     "node": "Délai depuis le début des symptômes",
+     "branches": [
+      {
+       "id": "avc-020",
+       "text": "Moins de 4 h 30 : thrombolyse IV et/ou thrombectomie possibles",
+       "type": "conditional",
+       "condition": "< 4 h 30",
+       "order": null,
+       "source": {
+        "source_id": "has-2025-avc-parcours",
+        "page": 32,
+        "quote": "Théoriquement, le patient peut bénéficier d'une thrombolyse IV et/ou d'une TM dans les 4 h 30 après le début des symptômes."
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:21:55+00:00"
+       }
+      },
+      {
+       "id": "avc-021",
+       "text": "4 h 30 à 24 h : thrombolyse jusqu'à 9 h, thrombectomie jusqu'à 24 h, imagerie de perfusion obligatoire entre 4 h 30 et 9 h",
+       "type": "conditional",
+       "condition": "4 h 30 à 24 h",
+       "order": null,
+       "source": {
+        "source_id": "has-2025-avc-parcours",
+        "page": 33,
+        "quote": "imagerie de perfusion impérative si le patient est exploré entre 4 h 30 et 9 h après le début des symptômes"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:21:55+00:00"
+       }
+      },
+      {
+       "id": "avc-022",
+       "text": "Heure inconnue ou AVC du réveil : thrombolyse possible selon l'imagerie si le délai calculé est inférieur à 9 h",
+       "type": "conditional",
+       "condition": "Heure inconnue / réveil",
+       "order": null,
+       "source": {
+        "source_id": "has-2025-avc-parcours",
+        "page": 33,
+        "quote": "Patient dont l'heure de début des symptômes est inconnue ou ayant des symptômes constatés au réveil"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:21:55+00:00"
+       }
+      },
+      {
+       "id": "avc-023",
+       "text": "Plus de 24 h : pas de reperfusion, mais imagerie rapide pour confirmer et prévenir la récidive",
+       "type": "conditional",
+       "condition": "> 24 h",
+       "order": null,
+       "source": {
+        "source_id": "has-2025-avc-parcours",
+        "page": 34,
+        "quote": "Plus de 24 h après le début des symptômes, le patient ne peut plus bénéficier, à l'heure actuelle, d'un traitement de reperfusion"
+       },
+       "translated": false,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "variant_group": null,
+       "missing": [],
+       "refs": [],
+       "attached_to": [],
+       "delai": null,
+       "checked": {
+        "by": "Mounib Zaidi",
+        "at": "2026-10-04T12:21:55+00:00"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "6_examens": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-024",
+     "text": "Imagerie cérébrale en urgence, délai cible < 25 min après l'arrivée",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 32,
+      "quote": "Le temps médian cible entre l'arrivée dans l'établissement et l'imagerie est de moins de 25 minutes"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-025",
+     "text": "IRM à privilégier sur le scanner",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 32,
+      "quote": "Il est conseillé de privilégier l'IRM cérébrale par rapport au scanner cérébral"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "avc-026",
+     "text": "Scanner et IRM détectent l'hémorragie avec la même sensibilité",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 32,
+      "quote": "Le scanner et l'IRM établissent le diagnostic d'AVC hémorragique avec la même sensibilité"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ]
+  },
+  "7_traitement": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-027",
+     "text": "Thrombolyse IV le plus vite possible, délai cible < 60 min après l'arrivée",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 34,
+      "quote": "Le temps médian cible entre l'arrivée dans l'établissement et le traitement médical d'urgence est de moins de 60 min."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-028",
+     "text": "Indications précises de la thrombolyse : voir fiche avc-thrombolyse (recommandations HAS actualisées)",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 34,
+      "quote": "En ce qui concerne les indications de la thrombolyse IV, se reporter aux recommandations HAS"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [
+      "avc-thrombolyse"
+     ],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "3efe57f4",
+     "text": "Altéplase / ténectéplase : Revelise 50 mg (altéplase); Metalyse 25 mg (ténectéplase, seule présentation pour l'AVC). Enregistré, usage hospitalier. Elaxim 50 mg est exclu pour l'AVC. non précisé dans la source : dose, source : RCP et recommandations HAS thrombolyse.",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": null,
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "local_adaptation",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [
+      "drug_dci",
+      "dose",
+      "route",
+      "administration",
+      "duree_frequence"
+     ],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "reviewer": "Mounib Zaidi",
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ],
+   "contre_indications": {
+    "state": "non_traité",
+    "elements": []
+   },
+   "posologies": []
+  },
+  "8_ne_pas_faire": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-029",
+     "text": "Ne pas appeler d'abord le médecin traitant : appeler directement le 15",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 21,
+      "quote": "l'appel au médecin traitant est à éviter"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-030",
+     "text": "Ne pas se rassurer devant des symptômes transitoires",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 20,
+      "quote": "faussement rassurants"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ]
+  },
+  "9_orientation": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-031",
+     "text": "Tout patient suspect d'AVC est accueilli dans un établissement de la filière AVC",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 25,
+      "quote": "Tout patient suspect d'AVC est à accueillir au sein d'un établissement de la filière AVC."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-032",
+     "text": "Tout AVC, ischémique ou hémorragique, est proposé à l'unité neurovasculaire",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 34,
+      "quote": "Tous les patients ayant un AVC (ischémique ou hémorragique) sont proposés à l'UNV du territoire."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "2838366f",
+     "text": "Adaptation Algérie : remplacer le 15 et le 114 par le numéro d'urgence médicale local, et « filière AVC / UNV » par le service de neurologie ou les urgences de référence",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": null,
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "local_adaptation",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "reviewer": "Mounib Zaidi",
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ]
+  },
+  "10_surveillance": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-033",
+     "text": "Surveiller température, PA, fréquence cardiaque, saturation, glycémie capillaire, diurèse et transit",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 41,
+      "quote": "Les constantes à surveiller sont : la température, la PA, la fréquence cardiaque, la saturation en oxygène, la glycémie capillaire."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "medium",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    },
+    {
+     "id": "avc-034",
+     "text": "Surveillance neurologique régulière (NIHSS) ; toute aggravation est signalée immédiatement",
+     "type": "action",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 41,
+      "quote": "toute aggravation est notifiée immédiatement au médecin"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ]
+  },
+  "11_suivi": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-035",
+     "text": "Prévention secondaire : antiagrégation par aspirine et/ou clopidogrel",
+     "type": "conditional",
+     "condition": "AVC ischémique d'origine athéromateuse",
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 47,
+      "quote": "Le traitement antithrombotique repose sur une anti-agrégation plaquettaire par aspirine et/ou clopidogrel."
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    },
+    {
+     "id": "avc-036",
+     "text": "Fibrillation auriculaire non valvulaire : anticoagulant oral au long cours (AVK ou AOD)",
+     "type": "conditional",
+     "condition": "FA non valvulaire",
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 47,
+      "quote": "En cas de fibrillation auriculaire non valvulaire, la prévention cardio-embolique repose sur les anticoagulants oraux"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "high",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null,
+     "checked": {
+      "by": "Mounib Zaidi",
+      "at": "2026-10-04T12:21:55+00:00"
+     }
+    }
+   ],
+   "conseils_patient": []
+  },
+  "12_ordonnance": {
+   "state": "sans_objet",
+   "elements": []
+  },
+  "13_definitions": {
+   "state": "filled",
+   "elements": [
+    {
+     "id": "avc-037",
+     "text": "FAST (ou VITE) : Face, Arm, Speech, Time",
+     "type": "info",
+     "condition": null,
+     "order": null,
+     "source": {
+      "source_id": "has-2025-avc-parcours",
+      "page": 21,
+      "quote": "L'acronyme « FAST » (ou VITE en français)"
+     },
+     "translated": false,
+     "grade": null,
+     "risk": "low",
+     "origin": "explicit",
+     "conflict_group": null,
+     "variant_group": null,
+     "missing": [],
+     "refs": [],
+     "attached_to": [],
+     "delai": null
+    }
+   ]
+  }
+ }
+}
