@@ -1,4 +1,4 @@
-"""MedGuides service: Collecte (search, source PDFs), the topic registry and its checks; the quote check and brand matcher join it (step 10)."""
+"""MedGuides service: Collecte (search, source PDFs), the topic registry and its checks, and the quote check of a fiche."""
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
