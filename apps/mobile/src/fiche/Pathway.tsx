@@ -33,17 +33,21 @@ export function Pathway({ pathway }: { pathway: PathwayData }) {
   const step = new Map(nodes.map((n, i) => [n.id, i + 1]));
   return (
     <Card title={t("f_pathway")}>
-      {nodes.map((n, i) => (
+      {nodes.map((n, i) => {
+        const title = n.question || (n.type === "end" ? t("f_end") : null);
+        return (
         <View key={n.id} className={`gap-2 py-3 ${i ? "border-t border-line" : ""}`}>
           <View className="flex-row items-start gap-3">
             <View className={`h-[26px] w-[26px] items-center justify-center rounded-full ${n.type === "end" ? "bg-panel" : "bg-tint"}`}>
               <Text className="text-[12.5px] font-bold text-accentink">{i + 1}</Text>
             </View>
-            <Body className="min-w-0 flex-1 pt-[2px] text-[14.5px] font-semibold leading-[21px]">
-              {n.question || (n.type === "end" ? t("f_end") : "")}
-            </Body>
+            {title ? (
+              <Body className="min-w-0 flex-1 pt-[2px] text-[14.5px] font-semibold leading-[21px]">{title}</Body>
+            ) : (
+              <View className="-mt-3 min-w-0 flex-1"><ItemRows items={n.items} /></View>
+            )}
           </View>
-          {n.items.length ? <View className="ps-[38px]"><ItemRows items={n.items} /></View> : null}
+          {title && n.items.length ? <View className="ps-[38px]"><ItemRows items={n.items} /></View> : null}
           {n.branches.length ? (
             <View className="gap-[6px] ps-[38px]">
               {n.branches.map((b) => (
@@ -58,7 +62,8 @@ export function Pathway({ pathway }: { pathway: PathwayData }) {
             </View>
           ) : null}
         </View>
-      ))}
+        );
+      })}
     </Card>
   );
 }

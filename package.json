@@ -13,7 +13,8 @@
     "tokens:check": "npm run check --workspace @medguides/ui-tokens",
     "test": "npm run test --workspaces --if-present",
     "api": "cd services/api && .venv/bin/uvicorn app.main:app --port 8000",
-    "db:sql": "services/api/.venv/bin/python -I tools/db/run_sql.py"
+    "db:sql": "services/api/.venv/bin/python -I tools/db/run_sql.py",
+    "db:seed": "python3 -I tools/db/make_seed.py"
   },
   "overrides": {
     "react": "19.2.3",

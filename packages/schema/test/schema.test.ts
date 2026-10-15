@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import { emptyProtocol, protocolJsonSchema, validateStructure } from "../src/index.ts";
+import { emptyProtocol, protocolJsonSchema, publicationGate, validateStructure } from "../src/index.ts";
 import { passingProtocol } from "./fixtures.ts";
 
 describe("structural validation", () => {
@@ -33,6 +33,20 @@ describe("structural validation", () => {
     expect(validateStructure(p).issues[0]).toMatchObject({ item_id: "m-1", rule: "structure" });
   });
 
+});
+
+describe("seed fiche content/fiches/embolie-pulmonaire.json", () => {
+  const seed = JSON.parse(readFileSync(new URL("../../../content/fiches/embolie-pulmonaire.json", import.meta.url), "utf8"));
+
+  it("is a structurally valid draft", () => {
+    expect(validateStructure(seed).issues).toEqual([]);
+    expect(seed.meta.status).toBe("draft");
+  });
+
+  it("is not publishable: no quote, missing fields, no approval", () => {
+    const rules = new Set(publicationGate(validateStructure(seed).protocol!, { published: new Set(), quotes: {} }).map((i) => i.rule));
+    expect([...rules].sort()).toEqual(["approval", "evidence", "missing", "numbers"]);
+  });
 });
 
 describe("JSON Schema", () => {

@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.1.0",
+  "meta": {
+    "id": "embolie-pulmonaire",
+    "title": "Embolie pulmonaire aiguë",
+    "template": "urgence",
+    "audience": ["MG"],
+    "country": "DZ",
+    "language": "fr",
+    "motifs": ["dyspnée aiguë", "douleur thoracique"],
+    "specialite": "pneumologie",
+    "version": "1.0.0",
+    "status": "draft",
+    "last_reviewed_at": null,
+    "next_review_at": null
+  },
+  "scope": {
+    "population": null,
+    "exclusions": []
+  },
+  "red_box": {
+    "signs": [],
+    "actions": []
+  },
+  "assess": {
+    "ask": [],
+    "examine": [],
+    "tests": [],
+    "pathway": {
+      "start_node_id": null,
+      "nodes": []
+    }
+  },
+  "treat": {
+    "medications": [
+      {
+        "id": "med-apixaban-init",
+        "inn": "apixaban",
+        "phase": "initiation",
+        "dose": 10,
+        "dose_unit": "mg",
+        "dose_basis": null,
+        "route": null,
+        "frequency": "2 fois par jour",
+        "duration": "7 jours",
+        "max_dose": null,
+        "condition": null,
+        "adjustments": [],
+        "contraindications": [],
+        "alternative_group": null,
+        "prescriber": "officine",
+        "local_availability": {
+          "country": "DZ",
+          "status": "enregistre",
+          "brands": ["APIXABEK", "APIXAR", "BIOPEXA", "INIBIX 2.5", "INIBIX 5", "XIBAN"]
+        },
+        "strength": null,
+        "evidence": [
+          { "source_id": "aha-acc-2026", "page": 1678, "quote": "" }
+        ],
+        "missing": ["dose_basis", "route", "strength"]
+      }
+    ],
+    "actions": [],
+    "do_not": []
+  },
+  "advise": [],
+  "refer_follow": {
+    "refer": [],
+    "follow_up": []
+  },
+  "sources": [
+    {
+      "id": "aha-acc-2026",
+      "title": "2026 AHA/ACC Guideline for the Evaluation and Management of Acute Pulmonary Embolism in Adults",
+      "organisation": "AHA/ACC",
+      "citation": "Creager MA et al. J Am Coll Cardiol 2026;87(13):1626-1710",
+      "url": "https://doi.org/10.1016/j.jacc.2025.11.005",
+      "publication_date": "2026-04-07",
+      "page_offset": -1625,
+      "accessed_at": "2026-10-15"
+    }
+  ],
+  "review": {
+    "reviewer": null,
+    "reviewed_at": null,
+    "clinical_approval": false,
+    "unresolved_issues": [],
+    "change_log": []
+  }
+}
