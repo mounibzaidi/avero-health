@@ -1,0 +1,888 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Protocol",
+  "$defs": {
+    "Protocol": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1.1.0"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "red_box": {
+          "type": "object",
+          "properties": {
+            "signs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            },
+            "actions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            }
+          },
+          "required": [
+            "signs",
+            "actions"
+          ],
+          "additionalProperties": false
+        },
+        "assess": {
+          "type": "object",
+          "properties": {
+            "ask": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            },
+            "examine": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            },
+            "tests": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            },
+            "pathway": {
+              "$ref": "#/$defs/Pathway"
+            }
+          },
+          "required": [
+            "ask",
+            "examine",
+            "tests",
+            "pathway"
+          ],
+          "additionalProperties": false
+        },
+        "treat": {
+          "type": "object",
+          "properties": {
+            "medications": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Medication"
+              }
+            },
+            "actions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            },
+            "do_not": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            }
+          },
+          "required": [
+            "medications",
+            "actions",
+            "do_not"
+          ],
+          "additionalProperties": false
+        },
+        "advise": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Item"
+          }
+        },
+        "refer_follow": {
+          "type": "object",
+          "properties": {
+            "refer": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Referral"
+              }
+            },
+            "follow_up": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/FollowUp"
+              }
+            }
+          },
+          "required": [
+            "refer",
+            "follow_up"
+          ],
+          "additionalProperties": false
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Source"
+          }
+        },
+        "review": {
+          "$ref": "#/$defs/Review"
+        }
+      },
+      "required": [
+        "schema_version",
+        "meta",
+        "scope",
+        "red_box",
+        "assess",
+        "treat",
+        "advise",
+        "refer_follow",
+        "sources",
+        "review"
+      ],
+      "additionalProperties": false
+    },
+    "Meta": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string",
+          "enum": [
+            "urgence",
+            "pathologie"
+          ]
+        },
+        "audience": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "country": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "motifs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "specialite": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "published"
+          ]
+        },
+        "last_reviewed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "next_review_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "template",
+        "audience",
+        "country",
+        "language",
+        "motifs",
+        "specialite",
+        "version",
+        "status",
+        "last_reviewed_at",
+        "next_review_at"
+      ],
+      "additionalProperties": false
+    },
+    "Scope": {
+      "type": "object",
+      "properties": {
+        "population": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "population",
+        "exclusions"
+      ],
+      "additionalProperties": false
+    },
+    "Item": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string"
+        },
+        "condition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "timing": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "immediate",
+                "same_day",
+                "prompt",
+                "routine"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "strength": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "forte",
+                "modérée",
+                "faible",
+                "à_éviter"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "enum": [
+            "source",
+            "adaptation_locale"
+          ]
+        },
+        "basis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        },
+        "refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "condition",
+        "timing",
+        "strength",
+        "origin",
+        "basis",
+        "evidence",
+        "refs"
+      ],
+      "additionalProperties": false
+    },
+    "Evidence": {
+      "type": "object",
+      "properties": {
+        "source_id": {
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quote": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "page",
+        "quote"
+      ],
+      "additionalProperties": false
+    },
+    "Pathway": {
+      "type": "object",
+      "properties": {
+        "start_node_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PathwayNode"
+          }
+        }
+      },
+      "required": [
+        "start_node_id",
+        "nodes"
+      ],
+      "additionalProperties": false
+    },
+    "PathwayNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "decision",
+            "action",
+            "end"
+          ]
+        },
+        "question": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "branches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Branch"
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Item"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "question",
+        "branches",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "Branch": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        },
+        "next_node_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "next_node_id"
+      ],
+      "additionalProperties": false
+    },
+    "Medication": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inn": {
+          "type": "string"
+        },
+        "phase": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "initiation",
+                "entretien",
+                "prolongee",
+                "unique"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dose": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dose_unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dose_basis": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "fixe",
+                "par_kg"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "route": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "frequency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "duration": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max_dose": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "condition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "adjustments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "contraindications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alternative_group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prescriber": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "officine",
+                "hopital"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "local_availability": {
+          "$ref": "#/$defs/LocalAvailability"
+        },
+        "strength": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "forte",
+                "modérée",
+                "faible",
+                "à_éviter"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "phase",
+              "dose",
+              "dose_unit",
+              "dose_basis",
+              "route",
+              "frequency",
+              "duration",
+              "max_dose",
+              "adjustments",
+              "contraindications",
+              "strength"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "inn",
+        "phase",
+        "dose",
+        "dose_unit",
+        "dose_basis",
+        "route",
+        "frequency",
+        "duration",
+        "max_dose",
+        "condition",
+        "adjustments",
+        "contraindications",
+        "alternative_group",
+        "prescriber",
+        "local_availability",
+        "strength",
+        "evidence",
+        "missing"
+      ],
+      "additionalProperties": false
+    },
+    "LocalAvailability": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "enregistre",
+                "non_renouvele",
+                "retire",
+                "aucune_presentation"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "brands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "country",
+        "status",
+        "brands"
+      ],
+      "additionalProperties": false
+    },
+    "Referral": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "criteria": {
+          "type": "string"
+        },
+        "urgency": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "urgent",
+                "same_week",
+                "next_appointment"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "destination": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "strength": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "forte",
+                "modérée",
+                "faible",
+                "à_éviter"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "criteria",
+        "urgency",
+        "destination",
+        "strength",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "FollowUp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "when": {
+          "type": "string"
+        },
+        "what": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "when",
+        "what",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "Source": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "organisation": {
+          "type": "string"
+        },
+        "citation": {
+          "type": "string"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "publication_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "page_offset": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "accessed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "organisation",
+        "citation",
+        "url",
+        "publication_date",
+        "page_offset",
+        "accessed_at"
+      ],
+      "additionalProperties": false
+    },
+    "Review": {
+      "type": "object",
+      "properties": {
+        "reviewer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "clinical_approval": {
+          "type": "boolean"
+        },
+        "unresolved_issues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "change_log": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ChangeLogEntry"
+          }
+        }
+      },
+      "required": [
+        "reviewer",
+        "reviewed_at",
+        "clinical_approval",
+        "unresolved_issues",
+        "change_log"
+      ],
+      "additionalProperties": false
+    },
+    "ChangeLogEntry": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "by": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "date",
+        "by",
+        "summary"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

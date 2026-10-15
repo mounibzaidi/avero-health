@@ -12,7 +12,6 @@
     "lint": "npm run lint --workspaces --if-present",
     "tokens:check": "npm run check --workspace @medguides/ui-tokens",
     "test": "npm run test --workspaces --if-present",
-    "content:import": "python3 -I tools/import/import_content.py ../carryover && python3 -I tools/import/make_seed.py && npm run validate-content --workspace @medguides/schema",
     "api": "cd services/api && .venv/bin/uvicorn app.main:app --port 8000",
     "db:sql": "services/api/.venv/bin/python -I tools/db/run_sql.py"
   },

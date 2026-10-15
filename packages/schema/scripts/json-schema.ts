@@ -1,9 +1,8 @@
-/** Writes fiche.schema.json (JSON Schema of the Fiche) for the Python service. */
+/** Writes protocol.schema.json, the JSON Schema of a Protocol v1.1. */
 import { writeFileSync } from "node:fs";
-import { z } from "zod";
 
-import { Fiche } from "../src/schema.ts";
+import { protocolJsonSchema } from "../src/json-schema.ts";
 
-const out = new URL("../../fiche.schema.json", import.meta.url);
-writeFileSync(out, JSON.stringify(z.toJSONSchema(Fiche, { io: "input" }), null, 2) + "\n");
-console.log("wrote fiche.schema.json");
+const out = new URL("../../protocol.schema.json", import.meta.url);
+writeFileSync(out, JSON.stringify(protocolJsonSchema(), null, 2) + "\n");
+console.log("wrote protocol.schema.json");

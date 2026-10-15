@@ -1,0 +1,50 @@
+import type { Pathway } from "./schema.ts";
+
+/** A problem of the decision pathway, tied to the node (and branch) it is on. */
+export type PathwayProblem = {
+  node_id: string | null;
+  branch_id: string | null;
+  kind: "no_start" | "bad_start" | "dead_end" | "unreachable" | "end_with_branches";
+  message: string;
+};
+
+/**
+ * Every branch must lead to a node or an end; every node must be reachable from the start.
+ * A dead end: a branch without a target, a branch to a node that does not exist, or a non-end node without branches.
+ */
+export function pathwayProblems(pathway: Pathway): PathwayProblem[] {
+  const { nodes, start_node_id } = pathway;
+  if (!nodes.length) return [];
+  const out: PathwayProblem[] = [];
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+
+  if (!start_node_id) out.push({ node_id: null, branch_id: null, kind: "no_start", message: "Aucun nœud de départ choisi" });
+  else if (!byId.has(start_node_id)) out.push({ node_id: null, branch_id: null, kind: "bad_start", message: `Le nœud de départ « ${start_node_id} » n'existe pas` });
+
+  for (const n of nodes) {
+    if (n.type === "end") {
+      if (n.branches.length) out.push({ node_id: n.id, branch_id: null, kind: "end_with_branches", message: `Le nœud de fin « ${n.id} » a des branches` });
+      continue;
+    }
+    if (!n.branches.length) out.push({ node_id: n.id, branch_id: null, kind: "dead_end", message: `Impasse : le nœud « ${n.id} » n'a aucune branche et n'est pas une fin` });
+    for (const b of n.branches) {
+      if (!b.next_node_id) out.push({ node_id: n.id, branch_id: b.id, kind: "dead_end", message: `Impasse : la branche « ${b.label || b.id} » du nœud « ${n.id} » ne mène nulle part` });
+      else if (!byId.has(b.next_node_id)) out.push({ node_id: n.id, branch_id: b.id, kind: "dead_end", message: `Impasse : la branche « ${b.label || b.id} » du nœud « ${n.id} » mène à « ${b.next_node_id} », qui n'existe pas` });
+    }
+  }
+
+  const reached = new Set<string>();
+  const queue = start_node_id && byId.has(start_node_id) ? [start_node_id] : [];
+  while (queue.length) {
+    const id = queue.shift()!;
+    if (reached.has(id)) continue;
+    reached.add(id);
+    for (const b of byId.get(id)!.branches) if (b.next_node_id && byId.has(b.next_node_id)) queue.push(b.next_node_id);
+  }
+  if (start_node_id && byId.has(start_node_id)) {
+    for (const n of nodes) {
+      if (!reached.has(n.id)) out.push({ node_id: n.id, branch_id: null, kind: "unreachable", message: `Le nœud « ${n.id} » n'est atteint depuis aucun chemin partant du départ` });
+    }
+  }
+  return out;
+}

@@ -1,191 +1,240 @@
 import { z } from "zod";
 
 /**
- * The fiche, stored in the numbered schema only (decision D1). v4 is display only (display.ts).
- * Base: the agreed fiche-protocole format and PROTOCOL SCHEMA v1. Objects are strict, so a document
- * of another shape (v4, Guideline v2) is refused instead of silently trimmed.
+ * Protocol Schema v1.1 (docs/protocol_schema_v1.1.md), the only fiche format. Field names and allowed values are the
+ * doc's. Objects are strict: a document of another shape is refused, not trimmed.
  *
- * `// CONFIRM Qn` marks a reading of an open question, kept as written until it is answered.
+ * Drafts may have gaps (empty text, null dose, empty quote): this is the shape only. Completeness is the publication
+ * gate's job (gate.ts), and the editor shows every gap as "[à compléter]".
  */
 
-export const SectionState = z.enum(["filled", "non_traité", "sans_objet"]);
+export const SCHEMA_VERSION = "1.1.0";
+
 export const Template = z.enum(["urgence", "pathologie"]);
-export const Risk = z.enum(["high", "medium", "low"]);
-export const Origin = z.enum(["explicit", "local_adaptation"]);
-export const ElementType = z.enum(["action", "conditional", "info", "row"]);
-export const Delai = z.enum(["immédiat", "<1h", "<24h"]);
-export const Phase = z.enum(["avant_transfert", "pendant_transfert"]);
+export const Status = z.enum(["draft", "published"]);
+export const Timing = z.enum(["immediate", "same_day", "prompt", "routine"]);
+export const Strength = z.enum(["forte", "modérée", "faible", "à_éviter"]);
+export const Origin = z.enum(["source", "adaptation_locale"]);
+export const Phase = z.enum(["initiation", "entretien", "prolongee", "unique"]);
+export const DoseBasis = z.enum(["fixe", "par_kg"]);
+export const Prescriber = z.enum(["officine", "hopital"]);
+export const AvailabilityStatus = z.enum(["enregistre", "non_renouvele", "retire", "aucune_presentation"]);
+export const NodeType = z.enum(["decision", "action", "end"]);
+export const Urgency = z.enum(["urgent", "same_week", "next_appointment"]);
 
-/** Page = printed page number of the document, not the PDF index. */
-export const SourceRef = z.strictObject({
-  source_id: z.string().min(1),
-  page: z.number().int().min(1),
-  page_end: z.number().int().min(1).optional(),
-  quote: z.string().min(1), // verbatim
-}).meta({ id: "SourceRef" });
+const Id = z.string().min(1);
 
-/** A review of one risk-high line or dose (rule 7). */
-export const Checked = z.strictObject({ by: z.string().min(1), at: z.string().min(1) }).meta({ id: "Checked" });
+/** page = printed page number; the PDF page is page + the source's page_offset. */
+export const Evidence = z.strictObject({
+  source_id: z.string(),
+  page: z.number().int().min(1).nullable(),
+  quote: z.string(), // original wording, verbatim
+}).meta({ id: "Evidence" });
 
-/** IDs only; labels are resolved at render. */
-export const RefId = z.string().min(1); // CONFIRM Q11: allowed targets
-
-export const Element = z.strictObject({
-  id: z.string().min(1),
-  text: z.string().min(1), // French
-  type: ElementType,
-  condition: z.string().nullable(), // required when type = conditional
-  order: z.number().int().nullable(),
-  timing: z.string().nullable().optional(),
-  reason: z.string().nullable().optional(),
-  cells: z.record(z.string(), z.string()).optional(), // type = row
-  /** Required when origin = explicit. A local adaptation may have none, then `reviewer` is required (Q21). */
-  source: SourceRef.nullable(),
-  translated: z.boolean(),
-  grade: z.string().nullable(), // as written in the source
-  risk: Risk,
-  origin: Origin,
-  reviewer: z.string().nullable().optional(), // local_adaptation: who wrote it
-  conflict_group: z.string().nullable(), // lines that disagree: "Sources divergentes"
-  /** Lines of one infusion switch under a dose card ("Seringue électrique" / "Sans …"); `condition` is the label (Q22). */
-  variant_group: z.string().nullable().default(null),
-  missing: z.array(z.string()),
-  checked: Checked.optional(),
-  refs: z.array(RefId).default([]),
-  /** Posologie ids: overdose, antidote and dose-detail lines shown under their drug(s) (Q23). */
-  attached_to: z.array(z.string().min(1)).default([]),
-  delai: Delai.nullable().default(null), // the delay badge
-  phase: Phase.nullable().optional(), // 9_orientation only
-}).meta({ id: "Element" });
-
-export const Block = z.strictObject({ state: SectionState, elements: z.array(Element) }).meta({ id: "Block" });
-
-/** Every field is source text, never computed. */
-export const Titration = z.strictObject({
-  start: z.string().nullable(),
-  step: z.string().nullable(),
-  interval: z.string().nullable(),
-  max: z.string().nullable(),
-}).meta({ id: "Titration" });
-
-export const AlgerieStatut = z.enum(["Enregistré", "Non renouvelé", "Retiré", "Aucune présentation enregistrée"]); // CONFIRM Q15
-export const Brand = z.strictObject({ brand: z.string(), form: z.string(), dosage: z.string(), hospital: z.boolean() }).meta({ id: "Brand" });
-
-export const Posologie = z.strictObject({
-  id: z.string().min(1), // target of attached_to and refs
-  drug_dci: z.string().min(1),
-  dose: z.string(), // empty only when the source gives none: then "dose" is in `missing`
-  dose_max: z.string().nullable(),
-  route: z.string(),
-  administration: z.string().nullable(),
-  frequency_or_duration: z.string(),
+export const Item = z.strictObject({
+  id: Id,
+  text: z.string(),
   condition: z.string().nullable(),
-  risk: Risk, // always "high" (rule 7)
-  source: SourceRef,
-  translated: z.boolean(),
-  missing: z.array(z.string()), // dose fields the source does not give: never invented
-  titration: Titration.nullable().default(null),
-  /** Computed by the brand matcher from the national nomenclature, never typed by hand. */
-  algerie: z.strictObject({ brands: z.array(Brand), statut: AlgerieStatut.nullable() }),
-  note: z.string().nullable(), // source inconsistencies, flagged not fixed
-  checked: Checked.optional(), // rule 7 review record (Q24)
-}).meta({ id: "Posologie" });
+  timing: Timing.nullable(),
+  strength: Strength.nullable(),
+  origin: Origin,
+  basis: z.string().nullable(), // required when origin = adaptation_locale
+  evidence: z.array(Evidence),
+  refs: z.array(Id), // IDs of scores or other fiches, labels resolved at display
+}).meta({ id: "Item" });
 
-export const Sections = z.strictObject({
-  "1_essentiel": Block, // max 3 elements
-  "2_presentation": z.strictObject({
-    state: SectionState,
-    signes_typiques: z.array(Element),
-    formes_trompeuses: z.array(Element),
-    examen_clinique: z.array(Element),
-    criteres_diagnostiques: z.array(Element).default([]),
-    diagnostics_differentiels: z.array(Element).default([]), // "Penser aussi à"
-  }),
-  "3_champ": Block,
-  "4_gravite": z.strictObject({
-    state: SectionState,
-    decision_initiale: Block.optional(), // urgence only (D3). CONFIRM Q9 (element kind, max lines)
-    signes_de_gravite: z.array(Element),
-    gestes_immediats: Block,
-  }),
-  "5_conduite": z.strictObject({
-    state: SectionState,
-    nodes: z.array(z.strictObject({ node: z.string().min(1), branches: z.array(Element) })),
-  }),
-  "6_examens": Block,
-  "7_traitement": z.strictObject({
-    state: SectionState,
-    elements: z.array(Element),
-    contre_indications: Block,
-    posologies: z.array(Posologie),
-  }),
-  "8_ne_pas_faire": Block,
-  "9_orientation": Block,
-  "10_surveillance": Block,
-  /** conseils_patient: "À dire au patient"; "Revenir immédiatement si" lines are conseils with a condition (Q25). */
-  "11_suivi": z.strictObject({ state: SectionState, elements: z.array(Element), conseils_patient: z.array(Element).default([]) }),
-  "12_ordonnance": Block, // both templates (D3); hidden when sans_objet
-  "13_definitions": Block,
-});
+/** Medication fields the sources may not give; listed in `missing`, shown as "[à compléter]", never invented. */
+export const MedicationField = z.enum([
+  "phase", "dose", "dose_unit", "dose_basis", "route", "frequency", "duration", "max_dose", "adjustments", "contraindications", "strength",
+]);
 
-export const SourceMeta = z.strictObject({
-  source_id: z.string().min(1),
-  type: z.enum(["full_guideline", "synthesis", "update_only", "product_info"]),
-  title: z.string().min(1),
-  citation: z.string().min(1), // who actually wrote it
-  licence: z.string(),
-  language: z.string().optional(),
-  page_offset: z.number().int().optional(), // printed page minus PDF index
-  pdf_path: z.string().nullable().optional(),
-  url: z.string().nullable().optional(), // "Source originale" (Q26)
-  /** The guideline version this fiche was built from: when the registry marks it replaced, the fiche is flagged. */
-  year: z.number().int().optional(),
-  doi: z.string().nullable().optional(), // DOI, or the URL when the guideline has none
-}).meta({ id: "SourceMeta" });
+export const LocalAvailability = z.strictObject({
+  country: z.string(),
+  status: AvailabilityStatus.nullable(), // from the nomenclature, never typed
+  brands: z.array(z.string()), // from the nomenclature only
+}).meta({ id: "LocalAvailability" });
 
-export const Meta = z.strictObject({
-  title: z.string().min(1),
-  topic_id: z.string().min(1),
-  template: Template,
-  audience: z.array(z.enum(["MG", "urgences"])).min(1), // CONFIRM Q15 (list vs string)
-  version: z.string(), // CONFIRM Q15
-  status: z.enum(["draft", "review", "published"]),
+export const Medication = z.strictObject({
+  id: Id,
+  inn: z.string(),
+  phase: Phase.nullable(),
+  dose: z.number().positive().nullable(),
+  dose_unit: z.string().nullable(),
+  dose_basis: DoseBasis.nullable(),
+  route: z.string().nullable(),
+  frequency: z.string().nullable(),
+  duration: z.string().nullable(),
+  max_dose: z.string().nullable(),
+  condition: z.string().nullable(),
+  adjustments: z.array(z.string()),
+  contraindications: z.array(z.string()),
+  alternative_group: z.string().nullable(), // same value = interchangeable, shown as "ou"
+  prescriber: Prescriber.nullable(), // from the nomenclature (OFF / HOP), never typed
+  local_availability: LocalAvailability,
+  strength: Strength.nullable(),
+  evidence: z.array(Evidence),
+  missing: z.array(MedicationField),
+}).meta({ id: "Medication" });
+
+export const Branch = z.strictObject({
+  id: Id,
+  label: z.string(),
+  next_node_id: z.string().nullable(),
+}).meta({ id: "Branch" });
+
+export const PathwayNode = z.strictObject({
+  id: Id,
+  type: NodeType,
+  question: z.string().nullable(),
+  branches: z.array(Branch),
+  items: z.array(Item),
+}).meta({ id: "PathwayNode" });
+
+export const Pathway = z.strictObject({
+  start_node_id: z.string().nullable(),
+  nodes: z.array(PathwayNode),
+}).meta({ id: "Pathway" });
+
+export const Referral = z.strictObject({
+  id: Id,
+  criteria: z.string(),
+  urgency: Urgency.nullable(),
+  destination: z.string().nullable(),
+  strength: Strength.nullable(),
+  evidence: z.array(Evidence),
+}).meta({ id: "Referral" });
+
+export const FollowUp = z.strictObject({
+  id: Id,
+  when: z.string(),
+  what: z.string(),
+  evidence: z.array(Evidence),
+}).meta({ id: "FollowUp" });
+
+/** page_offset = PDF page minus printed page (printed 1678 + offset -1625 = PDF page 53). */
+export const Source = z.strictObject({
+  id: Id,
+  title: z.string(),
+  organisation: z.string(),
+  citation: z.string(),
+  url: z.string().nullable(),
+  publication_date: z.string().nullable(),
+  page_offset: z.number().int(),
+  accessed_at: z.string().nullable(),
+}).meta({ id: "Source" });
+
+export const ChangeLogEntry = z.strictObject({
+  date: z.string(),
+  by: z.string(),
+  summary: z.string(),
+}).meta({ id: "ChangeLogEntry" });
+
+export const Review = z.strictObject({
   reviewer: z.string().nullable(),
   reviewed_at: z.string().nullable(),
-  siblings: z.array(z.string()),
-  sources: z.array(SourceMeta).min(1),
-  excluded_by_audience: z.array(z.string()),
-  quote_check: z.string().optional(), // "x/y", computed
-  motifs: z.array(z.string()).default([]), // reasons for consultation (search, home)
-  synonymes: z.array(z.string()).default([]), // other names, for search (Q26)
-  specialite: z.string().min(1), // drives the library grouping
-});
+  clinical_approval: z.boolean(),
+  unresolved_issues: z.array(z.string()), // conflicting sources, never silently merged
+  change_log: z.array(ChangeLogEntry),
+}).meta({ id: "Review" });
 
-export const Fiche = z.strictObject({ kind: z.literal("fiche"), meta: Meta, sections: Sections });
+export const Meta = z.strictObject({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  title: z.string(),
+  template: Template,
+  audience: z.array(z.string()),
+  country: z.string(),
+  language: z.string(),
+  motifs: z.array(z.string()),
+  specialite: z.string(),
+  version: z.string().regex(/^\d+\.\d+\.\d+$/),
+  status: Status,
+  last_reviewed_at: z.string().nullable(),
+  next_review_at: z.string().nullable(),
+}).meta({ id: "Meta" });
 
-/** Same sourcing rules (every content line is an Element). CONFIRM Q10 for their body fields. */
-export const Score = z.strictObject({
-  kind: z.literal("score"),
-  id: z.string().regex(/^S-\d{3,}$/),
-  meta: Meta.omit({ template: true }),
-  elements: z.array(Element),
-});
-export const FicheTechnique = z.strictObject({
-  kind: z.literal("fiche_technique"),
-  id: z.string().regex(/^F-\d{3,}$/),
-  meta: Meta.omit({ template: true }),
-  elements: z.array(Element),
-});
+export const Scope = z.strictObject({
+  population: z.string().nullable(),
+  exclusions: z.array(z.string()),
+}).meta({ id: "Scope" });
 
-export type SectionState = z.infer<typeof SectionState>;
+export const Protocol = z.strictObject({
+  schema_version: z.literal(SCHEMA_VERSION),
+  meta: Meta,
+  scope: Scope,
+  red_box: z.strictObject({ signs: z.array(Item), actions: z.array(Item) }),
+  assess: z.strictObject({ ask: z.array(Item), examine: z.array(Item), tests: z.array(Item), pathway: Pathway }),
+  treat: z.strictObject({ medications: z.array(Medication), actions: z.array(Item), do_not: z.array(Item) }),
+  advise: z.array(Item),
+  refer_follow: z.strictObject({ refer: z.array(Referral), follow_up: z.array(FollowUp) }),
+  sources: z.array(Source),
+  review: Review,
+}).meta({ id: "Protocol" });
+
 export type Template = z.infer<typeof Template>;
-export type SourceRef = z.infer<typeof SourceRef>;
-export type Element = z.infer<typeof Element>;
-export type Block = z.infer<typeof Block>;
-export type Posologie = z.infer<typeof Posologie>;
-export type Sections = z.infer<typeof Sections>;
-export type SourceMeta = z.infer<typeof SourceMeta>;
+export type Status = z.infer<typeof Status>;
+export type Timing = z.infer<typeof Timing>;
+export type Strength = z.infer<typeof Strength>;
+export type Origin = z.infer<typeof Origin>;
+export type Phase = z.infer<typeof Phase>;
+export type DoseBasis = z.infer<typeof DoseBasis>;
+export type Prescriber = z.infer<typeof Prescriber>;
+export type AvailabilityStatus = z.infer<typeof AvailabilityStatus>;
+export type NodeType = z.infer<typeof NodeType>;
+export type Urgency = z.infer<typeof Urgency>;
+export type Evidence = z.infer<typeof Evidence>;
+export type Item = z.infer<typeof Item>;
+export type MedicationField = z.infer<typeof MedicationField>;
+export type LocalAvailability = z.infer<typeof LocalAvailability>;
+export type Medication = z.infer<typeof Medication>;
+export type Branch = z.infer<typeof Branch>;
+export type PathwayNode = z.infer<typeof PathwayNode>;
+export type Pathway = z.infer<typeof Pathway>;
+export type Referral = z.infer<typeof Referral>;
+export type FollowUp = z.infer<typeof FollowUp>;
+export type Source = z.infer<typeof Source>;
+export type ChangeLogEntry = z.infer<typeof ChangeLogEntry>;
+export type Review = z.infer<typeof Review>;
 export type Meta = z.infer<typeof Meta>;
-export type Fiche = z.infer<typeof Fiche>;
-export type Score = z.infer<typeof Score>;
-export type FicheTechnique = z.infer<typeof FicheTechnique>;
+export type Scope = z.infer<typeof Scope>;
+export type Protocol = z.infer<typeof Protocol>;
+
+/** Item lists of the fiche, in screen order, with their French label. Pathway node items are listed by `walk`. */
+export const ITEM_LISTS = [
+  { key: "red_box.signs", label: "Signes d'alerte", get: (p: Protocol) => p.red_box.signs },
+  { key: "red_box.actions", label: "En attendant", get: (p: Protocol) => p.red_box.actions },
+  { key: "assess.ask", label: "Demander", get: (p: Protocol) => p.assess.ask },
+  { key: "assess.examine", label: "Examiner", get: (p: Protocol) => p.assess.examine },
+  { key: "assess.tests", label: "Examens", get: (p: Protocol) => p.assess.tests },
+  { key: "treat.actions", label: "Autres mesures", get: (p: Protocol) => p.treat.actions },
+  { key: "treat.do_not", label: "À ne pas faire", get: (p: Protocol) => p.treat.do_not },
+  { key: "advise", label: "Conseiller", get: (p: Protocol) => p.advise },
+] as const;
+
+/** Every item of the fiche, pathway node items included. */
+export function allItems(p: Protocol): Item[] {
+  return [...ITEM_LISTS.flatMap((l) => l.get(p)), ...p.assess.pathway.nodes.flatMap((n) => n.items)];
+}
+
+/** Every line that carries evidence: items, medications, referrals, follow-ups. */
+export function evidenceLines(p: Protocol): { id: string; evidence: Evidence[] }[] {
+  return [...allItems(p), ...p.treat.medications, ...p.refer_follow.refer, ...p.refer_follow.follow_up];
+}
+
+/** An empty fiche of v1.1, as the editor starts it. */
+export function emptyProtocol(id: string, title: string, template: Template): Protocol {
+  return {
+    schema_version: SCHEMA_VERSION,
+    meta: {
+      id, title, template, audience: [], country: "DZ", language: "fr", motifs: [], specialite: "",
+      version: "1.0.0", status: "draft", last_reviewed_at: null, next_review_at: null,
+    },
+    scope: { population: null, exclusions: [] },
+    red_box: { signs: [], actions: [] },
+    assess: { ask: [], examine: [], tests: [], pathway: { start_node_id: null, nodes: [] } },
+    treat: { medications: [], actions: [], do_not: [] },
+    advise: [],
+    refer_follow: { refer: [], follow_up: [] },
+    sources: [],
+    review: { reviewer: null, reviewed_at: null, clinical_approval: false, unresolved_issues: [], change_log: [] },
+  };
+}
