@@ -1,6 +1,6 @@
 "use client";
 
-import { Fiche } from "@medguides/schema";
+import { validateStructure } from "@medguides/schema";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -142,18 +142,18 @@ export default function VeillePage() {
     setAlerts(al.data as Alert[]);
     setReplaced(rp.data as Replaced[]);
     setLastCheck((rc.data as { ran_at: string }[])[0]?.ran_at ?? null);
-    // Fiches whose source guideline (meta.sources[].doi) was replaced: to review.
+    // Fiches whose source guideline (sources[].url, a DOI link) was replaced: to review.
     const old = new Map((rp.data as Replaced[]).filter((r) => r.ref).map((r) => [norm(r.ref), r]));
     const seen = new Set<string>();
     const review: ToReview[] = [];
     for (const v of fv.data as { subject_id: string; content: unknown }[]) {
       if (seen.has(v.subject_id)) continue;
       seen.add(v.subject_id);
-      const f = Fiche.safeParse(v.content);
-      if (!f.success) continue;
-      for (const s of f.data.meta.sources) {
-        const r = s.doi ? old.get(norm(s.doi)) : undefined;
-        if (r) review.push({ id: v.subject_id, title: f.data.meta.title, source: `${r.title ?? s.title} (${r.year ?? "?"})`, replacedBy: `${r.replaced_by_title} (${r.replaced_by_year ?? "?"})` });
+      const { protocol: f } = validateStructure(v.content);
+      if (!f) continue;
+      for (const s of f.sources) {
+        const r = s.url ? old.get(norm(s.url)) : undefined;
+        if (r) review.push({ id: v.subject_id, title: f.meta.title, source: `${r.title ?? s.title} (${r.year ?? "?"})`, replacedBy: `${r.replaced_by_title} (${r.replaced_by_year ?? "?"})` });
       }
     }
     setToReview(review);
