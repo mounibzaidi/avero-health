@@ -1,6 +1,7 @@
 "use client";
 
 import { fromLegacy, type Medication } from "@medguides/schema";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -8,9 +9,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { BrandPicker } from "@/components/editor/BrandPicker";
 import { RUNNING, Stepper } from "@/components/GenerationProgress";
 import { Button, Card, ErrorNote, inputCls, PageHeader, Spinner, Tag } from "@/components/ui";
-import { api, apiBlob } from "@/lib/api";
+import { api } from "@/lib/api";
 import { IMPORT_KEY } from "@/lib/fiche-import";
 import { createClient } from "@/lib/supabase/client";
+
+const PdfViewer = dynamic(() => import("@/components/PdfViewer"), { ssr: false, loading: () => <p className="p-4 text-sm text-muted">Chargement du PDF…</p> });
 
 /** A line of a fiche-protocole fiche (element) and a dose, as generated. */
 interface Line { id: string; text: string; type: string; condition: string | null; source: { source_id: string; page: number | null; quote: string }; grade: string | null; missing: string[] }
@@ -26,7 +29,7 @@ interface Coverage {
 }
 interface Draft {
   id: string; topic_id: string; content: Fiche | null; status: string; stage: string; stage_detail: string | null; error: string | null;
-  licence_scope: "internal" | "publish"; page_offset: number | null; offset_detected: boolean; form: { title: string; licence_text?: string };
+  licence_scope: "internal" | "publish"; page_offset: number | null; offset_detected: boolean; pdf_path: string; form: { title: string; licence_text?: string };
   lines: LineMeta[]; dropped: LineMeta[]; models: string[]; coverage: Coverage | null;
   cost: { calls: number; cost_usd: number; by_model: Record<string, number>; input_tokens: number; output_tokens: number; cache_read_tokens: number };
 }
@@ -59,6 +62,14 @@ function lineLists(f: Fiche): { section: string; label: string; path: (string | 
     }
   }
   return out;
+}
+
+/** Every quote of the fiche cited on this printed page (lines and doses): marked in the PDF in the second colour. */
+function quotesOnPage(f: Fiche | null, printed: number | null): string[] {
+  if (!f || printed == null) return [];
+  const lines = lineLists(f).flatMap((l) => l.items);
+  const doses = (f.sections["7_traitement"]?.posologies as Dose[] | undefined) ?? [];
+  return [...lines, ...doses].filter((x) => x.source.page === printed).map((x) => x.source.quote);
 }
 
 function at(obj: unknown, path: (string | number)[]): unknown[] {
@@ -96,7 +107,9 @@ export default function DraftReview() {
   const [batch, setBatch] = useState(false);
   const [reviewer, setReviewer] = useState("");
   const [shown, setShown] = useState<{ page: number | null; quote: string } | null>(null);
-  const [image, setImage] = useState<string | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [viewPage, setViewPage] = useState(1);  // the PDF page on screen (not the printed number)
+  const [found, setFound] = useState<boolean | null>(null);
 
   const load = useCallback(() => api<Draft>(`/fichegen/drafts/${id}`).then((x) => {
     setD(x);
@@ -113,14 +126,19 @@ export default function DraftReview() {
     return () => clearInterval(t);
   }, [d, load]);
   useEffect(() => {
-    if (!shown?.page) return;
-    let url: string | null = null;
-    apiBlob(`/fichegen/drafts/${id}/page/${shown.page}`).then((u) => { url = u; setImage(u); }, () => setImage(null));
-    return () => { if (url) URL.revokeObjectURL(url); };
-  }, [shown, id]);
+    if (!d?.pdf_path || pdfUrl) return;
+    api<{ url: string }>(`/crawl/file?path=${encodeURIComponent(d.pdf_path)}`).then((r) => setPdfUrl(r.url), (e) => setError((e as Error).message));
+  }, [d?.pdf_path, pdfUrl]);
 
   const metas = useMemo(() => new Map((d?.lines ?? []).map((l) => [l.element_id, l])), [d]);
   if (!d) return <div className="p-6">{error ? <ErrorNote>{error}</ErrorNote> : <Spinner />}</div>;
+
+  // a line clicked: its quote shown, its printed page opened in the PDF (PDF page = printed page - offset)
+  const showLine = (x: { page: number | null; quote: string }) => {
+    setShown(x);
+    setFound(null);
+    if (x.page != null && d.page_offset != null) setViewPage(Math.max(1, x.page - d.page_offset));
+  };
 
   const run = async (p: Promise<unknown>) => {
     setBusy(true);
@@ -200,7 +218,7 @@ export default function DraftReview() {
   }
 
   return (
-    <div className="grid h-[calc(100dvh-3rem)] grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+    <div className="grid h-[calc(100dvh-3rem)] grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
       <div className="min-h-0 overflow-auto px-5 pb-16">
         <div className="flex flex-col gap-4 py-4">
           <Link href="/generation" className="self-start text-sm text-accentink hover:underline">‹ Génération</Link>
@@ -243,8 +261,9 @@ export default function DraftReview() {
                   <div key={l.path.join("/")} className="flex flex-col gap-1">
                     {l.label && <p className="text-xs font-medium text-soft">{l.label}</p>}
                     {l.items.map((line, i) => (
-                      <div key={line.id} className="flex items-start gap-2 rounded-lg px-2 py-1.5 hover:bg-panel/60">
-                        <div className="min-w-0 flex-1 cursor-pointer" onClick={() => setShown({ page: line.source.page, quote: line.source.quote })}>
+                      <div key={line.id} className={`flex items-start gap-2 rounded-lg px-2 py-1.5 ${
+                        shown?.quote === line.source.quote && shown?.page === line.source.page ? "bg-tint ring-1 ring-accent/30" : "hover:bg-panel/60"}`}>
+                        <div className="min-w-0 flex-1 cursor-pointer" onClick={() => showLine({ page: line.source.page, quote: line.source.quote })}>
                           <textarea rows={1} className="w-full resize-y bg-transparent text-sm text-ink outline-none" value={line.text}
                             onClick={(e) => e.stopPropagation()} onChange={(e) => edit((x) => { (at(x, l.path)[i] as Line).text = e.target.value; })} />
                           <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted">
@@ -264,7 +283,7 @@ export default function DraftReview() {
                     {doses.map((x, i) => (
                       <div key={i} className="flex flex-col gap-1.5 rounded-lg bg-panel/50 p-2">
                         <div className="flex items-start gap-2">
-                          <div className="min-w-0 flex-1 cursor-pointer text-sm" onClick={() => setShown({ page: x.source.page, quote: x.source.quote })}>
+                          <div className="min-w-0 flex-1 cursor-pointer text-sm" onClick={() => showLine({ page: x.source.page, quote: x.source.quote })}>
                             <b>{x.drug_dci}</b> {x.dose}{x.dose_max ? ` (max ${x.dose_max})` : ""} · {x.route} · {x.frequency_or_duration}{x.condition ? ` · si ${x.condition}` : ""}
                             <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted"><span>p. {x.source.page}</span><Badges meta={doseMeta[i]} missing={x.missing} /></div>
                           </div>
@@ -309,7 +328,7 @@ export default function DraftReview() {
                   « 3: Harm / No Benefit » en Ne pas faire : {d.coverage.harm_in_8}/{d.coverage.harm_rows})</span>
               </h2>
               {d.coverage.uncovered.map((r, i) => (
-                <div key={i} className="cursor-pointer rounded-lg px-2 py-1 text-sm hover:bg-panel/60" onClick={() => setShown({ page: r.page, quote: r.text })}>
+                <div key={i} className="cursor-pointer rounded-lg px-2 py-1 text-sm hover:bg-panel/60" onClick={() => showLine({ page: r.page, quote: r.text })}>
                   <span className="me-2 inline-block"><Tag tone="caution">Non couvert</Tag></span>
                   <span className="text-ink">{r.text}</span>
                   <span className="text-xs text-muted"> · p. {r.page}{r.cor ? ` · COR ${r.cor} / LOE ${r.loe}` : " · posologie"}</span>
@@ -323,7 +342,7 @@ export default function DraftReview() {
               <h2 className="text-sm font-semibold text-ink">Écartées ({d.dropped.length})</h2>
               {d.dropped.map((x) => (
                 <div key={x.element_id} className="cursor-pointer rounded-lg px-2 py-1 text-sm hover:bg-panel/60"
-                  onClick={() => x.dropped_line && setShown({ page: x.dropped_line.source.page, quote: x.dropped_line.source.quote })}>
+                  onClick={() => x.dropped_line && showLine({ page: x.dropped_line.source.page, quote: x.dropped_line.source.quote })}>
                   <span className="text-ink">{x.dropped_line?.text ?? (x.dropped_line as unknown as Dose | null)?.drug_dci}</span>
                   <span className="text-xs text-muted"> · {SECTION_LABEL[x.section] ?? x.section} · {x.reason}</span>
                 </div>
@@ -333,27 +352,38 @@ export default function DraftReview() {
         </div>
       </div>
 
-      <aside className="flex min-h-0 flex-col gap-3 overflow-auto border-l border-line bg-surface p-4">
-        <div className="flex flex-col gap-2">
-          {dirty && <Button variant="primary" disabled={busy} onClick={() => run(api(`/fichegen/drafts/${id}/content`, { method: "PUT", body: JSON.stringify({ content: f }) }).then(() => setDirty(false)))}>Enregistrer les modifications</Button>}
-          <input className={inputCls} placeholder="Nom du relecteur" value={reviewer} onChange={(e) => setReviewer(e.target.value)} />
-          <div className="flex flex-wrap gap-2">
-            <Button disabled={busy || !f || dirty || !reviewer.trim()} onClick={() => run(api(`/fichegen/drafts/${id}/approve`, { method: "POST", body: JSON.stringify({ status: "review", reviewer }) }))}>Marquer relu</Button>
-            <Button variant="primary" disabled={busy || !f || blocked.length > 0} title={blocked.length ? `Bloqué : ${blocked.join(", ")}` : "Publier"}
-              onClick={() => run(api(`/fichegen/drafts/${id}/approve`, { method: "POST", body: JSON.stringify({ status: "published", reviewer }) }))}>Publier</Button>
-            {f && ["review", "published"].includes(d.status) && <Button onClick={openInEditor}>Ouvrir en v1.1 dans l&apos;éditeur</Button>}
-          </div>
-          {blocked.length > 0 && <p className="text-xs text-caution">Publication bloquée : {blocked.join(", ")}.</p>}
-          {f && f.meta.excluded_by_audience.length > 0 && <p className="text-xs text-muted">Hors champ pour ce public : {f.meta.excluded_by_audience.join(" · ")}</p>}
+      <aside className="flex min-h-0 flex-col border-l border-line bg-surface">
+        <div className="flex flex-col gap-2 border-b border-line p-3">
+            {dirty && <Button variant="primary" disabled={busy} onClick={() => run(api(`/fichegen/drafts/${id}/content`, { method: "PUT", body: JSON.stringify({ content: f }) }).then(() => setDirty(false)))}>Enregistrer les modifications</Button>}
+            <input className={inputCls} placeholder="Nom du relecteur" value={reviewer} onChange={(e) => setReviewer(e.target.value)} />
+            <div className="flex flex-wrap gap-2">
+              <Button disabled={busy || !f || dirty || !reviewer.trim()} onClick={() => run(api(`/fichegen/drafts/${id}/approve`, { method: "POST", body: JSON.stringify({ status: "review", reviewer }) }))}>Marquer relu</Button>
+              <Button variant="primary" disabled={busy || !f || blocked.length > 0} title={blocked.length ? `Bloqué : ${blocked.join(", ")}` : "Publier"}
+                onClick={() => run(api(`/fichegen/drafts/${id}/approve`, { method: "POST", body: JSON.stringify({ status: "published", reviewer }) }))}>Publier</Button>
+              {f && ["review", "published"].includes(d.status) && <Button onClick={openInEditor}>Ouvrir en v1.1 dans l&apos;éditeur</Button>}
+            </div>
+            {blocked.length > 0 && <p className="text-xs text-caution">Publication bloquée : {blocked.join(", ")}.</p>}
+            {f && f.meta.excluded_by_audience.length > 0 && <p className="text-xs text-muted">Hors champ pour ce public : {f.meta.excluded_by_audience.join(" · ")}</p>}
         </div>
-        {shown && (
-          <div className="flex flex-col gap-2">
-            <p className="text-xs font-medium text-soft">Citation, page {shown.page}</p>
-            <blockquote className="rounded-lg bg-panel/60 p-2 text-sm italic text-ink">{shown.quote}</blockquote>
-            {/* eslint-disable-next-line @next/next/no-img-element -- a blob URL of the page image, nothing to optimise */}
-            {image ? <img src={image} alt={`Page ${shown.page}`} className="w-full rounded-lg border border-line" /> : <Spinner />}
+        {shown ? (
+          <div className="flex flex-col gap-1 border-b border-line bg-panel/40 px-3 py-2">
+            <p className="text-xs font-medium text-soft">
+              Page {shown.page} du document (page {viewPage} du PDF)
+              {found === false && <span className="ms-2 text-caution">· citation non surlignée (figure ou mise en page) : à lire sur la page</span>}
+            </p>
+            <blockquote className="line-clamp-3 text-sm italic text-ink">{shown.quote}</blockquote>
           </div>
+        ) : (
+          <p className="border-b border-line px-3 py-2 text-xs text-muted">Cliquez une ligne à gauche : sa citation est surlignée en jaune dans le PDF, les autres citations de la page en vert.</p>
         )}
+        <div className="min-h-0 flex-1">
+          {pdfUrl ? (
+            <PdfViewer url={pdfUrl} page={viewPage} onPageChange={setViewPage}
+              quote={shown?.page != null && d.page_offset != null && viewPage === shown.page - d.page_offset ? shown.quote : ""}
+              used={quotesOnPage(f, d.page_offset == null ? null : viewPage + d.page_offset)}
+              onHighlight={(_, ok) => setFound(ok)} />
+          ) : <div className="flex justify-center p-6 text-muted"><Spinner /></div>}
+        </div>
       </aside>
     </div>
   );
