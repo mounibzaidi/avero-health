@@ -321,12 +321,27 @@ def test_propose_keeps_the_selected_quote_and_runs_the_checks(monkeypatch):
     monkeypatch.setattr(llm, "call", lambda *a, **k: {"text": "Ne pas donner de ticagrélor.", "type": "action", "condition": None, "grade": None,
                                                        "risk": "high", "missing": []})
     parts = [{"page": 2157, "text": "Loading dose 180 mg\n orally"}, {"page": 2163, "text": "Loading dose 60 IU/kg (max 4,000 IU)"}]
-    out = manual.propose(None, draft, pages, {"section": "7_traitement", "place": "elements"}, parts, lambda e: None)
+    out = manual.propose(None, draft, pages, {"section": "7_traitement", "place": "elements"}, parts, lambda e: None, fill=True)
     assert out["line"]["source"] == {"source_id": "accaha2025", "page": 2157, "quote": "Loading dose 180 mg orally [...] Loading dose 60 IU/kg (max 4,000 IU)"}
     assert out["quote_status"] == "pdf" and out["part_status"] == ["pdf", "pdf"] and out["problems"] == []
     assert out["placement"]["section"] == "8_ne_pas_faire"  # rule 4: a do-not line
-    out = manual.propose(None, draft, pages, {"section": "7_traitement", "place": "elements"}, parts[:1], lambda e: None)
+    out = manual.propose(None, draft, pages, {"section": "7_traitement", "place": "elements"}, parts[:1], lambda e: None, fill=True)
     assert out["duplicate"]["section"] == "8_ne_pas_faire"
+
+
+def test_manual_card_is_blank_and_free_by_default(monkeypatch):
+    from app.fichegen import llm, manual
+    fiche, _, _ = build({})
+    pages = {2157: {**page(2157), "printed_page": 2157}}
+
+    def paid(*a, **k):
+        raise AssertionError("no model call without fill")
+
+    monkeypatch.setattr(llm, "call", paid)
+    out = manual.propose(None, {"content": fiche, "form": FORM}, pages, {"section": "7_traitement", "place": "posologies"},
+                         [{"page": 2157, "text": "Loading dose 180 mg orally"}], lambda e: None)
+    assert out["line"]["dose"] == "" and out["line"]["source"]["quote"] == "Loading dose 180 mg orally" and out["quote_status"] == "pdf"
+    assert "algerie.statut" in out["line"]["missing"]
 
 
 def test_suggestions_merged_into_a_started_fiche():

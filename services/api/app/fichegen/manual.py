@@ -125,9 +125,15 @@ def nomenclature(caller, dci: str) -> dict:
     return {"dci": dci, "brands": len(brands), "registered": registered, "statut": best}
 
 
-def propose(caller, draft: dict, pages: dict[int, dict], target: dict, parts: list[dict], log) -> dict:
-    """The proposed line for the selected passages and the target, with every code check. Not saved: the reviewer
-    edits and accepts it in the dashboard."""
+BLANK_ELEMENT = {"text": "", "type": "action", "condition": None, "grade": None, "risk": "medium", "missing": []}
+BLANK_DOSE = {"drug_dci": "", "dose": "", "dose_max": None, "route": "", "administration": None, "frequency_or_duration": "",
+              "condition": None, "missing": [], "note": None}
+
+
+def propose(caller, draft: dict, pages: dict[int, dict], target: dict, parts: list[dict], log, fill: bool = False) -> dict:
+    """The line for the selected passages and the target, with every code check. By default its fields are empty for
+    the reviewer to type (no paid call); `fill` asks Haiku to pre-fill them. Not saved: the reviewer edits and
+    accepts it in the dashboard."""
     content = draft["content"] or {}
     source_id = ((content.get("meta") or {}).get("sources") or [{}])[0].get("source_id") or draft["form"]["source"]["source_id"]
     quote = quote_of(parts)
@@ -141,7 +147,8 @@ def propose(caller, draft: dict, pages: dict[int, dict], target: dict, parts: li
             f"Quote (fixed, page {page}): {quote}\n"
             + (f"Grade printed next to it: {grade}\n" if grade else "")
             + f"\nPage context:\n{context}")
-    fill = llm.call(llm.params(llm.DEFAULT_MODEL, FILL_SYSTEM, user, FILL_DOSE if is_dose else FILL_ELEMENT, 1500), log, "manual", target["section"])
+    fill = (llm.call(llm.params(llm.DEFAULT_MODEL, FILL_SYSTEM, user, FILL_DOSE if is_dose else FILL_ELEMENT, 1500), log, "manual", target["section"])
+            if fill else dict(BLANK_DOSE if is_dose else BLANK_ELEMENT))
     src = {"source_id": source_id, "page": page, "quote": quote}
     if is_dose:
         line = {**fill, "risk": "high", "source": src, "translated": not assemble.is_french(quote),

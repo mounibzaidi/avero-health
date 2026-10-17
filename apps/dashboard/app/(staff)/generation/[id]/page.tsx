@@ -159,8 +159,6 @@ export default function DraftReview() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [offset, setOffset] = useState("");
-  const [model, setModel] = useState("claude-haiku-5-5");
-  const [batch, setBatch] = useState(false);
   const [reviewer, setReviewer] = useState("");
   const [shown, setShown] = useState<{ page: number | null; quote: string } | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -224,12 +222,6 @@ export default function DraftReview() {
     setSelection(null);
     showLine({ page: line.source.page, quote: line.source.quote });
   };
-  const suggest = () => {
-    if (window.confirm("Suggérer avec l'IA : Haiku propose des lignes pour tout le guide, ajoutées à la fiche sans rien remplacer. Coût plafonné à 0,25 $. Continuer ?")) {
-      void run(api(`/fichegen/drafts/${id}/generate`, { method: "POST", body: JSON.stringify({ model: "claude-haiku-5-5", batch: false }) }));
-    }
-  };
-
   const run = async (p: Promise<unknown>) => {
     setBusy(true);
     setError(null);
@@ -265,18 +257,6 @@ export default function DraftReview() {
     router.push(data ? `/fiche/${protocol.meta.id}` : "/fiche/nouveau");
   };
 
-  const generateControls = (
-    <div className="flex flex-wrap items-center gap-2">
-      <select className={inputCls} value={model} onChange={(e) => setModel(e.target.value)}>
-        {d.models.map((m) => <option key={m} value={m}>{m}{m.includes("haiku") ? " (le moins cher)" : ""}</option>)}
-      </select>
-      <label className="flex items-center gap-1 text-xs"><input type="checkbox" checked={batch} onChange={(e) => setBatch(e.target.checked)} /> en lot (−50 %, plus lent)</label>
-      <Button variant="primary" disabled={busy} onClick={() => run(api(`/fichegen/drafts/${id}/generate`, { method: "POST", body: JSON.stringify({ model, batch }) }))}>
-        {d.content ? "Regénérer" : "Générer"}
-      </Button>
-    </div>
-  );
-
   // while it generates (or before any content): the steps; when done, the editor below replaces them
   if ((RUNNING.has(d.stage) && d.stage !== "ready") || d.stage === "needs_offset" || !f) {
     return (
@@ -286,7 +266,7 @@ export default function DraftReview() {
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-muted">{d.topic_id}</p>
             <h1 className="mt-1 text-lg font-semibold tracking-tight text-ink">{d.form?.title ?? d.topic_id}</h1>
-            <p className="mt-1 text-sm text-soft">L&apos;éditeur s&apos;ouvre ici dès que le brouillon est prêt.</p>
+            <p className="mt-1 text-sm text-soft">L&apos;éditeur s&apos;ouvre ici dès que le PDF est lu.</p>
           </div>
           <Stepper stage={d.stage} detail={d.stage_detail} />
           {error && <ErrorNote>{error}</ErrorNote>}
@@ -300,7 +280,6 @@ export default function DraftReview() {
               <Button variant="primary" disabled={busy || !/^-?\d+$/.test(offset.trim())} onClick={() => run(api(`/fichegen/drafts/${id}/offset`, { method: "POST", body: JSON.stringify({ offset: Number(offset) }) }))}>Valider et générer</Button>
             </div>
           )}
-          {["ready", "error"].includes(d.stage) && d.page_offset !== null && generateControls}
           {d.cost.calls > 0 && <p className="text-xs text-muted">Coût jusqu&apos;ici : {d.cost.cost_usd.toFixed(4)} $ · {d.cost.calls} appel(s)</p>}
         </Card>
       </div>
@@ -362,8 +341,7 @@ export default function DraftReview() {
             <span className="text-xs text-muted">Temps d&apos;édition : <b className="text-ink">{minutes((d.edit_seconds ?? 0) + pendingTime)}</b></span>
           </div>
           <PageHeader title={d.form?.title ?? d.topic_id}
-            subtitle={`${d.topic_id} · ${d.status} · citations ${f.meta.quote_check} · ${d.mode === "manual" ? "construite à la main" : "générée"}`}
-            actions={<Button disabled={busy || dirty} onClick={suggest} title="Haiku, plafond 0,25 $">Suggérer (IA)</Button>} />
+            subtitle={`${d.topic_id} · ${d.status} · citations ${f.meta.quote_check} · ${d.mode === "manual" ? "construite à la main" : "générée"}`} />
           {error && <ErrorNote>{error}</ErrorNote>}
           {d.error && <ErrorNote>{d.error}</ErrorNote>}
 

@@ -113,7 +113,9 @@ def start_if_auto(caller, draft_id: str) -> None:
     if (d["form"] or {}).get("manual") and not d["content"]:  # built by hand: an empty fiche, no paid call
         _update(caller, draft_id, content=assemble.empty_fiche(d["form"]), mode="manual")
         return
-    if not (d["form"] or {}).get("auto_generate") or d["page_offset"] is None:
+    if not (d["form"] or {}).get("auto_generate") or d["page_offset"] is None or (env().get("FICHEGEN_AUTO") or "").lower() != "on":
+        if not d["content"]:  # automatic generation closed: the fiche is built by hand
+            _update(caller, draft_id, content=assemble.empty_fiche(d["form"]), mode="manual")
         return
     _update(caller, draft_id, options={"model": llm.DEFAULT_MODEL, "batch": False}, stage="routing", stage_detail=None)
     generate_draft(caller, draft_id)

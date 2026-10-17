@@ -74,7 +74,7 @@ export default function GenerationPage() {
   const ficheTitle = chosen ? chosen.title : title.trim();
   const ok = !!file && !!topicId && !!ficheTitle && !!sourceTitle.trim() && !!citation.trim();
 
-  const submit = async (suggest: boolean) => {
+  const submit = async () => {
     if (!file || !ok) return;
     setBusy(true);
     setError(null);
@@ -84,7 +84,7 @@ export default function GenerationPage() {
       body.append("form", JSON.stringify({
         title: ficheTitle, topic_id: topicId, template: chosen?.template ?? template, audience: ["MG", "urgences"], siblings: [],
         source: { source_id: `${topicId}-${new Date().getFullYear()}`.slice(0, 64), type: "full_guideline", title: sourceTitle.trim(), citation: citation.trim() },
-        licence_text: licence.trim(), licence_scope: scope, manual: !suggest, auto_generate: suggest,
+        licence_text: licence.trim(), licence_scope: scope, manual: true,
       }));
       const d = await apiForm<DraftRow>("/fichegen/drafts", body);
       router.push(`/generation/${d.id}`);
@@ -176,9 +176,8 @@ export default function GenerationPage() {
             </div>
             {more && <input className={inputCls} placeholder="Texte de la licence (© ACC/AHA : copie et modification interdites…)" value={licence} onChange={(e) => setLicence(e.target.value)} />}
             <div className="mt-auto flex items-center gap-3 pt-2">
-              <Button variant="primary" className="h-10 px-5" disabled={!ok || busy} onClick={() => submit(false)}>{busy ? <Spinner /> : "Créer la fiche"}</Button>
-              <Button className="h-10" disabled={!ok || busy} onClick={() => submit(true)} title="Haiku propose une première version, plafond 0,25 $">Créer et suggérer (IA)</Button>
-              <span className="text-xs text-muted">Sélectionnez les passages du PDF pour construire la fiche ; l&apos;IA est optionnelle.</span>
+              <Button variant="primary" className="h-10 px-5" disabled={!ok || busy} onClick={() => void submit()}>{busy ? <Spinner /> : "Créer la fiche"}</Button>
+              <span className="text-xs text-muted">Le PDF est lu (gratuit), puis vous construisez la fiche en sélectionnant ses passages.</span>
             </div>
           </div>
         </div>

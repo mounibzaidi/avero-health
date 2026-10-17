@@ -106,6 +106,9 @@ class GenerateIn(BaseModel):
 
 @router.post("/drafts/{draft_id}/generate", status_code=202)
 def generate(draft_id: str, body: GenerateIn, background: BackgroundTasks, caller: sb.Caller = Depends(sb.require_admin)):
+    """Closed: fiches are built by hand (select-to-add). FICHEGEN_AUTO=on in .env.local opens it again."""
+    if (pipeline.env().get("FICHEGEN_AUTO") or "").lower() != "on":
+        raise HTTPException(status_code=410, detail="Génération automatique désactivée : construisez la fiche par sélection")
     d = _one(caller, draft_id)
     if d["stage"] not in ("ready", "done", "error") or d["page_offset"] is None:
         raise HTTPException(status_code=409, detail="Le PDF n'est pas prêt (ingestion en cours ou décalage des pages à saisir)")
@@ -164,12 +167,13 @@ class Part(BaseModel):
 class ProposeIn(BaseModel):
     target: dict  # {section, place: elements | signes_typiques | ... | contre_indications | posologies | node, node: index, node_label}
     parts: list[Part]
+    fill: bool = False  # Haiku pre-fills the fields; by default they are empty, for the reviewer to type
 
 
 @router.post("/drafts/{draft_id}/propose")
 def propose(draft_id: str, body: ProposeIn, caller: sb.Caller = Depends(sb.require_admin)):
-    """One line from the selected passages: one Haiku call (capped at $0.02) fills the fields, code checks the rest.
-    Nothing is saved: the reviewer edits and accepts it."""
+    """One line from the selected passages: empty fields for the reviewer to type (or, with fill, one Haiku call capped
+    at $0.02), and every code check. Nothing is saved: the reviewer edits and accepts it."""
     d = _one(caller, draft_id)
     if d["page_offset"] is None:
         raise HTTPException(status_code=409, detail="Décalage des pages inconnu")
@@ -179,7 +183,7 @@ def propose(draft_id: str, body: ProposeIn, caller: sb.Caller = Depends(sb.requi
     by_printed = {p["printed_page"]: p for p in _layers(caller, d)}
     budget = pipeline.Budget(lambda e: sb.rest(caller, "POST", "generation_calls", body={**e, "draft_id": draft_id}), 0.02)
     try:
-        return manual.propose(caller, d, by_printed, body.target, parts, budget)
+        return manual.propose(caller, d, by_printed, body.target, parts, budget, fill=body.fill)
     except llm.BudgetExceeded as exc:
         raise HTTPException(status_code=402, detail=str(exc)) from exc
 
