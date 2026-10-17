@@ -2,13 +2,16 @@
 
 - route(): one call (Haiku) maps printed pages to the 13 sections and lists topics outside the audience's practice;
 - sections(): one call per section, in parallel, or through the Message Batches API (half price) when nobody waits;
-- fix(): the retry call for quotes the check did not find.
+- fix(): the retry call for quotes the check did not find;
+- cover(): one targeted call per section for the recommendation and dose rows the fiche does not cover yet.
+Pages holding a figure are sent as PNG images too (vision), after the page text.
 Every answer is JSON constrained by a schema (output_config.format). The shared system prompt is marked for prompt
 caching (it only caches above the model's minimum prompt length). The cheapest settings by default: Haiku with no
 thinking; Sonnet and Opus (which cannot turn thinking off) at low effort. Temperature is left at its default: these
 models reject other sampling values. Every call's tokens and cost go to `log` (prices: shared/llm_prices.yaml).
 """
 
+import base64
 import json
 import re
 import time
@@ -107,7 +110,7 @@ def client() -> anthropic.Anthropic:
     return anthropic.Anthropic(api_key=key, default_headers={"anthropic-workspace-id": workspace} if workspace else None)
 
 
-def params(model: str, system: str, user: str, schema: dict, max_tokens: int = 16000) -> dict:
+def params(model: str, system: str, user: str | list, schema: dict, max_tokens: int = 16000) -> dict:
     """One request's parameters: the system prompt cached, the answer constrained to `schema`, the cheapest thinking."""
     p = {"model": model, "max_tokens": max_tokens,
          "system": [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
@@ -172,12 +175,29 @@ def section_user(section: str, audience: str, source: dict, pages: list[dict]) -
     return (f"Section: {section}\nAudience: {audience}\nSource: {source.get('title')} ({source.get('citation')})\n\n" + page_block(pages))
 
 
+FIGURE_NOTE = ("The images below are the pages above that hold a figure, for the text inside the figure. A quote taken from "
+               "an image is copied as printed in it, with \"from_figure\": true and the printed page of that image.")
+
+
+def section_content(section: str, audience: str, source: dict, pages: list[dict]) -> str | list:
+    """The user message: the pages' text, then the figure pages as images (page["png"], set by the pipeline)."""
+    text = section_user(section, audience, source, pages)
+    figures = [p for p in pages if p.get("png")]
+    if not figures:
+        return text
+    blocks: list[dict] = [{"type": "text", "text": text + "\n\n" + FIGURE_NOTE}]
+    for p in figures:
+        blocks += [{"type": "text", "text": f"=== image of printed page {p['printed_page']} ==="},
+                   {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": base64.b64encode(p["png"]).decode()}}]
+    return blocks
+
+
 def sections(jobs: dict[str, list[dict]], audience: str, source: dict, model: str, log, batch: bool = False) -> dict[str, dict | Exception]:
     """{section: answer or the error}, one call per section with pages."""
     from .schema import llm_section_schema
 
     # one request per section and chunk of CHUNK_PAGES pages ("6_examens#1"), merged back per section
-    reqs = {f"{s}#{k}": params(model, GENERATION_SYSTEM, section_user(s, audience, source, pages[i:i + CHUNK_PAGES]), llm_section_schema(s))
+    reqs = {f"{s}#{k}": params(model, GENERATION_SYSTEM, section_content(s, audience, source, pages[i:i + CHUNK_PAGES]), llm_section_schema(s))
             for s, pages in jobs.items() for k, i in enumerate(range(0, len(pages), CHUNK_PAGES))}
     if not reqs:
         return {}
@@ -249,3 +269,19 @@ def fix(section: str, failed: list[dict], audience: str, source: dict, pages: li
                         for i, f in enumerate(failed))
     user = RETRY_USER + listing + "\n\n" + section_user(section, audience, source, pages)
     return call(params(model, GENERATION_SYSTEM, user, FIXES, 8000), log, "retry", section)["fixes"]
+
+
+COVER_USER = ("These rows of the guideline's recommendation and dose tables are not in the fiche yet. Write this section's "
+              "lines for them, each quote copied verbatim from its row and cited on its printed page. A row outside the "
+              "audience's practice (e.g. catheterization laboratory technique, mechanical circulatory support, surgery) "
+              "goes in \"excluded\" with its index and the topic, instead of a line.\n\n")
+
+
+def cover(section: str, rows: list[dict], audience: str, source: dict, model: str, log) -> dict:
+    """The targeted coverage call for one section's uncovered rows: the section's answer plus "excluded" [{row, topic}]."""
+    from .schema import llm_cover_schema
+
+    listing = "\n".join(json.dumps({"index": i, "printed_page": r["page"], **({"cor": r["cor"], "loe": r["loe"]} if r["kind"] == "rec" else {}),
+                                    "row": r["text"]}, ensure_ascii=False) for i, r in enumerate(rows))
+    user = (f"Section: {section}\nAudience: {audience}\nSource: {source.get('title')} ({source.get('citation')})\n\n" + COVER_USER + listing)
+    return call(params(model, GENERATION_SYSTEM, user, llm_cover_schema(section)), log, "coverage", section)

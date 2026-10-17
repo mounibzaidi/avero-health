@@ -1,13 +1,12 @@
 """Part A: a PDF's two text layers, per page, and its printed page numbers.
 
 - raw (free): `pdftotext -layout` per page, and a column-split copy (each line cut at the gutter, left then right);
-- parsed: LlamaParse markdown, only for the pages that need it (tables or figures among the pages the routing kept;
-  references, author lists and relationship-with-industry appendices never), sent as one sub-PDF. Tier
-  "cost_effective" by default (3 credits a page: the cheapest tier that reads charts and keeps tables;
-  LLAMAPARSE_TIER in .env.local for "agentic"). The other pages use the column-split text. Blocks that come from a
-  figure or an image are flagged.
+- parsed: LlamaParse markdown, lazily: only the routed pages with a numbered table, and the pages where a quote failed
+  on the raw text (references, author lists and relationship-with-industry appendices never), each sent as one
+  sub-PDF. Tier "cost_effective" (3 credits a page; LLAMAPARSE_TIER in .env.local to change it). The other pages use
+  the column-split text. Figures are not parsed: their pages are rendered to PNG (page_png) and read by Claude.
 Printed pages come from the running header or footer of the raw layer ("2136 Rao et al", "Rao et al 2137"): the offset
-that most pages agree on. Layers are stored once per PDF (by its sha256) in the table pdf_pages.
+that most pages agree on. Layers are stored once per PDF in document_pages, and a page is never parsed twice.
 """
 
 import re
@@ -126,9 +125,10 @@ _FIGURE_CAPTION = re.compile(r"^\s*Figure\s+\d+", re.I | re.M)
 _HEADING = re.compile(r"^\s*(\d+(?:\.\d+){1,4})\.?\s{1,3}([A-Z][^\n]{3,90}?)\s*$")
 
 
-def has_table(text: str) -> bool:
-    """A numbered table ("Table 6"): recommendation tables (COR, LOE) are text that pdftotext reads well."""
-    return bool(_TABLE.search(text))
+def has_table(text: str, columns: str = "") -> bool:
+    """A numbered table ("Table 6"), in the layout or the column-split text: recommendation tables (COR, LOE) are
+    text that pdftotext reads well."""
+    return bool(_TABLE.search(text) or _TABLE.search(columns or ""))
 
 
 def has_figure(text: str, images: int) -> bool:
@@ -206,7 +206,7 @@ def page_rows(pdf_bytes: bytes, document_id: str) -> tuple[list[dict], int | Non
         cols = split_columns(text)
         last = heading(cols) or last
         rows.append({"document_id": document_id, "pdf_page": i, "printed_page": i + offset if offset is not None else None,
-                     "raw_text": text, "raw_columns": cols, "parsed_md": None, "parser": "pdftotext", "has_table": has_table(text),
+                     "raw_text": text, "raw_columns": cols, "parsed_md": None, "parser": "pdftotext", "has_table": has_table(text, cols),
                      "has_figure": has_figure(text, images.get(i, 0)), "skipped": skip_page(text), "section_heading": last, "parsed_at": None})
     return rows, offset, consistent
 
@@ -223,10 +223,10 @@ def ensure_pages(store, document_id: str, pdf_bytes) -> tuple[list[dict], int | 
     return rows, offset, consistent
 
 
-def parse_pages(store, rows: list[dict], wanted_pdf_pages: set[int], pdf_bytes, filename: str) -> tuple[int, float]:
-    """LlamaParse for the wanted pages that hold a table or a figure, are not skipped and have no parsed_md yet (a
-    page is never paid twice); rows updated in place and saved. Returns (pages sent, cost in dollars)."""
-    todo = [r for r in rows if r["pdf_page"] in wanted_pdf_pages and (r["has_table"] or r["has_figure"]) and not r["skipped"] and r["parsed_md"] is None]
+def parse_pages(store, rows: list[dict], pdf_pages: set[int], pdf_bytes, filename: str) -> tuple[int, float]:
+    """LlamaParse for these PDF pages, except skipped ones and those already parsed (a page is never paid twice); rows
+    updated in place and saved. Returns (pages sent, cost in dollars)."""
+    todo = [r for r in rows if r["pdf_page"] in pdf_pages and not r["skipped"] and r["parsed_md"] is None]
     if not todo:
         return 0, 0.0
     got = llamaparse_pages(pdf_bytes(), filename, [r["pdf_page"] for r in todo])
@@ -237,8 +237,22 @@ def parse_pages(store, rows: list[dict], wanted_pdf_pages: set[int], pdf_bytes, 
     return len(todo), llamaparse_cost(len(todo))
 
 
-def as_layers(rows: list[dict], offset: int | None) -> list[dict]:
-    """document_pages rows as the pipeline reads them (printed page from the draft's offset)."""
+def page_png(pdf_bytes: bytes, pdf_page: int, long_edge: int = 1568) -> bytes:
+    """One PDF page as a PNG, its long edge at the size Claude reads without downscaling."""
+    with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
+        f.write(pdf_bytes)
+        f.flush()
+        return subprocess.run(["pdftoppm", "-f", str(pdf_page), "-l", str(pdf_page), "-png", "-scale-to", str(long_edge), "-singlefile", f.name],
+                              capture_output=True, check=True, timeout=60).stdout
+
+
+def as_layers(rows: list[dict], offset: int | None, parsed: set[int] | None = None) -> list[dict]:
+    """document_pages rows as the pipeline reads them (printed page from the draft's offset). `parsed`: the PDF pages
+    whose parsed layer this run uses (None: all); a layer stored for an earlier run's needs is not used."""
+    def md(r):
+        return (r["parsed_md"] or "") if parsed is None or r["pdf_page"] in parsed else ""
+
     return [{"pdf_page": r["pdf_page"], "printed_page": r["pdf_page"] + offset if offset is not None else r["printed_page"],
-             "raw_layout": r["raw_text"], "raw_columns": r["raw_columns"], "parsed": r["parsed_md"] or "",
-             "parsed_figures": figure_blocks(r["parsed_md"] or ""), "skip": r["skipped"], "section_heading": r["section_heading"]} for r in rows]
+             "raw_layout": r["raw_text"], "raw_columns": r["raw_columns"], "parsed": md(r), "parsed_figures": figure_blocks(md(r)),
+             "skip": r["skipped"], "section_heading": r["section_heading"], "has_table": has_table(r["raw_text"], r["raw_columns"]),
+             "has_figure": r["has_figure"]} for r in rows]

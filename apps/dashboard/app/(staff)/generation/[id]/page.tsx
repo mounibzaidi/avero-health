@@ -19,10 +19,14 @@ interface Dose {
 }
 type Fiche = { meta: Record<string, unknown> & { title: string; status: string; quote_check: string; excluded_by_audience: string[] }; sections: Record<string, Record<string, unknown>> };
 interface LineMeta { element_id: string; section: string; quote_status: "pdf" | "parsed" | "failed" | null; from_figure: boolean; retries: number; model: string | null; dropped: boolean; dropped_line: Line | null; reason: string | null }
+interface Coverage {
+  rows: number; rec_rows: number; dose_rows: number; matched: number; excluded: number; harm_rows: number; harm_in_8: number; pct: number; pct_before: number;
+  uncovered: { kind: "rec" | "dose"; page: number; text: string; cor?: string; loe?: string }[];
+}
 interface Draft {
   id: string; topic_id: string; content: Fiche | null; status: string; stage: string; stage_detail: string | null; error: string | null;
   licence_scope: "internal" | "publish"; page_offset: number | null; offset_detected: boolean; form: { title: string; licence_text?: string };
-  lines: LineMeta[]; dropped: LineMeta[]; models: string[];
+  lines: LineMeta[]; dropped: LineMeta[]; models: string[]; coverage: Coverage | null;
   cost: { calls: number; cost_usd: number; by_model: Record<string, number>; input_tokens: number; output_tokens: number; cache_read_tokens: number };
 }
 
@@ -66,7 +70,7 @@ function Badges({ meta, missing }: { meta?: LineMeta; missing: string[] }) {
     <span className="flex flex-wrap gap-1">
       {meta?.quote_status === "pdf" && <Tag tone="accent">PDF</Tag>}
       {meta?.quote_status === "parsed" && <Tag tone="caution">Parsé</Tag>}
-      {meta?.from_figure && <span className="rounded-md bg-[#efe6fb] px-1.5 py-0.5 text-[11px] font-semibold text-[#6b3fa0]">Figure</span>}
+      {meta?.from_figure && <span className="rounded-md bg-[#efe6fb] px-1.5 py-0.5 text-[11px] font-semibold text-[#6b3fa0]">{meta.quote_status === "parsed" ? "Figure : à confirmer" : "Figure"}</span>}
       {missing.map((m, i) => <Tag key={i} tone="urgent">{m.length > 40 ? `${m.slice(0, 40)}…` : m}</Tag>)}
     </span>
   );
@@ -260,6 +264,23 @@ export default function DraftReview() {
               </Card>
             );
           })}
+
+          {d.coverage && (
+            <Card className="flex flex-col gap-1 p-4">
+              <h2 className="text-sm font-semibold text-ink">
+                Couverture {d.coverage.pct} % <span className="text-xs font-normal text-muted">
+                  ({d.coverage.matched} lignes du guide couvertes + {d.coverage.excluded} hors public sur {d.coverage.rows} : {d.coverage.rec_rows} recommandations, {d.coverage.dose_rows} posologies ·
+                  « 3: Harm / No Benefit » en Ne pas faire : {d.coverage.harm_in_8}/{d.coverage.harm_rows})</span>
+              </h2>
+              {d.coverage.uncovered.map((r, i) => (
+                <div key={i} className="cursor-pointer rounded-lg px-2 py-1 text-sm hover:bg-panel/60" onClick={() => setShown({ page: r.page, quote: r.text })}>
+                  <span className="me-2 inline-block"><Tag tone="caution">Non couvert</Tag></span>
+                  <span className="text-ink">{r.text}</span>
+                  <span className="text-xs text-muted"> · p. {r.page}{r.cor ? ` · COR ${r.cor} / LOE ${r.loe}` : " · posologie"}</span>
+                </div>
+              ))}
+            </Card>
+          )}
 
           {d.dropped.length > 0 && (
             <Card className="flex flex-col gap-1 p-4">

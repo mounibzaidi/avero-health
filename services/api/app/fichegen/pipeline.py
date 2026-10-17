@@ -2,22 +2,35 @@
 
 ingest: the PDF's free layers (pdftotext) into document_pages, once per document; the draft waits at
 "needs_offset" when the printed page offset is not clear.
-generate: routing (Haiku, on the free layers), then LlamaParse only for the routed pages with a table or a figure that
-have no parsed layer yet, one call per section, the quote check of every line, up to MAX_RETRIES correction calls,
-and, for a section still failing, one rerun on the fallback model (FICHEGEN_FALLBACK_MODEL, default Sonnet; "none"
-turns it off). Then assembly and validation: a fiche that fails validation is not saved. Text layers are read from
-document_pages; every call's cost (LlamaParse included) goes to generation_calls; per-line data to fiche_line_meta.
+generate:
+1. routing (Haiku, on the free layers);
+2. LlamaParse for the routed pages with a numbered table; the routed pages with a figure rendered to PNG for Claude;
+3. one call per section (chunks of pages, figure images included);
+4. the quote check of every line; a quote cited on the wrong page moved by code; a line read from a figure image is
+   kept as "parsed" + from_figure, for the reviewer to confirm;
+5. lazy parsing: LlamaParse for the pages where quotes still fail on the pdftotext text, then the check again;
+6. up to MAX_RETRIES correction calls, then, for a section still failing, one rerun on the fallback model
+   (FICHEGEN_FALLBACK_MODEL, default Sonnet; "none" turns it off);
+7. coverage (coverage.py): every recommendation and dose row must be covered; "3: Harm"/"3: No Benefit" rows in
+   8_ne_pas_faire; one targeted call per section for the rows left; rows still left go to the reviewer ("Non couvert");
+8. assembly and validation: a fiche that fails validation is not saved.
+Text layers are read from document_pages; every call's cost (LlamaParse included) goes to generation_calls; per-line
+data to fiche_line_meta; the coverage report to fiche_drafts.coverage.
 """
 
 import hashlib
 
 from .. import supabase as sb
 from ..settings import env
-from . import assemble, check, ingest, llm
+from concurrent.futures import ThreadPoolExecutor
+
+from . import assemble, check, coverage, ingest, llm
 from .schema import SECTIONS, validate
 from .store import RestStore, now
 
 MAX_RETRIES = 2
+LAZY_MAX = 12  # pages LlamaParse may read for failed quotes in one run
+COVER_ROWS = 20
 
 
 def fallback_model() -> str | None:
@@ -60,21 +73,39 @@ def ingest_draft(caller, draft_id: str) -> None:
         _update(caller, draft_id, stage="error", error=f"Ingestion : {type(exc).__name__} {exc}"[:500])
 
 
-def _section_lines(section, answer, by_printed, model, jobs, audience, source, log, errors) -> list:
-    """One section's lines checked on the PDF, corrected up to MAX_RETRIES times: [place, line, meta]."""
+def _wrong_page(lines: list, pages: list[dict]) -> None:
+    """A verbatim quote cited on the wrong page: its page found by code among `pages` (free, before any retry)."""
+    for t in lines:
+        if t[2]["quote_status"] == "failed":
+            hits = [p for p in pages if check.check(t[1]["source"]["quote"], p) != "failed"]
+            if len(hits) == 1:
+                t[1]["source"]["page"] = hits[0]["printed_page"]
+                t[2]["quote_status"] = check.check(t[1]["source"]["quote"], hits[0])
+
+
+def _figures(lines: list, pages: list[dict]) -> None:
+    """A line the model read from a figure image it was shown: "parsed" + from_figure, the reviewer confirms it."""
+    shown = {p["printed_page"] for p in pages if p.get("png")}
+    for t in lines:
+        if t[2]["quote_status"] == "failed" and t[1].get("from_figure") and t[1]["source"]["page"] in shown:
+            t[2].update(quote_status="parsed", from_figure=True, reason="lue sur l'image de la figure : à confirmer")
+
+
+def _initial(section, answer, by_printed, model, pages) -> list:
+    """One section's lines with their first check: [place, line, meta]."""
     lines = []
     for place, line in assemble.lines_of(answer, section):
         page = by_printed.get(line["source"]["page"])
         lines.append([place, line, {"quote_status": check.check(line["source"]["quote"], page),
                                     "from_figure": bool(line.get("from_figure")) or check.from_figure(line["source"]["quote"], page),
                                     "retries": 0, "model": model}])
-    # a verbatim quote cited on the wrong page: code finds its page among the section's pages (free, before any retry)
-    for t in lines:
-        if t[2]["quote_status"] == "failed":
-            hits = [p["printed_page"] for p in jobs.get(section, []) if check.check(t[1]["source"]["quote"], p) != "failed"]
-            if len(hits) == 1:
-                t[1]["source"]["page"] = hits[0]
-                t[2]["quote_status"] = check.check(t[1]["source"]["quote"], by_printed[hits[0]])
+    _wrong_page(lines, pages)
+    _figures(lines, pages)
+    return lines
+
+
+def _retry(section, lines, by_printed, model, jobs, audience, source, log, errors) -> None:
+    """Up to MAX_RETRIES correction calls for the section's failed quotes."""
     for attempt in range(1, MAX_RETRIES + 1):
         failed = [t for t in lines if t[2]["quote_status"] == "failed"]
         if not failed:
@@ -100,7 +131,17 @@ def _section_lines(section, answer, by_printed, model, jobs, audience, source, l
             if fx.get("quote"):
                 t[1]["source"]["quote"] = fx["quote"]
             t[2]["quote_status"] = check.check(t[1]["source"]["quote"], by_printed.get(t[1]["source"]["page"]))
+
+
+def _section_lines(section, answer, by_printed, model, jobs, audience, source, log, errors) -> list:
+    """One section's lines checked on the PDF, corrected up to MAX_RETRIES times: [place, line, meta]."""
+    lines = _initial(section, answer, by_printed, model, jobs.get(section, []))
+    _retry(section, lines, by_printed, model, jobs, audience, source, log, errors)
     return lines
+
+
+def _verified(meta: dict) -> bool:
+    return meta["quote_status"] in ("pdf", "parsed")
 
 
 def generate(store, document_id: str, offset: int | None, pdf_bytes, filename: str, form: dict, model: str, batch: bool, log,
@@ -108,53 +149,145 @@ def generate(store, document_id: str, offset: int | None, pdf_bytes, filename: s
     """The pipeline: (fiche, side data by element id, dropped lines, section errors, report). Layers are read from
     document_pages (store); `log` receives every call's cost; `progress(stage, detail)` the steps."""
     audience = ", ".join(form.get("audience") or ["MG", "urgences"])
+    source = form["source"]
     rows = store.pages(document_id)
-    pages = [p for p in ingest.as_layers(rows, offset) if not p["skip"]]
-    by_printed = {p["printed_page"]: p for p in pages}
+    pdf_cache: list[bytes] = []
 
+    def pdf() -> bytes:
+        if not pdf_cache:
+            pdf_cache.append(pdf_bytes())
+        return pdf_cache[0]
+
+    needed: set[int] = set()  # PDF pages whose LlamaParse layer this run uses
+    pngs: dict[int, bytes] = {}  # figure pages shown to Claude, by printed page
+
+    def layers():
+        ps = [p for p in ingest.as_layers(rows, offset, needed) if not p["skip"]]
+        for p in ps:
+            if p["printed_page"] in pngs:
+                p["png"] = pngs[p["printed_page"]]
+        return ps, {p["printed_page"]: p for p in ps}
+
+    def llamaparse(pdf_pages: set[int]) -> tuple[int, float]:
+        n, usd = ingest.parse_pages(store, rows, pdf_pages, pdf, filename)
+        needed.update(pdf_pages)
+        if n:
+            log({"stage": "llamaparse", "section": None, "model": f"llamaparse:{ingest.tier_name()}", "batch": False, "input_tokens": n,
+                 "output_tokens": 0, "cache_read_tokens": 0, "cache_write_tokens": 0, "cost_usd": usd})
+        return n, usd
+
+    pages, by_printed = layers()
     progress("routing", "répartition des pages par section")
     routing = llm.route(pages, audience, log)
-    wanted = {n for s in SECTIONS for n in routing["sections"].get(s, [])}
+    wanted = [n for n in dict.fromkeys(n for s in SECTIONS for n in routing["sections"].get(s, [])) if n in by_printed]
 
-    progress("parsing", "LlamaParse des pages à tableaux ou figures retenues")
-    sent, lp_cost = ingest.parse_pages(store, rows, {by_printed[n]["pdf_page"] for n in wanted if n in by_printed}, pdf_bytes, filename)
-    if sent:
-        log({"stage": "llamaparse", "section": None, "model": f"llamaparse:{ingest.tier_name()}", "batch": False, "input_tokens": sent,
-             "output_tokens": 0, "cache_read_tokens": 0, "cache_write_tokens": 0, "cost_usd": lp_cost})
-    pages = [p for p in ingest.as_layers(rows, offset) if not p["skip"]]
-    by_printed = {p["printed_page"]: p for p in pages}
-    jobs = {s: [by_printed[n] for n in routing["sections"][s] if n in by_printed] for s in SECTIONS if s != "12_ordonnance"}
-    jobs = {s: ps for s, ps in jobs.items() if ps}
+    progress("parsing", "LlamaParse des pages à tableau numéroté retenues ; figures en images")
+    sent, lp_cost = llamaparse({by_printed[n]["pdf_page"] for n in wanted if by_printed[n]["has_table"]})
+    for n in wanted:
+        if by_printed[n]["has_figure"]:
+            pngs[n] = ingest.page_png(pdf(), by_printed[n]["pdf_page"])
+    pages, by_printed = layers()
 
-    progress("generating", f"{len(jobs)} section(s), {model}{' en lot' if batch else ''}")
-    answers = llm.sections(jobs, audience, form["source"], model, log, batch=batch)
+    def jobs_of():
+        js = {s: [by_printed[n] for n in routing["sections"][s] if n in by_printed] for s in SECTIONS if s != "12_ordonnance"}
+        return {s: ps for s, ps in js.items() if ps}
+
+    jobs = jobs_of()
+    progress("generating", f"{len(jobs)} section(s), {model}{' en lot' if batch else ''}, {len(pngs)} figure(s) en image")
+    answers = llm.sections(jobs, audience, source, model, log, batch=batch)
 
     progress("checking", "vérification des citations")
-    kept: dict[str, list] = {}
-    dropped: list[dict] = []
     errors: list[str] = []
-    fell_back = []
-    for section, answer in list(answers.items()):
+    checked: dict[str, list] = {}
+    for section, answer in answers.items():
         if isinstance(answer, Exception):
             errors.append(f"{section} : {answer}")
-            continue
-        lines = _section_lines(section, answer, by_printed, model, jobs, audience, form["source"], log, errors)
+        else:
+            checked[section] = _initial(section, answer, by_printed, model, jobs[section])
+
+    # lazy parsing: the pages where quotes still fail on the pdftotext text
+    lazy = sorted({by_printed[t[1]["source"]["page"]]["pdf_page"] for ls in checked.values() for t in ls
+                   if t[2]["quote_status"] == "failed" and t[1]["source"]["page"] in by_printed} - needed)[:LAZY_MAX]
+    lazy_sent, lazy_cost = 0, 0.0
+    if lazy:
+        progress("parsing", f"LlamaParse de {len(lazy)} page(s) aux citations introuvables")
+        lazy_sent, lazy_cost = llamaparse(set(lazy))
+        pages, by_printed = layers()
+        jobs = jobs_of()
+        for section, lines in checked.items():
+            for t in lines:
+                if t[2]["quote_status"] == "failed":
+                    t[2]["quote_status"] = check.check(t[1]["source"]["quote"], by_printed.get(t[1]["source"]["page"]))
+            _wrong_page(lines, jobs.get(section, []))
+
+    kept: dict[str, list] = {}
+    dropped: list[dict] = []
+    fell_back = []
+    for section, lines in checked.items():
+        _retry(section, lines, by_printed, model, jobs, audience, source, log, errors)
         if fallback and fallback != model and any(t[2]["quote_status"] == "failed" for t in lines):
             # the section still fails after its corrections: one rerun on the fallback model, kept if it verifies more
-            again = llm.sections({section: jobs[section]}, audience, form["source"], fallback, log)[section]
+            again = llm.sections({section: jobs[section]}, audience, source, fallback, log)[section]
             if not isinstance(again, Exception):
-                other = _section_lines(section, again, by_printed, fallback, jobs, audience, form["source"], log, errors)
-                good = lambda ls: sum(t[2]["quote_status"] in ("pdf", "parsed") for t in ls) - sum(t[2]["quote_status"] == "failed" for t in ls)  # noqa: E731
+                other = _section_lines(section, again, by_printed, fallback, jobs, audience, source, log, errors)
+                good = lambda ls: sum(_verified(t[2]) for t in ls) - sum(t[2]["quote_status"] == "failed" for t in ls)  # noqa: E731
                 if good(other) > good(lines):
                     lines, answers[section] = other, again
                     fell_back.append(section)
-        kept[section] = [(pl, ln, m) for pl, ln, m in lines if m["quote_status"] in ("pdf", "parsed")]
+        kept[section] = [(pl, ln, m) for pl, ln, m in lines if _verified(m)]
         dropped += [{"section": section, "line": ln, "reason": m.get("reason") or f"citation introuvable page {ln['source']['page']} après {MAX_RETRIES} corrections"}
-                    for pl, ln, m in lines if m["quote_status"] not in ("pdf", "parsed")]
+                    for pl, ln, m in lines if not _verified(m)]
+
+    # coverage: every recommendation and dose row in the fiche, or out of the audience
+    progress("coverage", "couverture des recommandations et des posologies")
+    rows_c = coverage.rows_of(pages)
+    moved = coverage.harm_to_8(rows_c, kept)
+    hits = coverage.match(rows_c, coverage.items_of_kept(kept))
+    pct_before = round(100 * len(hits) / len(rows_c), 1) if rows_c else 100.0
+    by_section: dict[str, list[dict]] = {}
+    for r in rows_c:
+        if r["id"] not in hits:
+            by_section.setdefault(coverage.section_for(r, routing["sections"]), []).append(r)
+    # one targeted call per section, COVER_ROWS rows at a time (a long answer gets cut at max_tokens)
+    todo = [(s, rs[i:i + COVER_ROWS]) for s, rs in by_section.items() for i in range(0, len(rs), COVER_ROWS)]
+    excluded_ids: set[int] = set()
+    topics: list[str] = []
+
+    def cover(item):
+        section, rs = item
+        try:
+            return section, rs, llm.cover(section, rs, audience, source, model, log)
+        except Exception as exc:
+            return section, rs, exc
+
+    with ThreadPoolExecutor(llm.PARALLEL) as pool:
+        covered = list(pool.map(cover, todo))
+    for section, rs, ans in covered:
+        if isinstance(ans, Exception):
+            errors.append(f"{section} (couverture) : {ans}")
+            continue
+        for e in ans.get("excluded") or []:
+            if 0 <= e["row"] < len(rs):
+                excluded_ids.add(rs[e["row"]]["id"])
+                topics.append(e["topic"])
+        near = [by_printed[n] for n in sorted({r["page"] + d for r in rs for d in (-1, 0, 1)}) if n in by_printed]
+        lines = _initial(section, ans, by_printed, model, near)
+        for t in lines:
+            t[2]["coverage"] = True
+        kept.setdefault(section, []).extend((pl, ln, m) for pl, ln, m in lines if _verified(m))
+        dropped += [{"section": section, "line": ln, "reason": f"couverture : citation introuvable page {ln['source']['page']}"}
+                    for pl, ln, m in lines if not _verified(m)]
+    moved += coverage.harm_to_8(rows_c, kept)
 
     good_answers = {k: v for k, v in answers.items() if not isinstance(v, Exception)}
-    fiche, side, duplicates = assemble.assemble(form, good_answers, kept, routing["excluded_by_audience"])
-    report = {"llamaparse_pages": sent, "llamaparse_usd": lp_cost, "routed_pages": len(wanted), "fallback_sections": fell_back}
+    excluded = list(dict.fromkeys([*routing["excluded_by_audience"], *topics]))
+    fiche, side, duplicates = assemble.assemble(form, good_answers, kept, excluded)
+    cov = coverage.report(rows_c, coverage.items_of_fiche(fiche), excluded_ids)
+    cov.update(pct_before=pct_before, harm_moved=moved)
+    report = {"llamaparse_pages": sent + lazy_sent, "llamaparse_usd": round(lp_cost + lazy_cost, 6), "table_pages": sent, "lazy_pages": lazy_sent,
+              # what a first run of this PDF pays LlamaParse (pages already parsed by an earlier run included)
+              "llamaparse_pages_needed": len(needed), "llamaparse_usd_needed": ingest.llamaparse_cost(len(needed)),
+              "figure_pages": sorted(pngs), "routed_pages": len(wanted), "fallback_sections": fell_back, "coverage": cov}
     return fiche, side, dropped + duplicates, errors, report
 
 
@@ -177,7 +310,7 @@ def generate_draft(caller, draft_id: str) -> None:
             return body
 
         fallback = opts.get("fallback", fallback_model()) if opts.get("fallback") != "none" else None
-        fiche, side, dropped, errors, _ = generate(RestStore(caller), d["document_id"], d["page_offset"], pdf, d["pdf_path"].rsplit("/", 1)[-1],
+        fiche, side, dropped, errors, report = generate(RestStore(caller), d["document_id"], d["page_offset"], pdf, d["pdf_path"].rsplit("/", 1)[-1],
                                                    form, model, bool(opts.get("batch")), log,
                                                    lambda stage, detail: _update(caller, draft_id, stage=stage, stage_detail=detail), fallback)
         problems = validate(fiche)
@@ -189,8 +322,10 @@ def generate_draft(caller, draft_id: str) -> None:
                   "reason": x["reason"], "model": model} for i, x in enumerate(dropped)]
         for k in range(0, len(rows), 100):
             sb.rest(caller, "POST", "fiche_line_meta", body=rows[k:k + 100])
-        _update(caller, draft_id, content=fiche, stage="done", status="draft",
-                stage_detail=f"citations vérifiées {fiche['meta']['quote_check']}, {len(dropped)} ligne(s) écartée(s)",
+        cov = report["coverage"]
+        _update(caller, draft_id, content=fiche, stage="done", status="draft", coverage=cov,
+                stage_detail=f"citations vérifiées {fiche['meta']['quote_check']}, {len(dropped)} ligne(s) écartée(s), "
+                             f"couverture {cov['pct']} % ({len(cov['uncovered'])} non couverte(s))",
                 error="; ".join(errors)[:500] or None)
     except Exception as exc:
         _update(caller, draft_id, stage="error", error=f"{type(exc).__name__} {exc}"[:500])

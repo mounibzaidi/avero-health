@@ -157,7 +157,7 @@ def page_image(draft_id: str, printed: int, caller: sb.Caller = Depends(sb.requi
     with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
         f.write(body)
         f.flush()
-        png = subprocess.run(["pdftoppm", "-f", str(pdf_page), "-l", str(pdf_page), "-png", "-r", "90", "-singlefile", f.name, "-"],
+        png = subprocess.run(["pdftoppm", "-f", str(pdf_page), "-l", str(pdf_page), "-png", "-r", "90", "-singlefile", f.name],
                              capture_output=True, timeout=60).stdout
     if not png:
         raise HTTPException(status_code=404, detail="Page introuvable")

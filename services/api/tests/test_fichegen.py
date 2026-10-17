@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from app.fichegen import assemble, check, ingest
+from app.fichegen import assemble, check, coverage, ingest
 from app.fichegen.schema import validate
 
 FIX = Path(__file__).resolve().parent / "fixtures"
@@ -145,6 +145,68 @@ def test_duplicate_kept_in_its_rule_4_section():
     assert len(fiche["sections"]["8_ne_pas_faire"]["elements"]) == 1 and len(dropped) == 1  # moved by rule 4, kept once
 
 
+def test_rule_4_exam_condition_branch_stays_in_conduite():
+    answers = {"5_conduite": {"state": "filled", "nodes": [{"node": "Douleur thoracique", "branches": []}]}}
+    kept = {"5_conduite": [("node:0", line("Si STEMI à l'ECG : reperfusion immédiate.", "quote a"), ok()),
+                           ("node:0", line("Stratégie invasive dans les 24 h.", "quote b", condition="troponine élevée"), ok())]}
+    fiche, _, _ = build(kept, answers)
+    assert len(fiche["sections"]["5_conduite"]["nodes"][0]["branches"]) == 2 and not fiche["sections"]["6_examens"]["elements"]
+
+
+def test_rule_4_exam_lines_go_to_examens_and_do_not_lines_to_8():
+    answers = {"5_conduite": {"state": "filled", "nodes": [{"node": "Arrivée", "branches": []}]}}
+    kept = {"5_conduite": [("node:0", line("Réaliser un ECG 12 dérivations dans les 10 minutes.", "quote c"), ok()),
+                           ("node:0", line("Pas de fibrinolyse en cas de sous-décalage ST isolé à l'ECG.", "should not be used"), ok())],
+            "1_essentiel": [("elements", line("Doser la troponine hs à l'arrivée.", "quote d"), ok()),
+                            ("elements", line("En cas de troponine élevée, stratégie invasive.", "quote e"), ok())]}
+    fiche, _, _ = build(kept, answers)
+    secs = fiche["sections"]
+    assert sorted(e["text"][:8] for e in secs["6_examens"]["elements"]) == ["Doser la", "Réaliser"]
+    assert [e["text"][:6] for e in secs["8_ne_pas_faire"]["elements"]] == ["Pas de"]  # do-not even with ECG, even from a branch
+    assert [e["text"][:8] for e in secs["1_essentiel"]["elements"]] == ["En cas d"]
+
+
+# ─── Coverage ────────────────────────────────────────────────────────────────────────────────────
+
+
+def cpage(printed):
+    return {**page(printed), "printed_page": printed, "skip": False}
+
+
+def test_recommendation_rows_parsed_with_cor_and_loe():
+    rows = coverage.rec_rows(RAW["pages"]["2147"], 2147)
+    assert [r["number"] for r in rows] == [1, 2, 3, 4] and all(r["cor"] and r["loe"] for r in rows)
+    assert rows[1]["text"].startswith("2. In patients with suspected ACS in which the initial ECG is non-diagnostic")
+    assert rows[2]["loe"] == "B-NR" and "PCI-capable hospital" in rows[2]["text"]
+
+
+def test_dose_rows_carry_the_drug_down():
+    rows = coverage.dose_rows(RAW["pages"]["2157"], 2157)
+    tica = [r for r in rows if r["drug"] == "Ticagrelor"]
+    assert [r["doses"] for r in tica] == [["180mg"], ["90mg"]]
+    assert {r["drug"] for r in rows} == {"Aspirin", "Clopidogrel", "Prasugrel", "Ticagrelor"}
+
+
+def test_rows_matched_by_quote_overlap():
+    rows = coverage.rows_of([cpage(2147), cpage(2157)])
+    rec = next(r for r in rows if r["kind"] == "rec" and r["number"] == 3)
+    tica = next(r for r in rows if r["kind"] == "dose" and r["drug"] == "Ticagrelor" and r["doses"] == ["180mg"])
+    items = [{"section": "9_orientation", "page": 2147, "quote": "immediate emergency medical services (EMS) transport to a PCI-capable hospital", "extra": ""},
+             {"section": "7_traitement", "page": 2157, "quote": "Loading dose 180 mg orally", "extra": "180 mg"}]
+    hits = coverage.match(rows, items)
+    assert hits[rec["id"]] == [0] and hits[tica["id"]] == [1]
+    assert coverage.report(rows, items, set())["matched"] == 2
+
+
+def test_harm_rows_moved_to_ne_pas_faire():
+    rows = [{"id": 0, "kind": "rec", "page": 2156, "number": 2, "cor": "3: Harm", "loe": "B-R",
+             "text": "2. In patients with a history of stroke or transient ischemic attack, prasugrel should not be administered because of worse net clinical outcomes."}]
+    kept = {"7_traitement": [("contre_indications", line("Prasugrel contre-indiqué après AVC ou AIT.", "prasugrel should not be administered because of worse net clinical outcomes"), ok())]}
+    assert coverage.harm_to_8(rows, kept) == 1
+    assert not kept["7_traitement"] and kept["8_ne_pas_faire"][0][0] == "elements"
+    assert coverage.section_for(rows[0], {}) == "8_ne_pas_faire"
+
+
 # ─── Live acceptance run (recorded once, then offline) ───────────────────────────────────────────
 
 
@@ -159,13 +221,24 @@ def test_live_quote_check_at_least_95_percent():
     assert y and x / y >= 0.95
 
 
-def test_live_no_ecg_or_troponin_outside_examens():
+def test_live_exam_lines_only_in_examens():
+    """Rule 4: a line about performing or reading an ECG or biology is in 6_examens; a 5_conduite branch may have an
+    exam result as its condition; do-not lines are in 8 whatever they mention."""
     secs = live()["fiche"]["sections"]
     for name, sec in secs.items():
-        if name == "6_examens":
+        if name in ("6_examens", "8_ne_pas_faire"):
             continue
-        for el in [e for v in sec.values() if isinstance(v, list) for e in v if isinstance(e, dict) and "text" in e]:
-            assert not any(w in el["text"] for w in ("ECG", "troponine")), (name, el["text"])
+        lists = [v for v in sec.values() if isinstance(v, list)] + [v["elements"] for v in sec.values() if isinstance(v, dict) and "elements" in v]
+        branches = [b for n in sec.get("nodes") or [] for b in n["branches"]]
+        for el in [e for lst in lists for e in lst if isinstance(e, dict) and "text" in e]:
+            assert not assemble.is_exam(el), (name, el["text"])
+        for b in branches:
+            assert not assemble.is_exam(b) or assemble.exam_condition(b), (name, b["text"])
+
+
+def test_live_coverage_reported():
+    cov = live()["report"]["coverage"]
+    assert cov["rows"] and cov["harm_in_8"] == cov["harm_rows"]
 
 
 @pytest.mark.parametrize("words", [["oxygène"], ["prasugrel"], ["fibrinolyse", "sous-décalage"], ["PDE5"], ["fondaparinux"]])

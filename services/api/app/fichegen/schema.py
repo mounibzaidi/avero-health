@@ -140,6 +140,15 @@ def llm_section_schema(section: str) -> dict:
     return _lsec(elements=_llist)
 
 
+def llm_cover_schema(section: str) -> dict:
+    """The targeted coverage call's answer: the section's lines for the rows given, and the rows outside the audience."""
+    base = llm_section_schema(section)
+    return {**base, "required": [*base["required"], "excluded"],
+            "properties": {**base["properties"], "excluded": {"type": "array", "items": {
+                "type": "object", "additionalProperties": False, "required": ["row", "topic"],
+                "properties": {"row": {"type": "integer"}, "topic": {"type": "string"}}}}}}
+
+
 ROUTING = {
     "type": "object", "additionalProperties": False, "required": ["sections", "excluded_by_audience"],
     "properties": {

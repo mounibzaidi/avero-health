@@ -3,8 +3,9 @@
 Ids `{topic_id}-{nnn}`, "translated" for a non-French quote, branch "order", source_id from the form, every dose's
 "algerie" block left for the reviewer (statut null, "algerie.statut" in its missing list). The per-line pipeline data
 (quote status, figure, retries, model) never enters the fiche: it is returned apart, by element id, for the side
-table. Lines found in two sections keep the place rule 4 gives them (symptoms in 2, ECG and biology in 6, do-not
-lines in 8); the other copy is dropped with its reason.
+table. Rule 4 by code: do-not lines go to 8, wherever they were (decision-tree branches included); lines that tell how
+to perform or interpret an exam go to 6, while a branch whose condition is an exam result stays in 5. Lines found in
+two sections keep the place rule 4 gives them; the other copy is dropped with its reason.
 """
 
 import re
@@ -15,21 +16,42 @@ from .schema import SECTIONS
 NOT_CHECKED = "Nomenclature algérienne non consultée : marques et statut à compléter."
 _FR = re.compile(r"\b(le|la|les|des|du|et|pour|chez|avec|une?|est|sont|dans|patients?)\b", re.I)
 _SYMPTOM = re.compile(r"\b(douleur|dyspn|symptôme|signe|malaise|syncope|palpitation|sueur|nausée)", re.I)
-_EXAM = re.compile(r"\b(ECG|électrocardiogramme|troponine|biolog|dosage|bilan|hémogramme|créatinine|kaliémie|échograph|scanner|IRM|radiograph)", re.I)
-_DONOT = re.compile(r"\b(ne pas|pas de|éviter|contre-indiqu|should not|not recommended|avoid)\b", re.I)
-# Rule 4, enforced by code: an ECG or biology line belongs in 6_examens, a do-not line in 8_ne_pas_faire.
+# Rule 4, enforced by code: a do-not line belongs in 8_ne_pas_faire, a line about performing or reading an exam in 6_examens.
 _ECG_BIO = re.compile(r"\b(ECG|électrocardiogramme|troponine|cTn|biolog\w*|kaliémie|créatinine|hémogramme|glycémie|bilan lipidique)\b", re.I)
 _DONOT_LINE = re.compile(r"^\s*(ne (pas|jamais)|pas d[e']|éviter|ne doit pas)\b", re.I)
 _DONOT_QUOTE = re.compile(r"\b(should not|is not recommended|are not recommended|avoid)\b", re.I)
+# the condition that opens a line ("Si STEMI à l'ECG, ...", "En cas de troponine élevée : ...") is not what the line does
+_CONDITION = re.compile(r"^\s*(si|en cas d[e']|chez|lorsqu|quand|devant|après|avant)\b[^,:;]*[,:;]\s*", re.I)
+# performing or reading an exam: a verb of doing/reading, or the exam as the subject of the line
+_EXAM_ACT = re.compile(r"\b(réalis\w*|enregistr\w*|obten\w*|dos(er|age)|mesur\w*|répét\w*|renouvel\w*|interpr[ée]t\w*|lire|lecture|"
+                       r"prélev\w*|demander|effectuer|faire|rechercher|critères?|définit|signe\w* électrique)\b", re.I)
+_EXAM_SUBJECT = re.compile(r"^\s*(l['’]\s*|le |la |un |une |les )?(ECG|électrocardiogramme|troponine|cTn|dosage|bilan)", re.I)
+
+
+def is_donot(line: dict) -> bool:
+    return bool(_DONOT_LINE.search(line.get("text", "")) or _DONOT_QUOTE.search(line.get("source", {}).get("quote", "")))
+
+
+def is_exam(line: dict) -> bool:
+    """Does the line tell how to perform or interpret an ECG or biology exam (its action, not its condition)."""
+    action = _CONDITION.sub("", line.get("text", ""), count=1)
+    return bool(_ECG_BIO.search(action)) and bool(_EXAM_ACT.search(action) or _EXAM_SUBJECT.search(action))
+
+
+def exam_condition(line: dict) -> bool:
+    """Is an exam result the condition of the line (its condition field, or the clause that opens its text)."""
+    opening = _CONDITION.match(line.get("text", ""))
+    return bool(_ECG_BIO.search(line.get("condition") or "") or (opening and _ECG_BIO.search(opening.group(0))))
 
 
 def placed(section: str, place: str, line: dict) -> tuple[str, str]:
-    """Where rule 4 puts a line: (section, place). Doses, contraindications and decision-tree branches stay put."""
-    if place in ("posologies", "contre_indications") or place.startswith("node:"):
+    """Where rule 4 puts a line: (section, place). Do-not lines go to 8 even from a decision-tree branch; exam lines go
+    to 6, except a decision-tree branch whose condition is the exam result. Doses and contraindications stay put."""
+    if place in ("posologies", "contre_indications"):
         return section, place
-    if section != "8_ne_pas_faire" and (_DONOT_LINE.search(line.get("text", "")) or _DONOT_QUOTE.search(line["source"]["quote"])):
+    if section != "8_ne_pas_faire" and is_donot(line):
         return "8_ne_pas_faire", "elements"
-    if section not in ("6_examens", "8_ne_pas_faire") and _ECG_BIO.search(line.get("text", "")):
+    if section not in ("6_examens", "8_ne_pas_faire") and is_exam(line) and not (place.startswith("node:") and exam_condition(line)):
         return "6_examens", "elements"
     return section, place
 
@@ -83,12 +105,11 @@ def lines_of(answer: dict, section: str) -> list[tuple[str, dict]]:
 
 def preferred(line: dict) -> str | None:
     """The section rule 4 assigns a line to, if any."""
-    text = f"{line.get('text', '')} {line.get('source', {}).get('quote', '')}"
-    if _DONOT.search(text):
+    if is_donot(line):
         return "8_ne_pas_faire"
-    if _EXAM.search(text):
+    if is_exam(line):
         return "6_examens"
-    if _SYMPTOM.search(text):
+    if _SYMPTOM.search(line.get("text", "")):
         return "2_presentation"
     return None
 
