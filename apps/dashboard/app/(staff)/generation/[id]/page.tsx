@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { BrandPicker } from "@/components/editor/BrandPicker";
+import { RUNNING, Stepper } from "@/components/GenerationProgress";
 import { Button, Card, ErrorNote, inputCls, PageHeader, Spinner, Tag } from "@/components/ui";
 import { api, apiBlob } from "@/lib/api";
 import { IMPORT_KEY } from "@/lib/fiche-import";
@@ -39,7 +40,6 @@ const SUB_LABEL: Record<string, string> = {
   signes_typiques: "Signes typiques", formes_trompeuses: "Formes trompeuses", examen_clinique: "Examen clinique", signes_de_gravite: "Signes de gravité",
   gestes_immediats: "Gestes immédiats", contre_indications: "Contre-indications", elements: "",
 };
-const RUNNING = new Set(["uploaded", "ingesting", "routing", "generating", "checking"]);
 const STATUTS = ["Enregistré", "Non renouvelé", "Retiré", "Aucune présentation enregistrée"] as const;
 const TO_STATUS: Record<string, string> = { "Enregistré": "enregistre", "Non renouvelé": "non_renouvele", "Retiré": "retire", "Aucune présentation enregistrée": "aucune_presentation" };
 const FROM_STATUS = Object.fromEntries(Object.entries(TO_STATUS).map(([k, v]) => [v, k]));
@@ -157,6 +157,48 @@ export default function DraftReview() {
     router.push(data ? `/fiche/${protocol.meta.id}` : "/fiche/nouveau");
   };
 
+  const generateControls = (
+    <div className="flex flex-wrap items-center gap-2">
+      <select className={inputCls} value={model} onChange={(e) => setModel(e.target.value)}>
+        {d.models.map((m) => <option key={m} value={m}>{m}{m.includes("haiku") ? " (le moins cher)" : ""}</option>)}
+      </select>
+      <label className="flex items-center gap-1 text-xs"><input type="checkbox" checked={batch} onChange={(e) => setBatch(e.target.checked)} /> en lot (−50 %, plus lent)</label>
+      <Button variant="primary" disabled={busy} onClick={() => run(api(`/fichegen/drafts/${id}/generate`, { method: "POST", body: JSON.stringify({ model, batch }) }))}>
+        {d.content ? "Regénérer" : "Générer"}
+      </Button>
+    </div>
+  );
+
+  // while it generates (or before any content): the steps; when done, the editor below replaces them
+  if ((RUNNING.has(d.stage) && d.stage !== "ready") || d.stage === "needs_offset" || !f) {
+    return (
+      <div className="mx-auto flex w-full max-w-[640px] flex-col gap-5 px-5 py-10">
+        <Link href="/generation" className="self-start text-sm text-accentink hover:underline">‹ Génération</Link>
+        <Card className="flex flex-col gap-6 p-6">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted">{d.topic_id}</p>
+            <h1 className="mt-1 text-lg font-semibold tracking-tight text-ink">{d.form?.title ?? d.topic_id}</h1>
+            <p className="mt-1 text-sm text-soft">L&apos;éditeur s&apos;ouvre ici dès que le brouillon est prêt.</p>
+          </div>
+          <Stepper stage={d.stage} detail={d.stage_detail} />
+          {error && <ErrorNote>{error}</ErrorNote>}
+          {d.error && <ErrorNote>{d.error}</ErrorNote>}
+          {d.stage === "needs_offset" && (
+            <div className="flex flex-wrap items-end gap-2 rounded-lg bg-cautionbg p-3">
+              <label className="flex flex-col gap-1">
+                <span className="text-xs text-caution">Numéros de page non détectés : page imprimée moins page du PDF (ex. 2134 si la page 1 du PDF est la page 2135)</span>
+                <input className={`${inputCls} w-40`} value={offset} onChange={(e) => setOffset(e.target.value)} />
+              </label>
+              <Button variant="primary" disabled={busy || !/^-?\d+$/.test(offset.trim())} onClick={() => run(api(`/fichegen/drafts/${id}/offset`, { method: "POST", body: JSON.stringify({ offset: Number(offset) }) }))}>Valider et générer</Button>
+            </div>
+          )}
+          {["ready", "error"].includes(d.stage) && d.page_offset !== null && generateControls}
+          {d.cost.calls > 0 && <p className="text-xs text-muted">Coût jusqu&apos;ici : {d.cost.cost_usd.toFixed(4)} $ · {d.cost.calls} appel(s)</p>}
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="grid h-[calc(100dvh-3rem)] grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
       <div className="min-h-0 overflow-auto px-5 pb-16">
@@ -180,13 +222,7 @@ export default function DraftReview() {
             {["ready", "done", "error"].includes(d.stage) && d.page_offset !== null && (
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs text-muted">Décalage des pages : {d.page_offset}{d.offset_detected ? " (détecté)" : " (saisi)"}</span>
-                <select className={inputCls} value={model} onChange={(e) => setModel(e.target.value)}>
-                  {d.models.map((m) => <option key={m} value={m}>{m}{m.includes("haiku") ? " (le moins cher)" : ""}</option>)}
-                </select>
-                <label className="flex items-center gap-1 text-xs"><input type="checkbox" checked={batch} onChange={(e) => setBatch(e.target.checked)} /> en lot (−50 %, plus lent)</label>
-                <Button variant="primary" disabled={busy} onClick={() => run(api(`/fichegen/drafts/${id}/generate`, { method: "POST", body: JSON.stringify({ model, batch }) }))}>
-                  {d.content ? "Regénérer" : "Générer"}
-                </Button>
+                {generateControls}
               </div>
             )}
             <p className="text-xs text-muted">

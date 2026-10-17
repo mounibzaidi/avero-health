@@ -71,6 +71,19 @@ def ingest_draft(caller, draft_id: str) -> None:
                 stage_detail=None if consistent else "décalage des pages imprimées non détecté : à saisir")
     except Exception as exc:
         _update(caller, draft_id, stage="error", error=f"Ingestion : {type(exc).__name__} {exc}"[:500])
+        return
+    if consistent:
+        start_if_auto(caller, draft_id)
+
+
+def start_if_auto(caller, draft_id: str) -> None:
+    """Generation right after ingestion when the upload asked for it (form.auto_generate): the default model,
+    interactive (someone is waiting), the default fallback."""
+    d = _draft(caller, draft_id)
+    if not (d["form"] or {}).get("auto_generate") or d["page_offset"] is None:
+        return
+    _update(caller, draft_id, options={"model": llm.DEFAULT_MODEL, "batch": False}, stage="routing", stage_detail=None)
+    generate_draft(caller, draft_id)
 
 
 def _wrong_page(lines: list, pages: list[dict]) -> None:

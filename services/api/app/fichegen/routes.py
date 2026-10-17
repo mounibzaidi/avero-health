@@ -30,7 +30,8 @@ def _one(caller, draft_id: str) -> dict:
 @router.post("/drafts", status_code=201)
 async def create(background: BackgroundTasks, file: UploadFile = File(...), form: str = Form(...), caller: sb.Caller = Depends(sb.require_admin)):
     """The upload form: the guideline PDF and {title, topic_id, template, audience, siblings, source {source_id, type,
-    title, citation}, licence_text, licence_scope: internal | publish}. Ingestion starts at once."""
+    title, citation}, licence_text, licence_scope: internal | publish, auto_generate}. Ingestion starts at once, and
+    with auto_generate the generation follows it (default model, interactive)."""
     try:
         f = json.loads(form)
     except ValueError as exc:
@@ -56,7 +57,8 @@ async def create(background: BackgroundTasks, file: UploadFile = File(...), form
 
 @router.get("/drafts")
 def list_drafts(caller: sb.Caller = Depends(sb.require_admin)):
-    return sb.rest(caller, "GET", "fiche_drafts", {"select": "id,topic_id,form,status,stage,stage_detail,error,licence_scope,created_at,updated_at", "order": "created_at.desc"})
+    return sb.rest(caller, "GET", "fiche_drafts", {"select": "id,topic_id,form,status,stage,stage_detail,error,licence_scope,coverage_pct:coverage->>pct,quote_check:content->meta->>quote_check,created_at,updated_at",
+                                                    "order": "created_at.desc"})
 
 
 @router.get("/drafts/{draft_id}")
@@ -72,10 +74,12 @@ class OffsetIn(BaseModel):
 
 
 @router.post("/drafts/{draft_id}/offset")
-def set_offset(draft_id: str, body: OffsetIn, caller: sb.Caller = Depends(sb.require_admin)):
-    """The printed page offset, typed by the user when it was not detected (printed page = PDF page + offset)."""
+def set_offset(draft_id: str, body: OffsetIn, background: BackgroundTasks, caller: sb.Caller = Depends(sb.require_admin)):
+    """The printed page offset, typed by the user when it was not detected (printed page = PDF page + offset).
+    A draft uploaded with auto_generate starts generating."""
     _one(caller, draft_id)
     sb.rest(caller, "PATCH", "fiche_drafts", {"id": f"eq.{draft_id}"}, {"page_offset": body.offset, "stage": "ready", "stage_detail": None})
+    background.add_task(pipeline.start_if_auto, caller, draft_id)
     return {"ok": True}
 
 
