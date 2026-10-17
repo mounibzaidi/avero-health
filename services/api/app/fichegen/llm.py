@@ -30,11 +30,10 @@ PRICES = yaml.safe_load((Path(__file__).resolve().parents[4] / "shared" / "llm_p
 MAX_PAGES = 40  # per section, sent CHUNK_PAGES at a time
 CHUNK_PAGES = 8  # a call per 8 pages: one call over 25 pages summarises instead of extracting
 PARALLEL = 6
-# Pages a section needs whatever the routing says, found by their words (code, no model): do-not statements are spread
-# over every treatment page; key messages and scope have fixed names.
+# Pages a section needs whatever the routing says, found by their words (code, no model): key messages and scope have
+# fixed names. Do-not and exam statements are not routed by keyword (it sent 25+ pages to each section and doubled
+# lines): rule 4 moves them to 8 and 6, and the coverage check catches the recommendation rows still missing.
 KEYWORDS = {
-    "8_ne_pas_faire": re.compile(r"\b(should not|not recommended|avoid|3: harm|3: no benefit|is contraindicated)\b", re.I),
-    "6_examens": re.compile(r"\b(ECG|electrocardiogra\w*|troponin|cTn|laboratory)\b", re.I),
     "1_essentiel": re.compile(r"\b(take-home messages|top 10|key messages)\b", re.I),
     "3_champ": re.compile(r"\bscope of (the|this) guideline\b", re.I),
 }
@@ -179,9 +178,15 @@ FIGURE_NOTE = ("The images below are the pages above that hold a figure, for the
                "an image is copied as printed in it, with \"from_figure\": true and the printed page of that image.")
 
 
+DOSES_NOTE = ("Every dose (amount and unit) goes in \"posologies\": one entry per drug and setting (loading, maintenance, "
+              "infusion), never only in an element's text.")
+
+
 def section_content(section: str, audience: str, source: dict, pages: list[dict]) -> str | list:
     """The user message: the pages' text, then the figure pages as images (page["png"], set by the pipeline)."""
     text = section_user(section, audience, source, pages)
+    if section == "7_traitement":
+        text = text.replace("\n\n", f"\n{DOSES_NOTE}\n\n", 1)
     figures = [p for p in pages if p.get("png")]
     if not figures:
         return text
@@ -283,5 +288,6 @@ def cover(section: str, rows: list[dict], audience: str, source: dict, model: st
 
     listing = "\n".join(json.dumps({"index": i, "printed_page": r["page"], **({"cor": r["cor"], "loe": r["loe"]} if r["kind"] == "rec" else {}),
                                     "row": r["text"]}, ensure_ascii=False) for i, r in enumerate(rows))
-    user = (f"Section: {section}\nAudience: {audience}\nSource: {source.get('title')} ({source.get('citation')})\n\n" + COVER_USER + listing)
+    note = DOSES_NOTE + "\n" if section == "7_traitement" else ""
+    user = (f"Section: {section}\nAudience: {audience}\nSource: {source.get('title')} ({source.get('citation')})\n\n" + COVER_USER + note + listing)
     return call(params(model, GENERATION_SYSTEM, user, llm_cover_schema(section)), log, "coverage", section)

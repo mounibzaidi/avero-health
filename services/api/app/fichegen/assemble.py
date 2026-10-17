@@ -136,9 +136,12 @@ def assemble(form: dict, answers: dict[str, dict], kept: dict[str, list[tuple[st
     for section in SECTIONS:
         for place, line, meta in list(kept.get(section, [])):
             key = normalise(line["source"]["quote"])[:200] or normalise(line.get("text", ""))[:200]
-            if seen.get(key) == section:  # the same line twice in one section (e.g. after a rule 4 move): keep the first
-                kept[section] = [t for t in kept[section] if t[1] is not line]
-                dropped.append({"section": section, "line": line, "reason": f"doublon dans la section {section}"})
+            if seen.get(key) == section:  # the same line twice in one section (e.g. after a rule 4 move): keep the first,
+                # unless this one is the posology of an element's dose
+                first = next(t for t in kept[section] if t[1] is not line and (normalise(t[1]["source"]["quote"])[:200] or normalise(t[1].get("text", ""))[:200]) == key)
+                loser = first[1] if place == "posologies" and first[0] != "posologies" else line
+                kept[section] = [t for t in kept[section] if t[1] is not loser]
+                dropped.append({"section": section, "line": loser, "reason": f"doublon dans la section {section}"})
             elif key in seen:
                 first = seen[key]
                 want = preferred(line)

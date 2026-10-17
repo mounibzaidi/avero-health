@@ -5,8 +5,8 @@ Rows are read from the pdftotext layout layer:
   "B-R"), column by column (the COR and LOE tokens sit left of the row's text, on any of its lines);
 - dose-table rows: inside a numbered table ("TABLE 7 ...") holding doses, every line with a dose ("Loading dose 180 mg
   orally"), with the drug of its first column carried down.
-A recommendation row is covered when a fiche quote overlaps its text; a dose row when a fiche quote on its page holds
-all its doses. Rows the targeted call puts out of the audience's practice count as covered (excluded_by_audience).
+A recommendation row is covered when a fiche quote overlaps its text; a dose row when a posology quoted on its page
+holds all its doses (a dose only in an element's text does not count). Rows the targeted call puts out of the audience's practice count as covered (excluded_by_audience).
 Rows with COR "3: Harm" or "3: No Benefit" must be covered in 8_ne_pas_faire: matched lines elsewhere are moved there.
 """
 
@@ -144,7 +144,7 @@ def match(rows: list[dict], items: list[dict]) -> dict[int, list[int]]:
             rn = normalise(r["text"])
             hits = [k for k, (_, it) in enumerate(norm_items) if _rec_match(rn, it["quote"])]
         else:
-            hits = [k for k, (n, it) in enumerate(norm_items) if it["page"] == r["page"] and all(d in n for d in r["doses"])]
+            hits = [k for k, (n, it) in enumerate(norm_items) if it.get("dose") and it["page"] == r["page"] and all(d in n for d in r["doses"])]
         if hits:
             out[r["id"]] = hits
     return out
@@ -156,7 +156,8 @@ def items_of_kept(kept: dict[str, list]) -> list[dict]:
     for section, lines in kept.items():
         for k, (place, line, _meta) in enumerate(lines):
             extra = f"{line.get('dose', '')} {line.get('dose_max') or ''}" if place == "posologies" else ""
-            items.append({"section": section, "place": place, "index": k, "page": line["source"]["page"], "quote": line["source"]["quote"], "extra": extra})
+            items.append({"section": section, "place": place, "index": k, "page": line["source"]["page"], "quote": line["source"]["quote"], "extra": extra,
+                          "dose": place == "posologies"})
     return items
 
 
@@ -171,7 +172,7 @@ def items_of_fiche(fiche: dict) -> list[dict]:
             for el in lst:
                 if isinstance(el, dict) and "source" in el:
                     items.append({"section": section, "page": el["source"]["page"], "quote": el["source"]["quote"],
-                                  "extra": f"{el.get('dose', '')} {el.get('dose_max') or ''}" if "drug_dci" in el else ""})
+                                  "extra": f"{el.get('dose', '')} {el.get('dose_max') or ''}" if "drug_dci" in el else "", "dose": "drug_dci" in el})
     return items
 
 

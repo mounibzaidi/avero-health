@@ -192,10 +192,19 @@ def test_rows_matched_by_quote_overlap():
     rec = next(r for r in rows if r["kind"] == "rec" and r["number"] == 3)
     tica = next(r for r in rows if r["kind"] == "dose" and r["drug"] == "Ticagrelor" and r["doses"] == ["180mg"])
     items = [{"section": "9_orientation", "page": 2147, "quote": "immediate emergency medical services (EMS) transport to a PCI-capable hospital", "extra": ""},
-             {"section": "7_traitement", "page": 2157, "quote": "Loading dose 180 mg orally", "extra": "180 mg"}]
+             {"section": "7_traitement", "page": 2157, "quote": "Loading dose 180 mg orally", "extra": "180 mg", "dose": True}]
     hits = coverage.match(rows, items)
     assert hits[rec["id"]] == [0] and hits[tica["id"]] == [1]
     assert coverage.report(rows, items, set())["matched"] == 2
+    items[1]["dose"] = False  # a dose only in an element's text does not cover a dose row
+    assert tica["id"] not in coverage.match(rows, items)
+
+
+def test_posology_wins_over_the_same_dose_as_an_element():
+    q = "Loading dose 180 mg orally"
+    kept = {"7_traitement": [("elements", line("Ticagrélor : charge 180 mg.", q), ok()), ("posologies", dose("ticagrélor", "180 mg", q), ok())]}
+    fiche, _, dropped = build(kept)
+    assert fiche["sections"]["7_traitement"]["posologies"] and not fiche["sections"]["7_traitement"]["elements"] and len(dropped) == 1
 
 
 def test_harm_rows_moved_to_ne_pas_faire():
