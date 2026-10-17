@@ -43,7 +43,7 @@ export function Stepper({ stage, detail }: { stage: string; detail: string | nul
           <li key={s.stage} className="relative flex gap-3 pb-5 last:pb-0">
             {i < STEPS.length - 1 && <span className={`absolute left-[11px] top-6 h-[calc(100%-1.25rem)] w-px ${state === "done" ? "bg-accent/50" : "bg-line"}`} />}
             <span className={`relative z-10 flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
-              state === "done" ? "bg-accent text-white" : state === "current" ? "bg-tint text-accentink ring-2 ring-accent/40" : state === "error" ? "bg-flagbg text-flag ring-2 ring-flag/40" : "bg-panel text-muted"}`}>
+              state === "done" ? "bg-accent text-onaccent" : state === "current" ? "bg-tint text-accentink ring-2 ring-accent/40" : state === "error" ? "bg-flagbg text-flag ring-2 ring-flag/40" : "bg-panel text-muted"}`}>
               {state === "done" ? "✓" : state === "current" ? <Spinner className="size-3" /> : state === "error" ? "!" : i + 1}
             </span>
             <div className="min-w-0 pt-0.5">

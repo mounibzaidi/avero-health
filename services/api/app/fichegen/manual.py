@@ -125,6 +125,57 @@ def nomenclature(caller, dci: str) -> dict:
     return {"dci": dci, "brands": len(brands), "registered": registered, "statut": best}
 
 
+# ─── Pre-fill by code (no model): only what the selected text says for sure ──────────────────────────────────────
+_ROUTES = [(r"\b(orally|oral|per os|PO|by mouth|orale?)\b", "orale"), (r"\b(IV|intravenous\w*|intraveineu\w*)\b", "IV"),
+           (r"\b(SC|subcutaneous\w*|sous-cutan\w*)\b", "SC"), (r"\b(SL|sublingual\w*)\b", "sublinguale"),
+           (r"\b(IM|intramuscular\w*)\b", "IM"), (r"\binhal\w*\b", "inhalée")]
+_FREQ = [(r"\b(loading dose|dose de charge)\b", "dose de charge"), (r"\bbolus\b", "bolus"), (r"\b(maintenance|entretien)\b", "entretien"),
+         (r"\b(infusion|perfusion)\b", "perfusion"), (r"\b(twice daily|BID|b\.i\.d\.|2 fois par jour)\b", "2 fois par jour"),
+         (r"\b(three times daily|TID|3 fois par jour)\b", "3 fois par jour"),
+         (r"\b(once daily|daily|per day|par jour|une fois par jour)\b", "1 fois par jour")]
+_EVERY = re.compile(r"\bevery (\d+(?:[-–]\d+)?)\s*(h|hours?|min|minutes?)\b", re.I)
+_MAX = re.compile(r"\b(?:max(?:imum)?|up to|not to exceed|jusqu'à|ne pas dépasser)\b[^\d]{0,12}(" + coverage.DOSE.pattern + ")", re.I)
+_FR_CONDITION = re.compile(r"^\s*((?:chez (?:les |le |la )?|en cas d[e']\s*|si |lorsqu)[^,:;]{4,140})[,:;]", re.I)
+_INN_FR = {"aspirin": "aspirine", "heparin": "héparine", "ufh": "héparine non fractionnée", "enoxaparin": "énoxaparine",
+           "ticagrelor": "ticagrélor", "alteplase": "altéplase", "tenecteplase": "ténectéplase", "reteplase": "rétéplase",
+           "nitroglycerin": "nitroglycérine", "furosemide": "furosémide", "ezetimibe": "ézétimibe", "perindopril": "périndopril",
+           "bivalirudin": "bivalirudine", "metoprolol": "métoprolol", "candesartan": "candésartan", "valsartan": "valsartan"}
+_RISK = {"4_gravite": "high", "5_conduite": "high", "7_traitement": "high", "8_ne_pas_faire": "high", "6_examens": "medium"}
+
+
+def inn_fr(drug: str | None) -> str:
+    """A drug name from an English table as its French INN (a few by name, else -in → -ine)."""
+    d = (drug or "").strip().lower().rstrip("*")
+    if not d:
+        return ""
+    if d in _INN_FR:
+        return _INN_FR[d]
+    return d + "e" if d.endswith("in") else d
+
+
+def prefill_dose(quote: str, drug: str | None) -> dict:
+    doses = coverage.DOSE.findall(quote)
+    mx = _MAX.search(quote)
+    freq = [label for rx, label in _FREQ if re.search(rx, quote, re.I)]
+    every = _EVERY.search(quote)
+    if every:
+        freq.append(f"toutes les {every.group(1)} {'h' if every.group(2).lower().startswith('h') else 'min'}")
+    if "2 fois par jour" in freq or "3 fois par jour" in freq:  # "twice daily" also says "daily"
+        freq = [f for f in freq if f != "1 fois par jour"]
+    route = next((label for rx, label in _ROUTES if re.search(rx, quote)), "")
+    dose = next((d for d in doses if not mx or d != mx.group(1)), doses[0] if doses else "")
+    return {**BLANK_DOSE, "drug_dci": inn_fr(drug), "dose": " ".join(dose.split()), "dose_max": " ".join(mx.group(1).split()) if mx else None,
+            "route": route, "frequency_or_duration": ", ".join(dict.fromkeys(freq))}
+
+
+def prefill_element(quote: str, section: str) -> dict:
+    french = assemble.is_french(quote)
+    cond = _FR_CONDITION.match(quote) if french else None
+    text = " ".join(quote.replace(_FIX, " … ").split()) if french else ""
+    return {**BLANK_ELEMENT, "text": text, "condition": cond.group(1).strip() if cond else None,
+            "type": "conditional" if cond else "action", "risk": _RISK.get(section, "medium")}
+
+
 BLANK_ELEMENT = {"text": "", "type": "action", "condition": None, "grade": None, "risk": "medium", "missing": []}
 BLANK_DOSE = {"drug_dci": "", "dose": "", "dose_max": None, "route": "", "administration": None, "frequency_or_duration": "",
               "condition": None, "missing": [], "note": None}
@@ -132,7 +183,8 @@ BLANK_DOSE = {"drug_dci": "", "dose": "", "dose_max": None, "route": "", "admini
 
 def propose(caller, draft: dict, pages: dict[int, dict], target: dict, parts: list[dict], log, fill: bool = False) -> dict:
     """The line for the selected passages and the target, with every code check. By default its fields are empty for
-    the reviewer to type (no paid call); `fill` asks Haiku to pre-fill them. Not saved: the reviewer edits and
+    the reviewer to type, pre-filled by code with what the text says for sure (dose, route, frequency, the drug of
+    its table row; for a French source the line itself and its condition), no paid call; `fill` asks Haiku instead. Not saved: the reviewer edits and
     accepts it in the dashboard."""
     content = draft["content"] or {}
     source_id = ((content.get("meta") or {}).get("sources") or [{}])[0].get("source_id") or draft["form"]["source"]["source_id"]
@@ -148,7 +200,7 @@ def propose(caller, draft: dict, pages: dict[int, dict], target: dict, parts: li
             + (f"Grade printed next to it: {grade}\n" if grade else "")
             + f"\nPage context:\n{context}")
     fill = (llm.call(llm.params(llm.DEFAULT_MODEL, FILL_SYSTEM, user, FILL_DOSE if is_dose else FILL_ELEMENT, 1500), log, "manual", target["section"])
-            if fill else dict(BLANK_DOSE if is_dose else BLANK_ELEMENT))
+            if fill else prefill_dose(quote, parts[0].get("drug")) if is_dose else prefill_element(quote, target["section"]))
     src = {"source_id": source_id, "page": page, "quote": quote}
     if is_dose:
         line = {**fill, "risk": "high", "source": src, "translated": not assemble.is_french(quote),
@@ -174,3 +226,17 @@ def propose(caller, draft: dict, pages: dict[int, dict], target: dict, parts: li
         "nomenclature": nomenclature(caller, line.get("drug_dci", "")) if is_dose else None,
     }
 
+
+
+def grade_label(row: dict) -> str:
+    return f"Classe {row['cor']} / Niveau {row['loe']}" if row["cor"] in ("I", "IIa", "IIb", "III") else f"COR {row['cor']} / LOE {row['loe']}"
+
+
+def rows_for(pages: list[dict], content: dict | None) -> list[dict]:
+    """Every recommendation and dose row of the guideline, for the editor's row list: page, text, grade or drug, and
+    whether the fiche already covers it."""
+    rows = coverage.rows_of(pages)
+    hits = coverage.match(rows, coverage.items_of_fiche(content)) if content else {}
+    return [{"id": f"{r['page']}-{r['kind']}-{r['id']}", "kind": r["kind"], "page": r["page"], "text": r["text"], "quote": r.get("quote") or r["text"],
+             "grade": grade_label(r) if r["kind"] == "rec" else None, "harm": bool(r["kind"] == "rec" and coverage.HARM.match(r["cor"] or "")),
+             "drug": r.get("drug"), "covered": r["id"] in hits} for r in rows]

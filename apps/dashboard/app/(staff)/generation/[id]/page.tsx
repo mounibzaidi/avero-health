@@ -16,6 +16,9 @@ import { createClient } from "@/lib/supabase/client";
 
 const PdfViewer = dynamic(() => import("@/components/PdfViewer"), { ssr: false, loading: () => <p className="p-4 text-sm text-muted">Chargement du PDF…</p> });
 
+/** A recommendation or dose row of the guideline (GET /rows), and whether the fiche covers it. */
+interface GuideRow { id: string; kind: "rec" | "dose"; page: number; text: string; quote: string; grade: string | null; harm: boolean; drug: string | null; covered: boolean }
+
 /** A line of a fiche-protocole fiche (element) and a dose, as generated. */
 interface Line { id: string; text: string; type: string; condition: string | null; source: { source_id: string; page: number | null; quote: string }; grade: string | null; missing: string[] }
 interface Dose {
@@ -168,8 +171,11 @@ export default function DraftReview() {
   const [pageTexts, setPageTexts] = useState<{ printed_page: number; pdf_page: number; text: string; parsed: string | null; skipped: boolean }[] | null>(null);
   const [parsedView, setParsedView] = useState(false);
   const [selection, setSelection] = useState<Part | null>(null);
+  const [guideRows, setGuideRows] = useState<GuideRow[] | null>(null);
+  const [rowsOpen, setRowsOpen] = useState(true);
   const source = useRef<HTMLDivElement>(null);
   const pendingTime = useEditTime(id);
+
 
   const load = useCallback(() => api<Draft>(`/fichegen/drafts/${id}`).then((x) => {
     setD(x);
@@ -195,6 +201,9 @@ export default function DraftReview() {
     api<NonNullable<typeof pageTexts>>(`/fichegen/drafts/${id}/pages`).then(setPageTexts, (e) => setError((e as Error).message));
   }, [tab, pageTexts, id]);
 
+  const loadRows = useCallback(() => api<GuideRow[]>(`/fichegen/drafts/${id}/rows`).then(setGuideRows, () => setGuideRows([])), [id]);
+  useEffect(() => { if (d?.content) void loadRows(); }, [d?.content, loadRows]);
+
   const metas = useMemo(() => new Map((d?.lines ?? []).map((l) => [l.element_id, l])), [d]);
   if (!d) return <div className="p-6">{error ? <ErrorNote>{error}</ErrorNote> : <Spinner />}</div>;
 
@@ -212,6 +221,18 @@ export default function DraftReview() {
     const text = sel?.toString().replace(/\s+/g, " ").trim() ?? "";
     if (text && sel?.anchorNode && source.current?.contains(sel.anchorNode)) setSelection({ page: printedOf(viewPage), text });
   };
+  // a guide row clicked: the whole row is the passage, its page opened and the row marked in the PDF
+  const pickRow = (r: GuideRow) => {
+    setSelection({ page: r.page, text: r.quote, drug: r.drug });
+    showLine({ page: r.page, quote: r.quote });
+  };
+  // N: the next row the fiche does not cover yet, after the one selected, else from the page on screen
+  const nextRow = () => {
+    const todo = (guideRows ?? []).filter((r) => !r.covered);
+    const at = todo.findIndex((r) => r.quote === selection?.text);
+    const r = at >= 0 ? todo[at + 1] ?? todo[0] : todo.find((x) => x.page >= printedOf(viewPage)) ?? todo[0];
+    if (r) pickRow(r);
+  };
   const acceptLine = async (target: Target, line: Proposal["line"]) => {
     if (!f) return;
     const next = insertLine(f, target, line);
@@ -221,6 +242,7 @@ export default function DraftReview() {
     setDirty(false);
     setSelection(null);
     showLine({ page: line.source.page, quote: line.source.quote });
+    void loadRows();
   };
   const run = async (p: Promise<unknown>) => {
     setBusy(true);
@@ -287,24 +309,35 @@ export default function DraftReview() {
   }
 
   const current = (pageTexts ?? []).find((t) => t.pdf_page === viewPage);
+  const pageRows = (guideRows ?? []).filter((r) => r.page === printedOf(viewPage));
+  const coveredCount = (guideRows ?? []).filter((r) => r.covered).length;
   const nodes = ((f.sections["5_conduite"]?.nodes as { node: string }[] | undefined) ?? []).map((n) => n.node);
 
   return (
     <div className="grid h-[calc(100dvh-3rem)] grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
       {/* left: the guideline, selectable; the composer under it */}
       <section className="flex min-h-0 flex-col border-r border-line bg-surface">
-        <div className="flex items-center gap-2 border-b border-line px-3 py-1.5 text-sm">
+        <div className="flex items-center gap-3 border-b border-line px-3 py-2 text-sm">
           <div className="inline-flex rounded-lg border border-edge/15 bg-panel p-0.5">
             {(["pdf", "text"] as const).map((t) => (
               <button key={t} type="button" onClick={() => setTab(t)}
-                className={`rounded-md px-2.5 py-0.5 text-xs ${tab === t ? "bg-surface font-medium text-ink shadow-surface" : "text-soft"}`}>{t === "pdf" ? "PDF" : "Texte"}</button>
+                className={`rounded-md px-3 py-1 text-xs ${tab === t ? "bg-surface font-medium text-ink shadow-surface" : "text-soft hover:text-ink"}`}>{t === "pdf" ? "PDF" : "Texte"}</button>
             ))}
           </div>
-          <span className="text-xs text-muted">page imprimée <b className="text-ink">{printedOf(viewPage)}</b> · PDF {viewPage}</span>
+          <span className="text-xs text-muted">p. <b className="tabular-nums text-ink">{printedOf(viewPage)}</b></span>
           {tab === "text" && current?.parsed && (
-            <label className="ms-auto flex items-center gap-1 text-xs text-soft"><input type="checkbox" checked={parsedView} onChange={(e) => setParsedView(e.target.checked)} /> texte parsé (tableaux)</label>
+            <label className="flex items-center gap-1 text-xs text-soft"><input type="checkbox" checked={parsedView} onChange={(e) => setParsedView(e.target.checked)} /> parsé</label>
           )}
-          {selection && <span className="ms-auto max-w-[45%] truncate rounded bg-tint px-2 py-0.5 text-xs text-accentink">sélection p. {selection.page} : {selection.text}</span>}
+          {guideRows && guideRows.length > 0 && (
+            <div className="ms-auto flex items-center gap-2">
+              <div className="hidden h-1.5 w-24 overflow-hidden rounded-full bg-panel sm:block">
+                <div className="h-full rounded-full bg-accent transition-[width] duration-500" style={{ width: `${Math.round((100 * coveredCount) / guideRows.length)}%` }} />
+              </div>
+              <span className="text-xs tabular-nums text-soft">{coveredCount}/{guideRows.length} lignes du guide</span>
+              <button type="button" onClick={nextRow} className="flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 text-xs text-soft hover:border-accent/40 hover:text-accentink">
+                Suivante <kbd className="font-mono text-[10px] text-muted">N</kbd></button>
+            </div>
+          )}
         </div>
         <div ref={source} className="min-h-0 flex-1" onMouseUp={takeSelection} onKeyUp={takeSelection}>
           {tab === "pdf" ? (
@@ -329,7 +362,37 @@ export default function DraftReview() {
           )}
         </div>
         {shown && found === false && tab === "pdf" && <p className="border-t border-line px-3 py-1 text-xs text-caution">Citation non surlignée (figure ou mise en page) : à lire sur la page.</p>}
-        <Composer draftId={id} selection={selection} nodes={nodes} onAccept={acceptLine}
+        {pageRows.length > 0 && (
+          <div className="border-t border-line bg-bg/40">
+            <button type="button" onClick={() => setRowsOpen((o) => !o)} className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-soft hover:text-ink">
+              <span className="font-medium">Lignes du guide sur cette page</span>
+              <span className="tabular-nums text-muted">{pageRows.filter((r) => r.covered).length}/{pageRows.length}</span>
+              <span className="ms-auto text-muted">{rowsOpen ? "▾" : "▸"}</span>
+            </button>
+            {rowsOpen && (
+              <ul className="flex max-h-44 flex-col gap-1 overflow-auto px-2 pb-2">
+                {pageRows.map((r) => {
+                  const on = selection?.text === r.quote;
+                  return (
+                    <li key={r.id}>
+                      <button type="button" onClick={() => pickRow(r)}
+                        className={`flex w-full items-start gap-2 rounded-lg border px-2 py-1.5 text-left text-xs transition-colors ${
+                          on ? "border-accent/50 bg-tint" : r.covered ? "border-transparent opacity-55 hover:opacity-100" : "border-line bg-surface hover:border-accent/30"}`}>
+                        <span className={`mt-0.5 shrink-0 rounded px-1.5 py-px text-[10px] font-semibold ${
+                          r.kind === "dose" ? "bg-panel text-soft" : r.harm ? "bg-flagbg text-flag" : "bg-tint text-accentink"}`}>
+                          {r.kind === "dose" ? (r.drug ?? "dose") : r.grade?.replace(/^(COR|Classe) /, "").replace(/ \/ (LOE|Niveau) /, "·")}
+                        </span>
+                        <span className="line-clamp-2 min-w-0 flex-1 text-ink">{r.text}</span>
+                        {r.covered && <span className="shrink-0 text-accentink">✓</span>}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+        )}
+        <Composer draftId={id} selection={selection} nodes={nodes} onAccept={acceptLine} onNext={nextRow}
           onShow={(p) => showLine({ page: p.page, quote: p.text })} />
       </section>
 

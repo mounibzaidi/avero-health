@@ -340,8 +340,33 @@ def test_manual_card_is_blank_and_free_by_default(monkeypatch):
     monkeypatch.setattr(llm, "call", paid)
     out = manual.propose(None, {"content": fiche, "form": FORM}, pages, {"section": "7_traitement", "place": "posologies"},
                          [{"page": 2157, "text": "Loading dose 180 mg orally"}], lambda e: None)
-    assert out["line"]["dose"] == "" and out["line"]["source"]["quote"] == "Loading dose 180 mg orally" and out["quote_status"] == "pdf"
-    assert "algerie.statut" in out["line"]["missing"]
+    line = out["line"]
+    assert line["source"]["quote"] == "Loading dose 180 mg orally" and out["quote_status"] == "pdf"
+    assert (line["dose"], line["route"], line["frequency_or_duration"]) == ("180 mg", "orale", "dose de charge")  # by code
+    assert "algerie.statut" in line["missing"]
+
+
+def test_code_prefill_of_doses_and_french_lines():
+    from app.fichegen import manual
+    d = manual.prefill_dose("Loading dose 60 IU/kg (max 4,000 IU), with initial infusion 12 IU/kg per h", "UFH")
+    assert (d["drug_dci"], d["dose"], d["dose_max"]) == ("héparine non fractionnée", "60 IU/kg", "4,000 IU")
+    d = manual.prefill_dose("Maintenance dose 90 mg orally twice daily", "Ticagrelor")
+    assert (d["drug_dci"], d["frequency_or_duration"]) == ("ticagrélor", "entretien, 2 fois par jour")
+    assert manual.inn_fr("Atorvastatin") == "atorvastatine"
+    e = manual.prefill_element("Chez les patients en état de choc, une coronarographie immédiate est recommandée.", "5_conduite")
+    assert e["condition"] == "Chez les patients en état de choc" and e["type"] == "conditional" and e["text"].startswith("Chez")
+    assert manual.prefill_element("In patients with STEMI, aspirin is recommended.", "6_examens")["text"] == ""  # English: typed in French
+
+
+def test_esc_rows_with_class_and_level():
+    layout = (" It is recommended to measure BP using a validated and calibrated device, to enforce the correct measurement technique, and to apply a\n"
+              "                                                                                                                       I           B\n"
+              " consistent approach to BP measurement for each patient.\n"
+              " Coronary artery calcium scoring may be considered in patients with elevated BP or hypertension when it is likely.   IIb      B\n"
+              " Renal denervation is not recommended as a first-line BP-lowering intervention for hypertension.                       III      C\n")
+    rows = coverage.esc_rows(layout, 3920)
+    assert [(r["cor"], r["loe"]) for r in rows] == [("I", "B"), ("IIb", "B"), ("III", "C")]
+    assert rows[0]["text"].endswith("for each patient.") and coverage.HARM.match(rows[2]["cor"])
 
 
 def test_suggestions_merged_into_a_started_fiche():

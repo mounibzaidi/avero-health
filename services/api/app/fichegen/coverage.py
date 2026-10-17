@@ -34,7 +34,12 @@ _MARK = re.compile(r"^\s*([*†‡§]+)")
 DOSE = re.compile(r"(?<![\w.,])\d+(?:[.,]\d+)?(?:\s*(?:-|–|to|or)\s*\d+(?:[.,]\d+)?)?[\s-]*(?:mg|µg|μg|mcg|g|U|IU|units?|mL)(?:/(?:kg|min|h|d|day))*(?![A-Za-z/])")  # not lab values (mg/dL, g/dL, mL/min)
 _DRUG = re.compile(r"^([A-Z][A-Za-z-]{2,})\*?(?:\s|$)")
 _HEADERS = {"agent", "agents", "medication", "drug", "drugs", "dosing", "setting", "route", "class", "adults", "patients", "age", "these", "severe"}
-HARM = re.compile(r"^3:\s*(Harm|No Benefit)$", re.I)
+HARM = re.compile(r"^(3:\s*(Harm|No Benefit)|III)$", re.I)  # ACC/AHA "3: Harm" / "3: No Benefit", ESC class III
+_ONLY_TOKENS = re.compile(r"^(I|IIa|IIb|III)\s+(A|B|C)$")
+_ESC_TOKENS = re.compile(r"\s(I|IIa|IIb|III)\s{2,}(A|B|C)\s*$")
+_ESC_HEADER = re.compile(r"\bRecommendations?\b.*\bClass\w*\s+Level", re.I)
+_ESC_HEADING = re.compile(r"^\s*\d+(\.\d+)*\.\s+[A-Z]")
+_ESC_END = re.compile(r"^\s*(©|a\s*Class of recommendation|b\s*Level of evidence|[a-z]\s+Class|Table \d+)", re.I)
 
 
 def _join(lines: list[str]) -> str:
@@ -84,6 +89,59 @@ def rec_rows(layout: str, printed: int) -> list[dict]:
             for r in rows if r["cor"]]
 
 
+def esc_rows(layout: str, printed: int) -> list[dict]:
+    """The ESC recommendation-table rows of one page: [{kind, page, number, cor, loe, text}], cor = Class (I, IIa, IIb,
+    III), loe = Level (A, B, C). In the layout the Class and Level sit at the right edge of one of the row's lines;
+    a row ends when its sentence closes after them."""
+    rows: list[dict] = []
+    lines = layout.split("\n")
+    g = gutter(lines)
+    if g:  # the gap before a full-width table's Class/Level column is not a gutter: its "right column" is all grades
+        right = [l[g:].strip() for l in lines if l[g:].strip()]
+        if right and sum(1 for r in right if _ONLY_TOKENS.match(r) or "Downloaded" in r or r.isdigit()) >= 0.5 * len(right):
+            g = None
+    for col in ([[l[:g] for l in lines], [l[g:] for l in lines]] if g else [lines]):
+        rows += _esc_column(col, printed, len(rows))
+    return rows
+
+
+def _esc_column(lines: list[str], printed: int, start: int) -> list[dict]:
+    """One column of ESC rows. No table header needed (tables run over pages): text lines gather until a sentence
+    closes after a Class + Level token; a blank line, a heading or a watermark resets the gathering, which keeps at
+    most ROW_LINES lines; bullets right after a row belong to it."""
+    rows: list[dict] = []
+    cur, tok, blank = [], None, 0
+    for raw in lines:
+        if "Downloaded from" in raw or _ESC_HEADER.search(raw) or _ESC_END.match(raw):
+            cur, tok = [], None
+            continue
+        m = _ESC_TOKENS.search(raw)
+        if m:
+            tok = (m.group(1), m.group(2))
+            raw = raw[:m.start()]
+        text = raw.strip()
+        if not text:
+            blank += 1
+            if blank >= 2 and not tok:
+                cur = []
+            continue
+        blank = 0
+        if _ESC_HEADING.match(raw) and not tok:
+            cur = []
+            continue
+        if text.startswith("•") and not cur and not tok and rows and rows[-1]["page"] == printed:
+            rows[-1]["text"] = _join([rows[-1]["text"], text])  # the rest of the last row's list
+            continue
+        cur = [*cur, text][-ROW_LINES:]
+        if tok and text.endswith("."):
+            rows.append({"kind": "rec", "page": printed, "number": start + len(rows) + 1, "cor": tok[0], "loe": tok[1], "text": _join(cur)})
+            cur, tok = [], None
+    return rows
+
+
+ROW_LINES = 6
+
+
 def dose_rows(layout: str, printed: int) -> list[dict]:
     """The dose-table rows of one page: [{kind, page, table, drug, doses (normalised), text}]."""
     out: list[dict] = []
@@ -118,7 +176,7 @@ def dose_rows(layout: str, printed: int) -> list[dict]:
             doses = [d for d in DOSE.findall(l) if not normalise(d).endswith("mlmin")]  # creatinine clearance, not a dose
             if doses and drug:
                 out.append({"kind": "dose", "page": printed, "table": int(cap.group(1)), "drug": drug,
-                            "doses": [normalise(d) for d in doses], "text": f"{drug} : {' '.join(l.split())}"})
+                            "doses": [normalise(d) for d in doses], "text": f"{drug} : {' '.join(l.split())}", "quote": " ".join(l.split())})
     return out
 
 
@@ -129,7 +187,8 @@ def rows_of(pages: list[dict]) -> list[dict]:
     for p in pages:
         if p.get("skip"):
             continue
-        found = rec_rows(p["raw_layout"] or "", p["printed_page"]) + dose_rows(p["raw_layout"] or "", p["printed_page"])
+        layout = p["raw_layout"] or ""
+        found = rec_rows(layout, p["printed_page"]) + esc_rows(layout, p["printed_page"]) + dose_rows(layout, p["printed_page"])
         for r in found:
             r["excluded"] = excluded_topic(r["text"], p.get("section_heading"))
         rows += found

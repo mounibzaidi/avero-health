@@ -162,6 +162,15 @@ def start_manual(draft_id: str, caller: sb.Caller = Depends(sb.require_admin)):
 class Part(BaseModel):
     page: int
     text: str
+    drug: str | None = None  # the drug of the dose-table row the passage comes from
+
+
+@router.get("/drafts/{draft_id}/rows")
+def rows(draft_id: str, caller: sb.Caller = Depends(sb.require_admin)):
+    """The guideline's recommendation rows (ACC/AHA COR/LOE, ESC Class/Level) and dose-table rows, each marked when
+    the fiche already covers it: the editor's to-do list."""
+    d = _one(caller, draft_id)
+    return manual.rows_for([p for p in _layers(caller, d) if not p["skip"]], d["content"])
 
 
 class ProposeIn(BaseModel):

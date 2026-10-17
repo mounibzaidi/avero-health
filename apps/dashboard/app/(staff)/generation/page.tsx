@@ -122,7 +122,7 @@ export default function GenerationPage() {
             onDrop={(e) => { e.preventDefault(); setDrag(false); pick(e.dataTransfer.files[0]); }}
             className={`flex min-h-64 flex-col items-center justify-center gap-3 border-b border-line p-8 text-center transition-colors lg:border-b-0 lg:border-r ${
               drag ? "bg-tint" : file ? "bg-tint/50" : "bg-panel/40 hover:bg-panel/70"}`}>
-            <span className={`flex size-14 items-center justify-center rounded-2xl ${file ? "bg-accent text-white" : "bg-surface text-accentink shadow-surface"}`}>
+            <span className={`flex size-14 items-center justify-center rounded-2xl ${file ? "bg-accent text-onaccent" : "bg-surface text-accentink shadow-surface"}`}>
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 {file ? <path d="M20 6 9 17l-5-5" /> : <><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M12 18v-6M9 15l3-3 3 3" /></>}
               </svg>
