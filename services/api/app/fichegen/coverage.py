@@ -8,12 +8,21 @@ Rows are read from the pdftotext layout layer:
 A recommendation row is covered when a fiche quote overlaps its text; a dose row when a posology quoted on its page
 holds all its doses (a dose only in an element's text does not count). Rows the targeted call puts out of the audience's practice count as covered (excluded_by_audience).
 Rows with COR "3: Harm" or "3: No Benefit" must be covered in 8_ne_pas_faire: matched lines elsewhere are moved there.
+Rows on a topic outside the audience (shared/audience_exclusions.yaml: cath lab technique, MCS, CABG...) are excluded
+before matching, by their text or their section heading, and never sent to the targeted call.
 """
 
 import re
+from pathlib import Path
+
+import yaml
 
 from .check import fragments, normalise
 from .ingest import gutter
+
+# topics outside the audience's practice: their rows count as excluded_by_audience (shared/audience_exclusions.yaml)
+EXCLUSIONS = {t: re.compile(rx, re.I) for t, rx in
+              yaml.safe_load((Path(__file__).resolve().parents[4] / "shared" / "audience_exclusions.yaml").read_text(encoding="utf-8")).items()}
 
 _COR = r"1|2a|2b|3:\s*No Benefit|3:\s*Harm"
 _LOE = r"A|B-R|B-NR|C-LD|C-EO"
@@ -114,15 +123,35 @@ def dose_rows(layout: str, printed: int) -> list[dict]:
 
 
 def rows_of(pages: list[dict]) -> list[dict]:
-    """Every recommendation and dose row of the guideline's pages (pipeline layers, references skipped), numbered."""
+    """Every recommendation and dose row of the guideline's pages (pipeline layers, references skipped), numbered,
+    with "excluded": the audience-exclusion topic it belongs to, or None."""
     rows = []
     for p in pages:
         if p.get("skip"):
             continue
-        rows += rec_rows(p["raw_layout"] or "", p["printed_page"]) + dose_rows(p["raw_layout"] or "", p["printed_page"])
+        found = rec_rows(p["raw_layout"] or "", p["printed_page"]) + dose_rows(p["raw_layout"] or "", p["printed_page"])
+        for r in found:
+            r["excluded"] = excluded_topic(r["text"], p.get("section_heading"))
+        rows += found
     for i, r in enumerate(rows):
         r["id"] = i
     return rows
+
+
+def excluded_topic(text: str, heading: str | None = None) -> str | None:
+    """The audience-exclusion topic of a row or line, by its text, else by its section heading."""
+    for t, rx in EXCLUSIONS.items():
+        if rx.search(text or ""):
+            return t
+    for t, rx in EXCLUSIONS.items():
+        if rx.search(heading or ""):
+            return t
+    return None
+
+
+def dose_table_pages(pages: list[dict]) -> set[int]:
+    """Printed pages holding a numbered table with doses: the only table pages worth LlamaParse."""
+    return {p["printed_page"] for p in pages if not p.get("skip") and dose_rows(p["raw_layout"] or "", p["printed_page"])}
 
 
 def _rec_match(row_norm: str, quote: str) -> bool:
@@ -199,7 +228,7 @@ def report(rows: list[dict], items: list[dict], excluded_ids: set[int]) -> dict:
     covered = [r for r in rows if r["id"] in hits or r["id"] in excluded_ids]
     uncovered = [r for r in rows if r["id"] not in hits and r["id"] not in excluded_ids]
     return {"rows": len(rows), "rec_rows": sum(r["kind"] == "rec" for r in rows), "dose_rows": sum(r["kind"] == "dose" for r in rows),
-            "matched": sum(1 for r in rows if r["id"] in hits), "excluded": len(excluded_ids), "harm_rows": len(harm), "harm_in_8": harm_ok,
+            "matched": sum(1 for r in rows if r["id"] in hits and r["id"] not in excluded_ids), "excluded": len(excluded_ids), "harm_rows": len(harm), "harm_in_8": harm_ok,
             "pct": round(100 * len(covered) / len(rows), 1) if rows else 100.0,
             "uncovered": [{k: r[k] for k in ("kind", "page", "text", "cor", "loe") if k in r} for r in uncovered]}
 

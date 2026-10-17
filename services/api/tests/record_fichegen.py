@@ -86,6 +86,11 @@ if __name__ == "__main__":
           report["llamaparse_pages_needed"], "page(s) pour un premier run =", f"${report['llamaparse_usd_needed']}", "| figures en image :", report["figure_pages"])
     print("couverture :", f"{cov['pct_before']} % avant l'appel ciblé ->", f"{cov['pct']} %", f"({cov['matched']} couvertes + {cov['excluded']} hors public / {cov['rows']} :",
           f"{cov['rec_rows']} recommandations, {cov['dose_rows']} posologies) | 3: Harm/No Benefit en 8 : {cov['harm_in_8']}/{cov['harm_rows']} | non couvertes :", len(cov["uncovered"]))
+    per = {}
+    for name, sec in fiche["sections"].items():
+        lists = [v for v in sec.values() if isinstance(v, list)] + [v["elements"] for v in sec.values() if isinstance(v, dict) and "elements" in v]
+        per[name] = sum(1 for lst in lists + [n["branches"] for n in sec.get("nodes") or []] for e in lst if isinstance(e, dict) and "source" in e)
+    print("lignes par section :", per)
     print("posologies :", json.dumps(doses(fiche), ensure_ascii=False))
     print("GRACE :", json.dumps(grace(fiche, side), ensure_ascii=False))
     claude = round(sum(v for k, v in costs.items() if k != "llamaparse"), 4)

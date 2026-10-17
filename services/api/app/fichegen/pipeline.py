@@ -4,7 +4,7 @@ ingest: the PDF's free layers (pdftotext) into document_pages, once per document
 "needs_offset" when the printed page offset is not clear.
 generate:
 1. routing (Haiku, on the free layers);
-2. LlamaParse for the routed pages with a numbered table; the routed pages with a figure rendered to PNG for Claude;
+2. LlamaParse for the routed pages with a dose table; the routed pages with a figure rendered to PNG for Claude;
 3. one call per section (chunks of pages, figure images included);
 4. the quote check of every line; a quote cited on the wrong page moved by code; a line read from a figure image is
    kept as "parsed" + from_figure, for the reviewer to confirm;
@@ -181,8 +181,9 @@ def generate(store, document_id: str, offset: int | None, pdf_bytes, filename: s
     routing = llm.route(pages, audience, log)
     wanted = [n for n in dict.fromkeys(n for s in SECTIONS for n in routing["sections"].get(s, [])) if n in by_printed]
 
-    progress("parsing", "LlamaParse des pages à tableau numéroté retenues ; figures en images")
-    sent, lp_cost = llamaparse({by_printed[n]["pdf_page"] for n in wanted if by_printed[n]["has_table"]})
+    progress("parsing", "LlamaParse des tableaux de posologies retenus ; figures en images")
+    dose_tables = coverage.dose_table_pages(pages)
+    sent, lp_cost = llamaparse({by_printed[n]["pdf_page"] for n in wanted if n in dose_tables})
     for n in wanted:
         if by_printed[n]["has_figure"]:
             pngs[n] = ingest.page_png(pdf(), by_printed[n]["pdf_page"])
@@ -243,15 +244,15 @@ def generate(store, document_id: str, offset: int | None, pdf_bytes, filename: s
     rows_c = coverage.rows_of(pages)
     moved = coverage.harm_to_8(rows_c, kept)
     hits = coverage.match(rows_c, coverage.items_of_kept(kept))
-    pct_before = round(100 * len(hits) / len(rows_c), 1) if rows_c else 100.0
+    excluded_ids: set[int] = {r["id"] for r in rows_c if r["excluded"]}  # topics outside the audience, never forced in
+    topics: list[str] = sorted({r["excluded"] for r in rows_c if r["excluded"]})
+    pct_before = round(100 * len(set(hits) | excluded_ids) / len(rows_c), 1) if rows_c else 100.0
     by_section: dict[str, list[dict]] = {}
     for r in rows_c:
-        if r["id"] not in hits:
+        if r["id"] not in hits and r["id"] not in excluded_ids:
             by_section.setdefault(coverage.section_for(r, routing["sections"]), []).append(r)
     # one targeted call per section, COVER_ROWS rows at a time (a long answer gets cut at max_tokens)
     todo = [(s, rs[i:i + COVER_ROWS]) for s, rs in by_section.items() for i in range(0, len(rs), COVER_ROWS)]
-    excluded_ids: set[int] = set()
-    topics: list[str] = []
 
     def cover(item):
         section, rs = item

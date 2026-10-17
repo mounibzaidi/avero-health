@@ -1,0 +1,14 @@
+# Topics outside general practice and emergency first contact (fiche audience MG, urgences). The coverage check of fiche
+# generation (services/api/app/fichegen/coverage.py) counts a recommendation or dose row matching one of these as
+# excluded_by_audience instead of forcing it into the fiche. Each pattern is a case-insensitive regex, tried on the row
+# text and on the heading of the guideline section the row sits in.
+cath lab technique: '\b(radial|femoral) (approach|access)|vascular access|intracoronary imaging|IVUS|OCT\b|thrombus aspiration|aspiration thrombectomy|fractional flow|FFR\b|physiolog\w+ assessment|stent(ing)? (type|selection)|drug-eluting|catheterization laboratory'
+multivessel PCI: '\bmultivessel|non-?culprit|complete revascularization|culprit[- ]only'
+mechanical circulatory support: '\bMCS\b|mechanical circulatory support|intra-?aortic balloon|IABP|Impella|ECMO|microaxial|ventricular assist'
+mechanical complications: 'mechanical complications?|papillary muscle|ventricular septal (rupture|defect)|free[- ]wall rupture'
+CABG timing: '\bCABG\b|coronary artery bypass|surgical revascularization'
+bivalirudin: '\bbivalirudin'
+GP IIb/IIIa inhibitors: 'glycoprotein IIb/IIIa|\bGP ?IIb/IIIa|eptifibatide|tirofiban|abciximab'
+cangrelor: '\bcangrelor'
+CICU: '\bCICU\b|cardiac intensive care'
+transfusion: '\btransfusion'

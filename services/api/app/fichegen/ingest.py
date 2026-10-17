@@ -1,7 +1,7 @@
 """Part A: a PDF's two text layers, per page, and its printed page numbers.
 
 - raw (free): `pdftotext -layout` per page, and a column-split copy (each line cut at the gutter, left then right);
-- parsed: LlamaParse markdown, lazily: only the routed pages with a numbered table, and the pages where a quote failed
+- parsed: LlamaParse markdown, lazily: only the routed pages with a dose table, and the pages where a quote failed
   on the raw text (references, author lists and relationship-with-industry appendices never), each sent as one
   sub-PDF. Tier "cost_effective" (3 credits a page; LLAMAPARSE_TIER in .env.local to change it). The other pages use
   the column-split text. Figures are not parsed: their pages are rendered to PNG (page_png) and read by Claude.
