@@ -285,3 +285,14 @@ def test_wrong_page_corrected_by_code_without_a_retry():
     lines = pipeline._section_lines("7_traitement", answer, pages, "claude-haiku-5-5", {"7_traitement": list(pages.values())},
                                     "MG", FORM["source"], calls.append, [])
     assert lines[0][1]["source"]["page"] == 2163 and lines[0][2]["quote_status"] == "pdf" and not calls
+
+
+def test_cost_cap_blocks_paid_calls_and_fallback_is_off_by_default():
+    from app.fichegen import llm, pipeline
+    budget = pipeline.Budget(lambda e: None, 0.10)
+    budget({"cost_usd": 0.09})
+    assert budget.tight() and not budget.over()
+    budget({"cost_usd": 0.02})
+    with pytest.raises(llm.BudgetExceeded):
+        llm.call({"model": "claude-haiku-5-5"}, budget, "section")  # refused before any request is sent
+    assert pipeline.fallback_model() is None or "FICHEGEN_FALLBACK_MODEL" in __import__("app.settings", fromlist=["env"]).env()

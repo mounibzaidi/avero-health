@@ -34,8 +34,38 @@ COVER_ROWS = 20
 
 
 def fallback_model() -> str | None:
-    m = (env().get("FICHEGEN_FALLBACK_MODEL") or "claude-sonnet-5-5").strip()
+    """The model rerunning a section still failing after its corrections: none unless FICHEGEN_FALLBACK_MODEL names
+    one (a Sonnet rerun of every failing section cost $2.23 on a 107-page guideline)."""
+    m = (env().get("FICHEGEN_FALLBACK_MODEL") or "none").strip()
     return None if m == "none" or m not in llm.MODELS else m
+
+
+def max_usd() -> float:
+    """The cost cap of one generation (FICHEGEN_MAX_USD, default $0.25)."""
+    try:
+        return float(env().get("FICHEGEN_MAX_USD") or 0.25)
+    except ValueError:
+        return 0.25
+
+
+class Budget:
+    """The cost log of one generation with its cap: every call's cost goes through it; llm.call refuses a paid call
+    once it is spent, and the optional steps (retries, fallback, coverage) are skipped past SOFT of it."""
+
+    SOFT = 0.8
+
+    def __init__(self, log, limit: float):
+        self.log, self.limit, self.spent = log, limit, 0.0
+
+    def __call__(self, entry: dict) -> None:
+        self.spent += float(entry.get("cost_usd") or 0)
+        self.log(entry)
+
+    def over(self) -> bool:
+        return self.spent >= self.limit
+
+    def tight(self) -> bool:
+        return self.spent >= self.SOFT * self.limit
 
 
 def _now() -> str:
@@ -163,6 +193,7 @@ def generate(store, document_id: str, offset: int | None, pdf_bytes, filename: s
     document_pages (store); `log` receives every call's cost; `progress(stage, detail)` the steps."""
     audience = ", ".join(form.get("audience") or ["MG", "urgences"])
     source = form["source"]
+    log = log if isinstance(log, Budget) else Budget(log, max_usd())
     rows = store.pages(document_id)
     pdf_cache: list[bytes] = []
 
@@ -238,8 +269,11 @@ def generate(store, document_id: str, offset: int | None, pdf_bytes, filename: s
     dropped: list[dict] = []
     fell_back = []
     for section, lines in checked.items():
-        _retry(section, lines, by_printed, model, jobs, audience, source, log, errors)
-        if fallback and fallback != model and any(t[2]["quote_status"] == "failed" for t in lines):
+        if log.tight():
+            errors.append(f"{section} : corrections sautées (plafond de coût {log.limit:.2f} $)")
+        else:
+            _retry(section, lines, by_printed, model, jobs, audience, source, log, errors)
+        if fallback and fallback != model and not log.tight() and any(t[2]["quote_status"] == "failed" for t in lines):
             # the section still fails after its corrections: one rerun on the fallback model, kept if it verifies more
             again = llm.sections({section: jobs[section]}, audience, source, fallback, log)[section]
             if not isinstance(again, Exception):
@@ -274,6 +308,9 @@ def generate(store, document_id: str, offset: int | None, pdf_bytes, filename: s
         except Exception as exc:
             return section, rs, exc
 
+    if log.tight():
+        errors.append(f"couverture : appel ciblé sauté (plafond de coût {log.limit:.2f} $)")
+        todo = []
     with ThreadPoolExecutor(llm.PARALLEL) as pool:
         covered = list(pool.map(cover, todo))
     for section, rs, ans in covered:
@@ -301,7 +338,8 @@ def generate(store, document_id: str, offset: int | None, pdf_bytes, filename: s
     report = {"llamaparse_pages": sent + lazy_sent, "llamaparse_usd": round(lp_cost + lazy_cost, 6), "table_pages": sent, "lazy_pages": lazy_sent,
               # what a first run of this PDF pays LlamaParse (pages already parsed by an earlier run included)
               "llamaparse_pages_needed": len(needed), "llamaparse_usd_needed": ingest.llamaparse_cost(len(needed)),
-              "figure_pages": sorted(pngs), "routed_pages": len(wanted), "fallback_sections": fell_back, "coverage": cov}
+              "figure_pages": sorted(pngs), "routed_pages": len(wanted), "fallback_sections": fell_back, "coverage": cov,
+              "spent_usd": round(log.spent, 4), "cap_usd": log.limit}
     return fiche, side, dropped + duplicates, errors, report
 
 

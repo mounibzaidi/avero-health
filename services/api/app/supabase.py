@@ -25,16 +25,27 @@ def _as(caller: Caller) -> dict[str, str]:
     return {"apikey": setting("SUPABASE_ANON_KEY"), "Authorization": f"Bearer {caller.token}"}
 
 
+def _send(method: str, url: str, retry: bool = True, **kw) -> httpx.Response:
+    """One HTTP call to Supabase; a timeout or dropped connection is tried once more when the call can be repeated
+    safely (reads, updates, deletes; not inserts)."""
+    try:
+        return httpx.request(method, url, **kw)
+    except httpx.TransportError:
+        if not retry:
+            raise
+        return httpx.request(method, url, **kw)
+
+
 def require_admin(authorization: str = Header(default="")) -> Caller:
     """The caller, when their Supabase session belongs to an admin in staff."""
     token = authorization.removeprefix("Bearer ").strip()
     if not token:
         raise HTTPException(status_code=401, detail="Connexion requise")
-    r = httpx.get(f"{_base()}/auth/v1/user", headers={"apikey": setting("SUPABASE_ANON_KEY"), "Authorization": f"Bearer {token}"}, timeout=15)
+    r = _send("GET", f"{_base()}/auth/v1/user", headers={"apikey": setting("SUPABASE_ANON_KEY"), "Authorization": f"Bearer {token}"}, timeout=15)
     if r.status_code != 200:
         raise HTTPException(status_code=401, detail="Session expirée : reconnectez-vous")
     caller = Caller(uid=r.json()["id"], token=token)
-    staff = httpx.get(f"{_base()}/rest/v1/staff", params={"user_id": f"eq.{caller.uid}", "select": "role"}, headers=_as(caller), timeout=15).json()
+    staff = _send("GET", f"{_base()}/rest/v1/staff", params={"user_id": f"eq.{caller.uid}", "select": "role"}, headers=_as(caller), timeout=15).json()
     if not isinstance(staff, list) or not staff or staff[0]["role"] != "admin":
         raise HTTPException(status_code=403, detail="Réservé aux administrateurs")
     return caller
@@ -48,7 +59,7 @@ def upload(caller: Caller, path: str, body: bytes, content_type: str) -> None:
 
 
 def download(caller: Caller, path: str) -> bytes | None:
-    r = httpx.get(f"{_base()}/storage/v1/object/authenticated/{BUCKET}/{path}", headers=_as(caller), timeout=120)
+    r = _send("GET", f"{_base()}/storage/v1/object/authenticated/{BUCKET}/{path}", headers=_as(caller), timeout=120)
     return r.content if r.status_code == 200 else None
 
 
@@ -70,7 +81,7 @@ def rest(caller: Caller, method: str, table: str, params: dict | None = None, bo
     headers = {**_as(caller), "Content-Type": "application/json"}
     if prefer:
         headers["Prefer"] = prefer
-    r = httpx.request(method, f"{_base()}/rest/v1/{table}", params=params, json=body, headers=headers, timeout=30)
+    r = _send(method, f"{_base()}/rest/v1/{table}", retry=method != "POST", params=params, json=body, headers=headers, timeout=30)
     if r.status_code >= 400:
         raise HTTPException(status_code=502 if r.status_code >= 500 else r.status_code, detail=f"Base : {r.text[:200]}")
     return r.json() if r.content else None

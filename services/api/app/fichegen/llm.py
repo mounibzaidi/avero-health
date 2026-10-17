@@ -141,7 +141,18 @@ def _answer(message) -> dict:
     return json.loads(next(b.text for b in message.content if b.type == "text"))
 
 
+class BudgetExceeded(RuntimeError):
+    """The generation's cost cap is reached: no more paid calls."""
+
+
+def check_budget(log) -> None:
+    """Refuse a paid call once the log's budget (pipeline.Budget) is spent."""
+    if getattr(log, "over", None) and log.over():
+        raise BudgetExceeded(f"plafond de coût atteint ({log.spent:.3f} $ sur {log.limit:.2f} $)")
+
+
 def call(p: dict, log, stage: str, section: str | None = None) -> dict:
+    check_budget(log)
     message = client().messages.create(**p)
     log({**cost(p["model"], message.usage), "stage": stage, "section": section})
     return _answer(message)
@@ -244,6 +255,7 @@ def merge(parts: dict[str, dict | Exception]) -> dict[str, dict | Exception]:
 
 def _batch(reqs: dict[str, dict], log, poll_s: int = 30) -> dict[str, dict | Exception]:
     """The same requests through the Message Batches API (half price), polled until they end."""
+    check_budget(log)
     c = client()
     ids = {key: re.sub(r"[^A-Za-z0-9_-]", "-", key) for key in reqs}
     b = c.messages.batches.create(requests=[{"custom_id": ids[k], "params": p} for k, p in reqs.items()])
