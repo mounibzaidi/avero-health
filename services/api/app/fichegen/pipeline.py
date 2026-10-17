@@ -330,19 +330,30 @@ def generate_draft(caller, draft_id: str) -> None:
         problems = validate(fiche)
         if problems:
             raise RuntimeError("fiche non conforme, non enregistrée : " + " ; ".join(problems[:5]))
-        rows = [{"draft_id": draft_id, "element_id": eid, "section": m["section"], "quote_status": m["quote_status"],
-                 "from_figure": m["from_figure"], "retries": m["retries"], "model": m["model"]} for eid, m in side.items()]
-        rows += [{"draft_id": draft_id, "element_id": f"dropped-{i + 1}", "section": x["section"], "dropped": True, "dropped_line": x["line"],
-                  "reason": x["reason"], "model": model} for i, x in enumerate(dropped)]
-        for k in range(0, len(rows), 100):
-            sb.rest(caller, "POST", "fiche_line_meta", body=rows[k:k + 100])
         cov = report["coverage"]
+        # the fiche first: a failure while saving the per-line data must not lose a paid generation
         _update(caller, draft_id, content=fiche, stage="done", status="draft", coverage=cov,
                 stage_detail=f"citations vérifiées {fiche['meta']['quote_check']}, {len(dropped)} ligne(s) écartée(s), "
                              f"couverture {cov['pct']} % ({len(cov['uncovered'])} non couverte(s))",
                 error="; ".join(errors)[:500] or None)
+        try:
+            rows = meta_rows(draft_id, side, dropped, model)
+            for k in range(0, len(rows), 100):
+                sb.rest(caller, "POST", "fiche_line_meta", body=rows[k:k + 100])
+        except Exception as exc:  # the fiche is saved: the draft stays done, the badges are missing
+            _update(caller, draft_id, error=f"Badges des lignes non enregistrés : {type(exc).__name__} {exc}"[:500])
     except Exception as exc:
         _update(caller, draft_id, stage="error", error=f"{type(exc).__name__} {exc}"[:500])
+
+
+def meta_rows(draft_id: str, side: dict, dropped: list[dict], model: str) -> list[dict]:
+    """fiche_line_meta rows: kept lines (by element id) and dropped ones. Every row has the same keys: PostgREST
+    rejects a bulk insert whose objects differ (PGRST102)."""
+    rows = [{"draft_id": draft_id, "element_id": eid, "section": m["section"], "quote_status": m["quote_status"], "from_figure": m["from_figure"],
+             "retries": m["retries"], "model": m["model"], "dropped": False, "dropped_line": None, "reason": m.get("reason")} for eid, m in side.items()]
+    rows += [{"draft_id": draft_id, "element_id": f"dropped-{i + 1}", "section": x["section"], "quote_status": None, "from_figure": False,
+              "retries": 0, "model": model, "dropped": True, "dropped_line": x["line"], "reason": x["reason"]} for i, x in enumerate(dropped)]
+    return rows
 
 
 def sha256(body: bytes) -> str:

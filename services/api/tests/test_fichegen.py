@@ -166,6 +166,14 @@ def test_rule_4_exam_lines_go_to_examens_and_do_not_lines_to_8():
     assert [e["text"][:8] for e in secs["1_essentiel"]["elements"]] == ["En cas d"]
 
 
+def test_line_meta_rows_all_have_the_same_keys():
+    from app.fichegen import pipeline
+    kept = {"7_traitement": [("posologies", dose("ticagrélor", "180 mg", "Loading dose 180 mg orally"), ok())]}
+    fiche, side, dropped = build(kept)
+    rows = pipeline.meta_rows("d", side, [{"section": "8_ne_pas_faire", "line": line("x", "y"), "reason": "doublon"}], "claude-haiku-5-5")
+    assert len(rows) == 2 and len({tuple(sorted(r)) for r in rows}) == 1
+
+
 # ─── Coverage ────────────────────────────────────────────────────────────────────────────────────
 
 
