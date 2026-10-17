@@ -1,0 +1,724 @@
+{
+  "schema_version": "1.1.0",
+  "meta": {
+    "id": "stroke",
+    "title": "Accident vasculaire cérébral : reconnaître et orienter en urgence",
+    "template": "urgence",
+    "audience": [
+      "urgences"
+    ],
+    "country": "DZ",
+    "language": "fr",
+    "motifs": [],
+    "specialite": "Neurologie",
+    "version": "1.0.0",
+    "status": "published",
+    "last_reviewed_at": "2026-10-17",
+    "next_review_at": null
+  },
+  "scope": {
+    "population": "Adulte avec suspicion d'AVC ou d'AIT, de l'alerte à la phase hospitalière initiale",
+    "exclusions": []
+  },
+  "red_box": {
+    "signs": [
+      {
+        "id": "avc-004",
+        "text": "Paralysie faciale : asymétrie du visage ou du sourire.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "paralysie faciale : asymétrie du visage ou du sourire"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-005",
+        "text": "Faiblesse d'un bras, d'une main, d'une jambe ou d'un hémicorps.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "hémiplégie : faiblesse d'un bras, d'une main, d'une jambe ou d'un hémicorps"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-006",
+        "text": "Trouble du langage : impossibilité de trouver les mots.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "aphasie : trouble du langage, impossibilité de trouver les mots"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-007",
+        "text": "Perte de la vue d'un œil.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "amaurose : perte de la vue d'un œil"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-008",
+        "text": "Troubles de la marche ou de l'équilibre.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "troubles de la marche ou de l'équilibre"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-009",
+        "text": "Céphalée intense et soudaine (évoque une hémorragie sous-arachnoïdienne).",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "céphalées intenses et soudaines (évocatrices d'une hémorragie sous-arachnoïdienne"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-010",
+        "text": "Symptômes transitoires (AIT) : faussement rassurants, ils imposent aussi l'appel ; le risque de récidive dans les 24 h est élevé.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "Les symptômes transitoires durant quelques minutes ou heures sont faussement rassurants et doivent également conduire à l'appel du 15."
+          },
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "l'AIT est également une urgence car le risque de récidive précoce (dans les 24 heures) est élevé"
+          }
+        ],
+        "refs": []
+      }
+    ],
+    "actions": [
+      {
+        "id": "avc-001",
+        "text": "Appelez immédiatement le SAMU, sans attendre de consulter le médecin traitant.",
+        "condition": null,
+        "timing": "immediate",
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 21,
+            "quote": "il faut réagir immédiatement en appelant le 15, sans attendre de consulter le médecin traitant."
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-ad1",
+        "text": "En Algérie : orientez vers les urgences ou le service de neurologie de référence (à la place de la filière AVC / UNV).",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "adaptation_locale",
+        "basis": "Adaptation de la fiche v1 validée par le Dr Mounib Zaidi le 04/10/2026 : le guide HAS décrit la filière AVC et l'UNV françaises ; en Algérie, le patient est orienté vers les urgences ou le service de neurologie de référence.",
+        "evidence": [],
+        "refs": []
+      }
+    ]
+  },
+  "assess": {
+    "ask": [
+      {
+        "id": "avc-014",
+        "text": "Demandez la date et l'heure exactes du début des symptômes ; à défaut, l'heure où le patient a été vu pour la dernière fois sans symptôme.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 25,
+            "quote": "Date et heure exactes de début des symptômes"
+          },
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 25,
+            "quote": "Date et heure auxquelles le patient a été vu pour la dernière fois sans symptôme"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-015",
+        "text": "Demandez s'il prend un anticoagulant : molécule, date et heure de la dernière prise.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 25,
+            "quote": "Prise de traitements antithrombotiques et particulièrement anticoagulants"
+          }
+        ],
+        "refs": []
+      }
+    ],
+    "examine": [
+      {
+        "id": "avc-011",
+        "text": "Faites le test FAST (VITE) : faites sourire, faites lever les deux bras, faites répéter une phrase simple.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 21,
+            "quote": "Demander à la personne de sourire"
+          },
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 21,
+            "quote": "Demander à la personne de lever les deux bras"
+          },
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 21,
+            "quote": "Demander à la personne de répéter une phrase simple"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-013",
+        "text": "Évaluez la gravité par le score NIHSS.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 25,
+            "quote": "Signes de gravité : score de sévérité clinique NIHSS"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-016",
+        "text": "Prenez les constantes : PA, fréquence cardiaque, saturation, température ; posez un monitoring.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 31,
+            "quote": "la prise de constantes : pression artérielle (PA), fréquence cardiaque, saturation en oxygène, température (et pose d'un monitoring)"
+          }
+        ],
+        "refs": []
+      }
+    ],
+    "tests": [
+      {
+        "id": "avc-017",
+        "text": "Faites une glycémie capillaire, une hémostase, un hémogramme avec plaquettes.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 31,
+            "quote": "hémostase, hémogramme et plaquettes et glycémie capillaire"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-019",
+        "text": "Faites un ECG si cela ne retarde pas la prise en charge.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 31,
+            "quote": "la réalisation d'un électrocardiogramme (ECG) (si cela ne génère pas une perte de temps)"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-024",
+        "text": "Imagerie cérébrale en urgence : délai cible < 25 min après l'arrivée.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 32,
+            "quote": "Le temps médian cible entre l'arrivée dans l'établissement et l'imagerie est de moins de 25 minutes"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-025",
+        "text": "Privilégiez l'IRM cérébrale au scanner.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 32,
+            "quote": "Il est conseillé de privilégier l'IRM cérébrale par rapport au scanner cérébral"
+          }
+        ],
+        "refs": []
+      }
+    ],
+    "pathway": {
+      "start_node_id": "n1",
+      "nodes": [
+        {
+          "id": "n1",
+          "type": "decision",
+          "question": "Délai depuis le début des symptômes ?",
+          "items": [],
+          "branches": [
+            {
+              "id": "n1-b1",
+              "label": "Moins de 4 h 30",
+              "next_node_id": "n2"
+            },
+            {
+              "id": "n1-b2",
+              "label": "4 h 30 à 24 h",
+              "next_node_id": "n3"
+            },
+            {
+              "id": "n1-b3",
+              "label": "Heure inconnue ou symptômes au réveil",
+              "next_node_id": "n4"
+            },
+            {
+              "id": "n1-b4",
+              "label": "Plus de 24 h",
+              "next_node_id": "n5"
+            }
+          ]
+        },
+        {
+          "id": "n2",
+          "type": "end",
+          "question": "Moins de 4 h 30",
+          "items": [
+            {
+              "id": "avc-020",
+              "text": "Thrombolyse IV et/ou thrombectomie possibles dans les 4 h 30 : orientez sans délai.",
+              "condition": null,
+              "timing": null,
+              "strength": null,
+              "origin": "source",
+              "basis": null,
+              "evidence": [
+                {
+                  "source_id": "has-2025-avc-parcours",
+                  "page": 32,
+                  "quote": "Théoriquement, le patient peut bénéficier d'une thrombolyse IV et/ou d'une TM dans les 4 h 30 après le début des symptômes."
+                }
+              ],
+              "refs": []
+            }
+          ],
+          "branches": []
+        },
+        {
+          "id": "n3",
+          "type": "end",
+          "question": "4 h 30 à 24 h",
+          "items": [
+            {
+              "id": "avc-021",
+              "text": "Thrombolyse IV possible jusqu'à 9 h, thrombectomie jusqu'à 24 h ; imagerie de perfusion impérative entre 4 h 30 et 9 h.",
+              "condition": null,
+              "timing": null,
+              "strength": null,
+              "origin": "source",
+              "basis": null,
+              "evidence": [
+                {
+                  "source_id": "has-2025-avc-parcours",
+                  "page": 33,
+                  "quote": "peut bénéficier d'une thrombolyse IV jusqu'à 9 h ou d'une TM jusqu'à 24 h après le début des symptômes"
+                },
+                {
+                  "source_id": "has-2025-avc-parcours",
+                  "page": 33,
+                  "quote": "imagerie de perfusion impérative si le patient est exploré entre 4 h 30 et 9 h après le début des symptômes"
+                }
+              ],
+              "refs": []
+            }
+          ],
+          "branches": []
+        },
+        {
+          "id": "n4",
+          "type": "end",
+          "question": "Heure inconnue ou symptômes au réveil",
+          "items": [
+            {
+              "id": "avc-022",
+              "text": "Thrombolyse IV possible si le délai calculé est inférieur à 9 h, sous réserve de l'imagerie cérébrale.",
+              "condition": null,
+              "timing": null,
+              "strength": null,
+              "origin": "source",
+              "basis": null,
+              "evidence": [
+                {
+                  "source_id": "has-2025-avc-parcours",
+                  "page": 33,
+                  "quote": "est inférieur à 9 h (sous réserve de l'imagerie cérébrale)"
+                }
+              ],
+              "refs": []
+            }
+          ],
+          "branches": []
+        },
+        {
+          "id": "n5",
+          "type": "end",
+          "question": "Plus de 24 h",
+          "items": [
+            {
+              "id": "avc-023",
+              "text": "Plus de reperfusion possible ; imagerie rapide quand même, pour confirmer le diagnostic et prévenir la récidive.",
+              "condition": null,
+              "timing": null,
+              "strength": null,
+              "origin": "source",
+              "basis": null,
+              "evidence": [
+                {
+                  "source_id": "has-2025-avc-parcours",
+                  "page": 34,
+                  "quote": "Plus de 24 h après le début des symptômes, le patient ne peut plus bénéficier, à l'heure actuelle, d'un traitement de reperfusion"
+                }
+              ],
+              "refs": []
+            }
+          ],
+          "branches": []
+        }
+      ]
+    }
+  },
+  "treat": {
+    "medications": [],
+    "actions": [
+      {
+        "id": "avc-018",
+        "text": "Posez une voie veineuse périphérique.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 31,
+            "quote": "la pose d'une voie veineuse périphérique"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-027",
+        "text": "Thrombolyse IV le plus tôt possible : délai cible < 60 min après l'arrivée.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 34,
+            "quote": "Le temps médian cible entre l'arrivée dans l'établissement et le traitement médical d'urgence est de moins de 60 min."
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-028",
+        "text": "Pour les indications de la thrombolyse IV, reportez-vous aux recommandations HAS.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 34,
+            "quote": "En ce qui concerne les indications de la thrombolyse IV, se reporter aux recommandations HAS"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-033",
+        "text": "Surveillez température, PA, fréquence cardiaque, saturation, glycémie capillaire, diurèse et transit.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 41,
+            "quote": "Les constantes à surveiller sont : la température, la PA, la fréquence cardiaque, la saturation en oxygène, la glycémie capillaire."
+          },
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 41,
+            "quote": "La diurèse et le transit sont également surveillés."
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-034",
+        "text": "Surveillez l'état neurologique ; signalez immédiatement toute aggravation au médecin.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 41,
+            "quote": "toute aggravation est notifiée immédiatement au médecin"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-035",
+        "text": "Prévention secondaire : antiagrégant plaquettaire, aspirine et/ou clopidogrel.",
+        "condition": "AVC ischémique d'origine athéromateuse",
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 47,
+            "quote": "Le traitement antithrombotique repose sur une anti-agrégation plaquettaire par aspirine et/ou clopidogrel."
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-036",
+        "text": "Prévention secondaire : anticoagulant oral (AVK ou AOD) au long cours, même en cas de retour en rythme sinusal.",
+        "condition": "Fibrillation auriculaire non valvulaire",
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 47,
+            "quote": "la prévention cardio-embolique repose sur les anticoagulants oraux (antivitamine K (AVK) ou anticoagulants oraux directs (AOD)), à maintenir au long cours, même en cas de retour en rythme sinusal"
+          }
+        ],
+        "refs": []
+      }
+    ],
+    "do_not": [
+      {
+        "id": "avc-029",
+        "text": "N'appelez pas d'abord le médecin traitant : appelez directement le SAMU.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 21,
+            "quote": "l'appel au médecin traitant est à éviter"
+          }
+        ],
+        "refs": []
+      },
+      {
+        "id": "avc-030",
+        "text": "Ne vous rassurez pas devant des symptômes transitoires.",
+        "condition": null,
+        "timing": null,
+        "strength": null,
+        "origin": "source",
+        "basis": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 20,
+            "quote": "Les symptômes transitoires durant quelques minutes ou heures sont faussement rassurants"
+          }
+        ],
+        "refs": []
+      }
+    ]
+  },
+  "advise": [],
+  "refer_follow": {
+    "refer": [
+      {
+        "id": "ref-1",
+        "criteria": "Toute suspicion d'AVC ou d'AIT",
+        "urgency": "urgent",
+        "destination": "Établissement de la filière AVC (en Algérie : urgences ou neurologie de référence)",
+        "strength": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 25,
+            "quote": "Tout patient suspect d'AVC est à accueillir au sein d'un établissement de la filière AVC."
+          }
+        ]
+      },
+      {
+        "id": "ref-2",
+        "criteria": "AVC confirmé, ischémique ou hémorragique",
+        "urgency": "urgent",
+        "destination": "Unité neurovasculaire (UNV)",
+        "strength": null,
+        "evidence": [
+          {
+            "source_id": "has-2025-avc-parcours",
+            "page": 34,
+            "quote": "Tous les patients ayant un AVC (ischémique ou hémorragique) sont proposés à l'UNV du territoire."
+          }
+        ]
+      }
+    ],
+    "follow_up": []
+  },
+  "sources": [
+    {
+      "id": "has-2025-avc-parcours",
+      "title": "Guide du parcours de santé – Accident vasculaire cérébral de l'adulte",
+      "organisation": "HAS",
+      "citation": "HAS, octobre 2025",
+      "url": null,
+      "publication_date": null,
+      "page_offset": 0,
+      "accessed_at": null
+    }
+  ],
+  "review": {
+    "reviewer": "Mounib Zaidi",
+    "reviewed_at": "2026-10-17",
+    "clinical_approval": true,
+    "unresolved_issues": [],
+    "change_log": [
+      {
+        "date": "2026-10-17",
+        "by": "Claude (conversion)",
+        "summary": "Conversion de la fiche v1 (schéma numéroté) en v1.1, citations vérifiées sur le PDF HAS. Retirés : renvoi à la fiche avc-thrombolyse (inexistante), ligne altéplase / ténectéplase (aucune dose dans la source), définitions et doublons de l'essentiel."
+      },
+      {
+        "date": "2026-10-17",
+        "by": "Mounib Zaidi",
+        "summary": "Validation clinique et publication de la version v1.1."
+      }
+    ]
+  }
+}

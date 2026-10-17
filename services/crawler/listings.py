@@ -29,7 +29,12 @@ FRESH = timedelta(days=1)
 HAS_FRESH = timedelta(days=7)
 UA = "Mozilla/5.0 (X11; Linux x86_64) MedGuidesBot/0.3 (+guideline collection)"
 # sources.yaml id -> guideline_bodies.yaml id
-BODY = {"has": "has", "splf": "splf", "spilf": "spilf", "sfc": "sfc", "ansm": "ansm", "cnge": "cnge", "dz-ministry": "dz-ministere", "dz-insp": "dz-ministere"}
+BODY = {"has": "has", "splf": "splf", "spilf": "spilf", "sfc": "sfc", "ansm": "ansm", "cnge": "cnge", "dz-ministry": "dz-ministere", "dz-insp": "dz-ministere",
+        "sfmu": "sfmu", "sfar": "sfar"}
+# Societies read from their catalogue (societies_catalogue.py -> downloads/societies.json), not from a listing page:
+# sources.yaml id -> the catalogue's "source". Their listing page, if any, is not read as well.
+SOCIETIES = {"sfmu": "SFMU", "sfar": "SFAR", "sfc": "SFC", "spilf": "SPILF"}
+SOCIETIES_FRESH = timedelta(days=7)
 
 
 def now() -> datetime:
@@ -37,12 +42,12 @@ def now() -> datetime:
 
 
 def sources() -> list[dict]:
-    """The sources read through a listing page or marked for manual adding."""
+    """The sources read through a listing page, the society catalogue, or marked for manual adding."""
     out: list[dict] = []
 
     def walk(node):
         if isinstance(node, list):
-            out.extend(s for s in node if isinstance(s, dict) and ("listing" in s or "manual" in s))
+            out.extend(s for s in node if isinstance(s, dict) and ("listing" in s or "manual" in s or s.get("id") in SOCIETIES))
         elif isinstance(node, dict):
             for v in node.values():
                 walk(v)
@@ -109,7 +114,8 @@ def read_listing(src: dict) -> dict:
                         continue
                     title = text if len(text) > 8 else _title_from(url)
                     if url not in entries or len(title) > len(entries[url]["title"]):
-                        entries[url] = {"title": title, "url": url, "pdf": url.lower().endswith(".pdf"), "year": _year(f"{title} {url}")}
+                        # a date in the title is the document's ("... (31/12/2009)"); the address may carry a later upload date
+                        entries[url] = {"title": title, "url": url, "pdf": url.lower().endswith(".pdf"), "year": _year(title) or _year(url)}
     except polite.Blocked as exc:
         result = {"status": "ajout manuel", "reason": f"le site refuse le robot ({exc}) : ajout manuel"}
     except httpx.HTTPStatusError as exc:
@@ -138,10 +144,38 @@ def has_entries() -> dict:
         for i in items if not i.get("in_progress")]}  # a publication in progress (note de cadrage only) is not guidance yet
 
 
+def society_entries(source_id: str) -> dict:
+    """A French society's guidelines from downloads/societies.json. Built once if missing; when older than a week it
+    is rebuilt in the background and this search uses the current file (a site crawl never holds a search up)."""
+    path = DOWNLOADS / "societies.json"
+    script = [sys.executable, str(HERE / "societies_catalogue.py"), "--out", str(DOWNLOADS)]
+    if not path.exists():
+        subprocess.run(script, capture_output=True, timeout=200)
+    elif now() - datetime.fromtimestamp(path.stat().st_mtime, timezone.utc) > SOCIETIES_FRESH:
+        subprocess.Popen(script, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+    if not path.exists():
+        return {"status": "erreur", "reason": "catalogue des sociétés savantes indisponible", "entries": []}
+    items = [i for i in json.loads(path.read_text(encoding="utf-8"))["items"] if i.get("source") == SOCIETIES[source_id]]
+    return {"status": "ok", "reason": None, "entries": [
+        {"title": i["title"], "url": i["page_url"], "pdf": False, "pdf_url": (i["pdfs"][0]["url"] if i.get("pdfs") else None),
+         "year": int(str(i["published"])[:4]) if i.get("published") else _year(f"{i['title']} {i['page_url']}")}
+        for i in items]}
+
+
+def _singular_words(text: str) -> str:
+    """'etats de mal epileptiques' -> 'etat de mal epileptique': a title in the plural still names the topic."""
+    return " ".join(w[:-1] if len(w) > 4 and w[-1] in "sx" and not w.endswith(("ss", "is", "us")) else w for w in text.split())
+
+
 def matches(title: str, concepts: list[list[str]], fold) -> bool:
-    """Every concept named in the title (one of its French phrases)."""
-    t = f" {fold(title)} "
-    return all(any(f" {fold(p)} " in t or (len(p) > 6 and fold(p) in t) for p in alts) for alts in concepts)
+    """Every concept named in the title (one of its French phrases), singular or plural."""
+    t = f" {_singular_words(re.sub(r'[^a-z0-9+]+', ' ', fold(title)))} "
+    def has(p: str) -> bool:
+        if re.fullmatch(r"[A-Z0-9+]{2,5}", p.strip()):
+            return False  # "ACR" is arrêt cardio-respiratoire and the American College of Radiology: a full name is needed
+        q = _singular_words(re.sub(r"[^a-z0-9+]+", " ", fold(p))).strip()
+        return bool(q) and (f" {q} " in t or (len(q) > 6 and q in t))
+    return all(any(has(p) for p in alts) for alts in concepts)
 
 
 def french_concepts(query: str | None, topic: dict | None, fold, glossary) -> list[list[str]]:
@@ -162,9 +196,9 @@ def search(query: str | None, topic: dict | None, fold, glossary) -> tuple[list[
     concepts = french_concepts(query, topic, fold, glossary)
     records, status = [], []
     for src in [{"id": "has", "name": "Haute Autorité de Santé"}, *sources()]:
-        listing = has_entries() if src["id"] == "has" else read_listing(src)
+        listing = has_entries() if src["id"] == "has" else society_entries(src["id"]) if src["id"] in SOCIETIES else read_listing(src)
         status.append({"id": src["id"], "name": src["name"], "status": listing["status"], "reason": listing.get("reason"),
-                       "url": src.get("listing") or src.get("url"), "entries": len(listing["entries"])})
+                       "url": src.get("listing") if src["id"] not in SOCIETIES and src.get("listing") else src.get("url"), "entries": len(listing["entries"])})
         for e in listing["entries"]:
             if not concepts or not matches(e["title"], concepts, fold):
                 continue

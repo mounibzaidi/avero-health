@@ -1,0 +1,4484 @@
+{
+ "model": "claude-sonnet-5-5",
+ "batch": false,
+ "fallback": null,
+ "fiche": {
+  "meta": {
+   "title": "Syndrome coronarien aigu : prise en charge initiale (ACC/AHA 2025)",
+   "topic_id": "sca-accaha-2025",
+   "template": "urgence",
+   "audience": [
+    "MG",
+    "urgences"
+   ],
+   "version": "0.1",
+   "status": "draft",
+   "reviewer": null,
+   "reviewed_at": null,
+   "siblings": [],
+   "sources": [
+    {
+     "source_id": "accaha2025",
+     "type": "full_guideline",
+     "title": "2025 ACC/AHA/ACEP/NAEMSP/SCAI Guideline for the Management of Patients With Acute Coronary Syndromes",
+     "citation": "Rao SV, O'Donoghue ML, Ruel M, et al. J Am Coll Cardiol. 2025;85(22):2135-2237",
+     "licence": "© 2025 ACCF et AHA. Copie multiple, modification et diffusion interdites sans autorisation expresse de l'ACC."
+    }
+   ],
+   "excluded_by_audience": [
+    "Catheterization laboratory vascular access approach (radial vs femoral) and intracoronary imaging (IVUS/OCT) use during stent implantation",
+    "Multivessel PCI technique and staged revascularization strategies in STEMI/NSTE-ACS",
+    "Mechanical circulatory support devices (IABP, microaxial flow pump, ECLS/VA-ECMO) in cardiogenic shock",
+    "Surgical management of mechanical complications (papillary muscle rupture, ventricular septal rupture) and CABG revascularization decisions",
+    "Electrophysiologic interventions and ICD implantation for sudden cardiac death prevention",
+    "Guideline methodology, author/industry relationship disclosures, and reviewer appendices"
+   ],
+   "quote_check": "151/151"
+  },
+  "sections": {
+   "1_essentiel": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-001",
+      "text": "Double antiplaquettaire recommandée chez les patients avec SCA ; ticagrélor ou prasugrel préférés au clopidogrel en cas d'angioplastie (PCI).",
+      "type": "action",
+      "condition": "SCA, avec PCI pour la préférence ticagrélor/prasugrel",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2138,
+       "quote": "Dual antiplatelet therapy is recommended for patients with acute coronary syndromes (ACS). Ticagrelor or prasugrel is recommended in preference to clopidogrel in patients with ACS who are undergoing percutaneous coronary intervention (PCI)."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-002",
+      "text": "Aspirine + inhibiteur oral du P2Y12 pendant au moins 12 mois par défaut chez les patients avec SCA sans risque hémorragique élevé.",
+      "type": "action",
+      "condition": "SCA sans risque hémorragique élevé",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2138,
+       "quote": "Dual antiplatelet therapy with aspirin and an oral P2Y12 inhibitor is indicated for at least 12 months as the default strategy in patients with ACS who are not at high bleeding risk."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "posologies"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-003",
+      "text": "Statine à haute intensité recommandée chez tous les patients avec SCA, avec option d'initier l'ézétimibe en association.",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2138,
+       "quote": "High-intensity statin therapy is recommended for all patients with ACS, and with the option to initiate con- current ezetimibe."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "doses"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-004",
+      "text": "SCA sans sus-décalage du ST à risque ischémique intermédiaire ou élevé : stratégie invasive avec intention de revascularisation pendant l'hospitalisation.",
+      "type": "conditional",
+      "condition": "SCA non ST+ à risque ischémique intermédiaire ou élevé",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2138,
+       "quote": "In patients with non–ST-segment elevation ACS who are at intermediate or high risk of ischemic events, an invasive approach with the intent to proceed with"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-005",
+      "text": "SCA avec choc cardiogénique : revascularisation en urgence de l'artère coupable indiquée.",
+      "type": "conditional",
+      "condition": "SCA avec choc cardiogénique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2139,
+       "quote": "In patients with ACS and cardiogenic shock, emergency revascularization of the culprit vessel is indicated"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ]
+   },
+   "2_presentation": {
+    "state": "non_traité",
+    "signes_typiques": [],
+    "formes_trompeuses": [],
+    "examen_clinique": []
+   },
+   "3_champ": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-006",
+      "text": "Champ de la recommandation : elle porte principalement sur la prise en charge de l'infarctis aigu du myocarde (IDM) de type 1.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2141,
+       "quote": "This guideline primarily focuses on the management of type 1 acute myocardial infarction (AMI)."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-007",
+      "text": "En cas d'incertitude entre IDM de type 1 et de type 2, selon le rapport bénéfices/risques de l'intervention diagnostique ou thérapeutique, il peut être approprié de considérer l'événement comme un SCA de type 1 jusqu'à preuve du contraire.",
+      "type": "conditional",
+      "condition": "Incertitude entre IDM de type 1 et de type 2",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2141,
+       "quote": "In cases of uncer-\ntainty and depending on the beneﬁts/risks of a speciﬁc\ndiagnostic or therapeutic intervention, it may be appro-\npriate to err on the side of considering an event a type 1\nacute coronary syndrome (ACS) event until established to\nbe otherwise."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-008",
+      "text": "Les recommandations sont limitées aux médicaments, dispositifs et traitements approuvés pour l'usage clinique aux États-Unis ; la posologie doit être confirmée avec la notice du produit, et les contre-indications et interactions doivent être évaluées.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2140,
+       "quote": "Recommendations are limited to              drugs,\ndevices, and treatments approved for clinical use in the\nUnited States."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ]
+   },
+   "4_gravite": {
+    "state": "filled",
+    "signes_de_gravite": [
+     {
+      "id": "sca-accaha-2025-009",
+      "text": "Facteurs pronostiques défavorables chez le patient comateux après arrêt cardiaque avec sus-décalage ST : arrêt non témoin, absence de RCP par témoin, rythme non choquable, RCP >30 min, délai de retour à la circulation spontanée >30 min, pH artériel <7,2, lactates >7 mmol/L, âge >85 ans, insuffisance rénale terminale dialysée.",
+      "type": "info",
+      "condition": "Patient comateux après arrêt cardiaque, retour à la circulation spontanée obtenu, avec STEMI à l'ECG",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2153,
+       "quote": "unwitnessed\n   arrest, no bystander cardiopulmonary resuscitation,\n   nonshockable rhythm, cardiopulmonary resuscitation\n   >30 minutes, time to ROSC >30 minutes, arterial\n   pH <7.2, lactate >7 mmol/L, age >85 years, and end-\n   stage renal disease on dialysis."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-010",
+      "text": "La survie jusqu'à la sortie de l'hôpital du patient comateux après arrêt cardiaque extrahospitalier est <10 %, quelle que soit l'étiologie.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2152,
+       "quote": "Survival-to-hospital discharge in the patient who is comatose with out-of-hospital cardiac arrest is <10% regardless of etiology."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-011",
+      "text": "Score TIMI pour STEMI (mortalité toutes causes à 30 jours) : Killip II-IV (2 points), PAS <100 mm Hg (3 points), FC >100 bpm (2 points), poids <67 kg (1 point), délai de traitement >4 h (1 point).",
+      "type": "info",
+      "condition": "Patient avec STEMI",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2152,
+       "quote": "Killip class II-IV (2 points)*<br />\n        Systolic blood pressure (&#x3C;100 mm Hg, 3 points)<br />\n        Heart rate >100 bpm (2 points)<br />\n        Anterior ST-segment elevation or LBBB (1 point)<br />\n        Diabetes/hypertension/angina (1 point)<br />\n        Weight (&#x3C;67 kg, 1 point)<br />\n        Time to treatment >4 h (1 point)"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "Les variables poids <67 kg et délai >4 h figurent dans le tableau mais ne sont pas incluses dans la citation"
+      ]
+     }
+    ],
+    "gestes_immediats": {
+     "state": "non_traité",
+     "elements": []
+    }
+   },
+   "5_conduite": {
+    "state": "filled",
+    "nodes": [
+     {
+      "node": "STEMI : angioplastie primaire (PPCI) et délais",
+      "branches": [
+       {
+        "id": "sca-accaha-2025-012",
+        "text": "STEMI se présentant <12 h après le début des symptômes : réaliser une PPCI avec un objectif de délai premier contact médical-activation du dispositif ≤90 min, ou ≤120 min si transfert hospitalier nécessaire, pour améliorer la survie.",
+        "type": "action",
+        "condition": "STEMI avec symptômes <12 h",
+        "order": 1,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2172,
+         "quote": "In patients with STEMI present-"
+        },
+        "translated": true,
+        "grade": "COR 1 / LOE A",
+        "risk": "high",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "La citation est limitée au début de la recommandation (texte PDF fragmenté) ; les délais ≤90/≤120 min figurent dans le texte de la page mais avec symboles altérés (£)."
+        ]
+       },
+       {
+        "id": "sca-accaha-2025-013",
+        "text": "Choc cardiogénique ou instabilité hémodynamique dans le SCA : revascularisation d'urgence du vaisseau coupable par PCI ou pontage (CABG), quel que soit le délai depuis le début des symptômes.",
+        "type": "conditional",
+        "condition": "SCA avec choc cardiogénique ou instabilité hémodynamique",
+        "order": 2,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2172,
+         "quote": "emergency revascu-"
+        },
+        "translated": true,
+        "grade": "COR 1 / LOE B-R",
+        "risk": "high",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Citation fragmentaire due à la mise en page du PDF."
+        ]
+       }
+      ]
+     },
+     {
+      "node": "STEMI : choix de la stratégie dans un hôpital sans angioplastie",
+      "branches": [
+       {
+        "id": "sca-accaha-2025-014",
+        "text": "STEMI avec délai estimé premier contact-dispositif ≤120 min ou contre-indication à la fibrinolyse : transfert vers un hôpital avec PCI pour PPCI.",
+        "type": "conditional",
+        "condition": "Hôpital sans PCI ; délai estimé ≤120 min ou contre-indication à la fibrinolyse",
+        "order": 1,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2174,
+         "quote": "transfer to a PCI-capable hospital for PPCI is"
+        },
+        "translated": true,
+        "grade": "COR 1 / LOE A",
+        "risk": "high",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": []
+       },
+       {
+        "id": "sca-accaha-2025-015",
+        "text": "STEMI avec symptômes <12 h et délai prévisible avant PPCI >120 min : administrer une fibrinolyse chez les patients sans contre-indication.",
+        "type": "conditional",
+        "condition": "Symptômes <12 h ; délai PPCI >120 min ; pas de contre-indication",
+        "order": 2,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2174,
+         "quote": "therapy should be administered"
+        },
+        "translated": true,
+        "grade": "COR 1 / LOE A",
+        "risk": "high",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Seuil >120 min présent dans la recommandation mais hors de la citation fragmentée."
+        ]
+       }
+      ]
+     },
+     {
+      "node": "Après fibrinolyse",
+      "branches": [
+       {
+        "id": "sca-accaha-2025-016",
+        "text": "Après fibrinolyse dans le STEMI : transfert immédiat vers un centre avec PCI.",
+        "type": "action",
+        "condition": "STEMI traité par fibrinolyse",
+        "order": 1,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2176,
+         "quote": "to a PCI-capable center immedi-"
+        },
+        "translated": true,
+        "grade": "COR 1 / LOE A",
+        "risk": "high",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": []
+       },
+       {
+        "id": "sca-accaha-2025-017",
+        "text": "Suspicion d'échec de reperfusion après fibrinolyse : angiographie immédiate avec PCI de sauvetage.",
+        "type": "conditional",
+        "condition": "Suspicion d'échec de reperfusion après fibrinolyse",
+        "order": 2,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2176,
+         "quote": "angiography with rescue PCI is"
+        },
+        "translated": true,
+        "grade": "COR 1 / LOE B-R",
+        "risk": "high",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": []
+       }
+      ]
+     },
+     {
+      "node": "Stratégie invasive dans le SCA sans sus-décalage de ST (NSTE-ACS) selon le risque",
+      "branches": [
+       {
+        "id": "sca-accaha-2025-018",
+        "text": "Patient instable / à très haut risque : stratégie invasive immédiate dans les 2 h.",
+        "type": "action",
+        "condition": "Patient NSTE-ACS instable ou à très haut risque",
+        "order": 1,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "C Immediate invasive strategy 2 h, Class 1"
+        },
+        "translated": true,
+        "grade": "COR 1",
+        "risk": "high",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Critères définissant l'instabilité / le très haut risque non présents dans la figure extraite",
+         "Niveau de preuve (LOE) non indiqué"
+        ]
+       },
+       {
+        "id": "sca-accaha-2025-019",
+        "text": "NSTE-ACS à haut risque : stratégie invasive de routine.",
+        "type": "action",
+        "condition": "NSTE-ACS à haut risque",
+        "order": 2,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "E Routine invasive Class 1"
+        },
+        "translated": true,
+        "grade": "COR 1",
+        "risk": "medium",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Niveau de preuve (LOE) non indiqué"
+        ]
+       },
+       {
+        "id": "sca-accaha-2025-020",
+        "text": "NSTE-ACS à haut risque : coronarographie dans les 24 h.",
+        "type": "action",
+        "condition": "NSTE-ACS à haut risque",
+        "order": 3,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "F Coronary angiography 24 h Class 2a"
+        },
+        "translated": true,
+        "grade": "COR 2a",
+        "risk": "medium",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Niveau de preuve (LOE) non indiqué"
+        ]
+       },
+       {
+        "id": "sca-accaha-2025-021",
+        "text": "NSTE-ACS à risque intermédiaire : stratégie invasive de routine.",
+        "type": "action",
+        "condition": "NSTE-ACS à risque intermédiaire",
+        "order": 4,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "H Routine invasive Class 1"
+        },
+        "translated": true,
+        "grade": "COR 1",
+        "risk": "medium",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Niveau de preuve (LOE) non indiqué"
+        ]
+       },
+       {
+        "id": "sca-accaha-2025-022",
+        "text": "NSTE-ACS à risque intermédiaire : coronarographie avant la sortie de l'hôpital, dans les 72 h.",
+        "type": "action",
+        "condition": "NSTE-ACS à risque intermédiaire",
+        "order": 5,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "I Coronary angiography before hospital discharge 72 h Class 2a"
+        },
+        "translated": true,
+        "grade": "COR 2a",
+        "risk": "medium",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Niveau de preuve (LOE) non indiqué"
+        ]
+       },
+       {
+        "id": "sca-accaha-2025-023",
+        "text": "NSTE-ACS à plus faible risque : stratégie invasive de routine ou sélective.",
+        "type": "action",
+        "condition": "NSTE-ACS à plus faible risque",
+        "order": 6,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "K Routine invasive or selective invasive Class 1"
+        },
+        "translated": true,
+        "grade": "COR 1",
+        "risk": "low",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Niveau de preuve (LOE) non indiqué"
+        ]
+       },
+       {
+        "id": "sca-accaha-2025-024",
+        "text": "NSTE-ACS à plus faible risque : coronarographie avant la sortie de l'hôpital.",
+        "type": "action",
+        "condition": "NSTE-ACS à plus faible risque",
+        "order": 7,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "L Coronary angiography before hospital discharge Class 2a"
+        },
+        "translated": true,
+        "grade": "COR 2a",
+        "risk": "low",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": [
+         "Niveau de preuve (LOE) non indiqué"
+        ]
+       },
+       {
+        "id": "sca-accaha-2025-025",
+        "text": "Stratification non invasive du risque pendant l'hospitalisation ou en cas de symptômes récurrents.",
+        "type": "action",
+        "condition": "NSTE-ACS à plus faible risque",
+        "order": 8,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "Non-invasive risk stratification during hospitalization or recurrent symptoms"
+        },
+        "translated": true,
+        "grade": null,
+        "risk": "low",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": []
+       },
+       {
+        "id": "sca-accaha-2025-026",
+        "text": "En cas de situation de décision incertaine, une approche en Heart Team est encouragée.",
+        "type": "conditional",
+        "condition": "Décisions de prise en charge peu claires",
+        "order": 9,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "clinicians are encouraged to use a Heart Team approach when care decisions are unclear"
+        },
+        "translated": true,
+        "grade": null,
+        "risk": "low",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": []
+       }
+      ]
+     },
+     {
+      "node": "Voie d'abord vasculaire pour l'angioplastie (PCI) dans le SCA",
+      "branches": [
+       {
+        "id": "sca-accaha-2025-027",
+        "text": "Chez les patients avec SCA bénéficiant d'une PCI, l'abord radial est préféré à l'abord fémoral pour réduire saignements, complications vasculaires et décès.",
+        "type": "action",
+        "condition": "SCA avec PCI",
+        "order": 1,
+        "source": {
+         "source_id": "accaha2025",
+         "page": 2180,
+         "quote": "In patients with ACS undergoing PCI, a radial approach is <u>preferred</u> to a femoral approach to reduce bleeding, vascular complications, and death."
+        },
+        "translated": true,
+        "grade": "COR 1 / LOE A",
+        "risk": "medium",
+        "origin": "explicit",
+        "conflict_group": null,
+        "missing": []
+       }
+      ]
+     }
+    ]
+   },
+   "6_examens": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-028",
+      "text": "Après la sortie : bilan lipidique à jeun 4 à 8 semaines après l'initiation ou l'ajustement du traitement hypolipémiant ; réadaptation cardiaque recommandée.",
+      "type": "action",
+      "condition": "après la sortie",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2139,
+       "quote": "A fasting lipid panel is recommended 4 to 8 weeks after initiating or adjusting the dose of lipid-lowering therapy."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-029",
+      "text": "Le score GRACE utilise : âge, classe Killip, pression artérielle systolique, fréquence cardiaque, déviation du segment ST, arrêt cardiaque à l'admission, créatinine sérique, biomarqueurs cardiaques élevés.",
+      "type": "info",
+      "condition": "Stratification du risque dans le SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2152,
+       "quote": "Age<br />\n        Killip class<br />\n        Systolic blood pressure<br />\n        Heart rate<br />\n        ST-segment deviation<br />\n        Cardiac arrest on admission<br />\n        Serum creatinine<br />\n        Elevated cardiac biomarkers"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-030",
+      "text": "Chez tout patient avec suspicion de SCA, réaliser et interpréter un ECG dans les 10 minutes pour guider la prise en charge.",
+      "type": "action",
+      "condition": "Suspicion de SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2149,
+       "quote": "acquisition and interpretation of\n                                  an ECG within 10 minutes is rec-\n                                  ommended to help guide patient"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-NR",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-031",
+      "text": "Si l'ECG initial est non diagnostique, répéter des ECG 12 dérivations en série pour détecter des changements ischémiques, surtout si la suspicion clinique est forte, les symptômes persistent ou l'état clinique se dégrade.",
+      "type": "conditional",
+      "condition": "Suspicion de SCA avec ECG initial non diagnostique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2149,
+       "quote": "serial 12-lead ECGs\n                                  should be performed to detect"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-NR",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-032",
+      "text": "Un ECG initial non diagnostique n'exclut pas un SCA : les anomalies peuvent être dynamiques.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2149,
+       "quote": "An initial nondiagnostic 12-lead ECG does not “rule\nout” or exclude ACS."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-033",
+      "text": "Obtenir des dérivations droites en cas de suspicion d'infarctus inférieur (STEMI) pour évaluer l'atteinte du ventricule droit.",
+      "type": "conditional",
+      "condition": "Suspicion de STEMI inférieur",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2149,
+       "quote": "Right-sided leads should be obtained in pa-\ntients with a concern for inferior STEMI to evaluate for\nright ventricular involvement."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-034",
+      "text": "Obtenir des dérivations postérieures (V7-V9) en cas de suspicion d'occlusion de la circonflexe, en particulier avec sous-décalage isolé du ST ≥0,5 mm en V1-V3.",
+      "type": "conditional",
+      "condition": "Suspicion d'occlusion de la circonflexe",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2145,
+       "quote": "Posterior leads (V<sub>7</sub>-V<sub>9</sub>) should be obtained in patients with suspected left circumflex occlusion particularly in the setting of isolated ST-segment depression ≥0.5 mm in leads V<sub>1</sub>-V<sub>3</sub>."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-035",
+      "text": "Dosage de la troponine cardiaque dès que possible, de préférence par dosage haute sensibilité (hs-cTn).",
+      "type": "action",
+      "condition": "Suspicion de SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2149,
+       "quote": "cTn should be measured as soon\n                                  as possible, preferably using a\n                                  high-sensitivity cTn (hs-cTn)\n                                  assay."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-NR",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-036",
+      "text": "Si la première troponine est non diagnostique, répéter le dosage après 1 à 2 heures pour la hs-cTn et 3 à 6 heures pour la troponine conventionnelle (à partir du prélèvement initial).",
+      "type": "conditional",
+      "condition": "Suspicion de SCA avec hs-cTn ou cTn initiale non diagnostique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2149,
+       "quote": "are\n                                  1 to 2 hours for hs-cTn and 3 to\n                                  6 hours for conventional cTn"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-NR",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-037",
+      "text": "Une troponine supérieure au 99e percentile de la limite de référence supérieure (propre à chaque dosage) indique une lésion myocardique.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2150,
+       "quote": "A cTn concentration >99th percentile upper reference"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-038",
+      "text": "Si une stratégie utilisant une seule valeur de hs-cTn est employée, la troponine doit être prélevée au moins 3 heures après le début des symptômes.",
+      "type": "conditional",
+      "condition": "Stratégie décisionnelle avec une seule valeur de hs-cTn",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2151,
+       "quote": "the troponin should\n   be obtained at least 3 hours after the onset of\n   symptoms."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-039",
+      "text": "Une échocardiographie urgente, éventuellement échographie au lit (POCUS) par un clinicien formé, est indiquée en cas de choc cardiogénique, d'instabilité hémodynamique ou de suspicion de complication mécanique.",
+      "type": "conditional",
+      "condition": "Choc cardiogénique, instabilité hémodynamique ou suspicion de complication mécanique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2149,
+       "quote": "Urgent echocardi-\n\nography, which may include an initial point-of-care\n\nultrasound by trained clinicians, is indicated for patients\nwith cardiogenic shock, hemodynamic instability, or for\n\nsuspected mechanical complications."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-040",
+      "text": "Chez tout patient suspect de SCA, réaliser et interpréter un ECG 12 dérivations dans les 10 minutes suivant le premier contact médical, afin d'identifier les patients avec STEMI.",
+      "type": "action",
+      "condition": "Suspicion de SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2147,
+       "quote": "In patients with suspected ACS, a 12-lead ECG should be acquired and interpreted within 10 minutes of first medical contact (FMC)* to identify patients with STEMI."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-NR",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-041",
+      "text": "Si l'ECG initial n'est pas diagnostique de STEMI, répéter des ECG en série pour détecter des modifications ischémiques, surtout si la suspicion clinique de SCA est élevée, si les symptômes persistent ou si l'état clinique se dégrade.",
+      "type": "conditional",
+      "condition": "Suspicion de SCA avec ECG initial non diagnostique de STEMI",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2147,
+       "quote": "serial ECGs to detect potential ischemic changes should be performed, especially when clinical suspicion of ACS is high, symptoms are persistent, or the clinical condition deteriorates."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE C-LD",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-042",
+      "text": "Appliquer les dérivations postérieures (V7-V9) chez les patients avec symptômes persistants et ECG non diagnostique, et chez ceux avec sous-décalage du segment ST en V1-V3, pour rechercher un sus-décalage ST postérieur (STEMI postérieur).",
+      "type": "conditional",
+      "condition": "Symptômes persistants avec ECG non diagnostique, ou sous-décalage ST en V1-V3",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2148,
+       "quote": "Posterior ECG leads (V 7-V9 ) should be applied in patients with ongoing symptoms and a nondiagnostic ECG and those with ST-segment de-pressions in leads V1-V3 to assess for ST-segment elevation in the posterior leads"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-043",
+      "text": "Les modifications électrocardiographiques ne sont pas nécessaires pour confirmer le diagnostic de SCA sans sus-décalage du segment ST (NSTE-ACS).",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2148,
+       "quote": "Electrocardiographic changes are not required to conﬁrm a diagnosis of non-ST-segment elevation ACS (NSTE-ACS)."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-044",
+      "text": "En cas de lyse, une absence d'amélioration des symptômes ischémiques ou une persistance du sus-décalage ST (résolution <50 % en antérieur ou <70 % en inférieur) peut indiquer une reperfusion incomplète.",
+      "type": "info",
+      "condition": "Après fibrinolyse",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2176,
+       "quote": "persistent\n       ST-segment elevation (<50% resolution of ST-segment\n       elevation in the anterior leads or <70% in inferior leads"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-045",
+      "text": "Chez les patients ayant un SCA, évaluer la FEVG avant la sortie de l'hôpital pour guider le traitement et stratifier le risque.",
+      "type": "action",
+      "condition": "Patients avec SCA, avant la sortie de l'hôpital",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2195,
+       "quote": "In patients with ACS, an assess-"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE C-LD",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-046",
+      "text": "L'échocardiographie transthoracique est généralement la modalité préférée pour évaluer la fonction VG ; elle est fortement préférée pour tous les patients hospitalisés pour STEMI.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2195,
+       "quote": "Transthoracic echocardiography is there-\nfore strongly preferred for all patients hospitalized with\nSTEMI because complications may be more likely to be\npresent."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-047",
+      "text": "Si l'échocardiographie transthoracique est non diagnostique, l'IRM cardiaque est une alternative raisonnable chez les patients cliniquement stables.",
+      "type": "conditional",
+      "condition": "Échocardiographie transthoracique non diagnostique, patient cliniquement stable",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2195,
+       "quote": "In patients where transthoracic echocardiogra-\nphy is nondiagnostic, cardiac magnetic resonance imag-\ning is a reasonable alternative in clinically stable patients."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-048",
+      "text": "Si la fonction VG est réduite, répéter l'échocardiographie à 6 à 12 semaines pour guider le traitement et discuter l'indication d'un DAI.",
+      "type": "conditional",
+      "condition": "Fonction VG réduite",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2195,
+       "quote": "For patients in\nwhom LV function is found to be reduced, a repeat\nechocardiogram should be performed in 6 to 12 weeks to\nfurther guide treatment decisions and for consideration of\nneed for an ICD."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-049",
+      "text": "Le diagnostic de thrombus VG repose sur l'échocardiogramme, modalité recommandée pour son accessibilité et son faible coût.",
+      "type": "info",
+      "condition": "Suspicion de thrombus VG après IDM",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2192,
+       "quote": "An echocardiogram is the recommended imaging modality for diagnosis, given its wide accessibility and low cost."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-050",
+      "text": "L'IRM cardiaque, plus sensible pour détecter un thrombus VG, peut être envisagée en cas de forte suspicion clinique et d'échocardiogramme non concluant.",
+      "type": "conditional",
+      "condition": "Forte suspicion clinique et échocardiogramme non concluant",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2192,
+       "quote": "Cardiac MRI is more sensitive for detection of LV thrombus and may be considered when there is high clinical suspicion and echocardiogram results are inconclusive."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-051",
+      "text": "Critères diagnostiques de péricardite post-IDM : douleur thoracique pleurétique et au moins un critère, notamment des signes ECG (sous-décalage du PR, sus-décalage diffus concave du ST, ou en contexte d'IDM sus-décalage persistant du ST ou modifications dynamiques de l'onde T).",
+      "type": "row",
+      "condition": "Douleur thoracique pleurétique présente",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2192,
+       "quote": "Electrocardiographic evidence such as classic PR-segment depression or diffuse concave ST-segment elevations, or in the setting of MI, persistent ST-segment elevations or dynamic T-wave changes"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-052",
+      "text": "Critère diagnostique de péricardite : épanchement péricardique nouveau ou croissant à l'échocardiographie.",
+      "type": "row",
+      "condition": "Douleur thoracique pleurétique présente",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2192,
+       "quote": "New or growing pericardial effusion on echocardiography"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-053",
+      "text": "Contrôler un bilan lipidique à jeun 4 à 8 semaines après l'initiation ou l'ajustement du traitement hypolipémiant, pour évaluer la réponse ou l'observance.",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2202,
+       "quote": "lipid panel is recommended 4 to\n8 weeks after initiation or dose\nadjustment of lipid-lowering\ntherapy to assess response or\nadherence to therapy."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE C-LD",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-054",
+      "text": "Un suivi précoce et fréquent, avec bilan lipidique, est associé à une meilleure observance des traitements hypolipémiants.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2203,
+       "quote": "Early and frequent follow-up, including lipid testing, is associated with improved"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-055",
+      "text": "Le point de contact médical initial (FMC) est le moment où le patient est évalué pour la première fois par un professionnel de santé capable d'obtenir et d'interpréter l'ECG et de délivrer les premières interventions (par ex. défibrillation).",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2147,
+       "quote": "FMC indicates the time point when the patient is initially assessed by a health care professional who can obtain and interpret the ECG and deliver initial interventions (eg, defibrillation)."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ]
+   },
+   "7_traitement": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-056",
+      "text": "Aspirine chez tout patient SCA : dose de charge orale puis aspirine à faible dose quotidienne, pour réduire décès et MACE.",
+      "type": "action",
+      "condition": "Patients avec SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2155,
+       "quote": "In patients with ACS, an initial oral loading dose of aspirin, followed by daily low-dose aspirin, is recommended to reduce death and MACE."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-057",
+      "text": "Un inhibiteur oral de P2Y12 doit être administré en plus de l'aspirine pour réduire les MACE chez tout patient avec SCA.",
+      "type": "action",
+      "condition": "Patients avec SCA (STEMI et NSTE-ACS)",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2156,
+       "quote": "In patients with ACS, an oral P2Y12 inhibitor should be administered in addition to aspirin to reduce MACE."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-058",
+      "text": "STEMI traité par fibrinolytique : clopidogrel à administrer de façon concomitante pour réduire décès et MACE.",
+      "type": "action",
+      "condition": "STEMI traité par fibrinolyse",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2156,
+       "quote": "In patients with STEMI managed with ﬁbrinolytic therapy, clopidogrel should be administered concurrently to reduce death and MACE."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-059",
+      "text": "STEMI avec angioplastie primaire : prasugrel ou ticagrelor pour réduire MACE et thrombose de stent.",
+      "type": "action",
+      "condition": "STEMI pris en charge par PPCI",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2156,
+       "quote": "In patients with STEMI managed with PPCI, prasugrel or ticagrelor should be administered to reduce MACE and stent thrombosis."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-R",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-060",
+      "text": "STEMI avec PPCI : clopidogrel recommandé si prasugrel ou ticagrelor indisponibles, non tolérés ou contre-indiqués.",
+      "type": "conditional",
+      "condition": "Prasugrel/ticagrélor indisponibles, non tolérés ou contre-indiqués",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2156,
+       "quote": "clopidogrel is recommended to reduce MACE and stent thrombosis when prasugrel or ticagrelor are unavailable, cannot be tolerated, or are contraindicated."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE C-LD",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-061",
+      "text": "Analgésie : nitroglycérine SL chez patient hémodynamiquement stable avec PAS ≥90 mm Hg.",
+      "type": "conditional",
+      "condition": "Patient hémodynamiquement stable, PAS ≥90 mm Hg",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "Use in hemodynamically stable patients with SBP ≥90 mm Hg."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-062",
+      "text": "Nitroglycérine IV à envisager en cas de douleur angineuse persistante après nitrate oral, ou si SCA avec hypertension ou œdème pulmonaire.",
+      "type": "conditional",
+      "condition": "Douleur persistante après nitrate oral, ou SCA avec hypertension ou œdème pulmonaire",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "Consider for persistent anginal pain after oral nitrate therapy, or if ACS is accompanied by hypertension or pulmonary edema."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-063",
+      "text": "Morphine IV : pour douleur résistant aux autres traitements anti-ischémiques maximalement tolérés ; peut retarder l'effet des inhibiteurs oraux de P2Y12 ; surveillance étroite des effets indésirables.",
+      "type": "conditional",
+      "condition": "Douleur résistante aux autres anti-ischémiques maximalement tolérés",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "Use for relief of pain that is resistant to other maximally tolerated anti-ischemic medications. May delay the effects of oral P2Y12 therapy."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-064",
+      "text": "Revascularisation coronaire rapide à poursuivre chez les patients dont les symptômes ischémiques persistent malgré les nitrates ; les opiacés ne doivent pas servir uniquement à masquer ces symptômes.",
+      "type": "action",
+      "condition": "Symptômes ischémiques persistants non soulagés par les nitrates",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "rapid coronary revascularization should be pursued for patients with ongoing ischemic symptoms that are not relieved with nitrates"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-065",
+      "text": "Anticoagulation parentérale : héparine non fractionnée IV utile pour réduire les événements ischémiques dans le NSTE-ACS.",
+      "type": "action",
+      "condition": "NSTE-ACS",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2161,
+       "quote": "In patients with NSTE-ACS, intravenous unfractionated heparin (UFH) is useful to reduce ischemic events."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-066",
+      "text": "NSTE-ACS sans approche invasive précoce prévue : énoxaparine ou fondaparinux sont des alternatives recommandées à l'HNF.",
+      "type": "conditional",
+      "condition": "NSTE-ACS sans approche invasive précoce anticipée",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2161,
+       "quote": "either enoxaparin or fondaparinux are recommended alternatives to UFH to reduce ischemic events."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-R",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-067",
+      "text": "Si revascularisation (CABG ou PCI) durant la même admission, poursuivre l'anticoagulation parentérale jusqu'à la revascularisation.",
+      "type": "action",
+      "condition": "SCA avec revascularisation durant la même admission",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2161,
+       "quote": "parenteral anticoagulation should be continued until revascularization to reduce ischemic events."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE C-LD",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-068",
+      "text": "SCA avec PCI : HNF IV utile pour réduire les événements ischémiques.",
+      "type": "action",
+      "condition": "SCA avec PCI",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2161,
+       "quote": "In patients with ACS undergoing PCI, intravenous UFH is useful to reduce ischemic events."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE C-EO",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-069",
+      "text": "Chez les patients avec SCA, une anticoagulation parentérale est recommandée, quelle que soit la stratégie initiale.",
+      "type": "action",
+      "condition": "SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2162,
+       "quote": "Parenteral anticoagulation is recommended for all pa-"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "Le quote est la synthèse, sans COR/LOE propre"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-070",
+      "text": "STEMI traité par fibrinolyse : poursuivre l'anticoagulation parentérale pendant la durée de l'hospitalisation (maximum 8 jours) ou jusqu'à la revascularisation.",
+      "type": "action",
+      "condition": "STEMI traité par fibrinolyse",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2162,
+       "quote": "parenteral anticoagulation should be"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-071",
+      "text": "STEMI sous fibrinolyse sans approche invasive prévue : l'énoxaparine est l'anticoagulant recommandé.",
+      "type": "action",
+      "condition": "STEMI sous fibrinolyse, sans approche invasive prévue",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2162,
+       "quote": "enoxaparin is"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-072",
+      "text": "STEMI sous fibrinolyse sans approche invasive prévue : le fondaparinux est une alternative recommandée.",
+      "type": "action",
+      "condition": "STEMI sous fibrinolyse, sans approche invasive prévue",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2162,
+       "quote": "fondaparinux"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-R",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-073",
+      "text": "STEMI avec ICP : la bivalirudine est utile comme alternative à l'HNF pour réduire la mortalité et les saignements.",
+      "type": "action",
+      "condition": "STEMI avec ICP",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2162,
+       "quote": "bivalirudin is useful as an"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-R",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-074",
+      "text": "Traitement hypolipémiant : un statine de haute intensité est recommandé chez les patients avec SCA.",
+      "type": "action",
+      "condition": "SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2165,
+       "quote": "intensity statin therapy is rec-"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-075",
+      "text": "Bêtabloquant oral : instauration précoce (<24 h) en l'absence de contre-indication pour réduire réinfarctus et arythmies ventriculaires.",
+      "type": "action",
+      "condition": "SCA sans contre-indication",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2168,
+       "quote": "early (<24 hours)"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-076",
+      "text": "SCA à haut risque (FEVG ≤40 %, hypertension, diabète ou STEMI antérieur) : IEC ou ARA2 oral indiqué pour réduire la mortalité toutes causes et les MACE.",
+      "type": "action",
+      "condition": "SCA à haut risque",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2169,
+       "quote": "an oral\n                                angiotensin-converting enzyme\n                                inhibitor (ACEi) or an angiotensin\n                                receptor blocker (ARB) is indi-"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ],
+    "contre_indications": {
+     "state": "filled",
+     "elements": [
+      {
+       "id": "sca-accaha-2025-077",
+       "text": "Nitrates contre-indiqués après prise récente d'inhibiteur de la PDE5 : éviter dans les 12 h après avanafil, 24 h après sildénafil/vardénafil, 48 h après tadalafil.",
+       "type": "info",
+       "condition": "Prise récente d'inhibiteur de la PDE5",
+       "order": null,
+       "source": {
+        "source_id": "accaha2025",
+        "page": 2154,
+        "quote": "Nitrates should not be administered after recent PDE5 inhibitor use. Avoid use of nitrates/nitroglycerin within 12 h of avanafil, 24 h of sildenafil/vardenafil, or 48 h of tadalafil."
+       },
+       "translated": true,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "missing": []
+      },
+      {
+       "id": "sca-accaha-2025-078",
+       "text": "Prasugrel contre-indiqué en cas d'antécédent d'AVC ou d'AIT (moins bons résultats cliniques nets).",
+       "type": "info",
+       "condition": "Antécédent d'AVC ou d'AIT",
+       "order": null,
+       "source": {
+        "source_id": "accaha2025",
+        "page": 2156,
+        "quote": "In patients with a history of stroke or transient ischemic attack, prasugrel should not be administered because of worse net clinical outcomes."
+       },
+       "translated": true,
+       "grade": "COR 3: Harm / LOE B-R",
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "missing": []
+      },
+      {
+       "id": "sca-accaha-2025-079",
+       "text": "Ne pas administrer systématiquement les inhibiteurs de la GP IIb/IIIa dans le SCA (absence de bénéfice ischémique, risque hémorragique accru).",
+       "type": "info",
+       "condition": null,
+       "order": null,
+       "source": {
+        "source_id": "accaha2025",
+        "page": 2160,
+        "quote": "In patients with ACS, glycoprotein IIb/IIIa inhibitors should not be administered routinely due to lack of ischemic benefit and increased risk of bleeding."
+       },
+       "translated": true,
+       "grade": "COR 3: Harm / LOE B-R",
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "missing": []
+      },
+      {
+       "id": "sca-accaha-2025-080",
+       "text": "Fondaparinux contre-indiqué si clairance de la créatinine <30 mL/min (schéma avec fibrinolyse).",
+       "type": "conditional",
+       "condition": "CrCl <30 mL/min",
+       "order": null,
+       "source": {
+        "source_id": "accaha2025",
+        "page": 2163,
+        "quote": "Contraindicated if CrCl <30 mL/min."
+       },
+       "translated": true,
+       "grade": null,
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "missing": []
+      },
+      {
+       "id": "sca-accaha-2025-081",
+       "text": "Fondaparinux ne doit pas être utilisé pour soutenir l'ICP en raison du risque de thrombose du cathéter.",
+       "type": "action",
+       "condition": "ICP",
+       "order": null,
+       "source": {
+        "source_id": "accaha2025",
+        "page": 2163,
+        "quote": "Fondaparinux should not be used to support PCI because of the risk of catheter thrombosis."
+       },
+       "translated": true,
+       "grade": "COR 3: Harm / LOE B-R",
+       "risk": "high",
+       "origin": "explicit",
+       "conflict_group": null,
+       "missing": []
+      }
+     ]
+    },
+    "posologies": [
+     {
+      "drug_dci": "nitroglycérine",
+      "dose": "0,3 ou 0,4 mg",
+      "dose_max": "3 doses au total",
+      "route": "SL (comprimés, spray)",
+      "administration": null,
+      "frequency_or_duration": "toutes les 5 min si besoin",
+      "condition": "Patient hémodynamiquement stable, PAS ≥90 mm Hg",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "0.3 or 0.4 mg every 5 min as needed up to a total of 3 doses"
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "nitroglycérine",
+      "dose": "Débuter à 10 μg/min, titrer selon soulagement et tolérance hémodynamique",
+      "dose_max": null,
+      "route": "IV",
+      "administration": null,
+      "frequency_or_duration": "perfusion titrée ; tachyphylaxie possible après environ 24 h",
+      "condition": null,
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "Start at 10 μg/min and titrate to pain relief and hemodynamic tolerability."
+      },
+      "translated": true,
+      "missing": [
+       "dose maximale",
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "morphine",
+      "dose": "2-4 mg",
+      "dose_max": "jusqu'à 10 mg peuvent être envisagés",
+      "route": "IV",
+      "administration": null,
+      "frequency_or_duration": "peut être répétée si besoin toutes les 5-15 min",
+      "condition": "Douleur résistante aux autres anti-ischémiques",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "2-4 mg; may repeat if needed every 5-15 min. Doses up to 10 mg may be considered."
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "fentanyl",
+      "dose": "25-50 μg",
+      "dose_max": "jusqu'à 100 μg peuvent être envisagés",
+      "route": "IV",
+      "administration": null,
+      "frequency_or_duration": "peut être répété si besoin",
+      "condition": "Douleur résistante aux autres anti-ischémiques",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "25-50 μg; may repeat if needed. Doses up to 100 μg may be considered."
+      },
+      "translated": true,
+      "missing": [
+       "intervalle de répétition",
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "aspirine",
+      "dose": "Dose de charge 162-325 mg",
+      "dose_max": null,
+      "route": "orale",
+      "administration": "Aspirine non entérique à mâcher si possible pour un effet plus rapide ; dose de charge aussi chez les patients déjà sous aspirine",
+      "frequency_or_duration": "dose unique de charge, puis entretien 75-100 mg par jour (non entérique)",
+      "condition": "NSTE-ACS ou STEMI",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2157,
+       "quote": "Loading dose 162-325 mg orally. Aspirin (nonenteric coated) should be chewed, when possible, to achieve faster onset of antiplatelet action."
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Voies rectale ou IV (si disponible) possibles si voie orale impossible (p. 2155). Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "clopidogrel",
+      "dose": "Dose de charge 300 ou 600 mg",
+      "dose_max": null,
+      "route": "orale",
+      "administration": null,
+      "frequency_or_duration": "entretien 75 mg par jour",
+      "condition": "NSTE-ACS ou STEMI sans fibrinolytique",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2157,
+       "quote": "Loading dose 300 or 600 mg orally"
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "clopidogrel",
+      "dose": "Dose de charge 300 mg si âge ≤75 ans ; dose initiale 75 mg si âge >75 ans",
+      "dose_max": null,
+      "route": "orale",
+      "administration": null,
+      "frequency_or_duration": "entretien 75 mg par jour",
+      "condition": "STEMI avec fibrinolytique",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2157,
+       "quote": "Loading dose 300 mg orally if age ≤75 y; Initial dose 75 mg orally if age >75 y"
+      },
+      "translated": true,
+      "missing": [
+       "Discordance dans le texte p. 2159 : <75 ans / ≥75 ans (seuil différent du tableau 7 : ≤75 / >75)",
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "prasugrel",
+      "dose": "Dose de charge 60 mg",
+      "dose_max": null,
+      "route": "orale",
+      "administration": null,
+      "frequency_or_duration": "entretien 10 mg par jour si poids ≥60 kg et âge <75 ans ; 5 mg par jour si poids <60 kg ou âge ≥75 ans (prudence)",
+      "condition": "NSTE-ACS ou STEMI sans fibrinolytique, avec PCI",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2157,
+       "quote": "Loading dose 60 mg orally"
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "ticagrelor",
+      "dose": "Dose de charge 180 mg",
+      "dose_max": null,
+      "route": "orale",
+      "administration": null,
+      "frequency_or_duration": "entretien 90 mg deux fois par jour",
+      "condition": "NSTE-ACS ou STEMI sans fibrinolytique",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2157,
+       "quote": "Loading dose 180 mg orally"
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "énoxaparine",
+      "dose": "1 mg/kg",
+      "dose_max": null,
+      "route": "sous-cutanée",
+      "administration": null,
+      "frequency_or_duration": "toutes les 12 h; 1 mg/kg par jour si CrCl <30 mL/min",
+      "condition": "Traitement initial",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2163,
+       "quote": "1 mg/kg subcutaneous every 12 h. Reduce dose to 1 mg/kg per d subcutaneous if CrCl <30 mL/min."
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "énoxaparine",
+      "dose": "<75 ans : bolus IV 30 mg puis 1 mg/kg SC à 15 min; ≥75 ans : pas de bolus, 0,75 mg/kg SC",
+      "dose_max": "100 mg pour les 2 premières doses (<75 ans); 75 mg pour les 2 premières doses (≥75 ans)",
+      "route": "IV puis sous-cutanée",
+      "administration": null,
+      "frequency_or_duration": "toutes les 12 h; 1 mg/kg toutes les 24 h si CrCl <30 mL/min",
+      "condition": "Avec fibrinolyse",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2163,
+       "quote": "If age <75 y, 30 mg IV bolus, followed in 15 min by 1 mg/kg subcutaneous every 12 h (maximum 100 mg for the first 2 doses)."
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "héparine non fractionnée",
+      "dose": "Dose de charge 60 UI/kg puis perfusion 12 UI/kg/h",
+      "dose_max": "4000 UI (charge); 1000 UI/h (perfusion)",
+      "route": "IV",
+      "administration": "perfusion ajustée à un aPTT de 60-80 s",
+      "frequency_or_duration": "traitement initial",
+      "condition": "Traitement initial",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2163,
+       "quote": "Loading dose 60 IU/kg (max 4,000 IU), with initial infusion 12 IU/kg per h (max 1,000 IU/h) adjusted to therapeutic aPTT range of 60-80 s."
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "fondaparinux",
+      "dose": "2,5 mg",
+      "dose_max": null,
+      "route": "sous-cutanée",
+      "administration": null,
+      "frequency_or_duration": "une fois par jour",
+      "condition": "Traitement initial",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2163,
+       "quote": "2.5 mg subcutaneous daily."
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     },
+     {
+      "drug_dci": "bivalirudine",
+      "dose": "bolus 0,75 mg/kg puis perfusion 1,75 mg/kg/h",
+      "dose_max": null,
+      "route": "IV",
+      "administration": "perfusion pendant l'ICP",
+      "frequency_or_duration": "pendant la procédure d'ICP",
+      "condition": "Pour soutenir l'ICP",
+      "risk": "high",
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2163,
+       "quote": "0.75 mg/kg bolus, 1.75 mg/kg per h IV infusion during the PCI procedure."
+      },
+      "translated": true,
+      "missing": [
+       "algerie.statut"
+      ],
+      "algerie": {
+       "brands": [],
+       "statut": null
+      },
+      "note": "Nomenclature algérienne non consultée : marques et statut à compléter."
+     }
+    ]
+   },
+   "8_ne_pas_faire": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-082",
+      "text": "En cas de STEMI à l'ECG, la reperfusion ne doit pas être retardée dans l'attente des résultats des biomarqueurs.",
+      "type": "info",
+      "condition": "Signes ECG de STEMI",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2150,
+       "quote": "In the setting of electrocardiographic evidence of STEMI, reperfusion therapy should not be delayed pending biomarker results."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-083",
+      "text": "La réalisation d'ECG supplémentaires ne doit pas retarder le transport vers l'hôpital.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2148,
+       "quote": "Acquisition of sub-sequent ECGs should not delay transport to a hospi-tal."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-084",
+      "text": "Ne pas utiliser le fondaparinux comme seul anticoagulant pour soutenir une ICP, en raison du risque de thrombose de cathéter.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2164,
+       "quote": "Fondaparinux should not be used as the sole anticoagulant to support PCI because of the risk of catheter thrombosis."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-085",
+      "text": "Éviter d'initier simultanément un IEC et un ARA II chez les patients atteints d'IDM aigu : augmentation des événements indésirables sans bénéfice supplémentaire par rapport à l'un ou l'autre seul.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2169,
+       "quote": "Concomitant initiation of both an ACEi and ARB in patients with AMI should be avoided due to an in-crease in adverse events without added beneﬁt compared with either drug alone."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-086",
+      "text": "En cas de choc cardiogénique, l'ICP systématique des artères non responsables de l'infarctus au moment de l'ICP n'est pas recommandée.",
+      "type": "info",
+      "condition": "Patients avec SCA et choc cardiogénique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2139,
+       "quote": "routine PCI of noninfarct-related arteries at the time of PCI is not recommended."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-087",
+      "text": "En cas de suspicion de STEMI, ne pas retarder la coronarographie ou la fibrinolyse par des examens complémentaires, sauf s'ils changent immédiatement la prise en charge.",
+      "type": "info",
+      "condition": "Suspicion de STEMI",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2149,
+       "quote": "further diagnostic testing should not delay cardiac catheterization or ﬁbrinolytic therapy unless it would immediately change patient management."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-088",
+      "text": "Un nouveau BBG isolé ne doit pas être considéré comme diagnostique d'IDM ; une corrélation clinique est nécessaire.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2145,
+       "quote": "New or presumably new LBBB at presentation occurs infrequently and should not be considered diagnostic of AMI in isolation; clinical correlation is required."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-089",
+      "text": "Chez un patient comateux réanimé après arrêt cardiaque, hémodynamiquement et électriquement stable, sans signe de STEMI, l'angiographie immédiate n'est pas recommandée (absence de bénéfice).",
+      "type": "info",
+      "condition": "Patient comateux après arrêt cardiaque, stable, sans STEMI",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2152,
+       "quote": "immediate angiography is not recommended due to lack of benefit."
+      },
+      "translated": true,
+      "grade": "COR 3: No Benefit / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-090",
+      "text": "Chez un patient avec SCA et saturation en oxygène ≥90 %, l'administration systématique d'oxygène n'est pas recommandée (pas d'amélioration des résultats cardiovasculaires).",
+      "type": "info",
+      "condition": "SCA avec SpO2 ≥90 %",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2153,
+       "quote": "routine administration of supplemental oxygen is not recommended"
+      },
+      "translated": true,
+      "grade": "COR 3: No Benefit / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-091",
+      "text": "Ne pas administrer les nitrés après une prise récente d'inhibiteur de la PDE5.",
+      "type": "info",
+      "condition": "Prise récente d'inhibiteur de la PDE5",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "Nitrates should not be administered after recent PDE5 inhibitor use."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-092",
+      "text": "Éviter la nitroglycérine IV en cas de suspicion d'infarctus du VD, de PAS <90 mmHg ou de baisse de la PAS >30 mmHg sous la valeur de base.",
+      "type": "info",
+      "condition": "Suspicion d'infarctus du VD, PAS <90 mmHg ou baisse de PAS >30 mmHg",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "Avoid use in suspected RV infarction, SBP <90 mm Hg or a change in SBP >30 mm Hg below baseline."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-093",
+      "text": "Ne pas utiliser les opiacés uniquement pour masquer des symptômes ischémiques persistants non soulagés par les nitrés ; une revascularisation rapide doit être recherchée.",
+      "type": "info",
+      "condition": "Symptômes ischémiques non soulagés par les nitrés",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "opiates should not be used solely to mask these symptoms"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-094",
+      "text": "Éviter si possible les AINS non aspiriniques pour la douleur ischémique suspectée ou connue (risque accru de MACE).",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2154,
+       "quote": "Use of nonaspirin nonsteroidal anti-inflammatory drugs should be avoided for management of suspected or known ischemia pain whenever possible."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-095",
+      "text": "Ne pas administrer le prasugrel en cas d'antécédent d'AVC ou d'AIT (moins bons résultats cliniques nets).",
+      "type": "info",
+      "condition": "Antécédent d'AVC ou d'AIT",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2156,
+       "quote": "prasugrel should not be administered because of worse"
+      },
+      "translated": true,
+      "grade": "COR 3: Harm / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-096",
+      "text": "Ne pas administrer systématiquement les inhibiteurs de la GP IIb/IIIa en cas de SCA (absence de bénéfice ischémique et sur-risque hémorragique).",
+      "type": "info",
+      "condition": "Patients avec SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2160,
+       "quote": "glycoprotein IIb/IIIa inhibitors should not be administered routinely due to lack of ischemic benefit and increased risk of bleeding."
+      },
+      "translated": true,
+      "grade": "COR 3: Harm / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-097",
+      "text": "Ne pas utiliser le fondaparinux pour soutenir une ICP (risque de thrombose de cathéter).",
+      "type": "info",
+      "condition": "SCA avec ICP",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2162,
+       "quote": "fondapar-"
+      },
+      "translated": true,
+      "grade": "COR 3: Harm / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "Citation tronquée par la césure du texte source (« fondapar- / inux should not be used to support PCI because of the risk of catheter thrombosis ») ; à vérifier par le relecteur"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-098",
+      "text": "Ne pas réaliser d'ICP primaire chez le patient STEMI stable avec artère coupable totalement occluse >24 h après le début des symptômes, sans ischémie persistante, insuffisance cardiaque aiguë sévère ni arythmie menaçante (absence de bénéfice).",
+      "type": "conditional",
+      "condition": "STEMI stable, artère responsable de l'infarctus totalement occluse >24 h après le début des symptômes, sans ischémie persistante, IC aiguë sévère ni arythmie menaçante",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2172,
+       "quote": "PPCI should not be performed due to lack of"
+      },
+      "translated": true,
+      "grade": "COR 3: No Benefit / LOE B-R",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-099",
+      "text": "Ne pas administrer de fibrinolytique chez le patient avec uniquement un sous-décalage du segment ST, sauf suspicion d'infarctus postérieur vrai (risque d'AVC hémorragique et de saignement majeur non cérébral).",
+      "type": "conditional",
+      "condition": "Sous-décalage du ST isolé, hors suspicion de STEMI postérieur vrai",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2174,
+       "quote": "fibrinolytic therapy should not be administered due to risk of"
+      },
+      "translated": true,
+      "grade": "COR 3: Harm / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-100",
+      "text": "Ne pas réaliser de thrombectomie par aspiration manuelle de routine avant l'ICP chez le patient STEMI traité par ICP primaire (absence de bénéfice clinique).",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2181,
+       "quote": "manual aspiration thrombectomy should not be performed routinely prior to PCI given lack of clinical benefit."
+      },
+      "translated": true,
+      "grade": "COR 3: No benefit / LOE A",
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-101",
+      "text": "Ne pas réaliser d'ICP systématique d'une artère non responsable lors de l'ICP primaire chez le patient STEMI compliqué de choc cardiogénique (risque accru de décès ou d'insuffisance rénale).",
+      "type": "conditional",
+      "condition": "STEMI compliqué de choc cardiogénique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2183,
+       "quote": "routine PCI of a noninfarct- related artery at the time of PPCI should not be performed"
+      },
+      "translated": true,
+      "grade": "COR 3: Harm / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "La citation a été reconstituée à partir d'un texte avec coupure de ligne ; vérifier la correspondance exacte avec la page imprimée"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-102",
+      "text": "Ne pas réaliser d'ICP systématique d'une artère non coupable lors de la procédure index chez le patient NSTE-ACS compliqué de choc cardiogénique (risque accru de décès ou d'insuffisance rénale).",
+      "type": "conditional",
+      "condition": "NSTE-ACS compliqué de choc cardiogénique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2185,
+       "quote": "routine PCI of a nonculprit artery at the time of index pro- cedure should not be performed"
+      },
+      "translated": true,
+      "grade": "COR 3: Harm / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "La citation contient une coupure de mot en fin de ligne (pro- cedure) ; vérifier la correspondance exacte avec la page imprimée"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-103",
+      "text": "Ne pas réaliser d'ICP systématique d'une artère non liée à l'infarctus lors de l'ICP primaire chez le patient avec SCA compliqué de choc cardiogénique (risque accru de décès ou d'insuffisance rénale).",
+      "type": "conditional",
+      "condition": "SCA compliqué de choc cardiogénique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2186,
+       "quote": "routine PCI of a noninfarct-related artery at the time of PPCI should not be performed because of the higher risk of death or renal failure."
+      },
+      "translated": true,
+      "grade": "COR 3: Harm / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-104",
+      "text": "Chez les patients avec IDM et choc cardiogénique, l'utilisation systématique du ballon de contrepulsion intra-aortique (BCPIA) ou de l'ECMO veino-artérielle n'est pas recommandée, faute de bénéfice sur la survie.",
+      "type": "info",
+      "condition": "Patients avec IDM et choc cardiogénique",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2187,
+       "quote": "the routine use of"
+      },
+      "translated": true,
+      "grade": "COR 3: No benefit / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "Citation partielle : la phrase de la recommandation est coupée sur plusieurs lignes dans la mise en page de la source ; à vérifier par le relecteur."
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-105",
+      "text": "Les traitements hypolipémiants ne doivent pas être diminués en cas de concentrations de LDL-C très basses.",
+      "type": "info",
+      "condition": "Suivi après SCA, LDL-C très bas",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2202,
+       "quote": "lipid-lowering therapies should not be"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "Citation partielle : la phrase se poursuit à la ligne suivante dans la source (« downtitrated in response to very low LDL-C concentra- tions »)."
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-106",
+      "text": "La colchicine ne doit pas être administrée en cas de dyscrasie sanguine, d'insuffisance rénale (clairance de la créatinine <15 mL/min), d'insuffisance hépatique sévère ou d'association avec des inhibiteurs de la P-glycoprotéine et/ou du CYP3A4 puissants.",
+      "type": "conditional",
+      "condition": "Dyscrasies sanguines, insuffisance rénale (ClCr <15 mL/min), insuffisance hépatique sévère, ou inhibiteurs de la P-gp et/ou du CYP3A4 puissants",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2204,
+       "quote": "Colchicine\n          should not be administered in patients with blood\n          dyscrasias, renal failure (creatinine clearance <15 mL/\n          min), severe hepatic impairment, or with concomitant\n          P-glycoprotein      and/or     strong     CYP3A4      inhibitors."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ]
+   },
+   "9_orientation": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-107",
+      "text": "En cas de STEMI dans un hôpital sans ICP, avec délai estimé premier contact–dispositif ≤120 minutes ou contre-indication à la fibrinolyse, le transfert vers un hôpital avec ICP pour ICP primaire est recommandé.",
+      "type": "action",
+      "condition": "STEMI dans un hôpital non équipé pour l'ICP ; délai estimé ≤120 min ou contre-indication à la fibrinolyse",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2174,
+       "quote": "transfer to a PCI-capable hospital for PPCI is\n                                        recommended to reduce MACE."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-108",
+      "text": "En cas de STEMI avec début des symptômes à 12–24 heures, le transfert vers un hôpital avec ICP pour ICP primaire est raisonnable.",
+      "type": "conditional",
+      "condition": "STEMI, symptômes depuis 12 à 24 heures, hôpital sans ICP",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2174,
+       "quote": "transfer to a PCI-capable hospital"
+      },
+      "translated": true,
+      "grade": "COR 2a / LOE B-NR",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-109",
+      "text": "Le centre sans ICP est prévenu pendant le transport du patient STEMI ; si l'ICP primaire est faisable dans les 120 min après le premier contact ou si la fibrinolyse est contre-indiquée : activer la salle de cathétérisme et transférer en urgence vers le centre ICP.",
+      "type": "conditional",
+      "condition": "ICP primaire faisable dans les 120 min après le premier contact médical, ou fibrinolyse contre-indiquée",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2171,
+       "quote": "U PPCI strategy br • If PPCI feasible within 120 min of FMC, or lysis contraindicated Class 1 br • Activate cath lab for PPCI br • Urgent transfer to PCI center bypass ED, direct to cath lab, if feasible"
+      },
+      "translated": true,
+      "grade": "Class 1",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-110",
+      "text": "Après fibrinolyse, transfert immédiat vers un centre ICP : angiographie urgente pour ICP de sauvetage si échec de la lyse ou patient instable ; angiographie précoce si lyse réussie et patient stable.",
+      "type": "conditional",
+      "condition": "après fibrinolyse",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2171,
+       "quote": "W Arrange for immediate transfer to PCI center: br • If lysis failed or patient unstable, arrange for urgent angiography for rescue PCI Class 1 br • If lysis successful and patient stable, arrange for early angiography Class 1"
+      },
+      "translated": true,
+      "grade": "Class 1",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-111",
+      "text": "Transport direct vers un centre ICP avec activation préhospitalière de la salle de cathétérisme pour une ICP primaire.",
+      "type": "action",
+      "condition": "STEMI suspecté par le SAMU/EMS",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2171,
+       "quote": "J Transport to PCI center: br • Prehospital cath lab activation Class 1 br • Direct transport to PCI center for PPCI Class 1"
+      },
+      "translated": true,
+      "grade": "Class 1",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ]
+   },
+   "10_surveillance": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-112",
+      "text": "Chez les patients avec SCA, une surveillance par télémétrie est recommandée pour réduire les événements cardiovasculaires, la durée étant déterminée par le risque cardiaque.",
+      "type": "action",
+      "condition": "Patients avec SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2194,
+       "quote": "In patients with ACS, telemetry"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE C-LD",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "La citation est tronquée sur la première ligne de la recommandation (le texte continue sur les lignes suivantes du tableau)"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-113",
+      "text": "Chez les patients avec SCA à faible risque d'arythmie, une surveillance du rythme en unité de télémétrie est nécessaire pendant 24 h au maximum ou jusqu'à la revascularisation coronaire (selon ce qui survient en premier).",
+      "type": "conditional",
+      "condition": "SCA à faible risque d'arythmie cardiaque",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2194,
+       "quote": "require rhythm monitoring for #24 hours or until cor-"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "Symbole « # » dans la citation probablement « ≤ » (≤24 heures) : écart d'OCR à vérifier par le relecteur"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-114",
+      "text": "Chez les patients à risque intermédiaire à élevé d'arythmie, la surveillance du rythme peut dépasser 24 h, en unité de télémétrie ou de soins intermédiaires, selon le tableau clinique, le degré de revascularisation et l'évolution précoce, avec l'avis du cardiologue.",
+      "type": "conditional",
+      "condition": "Risque intermédiaire à élevé d'arythmie cardiaque",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2194,
+       "quote": "individuals at intermediate to"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "Citation tronquée en fin de ligne ; la suite figure sur la ligne suivante du texte source"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-115",
+      "text": "La surveillance continue du segment ST peut être envisagée chez les patients à risque plus élevé, notamment ceux avec ischémie suspectée non encore revascularisés.",
+      "type": "conditional",
+      "condition": "Patients à risque plus élevé, dont ischémie suspectée non revascularisée",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2194,
+       "quote": "Continuous ST-segment monitoring can be considered"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-116",
+      "text": "Chez les patients avec SCA, une évaluation de la FEVG est recommandée avant la sortie de l'hôpital pour guider le traitement et la stratification du risque.",
+      "type": "action",
+      "condition": "Patients avec SCA, avant la sortie",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2195,
+       "quote": "ment of LVEF is recommended"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE C-LD",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-117",
+      "text": "Si la fonction VG est réduite, une échocardiographie de contrôle doit être réalisée à 6 à 12 semaines pour guider les décisions thérapeutiques et évaluer le besoin d'un DAI.",
+      "type": "conditional",
+      "condition": "Fonction VG réduite à l'évaluation avant la sortie",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2195,
+       "quote": "a repeat\nechocardiogram should be performed in 6 to 12 weeks"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-118",
+      "text": "L'éducation du patient à la sortie doit couvrir la gestion des symptômes : quoi surveiller, quelles actions entreprendre en cas de récidive des symptômes, et qui appeler.",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2196,
+       "quote": "Symptom management (what to monitor for and actions to take should symptoms recur, including whom to call)"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-119",
+      "text": "Le suivi après la sortie doit être planifié : futurs rendez-vous en cardiologie, réadaptation cardiaque et examens complémentaires.",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2196,
+       "quote": "Follow-up care (future appointments with cardiology, CR, additional testing postdischarge)"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-120",
+      "text": "À la sortie, rechercher des symptômes ischémiques persistants.",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2196,
+       "quote": "Assess for presence of ongoing ischemic symptoms"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-121",
+      "text": "À la sortie, évaluer le risque hémorragique lié aux médicaments ou au site de la procédure.",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2196,
+       "quote": "Assess risk for bleeding related to medications or procedural site"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-122",
+      "text": "Confirmer l'orientation vers la réadaptation cardiaque.",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2196,
+       "quote": "Confirm referral to CR"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ]
+   },
+   "11_suivi": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-123",
+      "text": "Si la fonction VG est réduite, répéter l'échocardiogramme à 6 à 12 semaines pour guider les décisions thérapeutiques et évaluer la nécessité d'un DAI.",
+      "type": "conditional",
+      "condition": "Fonction VG réduite",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2195,
+       "quote": "a repeat\nechocardiogram should be performed in 6 to 12 weeks to\nfurther guide treatment decisions and for consideration of\nneed for an ICD."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-124",
+      "text": "Adresser le patient à un programme de réadaptation cardiaque ambulatoire avant la sortie, pour réduire décès, infarctus et réhospitalisations et améliorer le statut fonctionnel et la qualité de vie.",
+      "type": "action",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2197,
+       "quote": "Patients with ACS should be referred to an outpatient CR program prior to hospital discharge to reduce death, MI, hospital readmissions, and improve functional status and QOL."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-125",
+      "text": "Une réadaptation cardiaque à domicile est une alternative raisonnable à celle en centre pour améliorer le statut fonctionnel et la qualité de vie.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2197,
+       "quote": "a home-based CR program is a reasonable alternative to a center-based CR program to improve functional status and QOL."
+      },
+      "translated": true,
+      "grade": "COR 2a / LOE B-R",
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-126",
+      "text": "Chez les patients avec SCA sans risque hémorragique élevé, administrer une DAPT (aspirine + inhibiteur oral du P2Y12) pendant au moins 1 an pour réduire les MACE.",
+      "type": "conditional",
+      "condition": "SCA sans risque hémorragique élevé",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2198,
+       "quote": "aspirin and an oral P2Y12 inhibi-\ntor should be administered for at\nleast 1 year to reduce MACE."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-127",
+      "text": "Chez les patients à risque élevé de saignement digestif, un IPP est recommandé en association à la DAPT, aux anticoagulants oraux, ou aux deux.",
+      "type": "conditional",
+      "condition": "Risque élevé de saignement gastro-intestinal",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2198,
+       "quote": "In patients at high risk of\ngastrointestinal bleeding, a pro-\nton pump inhibitor (PPI) is rec-\nommended in combination with"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-128",
+      "text": "Patients sous anticoagulant oral : arrêter l'aspirine après 1 à 4 semaines de trithérapie, en poursuivant un inhibiteur du P2Y12 (de préférence le clopidogrel) et l'anticoagulant oral.",
+      "type": "conditional",
+      "condition": "SCA nécessitant un anticoagulant oral",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2201,
+       "quote": "aspirin should be discontinued after 1 to 4 weeks of triple antithrombotic therapy, with continued use of a P2Y12 inhibitor (preferably clopidogrel) and an oral anticoagulant to reduce bleeding risk."
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE B-R",
+      "risk": "high",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-129",
+      "text": "Après un SCA, la colchicine à faible dose peut être raisonnable pour réduire le risque d'événements cardiovasculaires majeurs (MACE).",
+      "type": "action",
+      "condition": "Patient après SCA",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2203,
+       "quote": "In patients after ACS, low-dose"
+      },
+      "translated": true,
+      "grade": "COR 2b / LOE B-R",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "dose précise de la recommandation (non indiquée dans la recommandation elle-même)"
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-130",
+      "text": "Dose de colchicine : les essais ont étudié 0,5 mg par jour ; une dose quotidienne de 0,5 mg ou 0,6 mg peut être envisagée.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2204,
+       "quote": "Although the trials studied a dose of 0.5 mg daily, daily dosing of 0.5 mg or 0.6 mg may be considered."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-131",
+      "text": "Vaccination antigrippale annuelle recommandée chez le patient avec SCA sans contre-indication, pour réduire le risque de décès et de MACE.",
+      "type": "action",
+      "condition": "Patient avec SCA sans contre-indication",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2204,
+       "quote": "In patients with ACS without a"
+      },
+      "translated": true,
+      "grade": "COR 1 / LOE A",
+      "risk": "medium",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-132",
+      "text": "Les autres vaccins : pas de données randomisées pour une administration systématique lors de l'hospitalisation pour SCA ; le calendrier vaccinal habituel est recommandé en l'absence de contre-indication.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2204,
+       "quote": "randomized trial data are lacking to support routine administration of other vaccines for patients at time of hospitalization for ACS."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-133",
+      "text": "Un inhibiteur du SGLT-2 n'a pas à être différé chez les patients ayant une indication à sa prescription à la sortie de l'hôpital.",
+      "type": "conditional",
+      "condition": "Patient avec une indication d'un inhibiteur du SGLT-2 à la sortie d'hôpital",
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2203,
+       "quote": "use of an SGLT-2 inhibitor does not need to be deferred in pa- tients with an indication for its use at hospital discharge."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ]
+   },
+   "12_ordonnance": {
+    "state": "sans_objet",
+    "elements": []
+   },
+   "13_definitions": {
+    "state": "filled",
+    "elements": [
+     {
+      "id": "sca-accaha-2025-134",
+      "text": "IDM de type 1 : causé par une athérothrombose coronaire aiguë, généralement déclenchée par une rupture ou une érosion de plaque athéroscléreuse, souvent associée à une thrombose vasculaire partielle ou complète.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2147,
+       "quote": "Caused by acute coronary atherothrombosis, usually precipitated by atherosclerotic plaque disruption (rupture or erosion) and often associated with **partial or complete vessel thrombosis**."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-135",
+      "text": "IDM de type 2 : causé par un déséquilibre entre apports et besoins myocardiques en oxygène, sans lien avec une athérothrombose coronaire aiguë.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2147,
+       "quote": "Caused by an imbalance between myocardial oxygen supply and demand unrelated to acute coronary atherothrombosis."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     },
+     {
+      "id": "sca-accaha-2025-136",
+      "text": "Le SCA avec sus-décalage du ST (STEMI) correspond à un thrombus complètement occlusif, et le NSTEMI à un thrombus partiellement occlusif.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2146,
+       "quote": "Partially occlusive thrombus"
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": [
+       "La citation ne porte que sur le thrombus partiellement occlusif (NSTEMI); la partie STEMI (thrombus complètement occlusif) figure dans une cellule voisine du tableau."
+      ]
+     },
+     {
+      "id": "sca-accaha-2025-137",
+      "text": "PPCI : angioplastie coronaire en urgence dans le STEMI pour obtenir la reperfusion chez des patients sans fibrinolyse préalable.",
+      "type": "info",
+      "condition": null,
+      "order": null,
+      "source": {
+       "source_id": "accaha2025",
+       "page": 2147,
+       "quote": "PPCI refers to emergency PCI in the setting of STEMI to achieve reperfusion in patients without previous fibrinolytic treatment."
+      },
+      "translated": true,
+      "grade": null,
+      "risk": "low",
+      "origin": "explicit",
+      "conflict_group": null,
+      "missing": []
+     }
+    ]
+   }
+  }
+ },
+ "side": {
+  "sca-accaha-2025-001": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "1_essentiel"
+  },
+  "sca-accaha-2025-002": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "1_essentiel"
+  },
+  "sca-accaha-2025-003": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "1_essentiel"
+  },
+  "sca-accaha-2025-004": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "1_essentiel"
+  },
+  "sca-accaha-2025-005": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "1_essentiel"
+  },
+  "sca-accaha-2025-006": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "3_champ"
+  },
+  "sca-accaha-2025-007": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "3_champ"
+  },
+  "sca-accaha-2025-008": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "3_champ"
+  },
+  "sca-accaha-2025-009": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "4_gravite"
+  },
+  "sca-accaha-2025-010": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "4_gravite"
+  },
+  "sca-accaha-2025-011": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 1,
+   "model": "claude-sonnet-5-5",
+   "section": "4_gravite"
+  },
+  "sca-accaha-2025-012": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-013": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-014": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-015": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-016": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-017": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-018": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-019": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-020": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-021": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-022": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-023": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-024": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-025": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-026": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-027": {
+   "quote_status": "parsed",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "5_conduite"
+  },
+  "sca-accaha-2025-028": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-029": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-030": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-031": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-032": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-033": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-034": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-035": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-036": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-037": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-038": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-039": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-040": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-041": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-042": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-043": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-044": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-045": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-046": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-047": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-048": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-049": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-050": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-051": {
+   "quote_status": "parsed",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-052": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-053": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-054": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-055": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "6_examens"
+  },
+  "sca-accaha-2025-056": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-057": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-058": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-059": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-060": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-061": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-062": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-063": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-064": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-065": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-066": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-067": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-068": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-069": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-070": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-071": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-072": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-073": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-074": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-075": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-076": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-077": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-078": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-079": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-080": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-081": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-1": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-2": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-3": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-4": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-5": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-6": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-7": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-8": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-9": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-10": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-11": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-12": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-13": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "dose-14": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "7_traitement"
+  },
+  "sca-accaha-2025-082": {
+   "quote_status": "parsed",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-083": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-084": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-085": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-086": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-087": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-088": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-089": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-090": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-091": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-092": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-093": {
+   "quote_status": "parsed",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-094": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-095": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-096": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-097": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-098": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-099": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-100": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-101": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-102": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-103": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-104": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 2,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-105": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-106": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "8_ne_pas_faire"
+  },
+  "sca-accaha-2025-107": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "9_orientation"
+  },
+  "sca-accaha-2025-108": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "9_orientation"
+  },
+  "sca-accaha-2025-109": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "9_orientation"
+  },
+  "sca-accaha-2025-110": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "9_orientation"
+  },
+  "sca-accaha-2025-111": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "9_orientation"
+  },
+  "sca-accaha-2025-112": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-113": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-114": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-115": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-116": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-117": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-118": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-119": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-120": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-121": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-122": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "10_surveillance"
+  },
+  "sca-accaha-2025-123": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-124": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-125": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-126": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-127": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-128": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-129": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-130": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-131": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-132": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-133": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "11_suivi"
+  },
+  "sca-accaha-2025-134": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "13_definitions"
+  },
+  "sca-accaha-2025-135": {
+   "quote_status": "pdf",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "13_definitions"
+  },
+  "sca-accaha-2025-136": {
+   "quote_status": "parsed",
+   "from_figure": true,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "13_definitions"
+  },
+  "sca-accaha-2025-137": {
+   "quote_status": "pdf",
+   "from_figure": false,
+   "retries": 0,
+   "model": "claude-sonnet-5-5",
+   "section": "13_definitions"
+  }
+ },
+ "dropped": [
+  {
+   "section": "7_traitement",
+   "line": {
+    "text": "Fentanyl IV : pour douleur résistant aux autres traitements anti-ischémiques maximalement tolérés ; peut retarder l'effet des inhibiteurs oraux de P2Y12 ; surveillance étroite.",
+    "type": "conditional",
+    "condition": "Douleur résistante aux autres anti-ischémiques maximalement tolérés",
+    "source": {
+     "page": 2154,
+     "quote": "Use for relief of pain that is resistant to other maximally tolerated anti-ischemic medications. May delay the effects of oral P2Y12 therapy."
+    },
+    "from_figure": true,
+    "grade": null,
+    "risk": "high",
+    "origin": "explicit",
+    "missing": []
+   },
+   "reason": "doublon dans la section 7_traitement"
+  },
+  {
+   "section": "8_ne_pas_faire",
+   "line": {
+    "text": "En cas de STEMI à l'ECG, ne pas retarder la reperfusion dans l'attente des résultats biologiques.",
+    "type": "info",
+    "condition": "Signes électrocardiographiques de STEMI",
+    "source": {
+     "page": 2150,
+     "quote": "In the setting of electrocardiographic evidence of STEMI, reperfusion therapy should not be delayed pending biomarker results."
+    },
+    "from_figure": false,
+    "grade": null,
+    "risk": "high",
+    "origin": "explicit",
+    "missing": []
+   },
+   "reason": "doublon dans la section 8_ne_pas_faire"
+  },
+  {
+   "section": "8_ne_pas_faire",
+   "line": {
+    "text": "Ne pas retarder le transport vers l'hôpital pour réaliser des ECG successifs.",
+    "type": "info",
+    "condition": "ECG initial non diagnostique, transport préhospitalier",
+    "source": {
+     "page": 2148,
+     "quote": "Acquisition of sub-sequent ECGs should not delay transport to a hospi-tal."
+    },
+    "from_figure": false,
+    "grade": null,
+    "risk": "medium",
+    "origin": "explicit",
+    "missing": []
+   },
+   "reason": "doublon dans la section 8_ne_pas_faire"
+  },
+  {
+   "section": "7_traitement",
+   "line": {
+    "text": "Éviter la nitroglycérine IV en cas de suspicion d'infarctus du VD, de PAS <90 mmHg ou de baisse de la PAS >30 mmHg sous la valeur de base.",
+    "type": "info",
+    "condition": "Suspicion d'infarctus du VD, PAS <90 mmHg ou baisse de PAS >30 mmHg",
+    "source": {
+     "page": 2154,
+     "quote": "Avoid use in suspected RV infarction, SBP <90 mm Hg or a change in SBP >30 mm Hg below baseline."
+    },
+    "from_figure": true,
+    "grade": null,
+    "risk": "high",
+    "origin": "explicit",
+    "missing": []
+   },
+   "reason": "doublon (gardé en 8_ne_pas_faire)"
+  },
+  {
+   "section": "7_traitement",
+   "line": {
+    "text": "Éviter si possible les AINS non aspiriniques pour la douleur ischémique suspectée ou connue (risque accru de MACE).",
+    "type": "info",
+    "condition": null,
+    "source": {
+     "page": 2154,
+     "quote": "Use of nonaspirin nonsteroidal anti-inflammatory drugs should be avoided for management of suspected or known ischemia pain whenever possible."
+    },
+    "from_figure": false,
+    "grade": null,
+    "risk": "high",
+    "origin": "explicit",
+    "missing": []
+   },
+   "reason": "doublon (gardé en 8_ne_pas_faire)"
+  },
+  {
+   "section": "9_orientation",
+   "line": {
+    "text": "Chez un patient avec STEMI se présentant à moins de 12 heures du début des symptômes, réaliser une ICP primaire avec un objectif de délai premier contact médical–activation du dispositif ≤90 minutes, ou ≤120 minutes si transfert hospitalier nécessaire, afin d'améliorer la survie.",
+    "type": "action",
+    "condition": "STEMI, <12 heures après le début des symptômes",
+    "source": {
+     "page": 2172,
+     "quote": "In patients with STEMI present-"
+    },
+    "from_figure": false,
+    "grade": "COR 1 / LOE A",
+    "risk": "high",
+    "origin": "explicit",
+    "missing": []
+   },
+   "reason": "doublon (gardé en 5_conduite)"
+  },
+  {
+   "section": "11_suivi",
+   "line": {
+    "text": "Évaluer la FEVG avant la sortie d'hôpital chez tout patient avec SCA, pour guider le traitement et stratifier le risque.",
+    "type": "action",
+    "condition": null,
+    "source": {
+     "page": 2195,
+     "quote": "In patients with ACS, an assess-"
+    },
+    "from_figure": false,
+    "grade": "COR 1 / LOE C-LD",
+    "risk": "medium",
+    "origin": "explicit",
+    "missing": []
+   },
+   "reason": "doublon (gardé en 6_examens)"
+  }
+ ],
+ "errors": [],
+ "report": {
+  "llamaparse_pages": 0,
+  "llamaparse_usd": 0.0,
+  "routed_pages": 66,
+  "fallback_sections": []
+ },
+ "costs": {
+  "llamaparse": 0.0,
+  "routing": 0.002137,
+  "generation": 0.841868,
+  "retries": 0.047853
+ },
+ "calls": [
+  {
+   "input_tokens": 18303,
+   "output_tokens": 588,
+   "cache_read_tokens": 1249,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.002137,
+   "model": "claude-haiku-5-5",
+   "batch": false,
+   "stage": "routing",
+   "section": null
+  },
+  {
+   "input_tokens": 9444,
+   "output_tokens": 44,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 2472,
+   "cost_usd": 0.025508,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "2_presentation"
+  },
+  {
+   "input_tokens": 6515,
+   "output_tokens": 657,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 1534,
+   "cost_usd": 0.023435,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "3_champ"
+  },
+  {
+   "input_tokens": 8395,
+   "output_tokens": 1181,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 1534,
+   "cost_usd": 0.032435,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "1_essentiel"
+  },
+  {
+   "input_tokens": 5668,
+   "output_tokens": 1149,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 2011,
+   "cost_usd": 0.027853,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "4_gravite"
+  },
+  {
+   "input_tokens": 10097,
+   "output_tokens": 18,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.020681,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "6_examens"
+  },
+  {
+   "input_tokens": 1754,
+   "output_tokens": 1717,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 1671,
+   "cost_usd": 0.024855,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "5_conduite"
+  },
+  {
+   "input_tokens": 15231,
+   "output_tokens": 1285,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 1671,
+   "cost_usd": 0.047489,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "5_conduite"
+  },
+  {
+   "input_tokens": 15302,
+   "output_tokens": 1321,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.044121,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "6_examens"
+  },
+  {
+   "input_tokens": 1601,
+   "output_tokens": 34,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 2500,
+   "cost_usd": 0.009792,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "7_traitement"
+  },
+  {
+   "input_tokens": 16842,
+   "output_tokens": 2182,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.055811,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "6_examens"
+  },
+  {
+   "input_tokens": 14934,
+   "output_tokens": 1588,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.046055,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "6_examens"
+  },
+  {
+   "input_tokens": 15233,
+   "output_tokens": 1229,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.043063,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "8_ne_pas_faire"
+  },
+  {
+   "input_tokens": 6244,
+   "output_tokens": 839,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.021185,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "8_ne_pas_faire"
+  },
+  {
+   "input_tokens": 16776,
+   "output_tokens": 1676,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.050619,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "8_ne_pas_faire"
+  },
+  {
+   "input_tokens": 16150,
+   "output_tokens": 1442,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.047027,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "8_ne_pas_faire"
+  },
+  {
+   "input_tokens": 17651,
+   "output_tokens": 2707,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 2500,
+   "cost_usd": 0.068622,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "7_traitement"
+  },
+  {
+   "input_tokens": 11233,
+   "output_tokens": 1397,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.036743,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "9_orientation"
+  },
+  {
+   "input_tokens": 4137,
+   "output_tokens": 1049,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.019071,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "11_suivi"
+  },
+  {
+   "input_tokens": 15879,
+   "output_tokens": 1639,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.048455,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "11_suivi"
+  },
+  {
+   "input_tokens": 6660,
+   "output_tokens": 990,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.023527,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "13_definitions"
+  },
+  {
+   "input_tokens": 5998,
+   "output_tokens": 1900,
+   "cache_read_tokens": 1534,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.031303,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "10_surveillance"
+  },
+  {
+   "input_tokens": 16124,
+   "output_tokens": 5572,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 2500,
+   "cost_usd": 0.094218,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "section",
+   "section": "7_traitement"
+  },
+  {
+   "input_tokens": 6492,
+   "output_tokens": 206,
+   "cache_read_tokens": 0,
+   "cache_write_tokens": 1230,
+   "cost_usd": 0.018119,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "retry",
+   "section": "4_gravite"
+  },
+  {
+   "input_tokens": 7058,
+   "output_tokens": 60,
+   "cache_read_tokens": 1230,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.014962,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "retry",
+   "section": "8_ne_pas_faire"
+  },
+  {
+   "input_tokens": 7058,
+   "output_tokens": 41,
+   "cache_read_tokens": 1230,
+   "cache_write_tokens": 0,
+   "cost_usd": 0.014772,
+   "model": "claude-sonnet-5-5",
+   "batch": false,
+   "stage": "retry",
+   "section": "8_ne_pas_faire"
+  }
+ ]
+}

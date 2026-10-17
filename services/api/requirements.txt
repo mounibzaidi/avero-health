@@ -7,3 +7,6 @@ PyYAML==6.0.3
 starlette==1.8.0
 uvicorn==0.54.0
 pytest==8.4.2
+anthropic==1.15.0
+llama-cloud==2.16.0
+jsonschema==4.26.0

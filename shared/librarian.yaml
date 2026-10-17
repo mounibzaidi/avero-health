@@ -1,0 +1,38 @@
+# The guideline librarian (services/crawler/librarian.py): the bodies an LLM must check for a topic, and the
+# setting and countries it writes for. Its answer is only a proposal: every document it names is looked up on
+# PubMed or on the bodies' own catalogues before the search shows it as a reference.
+
+setting: "general practice and emergency first contact"
+country: "Algeria"
+reference_countries: "France, Algeria"
+languages: "fr, en"
+ui_language: "fr"  # scope_note and notes are written in it
+
+# Checked for every topic.
+always: ["HAS", "ANSM", "CNGE", "NICE", "Ministère de la Santé (Algérie)", "INSP (Algérie)"]
+
+# Added for every topic of a section of topics.yaml.
+by_section:
+  emergencies: ["Société Française de Médecine d'Urgence", "SFAR"]
+
+# Added by theme (topics.yaml group id).
+by_group:
+  cardiovascular: ["ESC", "ACC/AHA", "Société Française de Cardiologie"]
+  cardiometabolic: ["ESC", "ACC/AHA", "ADA", "EASD", "ESH", "Société Française de Cardiologie", "Société Française d'Hypertension Artérielle"]
+  respiratory: ["ERS", "ATS", "GINA", "GOLD", "BTS", "SPLF"]
+  shock-infection: ["Surviving Sepsis Campaign", "ESICM", "IDSA", "ESCMID", "SRLF", "SPILF"]
+  infections: ["IDSA", "ESCMID", "SPILF", "OMS"]
+  neurological: ["ESO", "AHA/ASA", "EAN", "ILAE", "Société Française Neuro-Vasculaire", "Société Française de Neurologie"]
+  neuro-mental: ["ESO", "AHA/ASA", "EAN", "Société Française de Neurologie"]
+  metabolic: ["ADA", "Endocrine Society", "Société Française d'Endocrinologie", "SFD"]
+  obstetric: ["OMS", "FIGO", "CNGOF", "ACOG", "RCOG"]
+  paediatric: ["OMS", "AAP", "Société Française de Pédiatrie", "GFRUP"]
+  toxicology-envenomation: ["OMS", "EAPCCT", "Société de Toxicologie Clinique"]
+  trauma-environment: ["ATLS", "ESICM", "SFMU", "SFAR"]
+  gastrointestinal: ["ESGE", "AGA", "SNFGE"]
+  digestive: ["ESGE", "AGA", "SNFGE"]
+  haematology: ["ISTH", "ASH", "BSH", "Société Française d'Hématologie"]
+  psychiatric: ["APA", "WFSBP", "Association Française de Psychiatrie Biologique et Neuropsychopharmacologie"]
+  musculoskeletal: ["EULAR", "ACR", "Société Française de Rhumatologie"]
+  skin: ["EADV", "Société Française de Dermatologie"]
+  women-children-prevention: ["OMS", "CNGOF", "Société Française de Pédiatrie"]

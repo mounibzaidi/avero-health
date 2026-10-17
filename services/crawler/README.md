@@ -33,6 +33,15 @@ short guideline, consensus, position paper, review), interventional or surgical 
 temporary and superseded documents are hidden. The dashboard shows the first five per list, "Voir tout"
 for the rest, and the reasons when the score is hovered.
 
+## Librarian
+
+On a topic search, `librarian.py` asks an LLM (OpenRouter, `FACTORY_MODEL` then `FACTORY_FALLBACK_MODELS` in
+`.env.local`) which guidelines are the topic's current primary references, for the bodies `shared/librarian.yaml`
+lists by theme. Its answer is only a proposal: each guideline is looked up on PubMed (by PMID, DOI, then title and
+year) or on the body's listing page, and only a match is pinned first as "Référence actuelle"; the identifiers
+shown are PubMed's, never the model's. What could not be confirmed is shown apart, "à vérifier". The answer is
+cached a week per topic (`downloads/librarian/`); without a key or when the model fails, the search runs as before.
+
 ## Setup (once)
 
 ```bash

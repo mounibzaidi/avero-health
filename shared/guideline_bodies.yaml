@@ -1,9 +1,9 @@
 # Issuing bodies of clinical guidelines: how a search result is attributed to one.
 # Order of evidence: a title pattern (the body names itself), then an author (a collective name), then the journal.
-# `region` feeds the origin-first ranking (dz, fr, eu, na, intl). Edit freely: nothing else holds a copy.
+# `region` feeds the origin-first ranking (dz, fr, then eu, na, intl, then other). Edit freely: nothing else holds a copy.
 
 bodies:
-  - { id: esc,    name: "ESC",            region: eu, title: ['\bESC\b', 'European Society of Cardiology'], authors: ['ESC Scientific Document Group'], journals: ["Eur Heart J"] }
+  - { id: esc,    name: "ESC",            region: eu, title: ['\bESC\b', 'European Society of Cardiology'], authors: ['ESC Scientific Document Group'], journals: ["Eur Heart J", "Europace", "Eur J Heart Fail", "Eur J Prev Cardiol", "Eur Heart J Acute Cardiovasc Care", "Eur Heart J Cardiovasc Imaging", "Eur Heart J Cardiovasc Pharmacother", "EuroIntervention"] }
   - { id: aha-acc, name: "AHA/ACC",       region: na, title: ['\bAHA\b', '\bACC\b', 'American Heart Association', 'American College of Cardiology'], authors: ['Joint Committee on Clinical Practice Guidelines'], journals: ["Circulation", "J Am Coll Cardiol"] }
   - { id: ers,    name: "ERS",            region: eu, title: ['\bERS\b', 'European Respiratory Society'], journals: ["Eur Respir J"] }
   - { id: ats,    name: "ATS",            region: na, title: ['\bATS\b', 'American Thoracic Society'], journals: ["Am J Respir Crit Care Med"] }
@@ -15,7 +15,8 @@ bodies:
   - { id: easd,   name: "EASD",           region: eu, title: ['\bEASD\b'], journals: ["Diabetologia"] }
   - { id: idsa,   name: "IDSA",           region: na, title: ['\bIDSA\b', 'Infectious Diseases Society of America'], journals: ["Clin Infect Dis"] }
   - { id: escmid, name: "ESCMID",         region: eu, title: ['\bESCMID\b'], journals: ["Clin Microbiol Infect"] }
-  - { id: ssc,    name: "Surviving Sepsis Campaign", region: intl, title: ['Surviving Sepsis Campaign'], journals: ["Crit Care Med", "Intensive Care Med"] }
+  - { id: ssc,    name: "Surviving Sepsis Campaign", region: intl, title: ['Surviving Sepsis Campaign'] }
+  - { id: sccm,   name: "SCCM",           region: na, title: ['Society of Critical Care Medicine', '\bSCCM\b'], journals: ["Crit Care Med", "Pediatr Crit Care Med"] }
   - { id: eso,    name: "ESO",            region: eu, title: ['\bESO\b', 'European Stroke Organisation'], journals: ["Eur Stroke J"] }
   - { id: aha-asa, name: "AHA/ASA",       region: na, title: ['\bASA\b', 'American Stroke Association'], journals: ["Stroke"] }
   - { id: erc,    name: "ERC",            region: eu, title: ['\bERC\b', 'European Resuscitation Council'], journals: ["Resuscitation"] }
@@ -26,12 +27,46 @@ bodies:
   - { id: isth,   name: "ISTH",           region: intl, title: ['\bISTH\b'], journals: ["J Thromb Haemost"] }
   - { id: asco,   name: "ASCO",           region: na, title: ['\bASCO\b'], journals: ["J Clin Oncol"] }
   - { id: esmo,   name: "ESMO",           region: eu, title: ['\bESMO\b'], journals: ["Ann Oncol"] }
+  - { id: eaaci,  name: "EAACI",          region: eu, title: ['\bEAACI\b', 'European Academy of Allergy and Clinical Immunology'], journals: ["Allergy"] }
+  - { id: wao,    name: "WAO",            region: intl, title: ['\bWAO\b', 'World Allergy Organization'], journals: ["World Allergy Organ J"] }
+  - { id: jtf,    name: "AAAAI/ACAAI",    region: na, title: ['Joint Task Force on Practice Parameters', '\bAAAAI\b', '\bACAAI\b'], journals: ["J Allergy Clin Immunol", "Ann Allergy Asthma Immunol"] }
+  - { id: ilae,   name: "ILAE",           region: intl, title: ['\bILAE\b', 'International League Against Epilepsy'], journals: ["Epilepsia"] }
+  - { id: ncs,    name: "Neurocritical Care Society", region: na, title: ['Neurocritical Care Society'], journals: ["Neurocrit Care"] }
+  - { id: ean,    name: "EAN",            region: eu, title: ['\bEAN\b', 'European Academy of Neurology', '\bEFNS\b'], journals: ["Eur J Neurol"] }
+  - { id: esicm,  name: "ESICM",          region: eu, title: ['\bESICM\b', 'European Society of Intensive Care Medicine'], journals: ["Intensive Care Med"] }
+  - { id: bts,    name: "BTS",            region: eu, title: ['British Thoracic Society', '\bBTS\b'], journals: ["Thorax"] }
+  - { id: acep,   name: "ACEP",           region: na, title: ['American College of Emergency Physicians', '\bACEP\b'], journals: ["Ann Emerg Med"] }
+  # National bodies of other countries (region: other): attributed so their guidelines read as official national
+  # documents, ranked after the French/Algerian and the European, North American and international ones.
+  - { id: ash,    name: "ASH",            region: na, title: ['American Society of Hematology'], journals: ["Blood Adv"] }
+  - { id: acr,    name: "ACR",            region: na, title: ['ACR Appropriateness Criteria', 'American College of Radiology'], journals: ["J Am Coll Radiol"] }
+  - { id: aafp,   name: "AAFP",           region: na, title: ['\bAAFP\b', 'American Academy of Family Physicians'], journals: ["Am Fam Physician"] }
+  - { id: saem,   name: "SAEM",           region: na, title: ['\bSAEM\b', 'Society for Academic Emergency Medicine', 'Society of Academic Emergency Medicine'] }
+  - { id: hfsa,   name: "HFSA",           region: na, title: ['\bHFSA\b', 'Heart Failure Society of America'], journals: ["J Card Fail"] }
+  - { id: ccs,    name: "CCS (Canada)",   region: other, title: ['Canadian Cardiovascular Society'], journals: ["Can J Cardiol"] }
+  - { id: csbp,   name: "Canadian Stroke Best Practices", region: other, title: ['Canadian Stroke Best Practice'] }
+  - { id: jcs,    name: "JCS (Japon)",    region: other, title: ['\bJCS\b', 'Japanese Circulation Society'], journals: ["Circ J"] }
+  - { id: jrc,    name: "JRC (Japon)",    region: other, title: ['Japan Resuscitation Council'] }
+  - { id: jssc,   name: "J-SSCG (Japon)", region: other, title: ['J-SSCG', 'Japanese Clinical Practice Guidelines for Management of Sepsis'] }
+  - { id: jss,    name: "Japan Stroke Society", region: other, title: ['Japan Stroke Society'] }
+  - { id: csanz,  name: "NHF/CSANZ (Australie)", region: other, title: ['National Heart Foundation of Australia', 'Cardiac Society of Australia and New Zealand', '\bCSANZ\b'] }
+  - { id: thanz,  name: "THANZ (Australie)", region: other, title: ['Thrombosis and Haemostasis Society of Australia'] }
+  - { id: anmco,  name: "ANMCO (Italie)", region: other, title: ['\bANMCO\b'] }
+  - { id: sec,    name: "SEC (Espagne)",  region: other, title: ['\bSEC-', 'Spanish Society of Cardiology'] }
+  - { id: semi,   name: "SEMI (Espagne)", region: other, title: ['Spanish Society of Internal Medicine'] }
+  - { id: separ,  name: "SEPAR/GesEPOC (Espagne)", region: other, title: ['\bGesEPOC\b', '\bSEPAR\b'], journals: ["Arch Bronconeumol"] }
+  - { id: esvs,   name: "ESVS",           region: eu, title: ['\bESVS\b', 'European Society for Vascular Surgery'], journals: ["Eur J Vasc Endovasc Surg"] }
+  - { id: sts-aats, name: "STS/AATS",     region: na, title: ['Society of Thoracic Surgeons', 'American Association for Thoracic Surgery', '\bAATS\b'], journals: ["Ann Thorac Surg", "J Thorac Cardiovasc Surg"] }
+  - { id: svs,    name: "SVS",            region: na, title: ['Society for Vascular Surgery'], journals: ["J Vasc Surg"] }
+  - { id: esvm,   name: "ESVM",           region: eu, title: ['\bESVM\b', 'European Society of Vascular Medicine'], journals: ["Vasa"] }
   # French and Algerian bodies (also checked through their own listing pages, sources.yaml)
   - { id: has,    name: "HAS",            region: fr, title: ['Haute Autorité de Santé', '\bHAS\b'] }
   - { id: splf,   name: "SPLF",           region: fr, title: ['\bSPLF\b', 'Société de Pneumologie de Langue Française'], journals: ["Rev Mal Respir", "Respir Med Res"] }
   - { id: spilf,  name: "SPILF",          region: fr, title: ['\bSPILF\b'], journals: ["Infect Dis Now", "Med Mal Infect"] }
   - { id: sfc,    name: "SFC",            region: fr, title: ['Société Française de Cardiologie', 'French Society of Cardiology'], journals: ["Arch Cardiovasc Dis"] }
   - { id: sfar,   name: "SFAR",           region: fr, title: ['\bSFAR\b'], journals: ["Anaesth Crit Care Pain Med"] }
+  - { id: srlf,   name: "SRLF",           region: fr, title: ['\bSRLF\b', 'Société de Réanimation de Langue Française'], journals: ["Ann Intensive Care"] }
+  - { id: sfmv,   name: "SFMV",           region: fr, title: ['French Society of Vascular Medicine', 'Société Française de Médecine Vasculaire', '\bSFMV\b'], journals: ["J Med Vasc"] }
   - { id: sfmu,   name: "SFMU",           region: fr, title: ['\bSFMU\b'], journals: ["Ann Fr Med Urgence"] }
   - { id: cnge,   name: "CNGE",           region: fr, title: ['\bCNGE\b'], journals: ["Exercer"] }
   - { id: ansm,   name: "ANSM",           region: fr, title: ['\bANSM\b'] }

@@ -4,7 +4,7 @@ import { TEMPLATE_LABEL, type ChangeLogEntry, type Meta, type Review, type Scope
 import { useEffect, useState } from "react";
 
 import { inputCls } from "@/components/ui";
-import { api } from "@/lib/api";
+import { api, apiForm } from "@/lib/api";
 
 import { Ids, Label, LineIssues, Lines, List, Text } from "./fields";
 
@@ -38,24 +38,54 @@ export function MetaEditor({ meta, scope, onMeta, onScope }: { meta: Meta; scope
 }
 
 /**
- * The fiche's sources, and the stored PDF of each (from Collecte), used by the quote check. The PDF link is kept in
- * the table source_pdfs, not in the fiche: it is saved at once.
+ * The fiche's sources, and the stored PDF of each, used by the quote check: a PDF uploaded here (kept with the fiche,
+ * fiches/<id>/) or one kept in a Collecte topic. The PDF link is kept in the table source_pdfs, not in the fiche: it
+ * is saved at once.
  */
 export function SourcesEditor({ sources, onChange, topic, pdfs, onPdf }: {
   sources: Source[]; onChange: (v: Source[]) => void; topic: string; pdfs: Record<string, string>; onPdf: (sourceId: string, path: string | null) => void;
 }) {
-  const [folder, setFolder] = useState(topic);
+  const [folder, setFolder] = useState("");
   const [files, setFiles] = useState<{ path: string; title: string }[]>([]);
+  const [own, setOwn] = useState<{ path: string; title: string }[]>([]);
+  const [uploading, setUploading] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const pdfsOnly = (t: { files: { path: string | null; title: string }[] }) => t.files.filter((x): x is { path: string; title: string } => !!x.path);
+  const loadOwn = () => api<{ files: { path: string | null; title: string }[] }>(`/crawl/fiches/${encodeURIComponent(topic)}/files`)
+    .then((t) => setOwn(pdfsOnly(t)), () => setOwn([]));
+  useEffect(() => {
+    void loadOwn();
+  }, [topic]);  // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!folder.trim()) return;
-    api<{ files: { path: string | null; title: string }[] }>(`/crawl/topics/${encodeURIComponent(folder.trim())}`)
-      .then((t) => setFiles(t.files.filter((x): x is { path: string; title: string } => !!x.path)), () => setFiles([]));
+    void api<{ files: { path: string | null; title: string }[] }>(`/crawl/topics/${encodeURIComponent(folder.trim())}`)
+      .then((t) => setFiles(pdfsOnly(t)), () => setFiles([]));
   }, [folder]);
+  const topicFiles = folder.trim() ? files : [];
+  const choices = [...own, ...topicFiles.filter((x) => !own.some((o) => o.path === x.path))];
+  /** Store the chosen PDF with the fiche, then link it to the source. */
+  const upload = async (sourceId: string, file: File | undefined) => {
+    if (!file) return;
+    setUploading(sourceId);
+    setError(null);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const { path } = await apiForm<{ path: string }>(`/crawl/fiches/${encodeURIComponent(topic)}/upload`, form);
+      await loadOwn();
+      onPdf(sourceId, path);
+    } catch (e) {
+      setError(`Téléversement impossible : ${(e as Error).message}`);
+    } finally {
+      setUploading(null);
+    }
+  };
   const title = (t: string) => { try { return decodeURIComponent(t); } catch { return t; } };
 
   return (
     <div className="flex flex-col gap-2">
-      <Text label="Thème Collecte où chercher les PDF" className="w-72" value={folder} onChange={setFolder} />
+      <Text label="Thème Collecte (facultatif) : proposer aussi ses PDF" className="w-80" value={folder} onChange={setFolder} />
+      {error && <p className="text-xs text-flag">{error}</p>}
       <List items={sources} add="une source" onChange={onChange}
         blank={(): Source => ({ id: "", title: "", organisation: "", citation: "", url: null, publication_date: null, page_offset: 0, accessed_at: new Date().toISOString().slice(0, 10) })}
         render={(s, set) => (
@@ -71,10 +101,17 @@ export function SourcesEditor({ sources, onChange, topic, pdfs, onPdf }: {
             <label className="flex flex-col gap-1 md:col-span-3">
               <Label>PDF stocké (enregistré tout de suite)</Label>
               <select className={inputCls} value={pdfs[s.id] ?? ""} disabled={!s.id} onChange={(e) => onPdf(s.id, e.target.value || null)}>
-                <option value="">{files.length ? "Aucun" : "Aucun PDF dans ce thème de Collecte"}</option>
-                {files.map((x) => <option key={x.path} value={x.path}>{title(x.title)}</option>)}
-                {pdfs[s.id] && !files.some((x) => x.path === pdfs[s.id]) && <option value={pdfs[s.id]}>{pdfs[s.id]}</option>}
+                <option value="">{choices.length ? "Aucun" : "Aucun PDF : téléversez-le à droite"}</option>
+                {choices.map((x) => <option key={x.path} value={x.path}>{title(x.title)}</option>)}
+                {pdfs[s.id] && !choices.some((x) => x.path === pdfs[s.id]) && <option value={pdfs[s.id]}>{pdfs[s.id]}</option>}
               </select>
+            </label>
+            <label className={`flex items-end ${!s.id ? "pointer-events-none opacity-50" : "cursor-pointer"}`} title={s.id ? undefined : "Donnez d'abord un identifiant à la source"}>
+              <span className="inline-flex h-9 items-center rounded-lg border border-line bg-surface px-3 text-sm font-medium text-ink hover:bg-panel">
+                {uploading === s.id ? "Téléversement…" : "Téléverser un PDF"}
+              </span>
+              <input type="file" accept="application/pdf,.pdf" className="hidden" disabled={!s.id || !!uploading}
+                onChange={(e) => { void upload(s.id, e.target.files?.[0]); e.target.value = ""; }} />
             </label>
             <div className="md:col-span-4"><LineIssues id={s.id} /></div>
           </div>

@@ -2,10 +2,12 @@
 
 import {
   emptyProtocol, evidenceLines, publicationGate, quoteKey, SECTION_TITLE, TEMPLATE_LABEL, validateStructure,
-  type Issue, type Protocol, type QuoteResult, type Template,
+  fromLegacy, isLegacy, type Issue, type Protocol, type QuoteResult, type Template,
 } from "@medguides/schema";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+
+import { IMPORT_KEY } from "@/lib/fiche-import";
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { Block, IssuesCtx, ShowCtx, Text, type Shown } from "@/components/editor/fields";
@@ -98,12 +100,28 @@ export default function FicheEditor() {
       const [pub, sp] = await Promise.all([supabase.from("published_fiches").select("subject_id"), supabase.from("source_pdfs").select("source_id,pdf_path")]);
       setPublished(new Set((pub.data ?? []).map((r: { subject_id: string }) => r.subject_id)));
       setPdfs(Object.fromEntries((sp.data ?? []).map((r: { source_id: string; pdf_path: string }) => [r.source_id, r.pdf_path])));
-      if (fresh) return;
+      // a fiche JSON imported from a topic page (Collecte): shown in place of the saved one, not saved yet
+      let imported: Protocol | null = null;
+      try {
+        const raw = sessionStorage.getItem(IMPORT_KEY);
+        sessionStorage.removeItem(IMPORT_KEY);
+        imported = raw ? validateStructure(JSON.parse(raw)).protocol : null;
+      } catch {
+        imported = null;
+      }
+      if (fresh) {
+        if (imported) {
+          setF(imported);
+          setDirty(true);
+        }
+        return;
+      }
       const { data, error } = await supabase.from("fiche_versions").select("version,content,published_at").eq("subject_id", id).order("version", { ascending: false });
       if (error || !data?.length) return setError(error?.message ?? "Fiche introuvable");
       const { protocol, issues } = validateStructure(data[0].content);
-      if (!protocol) return setError(`Version illisible (pas au format v1.1) : ${issues.slice(0, 3).map((i) => i.message).join(" ; ")}`);
-      setF(protocol);
+      if (!protocol && !imported) return setError(`Version illisible (pas au format v1.1) : ${issues.slice(0, 3).map((i) => i.message).join(" ; ")}`);
+      setF(imported && imported.meta.id === id ? imported : protocol);
+      if (imported && imported.meta.id === id) setDirty(true);
       setVersion(data[0].version);
       setPublishedVersion((data as { version: number; published_at: string | null }[]).find((v) => v.published_at)?.version ?? null);
     })();
@@ -227,14 +245,28 @@ export default function FicheEditor() {
     });
   };
 
-  const loadPasted = () => {
+  /** A fiche's JSON as a file to save: the one being edited, or an empty v1.1 template to fill. */
+  const download = (name: string, content: Protocol) => {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(content, null, 2) + "\n"], { type: "application/json" }));
+    const a = Object.assign(document.createElement("a"), { href: url, download: name });
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+  const template = (fid: string, title: string, tpl: Template) => download(`${fid || "fiche"}-modele-v1.1.json`, emptyProtocol(fid || "fiche", title, tpl));
+  /** A .json file chosen on disk, checked like a pasted one. */
+  const importFile = async (file: File | undefined) => {
+    if (file) loadPasted(await file.text());
+  };
+
+  const loadPasted = (text?: string) => {
     let raw: unknown;
     try {
-      raw = JSON.parse(paste ?? "");
+      raw = JSON.parse(text ?? paste ?? "");
     } catch (e) {
       return setError(`JSON illisible : ${(e as Error).message}`);
     }
-    const { protocol, issues } = validateStructure(raw);
+    const legacy = isLegacy(raw);  // the older fiche-protocole format is converted to a v1.1 draft
+    const { protocol, issues } = validateStructure(legacy ? fromLegacy(raw) : raw);
     if (!protocol) return setError(`Ce JSON n'est pas une fiche v1.1 : ${issues.slice(0, 5).map((i) => i.message).join(" ; ")}`);
     if (!fresh && protocol.meta.id !== id) return setError(`Ce JSON est la fiche « ${protocol.meta.id} », pas « ${id} ».`);
     setF(protocol);
@@ -249,7 +281,7 @@ export default function FicheEditor() {
       <textarea autoFocus rows={14} spellCheck={false} className={`${inputCls} h-auto py-2 font-mono text-xs`} placeholder='{ "schema_version": "1.1.0", "meta": { … } }'
         value={paste ?? ""} onChange={(e) => setPaste(e.target.value)} />
       <div className="flex items-center gap-2">
-        <Button variant="primary" disabled={!(paste ?? "").trim()} onClick={loadPasted}>Afficher</Button>
+        <Button variant="primary" disabled={!(paste ?? "").trim()} onClick={() => loadPasted()}>Afficher</Button>
         <Button onClick={() => setPaste(null)}>Annuler</Button>
       </div>
     </div>
@@ -273,8 +305,13 @@ export default function FicheEditor() {
           </label>
           <Button variant="primary" disabled={!ok} onClick={() => { setF(emptyProtocol(draft.id, draft.title.trim(), draft.template)); setDirty(true); }}>Créer</Button>
         </div>
-        <p className="text-sm text-muted">Ou collez une fiche complète :</p>
-        {paste === null ? <Button className="self-start" onClick={() => setPaste("")}>Coller un JSON</Button> : pasteBox}
+        <p className="text-sm text-muted">Ou partez d&apos;une fiche complète :</p>
+        <div className="flex flex-wrap gap-2">
+          {paste === null && <Button onClick={() => setPaste("")}>Coller un JSON</Button>}
+          <JsonFileButton onFile={importFile} />
+          <Button title="Fiche v1.1 vide et valide, à remplir puis à importer" onClick={() => template(draft.id, draft.title.trim(), draft.template)}>Télécharger un modèle vide</Button>
+        </div>
+        {paste !== null && pasteBox}
       </div>
     );
   }
@@ -300,6 +337,9 @@ export default function FicheEditor() {
             {note && <span className="text-xs text-accent">{note}</span>}
             {dirty && <span className="text-xs text-caution">Modifications non enregistrées</span>}
             <Button className="h-8 px-2.5 text-xs" onClick={() => setPaste(paste === null ? "" : null)}>Coller un JSON</Button>
+            <JsonFileButton small onFile={importFile} />
+            <Button className="h-8 px-2.5 text-xs" title="Télécharge la fiche affichée (modifications comprises)" onClick={() => download(`${f.meta.id}.json`, f)}>Exporter le JSON</Button>
+            <Button className="h-8 px-2.5 text-xs" title="Fiche v1.1 vide et valide, à remplir puis à importer" onClick={() => template(f.meta.id, f.meta.title, f.meta.template)}>Modèle vide</Button>
             <Button className="h-8" disabled={!!busy || !dirty || !isAdmin} onClick={() => run("save")}>{busy === "save" ? <Spinner /> : "Enregistrer"}</Button>
             <Button className="h-8" variant="primary" disabled={!!busy || !canPublish || isLive}
               title={canPublish ? "Publier cette version" : "Bloqué tant que les contrôles ne passent pas"} onClick={() => run("publish")}>
@@ -361,5 +401,16 @@ export default function FicheEditor() {
     </ShowCtx.Provider>
     </IssuesCtx.Provider>
     </EnvCtx.Provider>
+  );
+}
+
+
+/** "Importer un fichier JSON": a hidden file input behind a button. */
+function JsonFileButton({ onFile, small }: { onFile: (f: File | undefined) => void; small?: boolean }) {
+  return (
+    <label className={`inline-flex cursor-pointer items-center rounded-lg border border-line bg-surface font-medium text-ink hover:bg-panel ${small ? "h-8 px-2.5 text-xs" : "h-9 px-3 text-sm"}`}>
+      Importer un fichier JSON
+      <input type="file" accept="application/json,.json" className="hidden" onChange={(e) => { onFile(e.target.files?.[0]); e.target.value = ""; }} />
+    </label>
   );
 }

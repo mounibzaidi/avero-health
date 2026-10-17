@@ -1,0 +1,1809 @@
+{
+  "subject": {
+    "id": "eclampsia",
+    "title": "Éclampsie",
+    "template": "urgence",
+    "created_at": "2026-10-14T18:54:00.112465+00:00",
+    "specialite": "Obstétrique",
+    "updated_at": "2026-10-14T18:54:00.112465+00:00"
+  },
+  "version": {
+    "id": "64580df3-9f50-4a4d-93cd-14c96ae8d65c",
+    "content": {
+      "kind": "fiche",
+      "meta": {
+        "title": "Éclampsie",
+        "motifs": [],
+        "status": "draft",
+        "sources": [
+          {
+            "type": "full_guideline",
+            "title": "Conduite à tenir devant une éclampsie",
+            "licence": "",
+            "citation": "Ministère de la Santé, de la Population et de la Réforme Hospitalière ; Institut National de Santé Publique. Date non indiquée dans le document.",
+            "source_id": "insp-eclampsie-2018"
+          }
+        ],
+        "version": "0.1",
+        "audience": [
+          "MG",
+          "urgences"
+        ],
+        "reviewer": null,
+        "siblings": [],
+        "template": "urgence",
+        "topic_id": "eclampsie",
+        "synonymes": [],
+        "specialite": "Obstétrique",
+        "quote_check": "73/73",
+        "reviewed_at": null,
+        "excluded_by_audience": []
+      },
+      "sections": {
+        "3_champ": {
+          "state": "filled",
+          "elements": [
+            {
+              "id": "eclampsie-005",
+              "refs": [],
+              "risk": "low",
+              "text": "Survient après la 20e SA.",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "L’éclampsie survient après la 20ème semaine d’aménorrhée",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-006",
+              "refs": [],
+              "risk": "low",
+              "text": "Répartition : 50 % pendant la grossesse, 30 % pendant l'accouchement, 20 % dans le post-partum.",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "dans 50 % des cas pendant la grossesse dans 30 % pendant l’accouchement et dans 20% dans le post-partum",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ]
+        },
+        "11_suivi": {
+          "state": "non_traité",
+          "elements": [],
+          "conseils_patient": []
+        },
+        "4_gravite": {
+          "state": "filled",
+          "gestes_immediats": {
+            "state": "filled",
+            "elements": [
+              {
+                "id": "eclampsie-009",
+                "refs": [],
+                "risk": "high",
+                "text": "Position latérale de sécurité sur le côté gauche.",
+                "type": "action",
+                "delai": null,
+                "grade": null,
+                "order": 1,
+                "origin": "explicit",
+                "source": {
+                  "page": 2,
+                  "quote": "Disposer la patiente en position latérale de sécurité sur le côté gauche",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": null,
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              },
+              {
+                "id": "eclampsie-010",
+                "refs": [],
+                "risk": "medium",
+                "text": "Installer la patiente à l'abri du risque traumatique (chute).",
+                "type": "action",
+                "delai": null,
+                "grade": null,
+                "order": 2,
+                "origin": "explicit",
+                "source": {
+                  "page": 2,
+                  "quote": "Mettre la patiente dans un endroit permettant d’éviter le risque traumatique (comme une chute de la parturiente)",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": null,
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              },
+              {
+                "id": "eclampsie-011",
+                "refs": [],
+                "risk": "high",
+                "text": "Si inconsciente : canule de Guedel (aspiration des sécrétions, prévention de la chute et de la morsure de la langue).",
+                "type": "conditional",
+                "delai": null,
+                "grade": null,
+                "order": 3,
+                "origin": "explicit",
+                "source": {
+                  "page": 2,
+                  "quote": "Libérer les voies aériennes : placer une Canule de Guedel si la patiente est inconsciente",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": "patiente inconsciente",
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              },
+              {
+                "id": "eclampsie-012",
+                "refs": [],
+                "risk": "medium",
+                "text": "Oxygène nasal 6 à 8 l/min, ou à défaut au masque.",
+                "type": "action",
+                "delai": null,
+                "grade": null,
+                "order": 4,
+                "origin": "explicit",
+                "source": {
+                  "page": 2,
+                  "quote": "Oxygéner par voie nasale avec un débit de 6 à 8 l/minute ou à défaut au masque",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": null,
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              },
+              {
+                "id": "eclampsie-013",
+                "refs": [],
+                "risk": "medium",
+                "text": "Voie veineuse périphérique 16 G (grise) ou 18 G (verte).",
+                "type": "action",
+                "delai": null,
+                "grade": null,
+                "order": 5,
+                "origin": "explicit",
+                "source": {
+                  "page": 2,
+                  "quote": "Poser un abord veineux périphérique : 16 G (grise) ou 18 G (verte)",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": null,
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              },
+              {
+                "id": "eclampsie-014",
+                "refs": [],
+                "risk": "high",
+                "text": "Administrer immédiatement le MgSO4 à la dose d'attaque, en 1re intention (voir posologies).",
+                "type": "action",
+                "delai": null,
+                "grade": null,
+                "order": 6,
+                "origin": "explicit",
+                "source": {
+                  "page": 2,
+                  "quote": "Administrer immédiatement du sulfate de magnésium (MgSO4) à la dose d’attaque en 1ère intention",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": null,
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              },
+              {
+                "id": "eclampsie-015",
+                "refs": [],
+                "risk": "medium",
+                "text": "Sondage vésical systématique.",
+                "type": "action",
+                "delai": null,
+                "grade": null,
+                "order": 7,
+                "origin": "explicit",
+                "source": {
+                  "page": 2,
+                  "quote": "Sondage vésical systématique avec surveillance de la diurèse",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": null,
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              },
+              {
+                "id": "eclampsie-016",
+                "refs": [],
+                "risk": "high",
+                "text": "Dès la fin du traitement de la crise, passer au traitement d'entretien.",
+                "type": "action",
+                "delai": null,
+                "grade": null,
+                "order": 8,
+                "origin": "explicit",
+                "source": {
+                  "page": 2,
+                  "quote": "Dès la fin de du traitement de la crise, passer au traitement d’entretien",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": null,
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              }
+            ]
+          },
+          "decision_initiale": {
+            "state": "non_traité",
+            "elements": []
+          },
+          "signes_de_gravite": [
+            {
+              "id": "eclampsie-007",
+              "refs": [],
+              "risk": "high",
+              "text": "Crises répétées, état de mal convulsif et/ou troubles de la conscience (Glasgow ≤ 9).",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 4,
+                "quote": "Crise tonico-clonique répétée, Etat de mal convulsif et/ou troubles de la conscience (Glasgow ≤ 9)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-008",
+              "refs": [],
+              "risk": "high",
+              "text": "Convulsions persistantes malgré le bolus de MgSO4, nouvelles crises sous MgSO4, ou coma.",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 4,
+                "quote": "Si la patiente, malgré le bolus de sulfate de magnésium, continue à convulser ou présente de nouvelles crises sous sulfate de magnésium, ou sombre dans le coma",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ]
+        },
+        "6_examens": {
+          "state": "filled",
+          "elements": [
+            {
+              "id": "eclampsie-031",
+              "refs": [],
+              "risk": "medium",
+              "text": "Bilan rénal de référence : urée, créatininémie.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 2,
+                "quote": "bilan rénal de référence (urée, créatinémie)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-032",
+              "refs": [],
+              "risk": "medium",
+              "text": "Pendant l'entretien : surveiller urée et créatinine.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 3,
+                "quote": "Surveiller les ROT, la FR, la diurèse horaire, l’urée et la créatinine",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-033",
+              "refs": [],
+              "risk": "high",
+              "text": "Imagerie si : Coma post-critique > 6 h.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Si coma post critique > 6 heures",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "indication d'imagerie",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-034",
+              "refs": [],
+              "risk": "high",
+              "text": "Imagerie si : Signes de localisation évoquant un AVC ou une thrombose veineuse cérébrale.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Si apparition de signes de localisation en faveur d’un AVC ou d’une thrombose veineuse cérébrale (hémorragie, TVC)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "indication d'imagerie",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-035",
+              "refs": [],
+              "risk": "high",
+              "text": "Imagerie si : Convulsions persistantes.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Si convulsions persistantes",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "indication d'imagerie",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-036",
+              "refs": [],
+              "risk": "high",
+              "text": "Imagerie si : Convulsions avant la 20e SA.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Si convulsions survenant avant la 20ème SA",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "indication d'imagerie",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-037",
+              "refs": [],
+              "risk": "high",
+              "text": "Imagerie si : Éclampsie survenant 48 h après l'accouchement.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Si éclampsie survient 48 heures après l’accouchement",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "indication d'imagerie",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-038",
+              "refs": [],
+              "risk": "high",
+              "text": "Imagerie si : Éclampsie réfractaire malgré un traitement adéquat par MgSO4.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Si éclampsie réfractaire (récidive des convulsions) malgré un traitement adéquat par MgSO4",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "indication d'imagerie",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-039",
+              "refs": [],
+              "risk": "high",
+              "text": "Imagerie si : Troubles visuels persistants : IRM à la recherche d'un PRES.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Si persistance des troubles visuels : IRM à la recherche d’une encéphalopathie postérieure réversible (PRES syndrome)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "indication d'imagerie",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ]
+        },
+        "5_conduite": {
+          "nodes": [
+            {
+              "node": "Après stabilisation maternelle : évacuation utérine",
+              "branches": [
+                {
+                  "id": "eclampsie-017",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Dès que l'état maternel est stable, évacuer l'utérus le plus rapidement possible, par n'importe quelle voie ; la césarienne est le plus souvent pratiquée.",
+                  "type": "action",
+                  "delai": null,
+                  "grade": null,
+                  "order": null,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 1,
+                    "quote": "Dès que l’état maternel est considéré stable, il est impératif d’évacuer l’utérus le plus rapidement possible par n’importe quelle voie.",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": null,
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-018",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Bloc disponible : dès stabilisation, évacuer l'utérus ; appeler le chirurgien en l'absence d'obstétricien.",
+                  "type": "conditional",
+                  "delai": null,
+                  "grade": null,
+                  "order": null,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 3,
+                    "quote": "Dès stabilisation, procéder à l’évacuation de l’utérus - Appeler le chirurgien en cas d’absence d’obstétricien",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": "bloc opératoire disponible",
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-019",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Bloc non disponible, dilatation ≥ 6 cm : accoucher par voie basse immédiatement.",
+                  "type": "conditional",
+                  "delai": null,
+                  "grade": null,
+                  "order": null,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 3,
+                    "quote": "Dilatation >=6 cm",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [
+                    "quote: libellé 'Accoucher la patiente par voie basse immédiatement' dans une case séparée du schéma, à vérifier visuellement"
+                  ],
+                  "condition": "bloc non disponible ET dilatation ≥ 6 cm",
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-020",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Bloc non disponible, dilatation < 4 cm : transférer vers une structure disposant d'un bloc.",
+                  "type": "conditional",
+                  "delai": null,
+                  "grade": null,
+                  "order": null,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 3,
+                    "quote": "Dilatation < 4 cm",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [
+                    "quote: libellé 'Transférer la patiente vers une structure disposant d’un bloc opératoire' dans une case séparée du schéma, à vérifier visuellement"
+                  ],
+                  "condition": "bloc non disponible ET dilatation < 4 cm",
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-021",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Dilatation entre 4 et 6 cm : non traité par la source. Attitudes indicatives ; le médecin apprécie l'imminence de l'accouchement.",
+                  "type": "info",
+                  "delai": null,
+                  "grade": null,
+                  "order": null,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 3,
+                    "quote": "Les attitudes préconisées, en fonction de l’état d’avancement de la dilatation, sont données à titre indicatif. Le médecin devra apprécier l’imminence de l’accouchement",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [
+                    "conduite pour dilatation 4 à 6 cm"
+                  ],
+                  "condition": "bloc non disponible ET dilatation 4 à 6 cm",
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-022",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Accouchement imminent : favoriser la voie basse ; sinon, privilégier l'extraction par voie haute.",
+                  "type": "conditional",
+                  "delai": null,
+                  "grade": null,
+                  "order": null,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 3,
+                    "quote": "En cas d’accouchement imminent, on favorisera la voie basse. En dehors de ce cas de figure, c’est l’extraction par voie haute qui doit être privilégiée.",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": "accouchement imminent",
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                }
+              ]
+            },
+            {
+              "node": "Crises répétées, état de mal ou Glasgow ≤ 9",
+              "branches": [
+                {
+                  "id": "eclampsie-023",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Les mesures de réanimation sont au premier plan.",
+                  "type": "action",
+                  "delai": null,
+                  "grade": null,
+                  "order": null,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 4,
+                    "quote": "Les mesures de réanimation sont au 1er plan",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": null,
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-024",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Dans les deux cas : anesthésie générale, induction à séquence rapide (Rapifen) + manœuvre de Sellick, Penthotal ou Diprivan + curare (Esméron), intubation orotrachéale + ventilation assistée.",
+                  "type": "action",
+                  "delai": null,
+                  "grade": null,
+                  "order": 1,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 4,
+                    "quote": "Effectuer une anesthésie générale avec :",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": "utérus plein ou vide",
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-025",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Utérus plein (pré-partum) : extraire le fœtus en urgence par voie haute ; sans bloc, transférer vers la structure adéquate.",
+                  "type": "conditional",
+                  "delai": null,
+                  "grade": null,
+                  "order": 2,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 4,
+                    "quote": "Extraire le fœtus en urgence par voie haute – si la structure ne dispose pas de bloc, assurer le transfert vers la structure adéquate",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": "utérus plein (pré-partum)",
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-026",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Maintenir le MgSO4 en dose d'entretien, 1 à 2 g/h pendant 48 h, et contrôler l'HTA par nicardipine (voir posologies).",
+                  "type": "action",
+                  "delai": null,
+                  "grade": null,
+                  "order": 3,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 4,
+                    "quote": "Maintenir le Sulfate de Magnésium en dose d’entretien : en perfusion continue de 1 g à 2 g par heure pendant 48 heures",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": null,
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                }
+              ]
+            },
+            {
+              "node": "Surdosage en MgSO4",
+              "branches": [
+                {
+                  "id": "eclampsie-027",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Arrêter la perfusion de MgSO4.",
+                  "type": "action",
+                  "delai": null,
+                  "grade": null,
+                  "order": 1,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 5,
+                    "quote": "Arrêter la perfusion de MgSO4",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": null,
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-028",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Perfuser du gluconate de calcium (antagoniste du magnésium, voir posologies).",
+                  "type": "action",
+                  "delai": null,
+                  "grade": null,
+                  "order": 2,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 5,
+                    "quote": "Perfuser du gluconate de calcium",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": null,
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-029",
+                  "refs": [],
+                  "risk": "medium",
+                  "text": "Administrer de l'oxygène.",
+                  "type": "action",
+                  "delai": null,
+                  "grade": null,
+                  "order": 3,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 5,
+                    "quote": "Administrer de l’oxygène",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": null,
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                },
+                {
+                  "id": "eclampsie-030",
+                  "refs": [],
+                  "risk": "high",
+                  "text": "Si arrêt respiratoire : intubation trachéale + ventilation assistée.",
+                  "type": "conditional",
+                  "delai": null,
+                  "grade": null,
+                  "order": 4,
+                  "origin": "explicit",
+                  "source": {
+                    "page": 5,
+                    "quote": "Effectuer une intubation trachéale associée à une ventilation assistée si arrêt respiratoire",
+                    "source_id": "insp-eclampsie-2018"
+                  },
+                  "missing": [],
+                  "condition": "arrêt respiratoire",
+                  "translated": false,
+                  "attached_to": [],
+                  "variant_group": null,
+                  "conflict_group": null
+                }
+              ]
+            }
+          ],
+          "state": "filled"
+        },
+        "1_essentiel": {
+          "state": "filled",
+          "elements": [
+            {
+              "id": "eclampsie-001",
+              "refs": [],
+              "risk": "high",
+              "text": "Toute crise convulsive après le 4e mois de grossesse = éclampsie jusqu'à preuve du contraire, à traiter comme telle.",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "Toute crise convulsive survenant après le 4ème mois de la grossesse doit être considérée comme une éclampsie jusqu’à preuve du contraire et doit donc être traitée comme une éclampsie",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-002",
+              "refs": [],
+              "risk": "high",
+              "text": "Urgence obstétricale : 1re priorité, stabiliser l'état maternel.",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "L’éclampsie est une urgence obstétricale et la 1ère priorité est de stabiliser l’état maternel",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-003",
+              "refs": [],
+              "risk": "high",
+              "text": "L'urgence maternelle prime sur l'état fœtal.",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "L’urgence maternelle prime sur l’état fœtal",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ]
+        },
+        "7_traitement": {
+          "state": "filled",
+          "elements": [
+            {
+              "id": "eclampsie-040",
+              "refs": [],
+              "risk": "high",
+              "text": "Prévention de la récidive après la crise : repose sur le MgSO4.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 3,
+                "quote": "La prise en charge de la patiente après arrêt de la crise tonico-clonique pour prévenir la récidive : est basée sur l’administration du Sulfate de Magnésium (MgSO4)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-041",
+              "refs": [],
+              "risk": "high",
+              "text": "Contrôler l'HTA par nicardipine en perfusion continue, sur une 2e voie d'abord.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 3,
+                "quote": "Contrôler l’HTA en administrant de la Nicardipine (Loxen*) en perfusion continue de 1 à 6 mg/heure en utilisant une 2ème voie d’abord",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ],
+          "posologies": [
+            {
+              "id": "eclampsie-pos01",
+              "dose": "4 g (≈ 2,5 ampoules)",
+              "note": "Incohérence source : 4 g = 2,67 ampoules de 1,5 g, pas 2,5.",
+              "risk": "high",
+              "route": "IV",
+              "source": {
+                "page": 2,
+                "quote": "Diluer 4g (≈ 2,5 ampoules) de Sulfate de Magnésium dans 150 cc de SSI à passer en IV en 20 mn (présentation : ampoule de 1,5 g pour 10 ml)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [],
+              "dose_max": null,
+              "drug_dci": "sulfate de magnésium",
+              "condition": "dose d'attaque",
+              "titration": null,
+              "translated": false,
+              "administration": "Diluer dans 150 cc de SSI ; ampoule de 1,5 g pour 10 ml",
+              "frequency_or_duration": "en 20 mn"
+            },
+            {
+              "id": "eclampsie-pos02",
+              "dose": "1,5 à 2 g (1 à 1,5 ampoules)",
+              "note": null,
+              "risk": "high",
+              "route": "IV (perfusion)",
+              "source": {
+                "page": 2,
+                "quote": "En cas de récidive, injection d’une dose additionnelle de 1,5 à 2 g (1 à 1,5 ampoules) en perfusion à passer en 20 mn sans dépasser la dose cumulée de 8 g de Sulfate de Magnésium pendant la 1ère heure de traitement",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [
+                "administration"
+              ],
+              "dose_max": "8 g cumulés pendant la 1re heure",
+              "drug_dci": "sulfate de magnésium",
+              "condition": "récidive",
+              "titration": null,
+              "translated": false,
+              "administration": null,
+              "frequency_or_duration": "en 20 mn"
+            },
+            {
+              "id": "eclampsie-pos03",
+              "dose": "1 à 2 g/h ; 4 ampoules (6 g) dans 60 cc de SSI",
+              "note": null,
+              "risk": "high",
+              "route": "IV (seringue électrique)",
+              "source": {
+                "page": 3,
+                "quote": "Diluer 4 ampoules (6g) de MgSO4 dans 60 cc de SSI à passer à la seringue en 6H (vitesse de 10 cc/h ; 1 cc = 0,1g)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [],
+              "dose_max": null,
+              "drug_dci": "sulfate de magnésium",
+              "condition": "entretien, SE disponible",
+              "titration": null,
+              "translated": false,
+              "administration": "vitesse 10 cc/h ; 1 cc = 0,1 g",
+              "frequency_or_duration": "seringue en 6 h, renouvelée toutes les 6 h pendant 48 h"
+            },
+            {
+              "id": "eclampsie-pos04",
+              "dose": "2,5 ampoules (3 g) dans 300 cc de SSI",
+              "note": "Incohérence source : 2,5 ampoules de 1,5 g = 3,75 g, pas 3 g. À trancher par le relecteur.",
+              "risk": "high",
+              "route": "IV (perfusion)",
+              "source": {
+                "page": 3,
+                "quote": "Diluer 2,5 ampoules (3g) de MgSO4 dans 300 cc de SSI à passer en 3H",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [
+                "administration"
+              ],
+              "dose_max": null,
+              "drug_dci": "sulfate de magnésium",
+              "condition": "entretien, SE non disponible",
+              "titration": null,
+              "translated": false,
+              "administration": null,
+              "frequency_or_duration": "en 3 h, à renouveler pour couvrir 48 h"
+            },
+            {
+              "id": "eclampsie-pos05",
+              "dose": "1 à 6 mg/h ; 1 ampoule de 10 mg dans 20 cc de SSI",
+              "note": "ERRATUM SOURCE : « 1 cc = 1 g » est une erreur d'unité. De plus, 20 cc à 1 cc/h durent 20 h (pas 6 à 10 h) et donnent 0,5 mg/h, sous la fourchette 1 à 6 mg/h. Ne pas corriger sans validation du relecteur.",
+              "risk": "high",
+              "route": "IV (seringue électrique, 2e voie)",
+              "source": {
+                "page": 3,
+                "quote": "Diluer 1 ampoule de 10 mg (dans 1cc, il y a 1 mg) dans 20 cc de SSI à passer en 6 à 10 h (vitesse de 1 cc/h ; 1 cc = 1 g) selon les chiffres tensionnels",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [],
+              "dose_max": null,
+              "drug_dci": "nicardipine",
+              "condition": "SE disponible",
+              "titration": null,
+              "translated": false,
+              "administration": "vitesse 1 cc/h ; « 1 cc = 1 g » (tel qu'écrit)",
+              "frequency_or_duration": "en 6 à 10 h selon les chiffres tensionnels"
+            },
+            {
+              "id": "eclampsie-pos06",
+              "dose": "1 ampoule dans 200 cc de SSI",
+              "note": null,
+              "risk": "high",
+              "route": "IV (perfusion, 2e voie)",
+              "source": {
+                "page": 3,
+                "quote": "Diluer une ampoule dans 200 cc de SSI à passer en 4 à 6 h selon les chiffres tensionnels",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [
+                "administration"
+              ],
+              "dose_max": null,
+              "drug_dci": "nicardipine",
+              "condition": "SE non disponible",
+              "titration": null,
+              "translated": false,
+              "administration": null,
+              "frequency_or_duration": "en 4 à 6 h selon les chiffres tensionnels"
+            },
+            {
+              "id": "eclampsie-pos07",
+              "dose": "1 g dans 50 ml de SSI",
+              "note": null,
+              "risk": "high",
+              "route": "IV (perfusion)",
+              "source": {
+                "page": 5,
+                "quote": "Perfuser du gluconate de calcium : 1 g dans 50 ml de SSI à faire passer en 10 mn",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [
+                "administration"
+              ],
+              "dose_max": null,
+              "drug_dci": "gluconate de calcium",
+              "condition": "surdosage en MgSO4",
+              "titration": null,
+              "translated": false,
+              "administration": null,
+              "frequency_or_duration": "en 10 mn"
+            },
+            {
+              "id": "eclampsie-pos08",
+              "dose": "",
+              "note": "Cité par nom commercial (Rapifen) ; DCI déduite, à confirmer par le relecteur. Aucune dose dans la source.",
+              "risk": "high",
+              "route": "",
+              "source": {
+                "page": 4,
+                "quote": "Induction à séquence rapide (morphinique : Rapifen)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [
+                "dose",
+                "route",
+                "frequency_or_duration"
+              ],
+              "dose_max": null,
+              "drug_dci": "alfentanil",
+              "condition": "anesthésie générale, crises répétées",
+              "titration": null,
+              "translated": false,
+              "administration": null,
+              "frequency_or_duration": ""
+            },
+            {
+              "id": "eclampsie-pos09",
+              "dose": "",
+              "note": "Cité par nom commercial (Penthotal) ; DCI déduite, à confirmer par le relecteur. Aucune dose dans la source.",
+              "risk": "high",
+              "route": "",
+              "source": {
+                "page": 4,
+                "quote": "Penthotal ou Diprivan + curare (Esméron)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [
+                "dose",
+                "route",
+                "frequency_or_duration"
+              ],
+              "dose_max": null,
+              "drug_dci": "thiopental",
+              "condition": "anesthésie générale, crises répétées",
+              "titration": null,
+              "translated": false,
+              "administration": null,
+              "frequency_or_duration": ""
+            },
+            {
+              "id": "eclampsie-pos10",
+              "dose": "",
+              "note": "Cité par nom commercial (Diprivan) ; DCI déduite, à confirmer par le relecteur. Aucune dose dans la source.",
+              "risk": "high",
+              "route": "",
+              "source": {
+                "page": 4,
+                "quote": "Penthotal ou Diprivan + curare (Esméron)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [
+                "dose",
+                "route",
+                "frequency_or_duration"
+              ],
+              "dose_max": null,
+              "drug_dci": "propofol",
+              "condition": "anesthésie générale, crises répétées",
+              "titration": null,
+              "translated": false,
+              "administration": null,
+              "frequency_or_duration": ""
+            },
+            {
+              "id": "eclampsie-pos11",
+              "dose": "",
+              "note": "Cité par nom commercial (Esméron) ; DCI déduite, à confirmer par le relecteur. Aucune dose dans la source.",
+              "risk": "high",
+              "route": "",
+              "source": {
+                "page": 4,
+                "quote": "Penthotal ou Diprivan + curare (Esméron)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "algerie": {
+                "brands": [],
+                "statut": null
+              },
+              "missing": [
+                "dose",
+                "route",
+                "frequency_or_duration"
+              ],
+              "dose_max": null,
+              "drug_dci": "rocuronium",
+              "condition": "anesthésie générale, crises répétées",
+              "titration": null,
+              "translated": false,
+              "administration": null,
+              "frequency_or_duration": ""
+            }
+          ],
+          "contre_indications": {
+            "state": "filled",
+            "elements": [
+              {
+                "id": "eclampsie-042",
+                "refs": [],
+                "risk": "high",
+                "text": "MgSO4 contre-indiqué si insuffisance rénale sévère (clairance de la créatinine < 30 ml/min/1,73 m²).",
+                "type": "conditional",
+                "delai": null,
+                "grade": null,
+                "order": null,
+                "origin": "explicit",
+                "source": {
+                  "page": 1,
+                  "quote": "Contre Indication au MgSO4 : insuffisance rénale sévère (clairance de la créatinine inférieure à 30 ml/min/1,73 m²)",
+                  "source_id": "insp-eclampsie-2018"
+                },
+                "missing": [],
+                "condition": "insuffisance rénale sévère",
+                "translated": false,
+                "attached_to": [],
+                "variant_group": null,
+                "conflict_group": null
+              }
+            ]
+          }
+        },
+        "12_ordonnance": {
+          "state": "sans_objet",
+          "elements": []
+        },
+        "9_orientation": {
+          "state": "filled",
+          "elements": [
+            {
+              "id": "eclampsie-045",
+              "refs": [],
+              "risk": "high",
+              "text": "Transfert uniquement après stabilisation neurologique et tensionnelle : FC 80 à 100/min, FR > 12/min, PAD 90 à 105 mmHg, PAM 105 à 125 mmHg.",
+              "type": "row",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "La patiente ne doit être transférée qu’une fois stabilisée sur le plan neurologique et tensionnel avec une FC (80-100 btt/mn), une FR > 12 cycles/mn et une TA : PAD (entre 90 et 105 mm de Hg) et PAM : (entre 105 -125 mm de Hg)",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-046",
+              "refs": [],
+              "risk": "high",
+              "text": "Pendant le transfert, obligatoirement : deux voies veineuses, MgSO4 en entretien + antihypertenseur, oxygène, accompagnée d'un médecin ou éventuellement d'une sage-femme.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "Durant le transfert, la patiente doit être obligatoirement :",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-047",
+              "refs": [],
+              "risk": "medium",
+              "text": "Structure avec bloc : prévoir le transfert ultérieur en réanimation.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 2,
+                "quote": "De réanimation si l’on est dans une structure disposant d’un bloc opératoire",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "structure avec bloc",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-048",
+              "refs": [],
+              "risk": "medium",
+              "text": "Structure sans bloc : prévoir le transfert vers un service d'obstétrique ou pourvu d'un bloc.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 2,
+                "quote": "D’obstétrique ou pourvu d’un bloc opératoire si l’on est dans une structure sanitaire ne disposant pas de bloc opératoire",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "structure sans bloc",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-049",
+              "refs": [],
+              "risk": "medium",
+              "text": "Avec bloc : transférer en réanimation une fois la crise maîtrisée et l'utérus évacué.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 3,
+                "quote": "Transférer la patiente vers un service de réanimation, une fois la crise maitrisée et l’utérus évacué",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "bloc opératoire disponible",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-050",
+              "refs": [],
+              "risk": "high",
+              "text": "Sans bloc et sans médecin : gestes immédiats (PLS gauche, Guedel, O2, VVP), puis transfert immédiat vers une structure disposant d'un bloc.",
+              "type": "conditional",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Transférer immédiatement la patiente vers une structure disposant d’un bloc opératoire",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "ni bloc ni médecin dans la structure",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ]
+        },
+        "13_definitions": {
+          "state": "filled",
+          "elements": [
+            {
+              "id": "eclampsie-062",
+              "refs": [],
+              "risk": "low",
+              "text": "SE : seringue électrique.",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 3,
+                "quote": "1 : seringue électrique",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ]
+        },
+        "2_presentation": {
+          "state": "filled",
+          "examen_clinique": [],
+          "signes_typiques": [
+            {
+              "id": "eclampsie-004",
+              "refs": [],
+              "risk": "high",
+              "text": "Convulsion tonico-clonique et/ou trouble de la conscience, dans un contexte d'HTA, sans problème neurologique antérieur.",
+              "type": "info",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "Eclampsie = Convulsion tonico-clonique et/ou trouble de la conscience dans un contexte d’hypertension artérielle en l’absence d’un problème neurologique antérieur.",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ],
+          "formes_trompeuses": [],
+          "criteres_diagnostiques": [],
+          "diagnostics_differentiels": []
+        },
+        "8_ne_pas_faire": {
+          "state": "filled",
+          "elements": [
+            {
+              "id": "eclampsie-043",
+              "refs": [],
+              "risk": "high",
+              "text": "Ne pas administrer de nicardipine en bolus.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "Ne pas administrer de Nicardipine en bolus",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-044",
+              "refs": [],
+              "risk": "high",
+              "text": "Ne pas retarder la prise en charge de la crise par la recherche d'une étiologie.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 1,
+                "quote": "La recherche d’une étiologie ne doit pas retarder la prise en charge de la crise convulsive",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ]
+        },
+        "10_surveillance": {
+          "state": "filled",
+          "elements": [
+            {
+              "id": "eclampsie-051",
+              "refs": [],
+              "risk": "high",
+              "text": "Pendant la crise : TA, FC, FR, SpO2 toutes les 5 minutes.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 2,
+                "quote": "Monitorer la TA, FC, FR, SPO2 toutes les 5 minutes",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-052",
+              "refs": [],
+              "risk": "medium",
+              "text": "Surveillance de la diurèse.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 2,
+                "quote": "Sondage vésical systématique avec surveillance de la diurèse",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-053",
+              "refs": [],
+              "risk": "high",
+              "text": "Pendant l'entretien : monitorage continu TA, FC, FR, SpO2.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 3,
+                "quote": "Monitorer en continue la TA, FC, FR, SPO2.",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-054",
+              "refs": [],
+              "risk": "high",
+              "text": "Pendant l'entretien : surveiller les ROT, la FR, la diurèse horaire.",
+              "type": "action",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 3,
+                "quote": "Surveiller les ROT, la FR, la diurèse horaire",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": null,
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-055",
+              "refs": [],
+              "risk": "high",
+              "text": "Signe de surdosage en MgSO4 : Abolition des ROT.",
+              "type": "row",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Abolition Des ROT",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "surveillance du MgSO4",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-056",
+              "refs": [],
+              "risk": "high",
+              "text": "Signe de surdosage en MgSO4 : Faiblesse musculaire, flush cutané.",
+              "type": "row",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Faiblesse Musculaire, Flush Cutané",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "surveillance du MgSO4",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-057",
+              "refs": [],
+              "risk": "high",
+              "text": "Signe de surdosage en MgSO4 : Nausées, vomissements.",
+              "type": "row",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Nausées, Vomissement",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "surveillance du MgSO4",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-058",
+              "refs": [],
+              "risk": "high",
+              "text": "Signe de surdosage en MgSO4 : Somnolence.",
+              "type": "row",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Somnolence",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "surveillance du MgSO4",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-059",
+              "refs": [],
+              "risk": "high",
+              "text": "Signe de surdosage en MgSO4 : Diplopie ou troubles de l'élocution.",
+              "type": "row",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Diplopie Ou Troubles De L’élocution",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "surveillance du MgSO4",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-060",
+              "refs": [],
+              "risk": "high",
+              "text": "Signe de surdosage en MgSO4 : Paralysie.",
+              "type": "row",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Paralysie",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "surveillance du MgSO4",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            },
+            {
+              "id": "eclampsie-061",
+              "refs": [],
+              "risk": "high",
+              "text": "Signe de surdosage en MgSO4 : Arrêt respiratoire, arrêt cardiaque.",
+              "type": "row",
+              "delai": null,
+              "grade": null,
+              "order": null,
+              "origin": "explicit",
+              "source": {
+                "page": 5,
+                "quote": "Arrêt Respiratoire, arrêt cardiaque",
+                "source_id": "insp-eclampsie-2018"
+              },
+              "missing": [],
+              "condition": "surveillance du MgSO4",
+              "translated": false,
+              "attached_to": [],
+              "variant_group": null,
+              "conflict_group": null
+            }
+          ]
+        }
+      }
+    },
+    "version": 1,
+    "created_at": "2026-10-14T18:54:00.112465+00:00",
+    "created_by": null,
+    "subject_id": "eclampsia",
+    "published_at": null,
+    "published_by": null
+  }
+}

@@ -274,6 +274,40 @@ async def upload(topic: str, file: UploadFile = File(...), caller: sb.Caller = D
     return {"path": path}
 
 
+# ─── A fiche's own PDFs (fiches/<fiche id>/), whatever Collecte topic it belongs to ───────────────────
+
+_FICHE_ID = re.compile(r"^[a-z0-9-]{1,80}$")
+
+
+def _fiche_folder(fiche: str) -> str:
+    if not _FICHE_ID.match(fiche):
+        raise HTTPException(status_code=404, detail=f"Identifiant de fiche invalide : {fiche}")
+    return f"fiches/{fiche}"
+
+
+@router.get("/fiches/{fiche}/files")
+def fiche_files(fiche: str, caller: sb.Caller = Depends(sb.require_admin)):
+    """The PDFs stored for this fiche (its sources), for the editor's quote check."""
+    return {"files": _files(caller, _fiche_folder(fiche))}
+
+
+@router.post("/fiches/{fiche}/upload", status_code=201)
+async def fiche_upload(fiche: str, file: UploadFile = File(...), caller: sb.Caller = Depends(sb.require_admin)):
+    """A source PDF uploaded from the fiche editor, stored under fiches/<fiche id>/ (no Collecte topic needed)."""
+    import hashlib
+
+    folder = _fiche_folder(fiche)
+    body = await file.read()
+    if not body.startswith(b"%PDF"):
+        raise HTTPException(status_code=422, detail="Un fichier PDF est attendu")
+    sha = hashlib.sha256(body).hexdigest()
+    path = _stored_name(folder, file.filename or "document.pdf", sha)
+    sb.upload(caller, path, body, "application/pdf")
+    record = {"title": file.filename, "filename": file.filename, "bytes": len(body), "sha256": sha, "fetched_at": _now(), "scraper": "upload", "fiche": fiche}
+    sb.upload(caller, f"{path}.json", json.dumps(record, ensure_ascii=False).encode(), "application/json")
+    return {"path": path}
+
+
 @router.get("/file")
 def file_link(path: str, caller: sb.Caller = Depends(sb.require_admin)):
     """A link that opens a stored PDF for an hour."""
@@ -285,9 +319,9 @@ def file_link(path: str, caller: sb.Caller = Depends(sb.require_admin)):
 # ─── Guideline search: literature APIs + the French and Algerian listing pages (crawler/literature.py) ──
 
 def _run_search(args: list[str]) -> dict:
-    """literature.py in the crawler's venv: PubMed + Europe PMC, the bodies' listing pages; ~10 s."""
+    """literature.py in the crawler's venv: PubMed + Europe PMC, the bodies' catalogues, the librarian (~2 min the first time per topic, cached a week); ~10 s otherwise."""
     _require_crawler()
-    done = subprocess.run([str(PYTHON), str(CRAWLER / "literature.py"), *args], capture_output=True, text=True, timeout=240, cwd=CRAWLER)
+    done = subprocess.run([str(PYTHON), str(CRAWLER / "literature.py"), *args], capture_output=True, text=True, timeout=900, cwd=CRAWLER)  # a topic's first search waits for the librarian, the body crawls and the classifier
     if done.returncode != 0:
         raise HTTPException(status_code=502, detail=f"Recherche impossible : {(done.stderr or done.stdout).strip().splitlines()[-1:] or ['erreur']}")
     result = json.loads(done.stdout)
@@ -303,9 +337,11 @@ def _saved(topic: str) -> dict | None:
 
 
 @router.post("/search/{topic}")
-def search_topic(topic: str, caller: sb.Caller = Depends(sb.require_admin)):
+def search_topic(topic: str, ai: bool = False, caller: sb.Caller = Depends(sb.require_admin)):
+    """ai: also run the paid steps (librarian, classifier, about $0.05 a topic the first time); without it, their
+    saved answers are reused and the search costs nothing."""
     _topic(topic)
-    result = _run_search(["--topic", topic])
+    result = _run_search(["--topic", topic, *(["--ai"] if ai else [])])
     (DOWNLOADS / "search").mkdir(parents=True, exist_ok=True)
     (DOWNLOADS / "search" / f"{topic}.json").write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
     return result
