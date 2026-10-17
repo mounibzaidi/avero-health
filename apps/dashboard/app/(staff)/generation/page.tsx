@@ -14,6 +14,7 @@ import { createClient } from "@/lib/supabase/client";
 interface DraftRow {
   id: string; topic_id: string; form: { title: string; source?: { title?: string } }; status: string; stage: string;
   stage_detail: string | null; error: string | null; licence_scope: "internal" | "publish"; coverage_pct: string | null; quote_check: string | null;
+  mode: "auto" | "manual"; edit_seconds: number;
   created_at: string;
 }
 interface Subject { id: string; title: string; template: "urgence" | "pathologie"; specialite: string }
@@ -53,7 +54,8 @@ export default function GenerationPage() {
     void load();
     supabase.from("subjects").select("id,title,template,specialite").order("title").then(({ data }) => setSubjects((data ?? []) as Subject[]));
   }, [load, supabase]);
-  const running = rows?.some((r) => RUNNING.has(r.stage)) ?? false;
+  const busyRow = (r: DraftRow) => RUNNING.has(r.stage) && !(r.mode === "manual" && r.stage === "ready");
+  const running = rows?.some(busyRow) ?? false;
   useEffect(() => {
     if (!running) return;
     const t = setInterval(() => void load(), 4000);
@@ -72,7 +74,7 @@ export default function GenerationPage() {
   const ficheTitle = chosen ? chosen.title : title.trim();
   const ok = !!file && !!topicId && !!ficheTitle && !!sourceTitle.trim() && !!citation.trim();
 
-  const submit = async () => {
+  const submit = async (suggest: boolean) => {
     if (!file || !ok) return;
     setBusy(true);
     setError(null);
@@ -82,7 +84,7 @@ export default function GenerationPage() {
       body.append("form", JSON.stringify({
         title: ficheTitle, topic_id: topicId, template: chosen?.template ?? template, audience: ["MG", "urgences"], siblings: [],
         source: { source_id: `${topicId}-${new Date().getFullYear()}`.slice(0, 64), type: "full_guideline", title: sourceTitle.trim(), citation: citation.trim() },
-        licence_text: licence.trim(), licence_scope: scope, auto_generate: true,
+        licence_text: licence.trim(), licence_scope: scope, manual: !suggest, auto_generate: suggest,
       }));
       const d = await apiForm<DraftRow>("/fichegen/drafts", body);
       router.push(`/generation/${d.id}`);
@@ -103,11 +105,11 @@ export default function GenerationPage() {
   return (
     <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-8 px-5 py-8">
       <PageHeader title="Génération de fiches"
-        subtitle="Déposez une recommandation : chaque ligne de la fiche est rédigée puis retrouvée mot pour mot dans le PDF."
+        subtitle="Déposez une recommandation, puis construisez la fiche en sélectionnant ses passages : chaque ligne garde sa citation exacte et sa page."
         actions={rows && (
           <div className="flex gap-2 text-xs">
             <Tag>{rows.length} brouillon(s)</Tag>
-            {running && <Tag tone="caution">{rows.filter((r) => RUNNING.has(r.stage)).length} en cours</Tag>}
+            {running && <Tag tone="caution">{rows.filter(busyRow).length} en cours</Tag>}
             <Tag tone="accent">{rows.filter((r) => r.stage === "done").length} prêt(s)</Tag>
           </div>
         )} />
@@ -174,8 +176,9 @@ export default function GenerationPage() {
             </div>
             {more && <input className={inputCls} placeholder="Texte de la licence (© ACC/AHA : copie et modification interdites…)" value={licence} onChange={(e) => setLicence(e.target.value)} />}
             <div className="mt-auto flex items-center gap-3 pt-2">
-              <Button variant="primary" className="h-10 px-5" disabled={!ok || busy} onClick={submit}>{busy ? <Spinner /> : "Générer la fiche"}</Button>
-              <span className="text-xs text-muted">Environ 2 minutes · quelques centimes</span>
+              <Button variant="primary" className="h-10 px-5" disabled={!ok || busy} onClick={() => submit(false)}>{busy ? <Spinner /> : "Créer la fiche"}</Button>
+              <Button className="h-10" disabled={!ok || busy} onClick={() => submit(true)} title="Haiku propose une première version, plafond 0,25 $">Créer et suggérer (IA)</Button>
+              <span className="text-xs text-muted">Sélectionnez les passages du PDF pour construire la fiche ; l&apos;IA est optionnelle.</span>
             </div>
           </div>
         </div>
@@ -199,17 +202,20 @@ export default function GenerationPage() {
                     <li key={r.id}>
                       <Link href={`/generation/${r.id}`} className="flex flex-col gap-1.5 rounded-lg px-2 py-2 hover:bg-panel/60">
                         <div className="flex items-center gap-2 text-xs">
-                          <span className={`font-medium ${r.stage === "error" ? "text-flag" : r.stage === "done" ? "text-accentink" : "text-ink"}`}>{STAGE[r.stage] ?? r.stage}</span>
-                          {RUNNING.has(r.stage) && <Spinner className="size-3 text-muted" />}
+                          <span className={`font-medium ${r.stage === "error" ? "text-flag" : r.stage === "done" || r.mode === "manual" ? "text-accentink" : "text-ink"}`}>
+                            {r.mode === "manual" && r.stage === "ready" ? "En construction" : STAGE[r.stage] ?? r.stage}</span>
+                          {busyRow(r) && <Spinner className="size-3 text-muted" />}
                           <span className="min-w-0 flex-1 truncate text-muted">{r.form?.source?.title}</span>
                           <span className="shrink-0 text-muted">{dateFr(r.created_at)}</span>
                         </div>
-                        <ProgressBar stage={r.stage} />
-                        {r.stage === "done" && (
+                        {busyRow(r) || r.stage === "error" ? <ProgressBar stage={r.stage} /> : null}
+                        {(r.stage === "done" || r.mode === "manual") && (
                           <div className="flex flex-wrap gap-1.5">
                             {r.quote_check && <Tag tone="accent">citations {r.quote_check}</Tag>}
                             {r.coverage_pct && <Tag tone={Number(r.coverage_pct) >= 90 ? "accent" : "caution"}>couverture {r.coverage_pct} %</Tag>}
                             <Tag>{r.status}</Tag>
+                            <Tag>{r.mode === "manual" ? "à la main" : "générée"}</Tag>
+                            {r.edit_seconds > 0 && <Tag>{Math.round(r.edit_seconds / 60)} min d&apos;édition</Tag>}
                             {r.licence_scope === "internal" && <Tag>usage interne</Tag>}
                           </div>
                         )}

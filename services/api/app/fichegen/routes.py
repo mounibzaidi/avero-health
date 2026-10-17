@@ -8,16 +8,31 @@ allows it and every dose has its Algerian status.
 import json
 import subprocess
 import tempfile
+import time
 
 from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Response, UploadFile
 from pydantic import BaseModel
 
 from .. import supabase as sb
-from . import llm, pipeline
-from .schema import validate
+from . import assemble, ingest, llm, manual, pipeline
+from .schema import SECTIONS, validate
 from .store import RestStore
 
 router = APIRouter(prefix="/fichegen", tags=["fichegen"])
+
+
+_PAGES: dict[tuple, tuple[float, list[dict]]] = {}
+
+
+def _layers(caller, d: dict) -> list[dict]:
+    """The draft's document pages as the pipeline reads them (every parsed layer), cached ten minutes per document."""
+    key = (d["document_id"], d["page_offset"])
+    hit = _PAGES.get(key)
+    if hit and time.time() - hit[0] < 600:
+        return hit[1]
+    pages = ingest.as_layers(RestStore(caller).pages(d["document_id"]), d["page_offset"])
+    _PAGES[key] = (time.time(), pages)
+    return pages
 
 
 def _one(caller, draft_id: str) -> dict:
@@ -57,7 +72,7 @@ async def create(background: BackgroundTasks, file: UploadFile = File(...), form
 
 @router.get("/drafts")
 def list_drafts(caller: sb.Caller = Depends(sb.require_admin)):
-    return sb.rest(caller, "GET", "fiche_drafts", {"select": "id,topic_id,form,status,stage,stage_detail,error,licence_scope,coverage_pct:coverage->>pct,quote_check:content->meta->>quote_check,created_at,updated_at",
+    return sb.rest(caller, "GET", "fiche_drafts", {"select": "id,topic_id,form,status,stage,stage_detail,error,licence_scope,mode,edit_seconds,coverage_pct:coverage->>pct,quote_check:content->meta->>quote_check,created_at,updated_at",
                                                     "order": "created_at.desc"})
 
 
@@ -112,11 +127,74 @@ def save_content(draft_id: str, body: ContentIn, caller: sb.Caller = Depends(sb.
     d = _one(caller, draft_id)
     content = body.content
     content.setdefault("meta", {})["status"] = (d["content"] or {}).get("meta", {}).get("status", "draft")
+    if d["page_offset"] is not None and isinstance(content.get("sections"), dict):  # every line's quote rechecked by code
+        content["meta"]["quote_check"] = assemble.quote_check(content, {p["printed_page"]: p for p in _layers(caller, d)})
     problems = validate(content)
     if problems:
         raise HTTPException(status_code=422, detail="Fiche non conforme : " + " ; ".join(problems[:5]))
     sb.rest(caller, "PATCH", "fiche_drafts", {"id": f"eq.{draft_id}"}, {"content": content, "updated_at": pipeline._now()})
-    return {"ok": True}
+    return {"ok": True, "quote_check": content["meta"].get("quote_check")}
+
+
+@router.get("/drafts/{draft_id}/pages")
+def pages(draft_id: str, caller: sb.Caller = Depends(sb.require_admin)):
+    """The guideline's pages for the manual editor: printed number, column-split text, parsed markdown when there is
+    one. References and author appendices are flagged (skipped)."""
+    d = _one(caller, draft_id)
+    return [{"printed_page": p["printed_page"], "pdf_page": p["pdf_page"], "text": p["raw_columns"] or "", "parsed": p["parsed"] or None,
+             "skipped": p["skip"], "heading": p["section_heading"]} for p in _layers(caller, d)]
+
+
+@router.post("/drafts/{draft_id}/manual")
+def start_manual(draft_id: str, caller: sb.Caller = Depends(sb.require_admin)):
+    """An empty fiche to build by hand (select-to-add); a fiche already there is kept."""
+    d = _one(caller, draft_id)
+    if d["content"]:
+        return {"ok": True, "content": d["content"]}
+    content = assemble.empty_fiche(d["form"])
+    sb.rest(caller, "PATCH", "fiche_drafts", {"id": f"eq.{draft_id}"}, {"content": content, "mode": "manual", "updated_at": pipeline._now()})
+    return {"ok": True, "content": content}
+
+
+class Part(BaseModel):
+    page: int
+    text: str
+
+
+class ProposeIn(BaseModel):
+    target: dict  # {section, place: elements | signes_typiques | ... | contre_indications | posologies | node, node: index, node_label}
+    parts: list[Part]
+
+
+@router.post("/drafts/{draft_id}/propose")
+def propose(draft_id: str, body: ProposeIn, caller: sb.Caller = Depends(sb.require_admin)):
+    """One line from the selected passages: one Haiku call (capped at $0.02) fills the fields, code checks the rest.
+    Nothing is saved: the reviewer edits and accepts it."""
+    d = _one(caller, draft_id)
+    if d["page_offset"] is None:
+        raise HTTPException(status_code=409, detail="Décalage des pages inconnu")
+    parts = [p.model_dump() for p in body.parts if p.text.strip()]
+    if not parts or body.target.get("section") not in SECTIONS:
+        raise HTTPException(status_code=422, detail="Sélection ou section manquante")
+    by_printed = {p["printed_page"]: p for p in _layers(caller, d)}
+    budget = pipeline.Budget(lambda e: sb.rest(caller, "POST", "generation_calls", body={**e, "draft_id": draft_id}), 0.02)
+    try:
+        return manual.propose(caller, d, by_printed, body.target, parts, budget)
+    except llm.BudgetExceeded as exc:
+        raise HTTPException(status_code=402, detail=str(exc)) from exc
+
+
+class TimeIn(BaseModel):
+    seconds: int
+
+
+@router.post("/drafts/{draft_id}/time")
+def add_time(draft_id: str, body: TimeIn, caller: sb.Caller = Depends(sb.require_admin)):
+    """Editing time, sent by the editor every 30 s while it is visible and the reviewer active."""
+    d = _one(caller, draft_id)
+    s = max(0, min(body.seconds, 120))
+    sb.rest(caller, "PATCH", "fiche_drafts", {"id": f"eq.{draft_id}"}, {"edit_seconds": (d.get("edit_seconds") or 0) + s})
+    return {"edit_seconds": (d.get("edit_seconds") or 0) + s}
 
 
 class ApproveIn(BaseModel):

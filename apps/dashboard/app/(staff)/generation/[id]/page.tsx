@@ -4,9 +4,10 @@ import { fromLegacy, type Medication } from "@medguides/schema";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { BrandPicker } from "@/components/editor/BrandPicker";
+import { Composer, type Part, type Proposal, type Target } from "@/components/fichegen/Composer";
 import { RUNNING, Stepper } from "@/components/GenerationProgress";
 import { Button, Card, ErrorNote, inputCls, PageHeader, Spinner, Tag } from "@/components/ui";
 import { api } from "@/lib/api";
@@ -30,7 +31,7 @@ interface Coverage {
 interface Draft {
   id: string; topic_id: string; content: Fiche | null; status: string; stage: string; stage_detail: string | null; error: string | null;
   licence_scope: "internal" | "publish"; page_offset: number | null; offset_detected: boolean; pdf_path: string; form: { title: string; licence_text?: string };
-  lines: LineMeta[]; dropped: LineMeta[]; models: string[]; coverage: Coverage | null;
+  lines: LineMeta[]; dropped: LineMeta[]; models: string[]; coverage: Coverage | null; edit_seconds: number; mode: "auto" | "manual";
   cost: { calls: number; cost_usd: number; by_model: Record<string, number>; input_tokens: number; output_tokens: number; cache_read_tokens: number };
 }
 
@@ -72,6 +73,61 @@ function quotesOnPage(f: Fiche | null, printed: number | null): string[] {
   return [...lines, ...doses].filter((x) => x.source.page === printed).map((x) => x.source.quote);
 }
 
+/** The fiche with a new line at its target (select-to-add): next element id, a new 5_conduite node when asked. */
+function insertLine(f: Fiche, target: Target, line: Proposal["line"]): Fiche {
+  const next = structuredClone(f);
+  const sec = next.sections[target.section] as Record<string, unknown> & { state: string };
+  if (target.place === "posologies") {
+    (sec.posologies as unknown[]).push(line);
+  } else {
+    const nums = lineLists(next).flatMap((l) => l.items).map((x) => Number(/-(\d+)$/.exec(x.id ?? "")?.[1] ?? 0));
+    const el: Record<string, unknown> = { ...line, id: `${String(next.meta.topic_id)}-${String(Math.max(0, ...nums) + 1).padStart(3, "0")}` };
+    if (target.place === "node") {
+      const nodes = sec.nodes as { node: string; branches: Record<string, unknown>[] }[];
+      let i = target.node ?? nodes.length;
+      if (i >= nodes.length) { nodes.push({ node: target.node_label || "Conduite", branches: [] }); i = nodes.length - 1; }
+      el.order = nodes[i].branches.length + 1;
+      nodes[i].branches.push(el);
+    } else if (target.place === "gestes_immediats" || target.place === "contre_indications") {
+      const sub = sec[target.place] as { state: string; elements: unknown[] };
+      sub.elements.push(el);
+      sub.state = "filled";
+    } else {
+      (sec[target.place] as unknown[]).push(el);
+    }
+  }
+  sec.state = "filled";
+  return next;
+}
+
+/** Editing time: counted while the page is visible and the reviewer active (a key, a click or a move in the last
+ * minute), sent every 30 s. Returns the seconds not yet sent, to show the live total. */
+function useEditTime(id: string): number {
+  const [pending, setPending] = useState(0);
+  const last = useRef(0);
+  useEffect(() => {
+    last.current = Date.now();
+    const seen = () => { last.current = Date.now(); };
+    const events = ["keydown", "mousedown", "mousemove", "wheel"] as const;
+    events.forEach((e) => window.addEventListener(e, seen, { passive: true }));
+    let unsent = 0;
+    const tick = setInterval(() => {
+      if (document.visibilityState === "visible" && Date.now() - last.current < 60_000) { unsent += 5; setPending(unsent); }
+    }, 5_000);
+    const flush = setInterval(() => {
+      if (!unsent) return;
+      const seconds = unsent;
+      unsent = 0;
+      setPending(0);
+      api(`/fichegen/drafts/${id}/time`, { method: "POST", body: JSON.stringify({ seconds }) }).catch(() => { unsent += seconds; });
+    }, 30_000);
+    return () => { events.forEach((e) => window.removeEventListener(e, seen)); clearInterval(tick); clearInterval(flush); };
+  }, [id]);
+  return pending;
+}
+
+const minutes = (s: number) => (s < 60 ? `${s} s` : `${Math.floor(s / 60)} min ${String(s % 60).padStart(2, "0")} s`);
+
 function at(obj: unknown, path: (string | number)[]): unknown[] {
   return path.reduce<unknown>((o, k) => (o as Record<string | number, unknown>)[k], obj) as unknown[];
 }
@@ -110,6 +166,12 @@ export default function DraftReview() {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [viewPage, setViewPage] = useState(1);  // the PDF page on screen (not the printed number)
   const [found, setFound] = useState<boolean | null>(null);
+  const [tab, setTab] = useState<"pdf" | "text">("pdf");
+  const [pageTexts, setPageTexts] = useState<{ printed_page: number; pdf_page: number; text: string; parsed: string | null; skipped: boolean }[] | null>(null);
+  const [parsedView, setParsedView] = useState(false);
+  const [selection, setSelection] = useState<Part | null>(null);
+  const source = useRef<HTMLDivElement>(null);
+  const pendingTime = useEditTime(id);
 
   const load = useCallback(() => api<Draft>(`/fichegen/drafts/${id}`).then((x) => {
     setD(x);
@@ -121,7 +183,7 @@ export default function DraftReview() {
   }, (e) => setError((e as Error).message)), [id, dirty]);
   useEffect(() => { void load(); }, [load]);
   useEffect(() => {
-    if (!d || !RUNNING.has(d.stage)) return;
+    if (!d || !RUNNING.has(d.stage) || (d.mode === "manual" && d.stage === "ready" && d.content)) return;
     const t = setInterval(() => void load(), 3000);
     return () => clearInterval(t);
   }, [d, load]);
@@ -129,6 +191,11 @@ export default function DraftReview() {
     if (!d?.pdf_path || pdfUrl) return;
     api<{ url: string }>(`/crawl/file?path=${encodeURIComponent(d.pdf_path)}`).then((r) => setPdfUrl(r.url), (e) => setError((e as Error).message));
   }, [d?.pdf_path, pdfUrl]);
+
+  useEffect(() => {
+    if (tab !== "text" || pageTexts) return;
+    api<NonNullable<typeof pageTexts>>(`/fichegen/drafts/${id}/pages`).then(setPageTexts, (e) => setError((e as Error).message));
+  }, [tab, pageTexts, id]);
 
   const metas = useMemo(() => new Map((d?.lines ?? []).map((l) => [l.element_id, l])), [d]);
   if (!d) return <div className="p-6">{error ? <ErrorNote>{error}</ErrorNote> : <Spinner />}</div>;
@@ -138,6 +205,29 @@ export default function DraftReview() {
     setShown(x);
     setFound(null);
     if (x.page != null && d.page_offset != null) setViewPage(Math.max(1, x.page - d.page_offset));
+  };
+
+  const printedOf = (pdfPage: number) => (d.page_offset == null ? pdfPage : pdfPage + d.page_offset);
+  // a selection in the source pane (PDF text layer or page text): the passage and its printed page
+  const takeSelection = () => {
+    const sel = window.getSelection();
+    const text = sel?.toString().replace(/\s+/g, " ").trim() ?? "";
+    if (text && sel?.anchorNode && source.current?.contains(sel.anchorNode)) setSelection({ page: printedOf(viewPage), text });
+  };
+  const acceptLine = async (target: Target, line: Proposal["line"]) => {
+    if (!f) return;
+    const next = insertLine(f, target, line);
+    const r = await api<{ quote_check: string }>(`/fichegen/drafts/${id}/content`, { method: "PUT", body: JSON.stringify({ content: next }) });
+    next.meta.quote_check = r.quote_check;
+    setF(next);
+    setDirty(false);
+    setSelection(null);
+    showLine({ page: line.source.page, quote: line.source.quote });
+  };
+  const suggest = () => {
+    if (window.confirm("Suggérer avec l'IA : Haiku propose des lignes pour tout le guide, ajoutées à la fiche sans rien remplacer. Coût plafonné à 0,25 $. Continuer ?")) {
+      void run(api(`/fichegen/drafts/${id}/generate`, { method: "POST", body: JSON.stringify({ model: "claude-haiku-5-5", batch: false }) }));
+    }
   };
 
   const run = async (p: Promise<unknown>) => {
@@ -217,37 +307,80 @@ export default function DraftReview() {
     );
   }
 
+  const current = (pageTexts ?? []).find((t) => t.pdf_page === viewPage);
+  const nodes = ((f.sections["5_conduite"]?.nodes as { node: string }[] | undefined) ?? []).map((n) => n.node);
+
   return (
     <div className="grid h-[calc(100dvh-3rem)] grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+      {/* left: the guideline, selectable; the composer under it */}
+      <section className="flex min-h-0 flex-col border-r border-line bg-surface">
+        <div className="flex items-center gap-2 border-b border-line px-3 py-1.5 text-sm">
+          <div className="inline-flex rounded-lg border border-edge/15 bg-panel p-0.5">
+            {(["pdf", "text"] as const).map((t) => (
+              <button key={t} type="button" onClick={() => setTab(t)}
+                className={`rounded-md px-2.5 py-0.5 text-xs ${tab === t ? "bg-surface font-medium text-ink shadow-surface" : "text-soft"}`}>{t === "pdf" ? "PDF" : "Texte"}</button>
+            ))}
+          </div>
+          <span className="text-xs text-muted">page imprimée <b className="text-ink">{printedOf(viewPage)}</b> · PDF {viewPage}</span>
+          {tab === "text" && current?.parsed && (
+            <label className="ms-auto flex items-center gap-1 text-xs text-soft"><input type="checkbox" checked={parsedView} onChange={(e) => setParsedView(e.target.checked)} /> texte parsé (tableaux)</label>
+          )}
+          {selection && <span className="ms-auto max-w-[45%] truncate rounded bg-tint px-2 py-0.5 text-xs text-accentink">sélection p. {selection.page} : {selection.text}</span>}
+        </div>
+        <div ref={source} className="min-h-0 flex-1" onMouseUp={takeSelection} onKeyUp={takeSelection}>
+          {tab === "pdf" ? (
+            pdfUrl ? (
+              <PdfViewer url={pdfUrl} page={viewPage} onPageChange={setViewPage}
+                quote={shown?.page != null && d.page_offset != null && viewPage === shown.page - d.page_offset ? shown.quote : ""}
+                used={quotesOnPage(f, printedOf(viewPage))} onHighlight={(_, ok) => setFound(ok)} />
+            ) : <div className="flex justify-center p-6 text-muted"><Spinner /></div>
+          ) : (
+            <div className="flex h-full min-h-0 flex-col">
+              <div className="flex items-center justify-between border-b border-line px-3 py-1 text-sm">
+                <button type="button" className="rounded px-2 text-soft hover:bg-panel disabled:opacity-40" disabled={viewPage <= 1} onClick={() => setViewPage(viewPage - 1)}>‹</button>
+                <span className="text-xs text-muted">{current?.skipped ? "références / annexes" : ""}</span>
+                <button type="button" className="rounded px-2 text-soft hover:bg-panel" onClick={() => setViewPage(viewPage + 1)}>›</button>
+              </div>
+              {!pageTexts ? <div className="flex justify-center p-6 text-muted"><Spinner /></div> : (
+                <pre className="min-h-0 flex-1 overflow-auto whitespace-pre-wrap p-4 font-sans text-[13px] leading-relaxed text-ink selection:bg-[#ffe58a]">
+                  {(parsedView && current?.parsed) || current?.text || "Page vide."}
+                </pre>
+              )}
+            </div>
+          )}
+        </div>
+        {shown && found === false && tab === "pdf" && <p className="border-t border-line px-3 py-1 text-xs text-caution">Citation non surlignée (figure ou mise en page) : à lire sur la page.</p>}
+        <Composer draftId={id} selection={selection} nodes={nodes} onAccept={acceptLine}
+          onShow={(p) => showLine({ page: p.page, quote: p.text })} />
+      </section>
+
+      {/* right: the fiche */}
       <div className="min-h-0 overflow-auto px-5 pb-16">
         <div className="flex flex-col gap-4 py-4">
-          <Link href="/generation" className="self-start text-sm text-accentink hover:underline">‹ Génération</Link>
-          <PageHeader title={d.form?.title ?? d.topic_id} subtitle={`${d.topic_id} · ${d.status}${f ? ` · citations ${f.meta.quote_check}` : ""}`} />
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <Link href="/generation" className="text-sm text-accentink hover:underline">‹ Génération</Link>
+            <span className="text-xs text-muted">Temps d&apos;édition : <b className="text-ink">{minutes((d.edit_seconds ?? 0) + pendingTime)}</b></span>
+          </div>
+          <PageHeader title={d.form?.title ?? d.topic_id}
+            subtitle={`${d.topic_id} · ${d.status} · citations ${f.meta.quote_check} · ${d.mode === "manual" ? "construite à la main" : "générée"}`}
+            actions={<Button disabled={busy || dirty} onClick={suggest} title="Haiku, plafond 0,25 $">Suggérer (IA)</Button>} />
           {error && <ErrorNote>{error}</ErrorNote>}
           {d.error && <ErrorNote>{d.error}</ErrorNote>}
 
-          <Card className="flex flex-col gap-2 p-4 text-sm">
-            <p><span className="font-medium">Étape : </span>{d.stage}{d.stage_detail ? ` · ${d.stage_detail}` : ""}{RUNNING.has(d.stage) && <Spinner className="ms-2 inline" />}</p>
-            {d.stage === "needs_offset" && (
-              <div className="flex flex-wrap items-end gap-2">
-                <label className="flex flex-col gap-1">
-                  <span className="text-xs text-muted">Décalage : page imprimée moins page du PDF (ex. 2134 si la page 1 du PDF est la page 2135)</span>
-                  <input className={`${inputCls} w-40`} value={offset} onChange={(e) => setOffset(e.target.value)} />
-                </label>
-                <Button disabled={busy || !/^-?\d+$/.test(offset.trim())} onClick={() => run(api(`/fichegen/drafts/${id}/offset`, { method: "POST", body: JSON.stringify({ offset: Number(offset) }) }))}>Valider</Button>
-              </div>
-            )}
-            {["ready", "done", "error"].includes(d.stage) && d.page_offset !== null && (
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs text-muted">Décalage des pages : {d.page_offset}{d.offset_detected ? " (détecté)" : " (saisi)"}</span>
-                {generateControls}
-              </div>
-            )}
+          <Card className="flex flex-col gap-2 p-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {dirty && <Button variant="primary" disabled={busy} onClick={() => run(api(`/fichegen/drafts/${id}/content`, { method: "PUT", body: JSON.stringify({ content: f }) }).then(() => setDirty(false)))}>Enregistrer</Button>}
+              <input className={`${inputCls} w-48`} placeholder="Nom du relecteur" value={reviewer} onChange={(e) => setReviewer(e.target.value)} />
+              <Button disabled={busy || dirty || !reviewer.trim()} onClick={() => run(api(`/fichegen/drafts/${id}/approve`, { method: "POST", body: JSON.stringify({ status: "review", reviewer }) }))}>Marquer relu</Button>
+              <Button variant="primary" disabled={busy || blocked.length > 0} title={blocked.length ? `Bloqué : ${blocked.join(", ")}` : "Publier"}
+                onClick={() => run(api(`/fichegen/drafts/${id}/approve`, { method: "POST", body: JSON.stringify({ status: "published", reviewer }) }))}>Publier</Button>
+              {["review", "published"].includes(d.status) && <Button onClick={openInEditor}>Ouvrir en v1.1</Button>}
+            </div>
+            {blocked.length > 0 && <p className="text-xs text-caution">Publication bloquée : {blocked.join(", ")}.</p>}
             <p className="text-xs text-muted">
-              Coût : {d.cost.cost_usd.toFixed(4)} $ ({d.cost.calls} appel(s) ; {Object.entries(d.cost.by_model).map(([m, c]) => `${m} ${c.toFixed(4)} $`).join(", ") || "aucun"}) ·
-              jetons : {d.cost.input_tokens} entrée, {d.cost.output_tokens} sortie, {d.cost.cache_read_tokens} lus en cache
+              Coût IA : {d.cost.cost_usd.toFixed(4)} $ ({d.cost.calls} appel(s)) · Licence : {d.licence_scope === "internal" ? "usage interne seulement" : "publication autorisée"}
+              {f.meta.excluded_by_audience.length > 0 && ` · Hors champ : ${f.meta.excluded_by_audience.join(" · ")}`}
             </p>
-            <p className="text-xs text-muted">Licence : {d.form?.licence_text || "non renseignée"} · {d.licence_scope === "internal" ? "usage interne seulement" : "publication autorisée"}</p>
           </Card>
 
           {f && Object.keys(SECTION_LABEL).map((section) => {
@@ -351,40 +484,6 @@ export default function DraftReview() {
           )}
         </div>
       </div>
-
-      <aside className="flex min-h-0 flex-col border-l border-line bg-surface">
-        <div className="flex flex-col gap-2 border-b border-line p-3">
-            {dirty && <Button variant="primary" disabled={busy} onClick={() => run(api(`/fichegen/drafts/${id}/content`, { method: "PUT", body: JSON.stringify({ content: f }) }).then(() => setDirty(false)))}>Enregistrer les modifications</Button>}
-            <input className={inputCls} placeholder="Nom du relecteur" value={reviewer} onChange={(e) => setReviewer(e.target.value)} />
-            <div className="flex flex-wrap gap-2">
-              <Button disabled={busy || !f || dirty || !reviewer.trim()} onClick={() => run(api(`/fichegen/drafts/${id}/approve`, { method: "POST", body: JSON.stringify({ status: "review", reviewer }) }))}>Marquer relu</Button>
-              <Button variant="primary" disabled={busy || !f || blocked.length > 0} title={blocked.length ? `Bloqué : ${blocked.join(", ")}` : "Publier"}
-                onClick={() => run(api(`/fichegen/drafts/${id}/approve`, { method: "POST", body: JSON.stringify({ status: "published", reviewer }) }))}>Publier</Button>
-              {f && ["review", "published"].includes(d.status) && <Button onClick={openInEditor}>Ouvrir en v1.1 dans l&apos;éditeur</Button>}
-            </div>
-            {blocked.length > 0 && <p className="text-xs text-caution">Publication bloquée : {blocked.join(", ")}.</p>}
-            {f && f.meta.excluded_by_audience.length > 0 && <p className="text-xs text-muted">Hors champ pour ce public : {f.meta.excluded_by_audience.join(" · ")}</p>}
-        </div>
-        {shown ? (
-          <div className="flex flex-col gap-1 border-b border-line bg-panel/40 px-3 py-2">
-            <p className="text-xs font-medium text-soft">
-              Page {shown.page} du document (page {viewPage} du PDF)
-              {found === false && <span className="ms-2 text-caution">· citation non surlignée (figure ou mise en page) : à lire sur la page</span>}
-            </p>
-            <blockquote className="line-clamp-3 text-sm italic text-ink">{shown.quote}</blockquote>
-          </div>
-        ) : (
-          <p className="border-b border-line px-3 py-2 text-xs text-muted">Cliquez une ligne à gauche : sa citation est surlignée en jaune dans le PDF, les autres citations de la page en vert.</p>
-        )}
-        <div className="min-h-0 flex-1">
-          {pdfUrl ? (
-            <PdfViewer url={pdfUrl} page={viewPage} onPageChange={setViewPage}
-              quote={shown?.page != null && d.page_offset != null && viewPage === shown.page - d.page_offset ? shown.quote : ""}
-              used={quotesOnPage(f, d.page_offset == null ? null : viewPage + d.page_offset)}
-              onHighlight={(_, ok) => setFound(ok)} />
-          ) : <div className="flex justify-center p-6 text-muted"><Spinner /></div>}
-        </div>
-      </aside>
     </div>
   );
 }

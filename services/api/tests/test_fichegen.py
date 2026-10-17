@@ -296,3 +296,44 @@ def test_cost_cap_blocks_paid_calls_and_fallback_is_off_by_default():
     with pytest.raises(llm.BudgetExceeded):
         llm.call({"model": "claude-haiku-5-5"}, budget, "section")  # refused before any request is sent
     assert pipeline.fallback_model() is None or "FICHEGEN_FALLBACK_MODEL" in __import__("app.settings", fromlist=["env"]).env()
+
+
+# ─── Manual select-to-add ────────────────────────────────────────────────────────────────────────
+
+
+def test_grade_next_to_a_selection_acc_and_esc():
+    from app.fichegen import manual
+    acc = {**page(2147), "printed_page": 2147}
+    assert manual.grade_near(acc, "immediate emergency medical services (EMS) transport to a PCI-capable hospital") == "COR 1 / LOE B-NR"
+    esc = {"printed_page": 3920, "raw_layout": (
+        " It is recommended to measure BP using a validated and calibrated device, to enforce the correct measurement technique, and to apply a\n"
+        "                                                                                                         I           B\n"
+        " consistent approach to BP measurement for each patient.\n")}
+    assert manual.grade_near(esc, "It is recommended to measure BP using a validated and calibrated device") == "Classe I / Niveau B"
+    assert manual.grade_near(esc, "nothing like this on the page") is None
+
+
+def test_propose_keeps_the_selected_quote_and_runs_the_checks(monkeypatch):
+    from app.fichegen import llm, manual
+    fiche, _, _ = build({"8_ne_pas_faire": [("elements", line("Pas d'oxygène systématique.", "Loading dose 180 mg orally"), ok())]})
+    draft = {"content": fiche, "form": FORM}
+    pages = {2157: {**page(2157), "printed_page": 2157}, 2163: {**page(2163), "printed_page": 2163}}
+    monkeypatch.setattr(llm, "call", lambda *a, **k: {"text": "Ne pas donner de ticagrélor.", "type": "action", "condition": None, "grade": None,
+                                                       "risk": "high", "missing": []})
+    parts = [{"page": 2157, "text": "Loading dose 180 mg\n orally"}, {"page": 2163, "text": "Loading dose 60 IU/kg (max 4,000 IU)"}]
+    out = manual.propose(None, draft, pages, {"section": "7_traitement", "place": "elements"}, parts, lambda e: None)
+    assert out["line"]["source"] == {"source_id": "accaha2025", "page": 2157, "quote": "Loading dose 180 mg orally [...] Loading dose 60 IU/kg (max 4,000 IU)"}
+    assert out["quote_status"] == "pdf" and out["part_status"] == ["pdf", "pdf"] and out["problems"] == []
+    assert out["placement"]["section"] == "8_ne_pas_faire"  # rule 4: a do-not line
+    out = manual.propose(None, draft, pages, {"section": "7_traitement", "place": "elements"}, parts[:1], lambda e: None)
+    assert out["duplicate"]["section"] == "8_ne_pas_faire"
+
+
+def test_suggestions_merged_into_a_started_fiche():
+    q1, q2 = "Loading dose 180 mg orally", "Maintenance dose 90 mg orally twice daily"
+    old, _, _ = build({"7_traitement": [("elements", line("Charge 180 mg.", q1), ok())]})
+    new, side, _ = build({"7_traitement": [("elements", line("Charge 180 mg (doublon).", q1), ok()), ("elements", line("Entretien 90 mg x2.", q2), ok())]})
+    merged, keyed = assemble.merge(old, new, side)
+    els = merged["sections"]["7_traitement"]["elements"]
+    assert [e["text"] for e in els] == ["Charge 180 mg.", "Entretien 90 mg x2."] and [e["id"] for e in els] == ["sca-test-001", "sca-test-002"]
+    assert list(keyed) == ["sca-test-002"] and validate(merged) == []

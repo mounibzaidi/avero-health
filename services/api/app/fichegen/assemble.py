@@ -8,8 +8,10 @@ to perform or interpret an exam go to 6, while a branch whose condition is an ex
 two sections keep the place rule 4 gives them; the other copy is dropped with its reason.
 """
 
+import copy
 import re
 
+from . import check
 from .check import normalise
 from .schema import SECTIONS
 
@@ -206,3 +208,71 @@ def assemble(form: dict, answers: dict[str, dict], kept: dict[str, list[tuple[st
                     sec[sub]["state"] = "filled" if sec[sub]["elements"] else "non_traité"
     fiche["meta"]["quote_check"] = f"{verified}/{total}"
     return fiche, side, dropped
+
+
+def merge(old: dict, new: dict, side: dict) -> tuple[dict, dict]:
+    """A generated fiche ("Suggérer") added to a fiche the reviewer has started: the old lines kept as they are, the
+    new lines added after them unless their quote is already there, new element ids after the last one. Returns the
+    merged fiche and the side data re-keyed to the merged ids (meta.quote_check is recounted by the caller)."""
+    out = copy.deepcopy(old)
+    tid = out["meta"]["topic_id"]
+    lines = [el for sec in out["sections"].values() for el in _lines(sec)]
+    have = {normalise(el["source"]["quote"])[:200] for el in lines}
+    n = max([int(m.group(1)) for el in lines if (m := re.search(r"-(\d+)$", el.get("id") or ""))], default=0)
+    keyed: dict[str, dict] = {}
+
+    def take(items: list, dest: list, dose: bool = False) -> None:
+        nonlocal n
+        for i, el in enumerate(items):
+            k = normalise(el["source"]["quote"])[:200]
+            if k in have:
+                continue
+            have.add(k)
+            el = copy.deepcopy(el)
+            if dose:
+                old_key = f"dose-{new['sections']['7_traitement']['posologies'].index(items[i]) + 1}"
+                dest.append(el)
+                if old_key in side:
+                    keyed[f"dose-{len(dest)}"] = side[old_key]
+                continue
+            n += 1
+            if el.get("id") in side:
+                keyed[f"{tid}-{n:03d}"] = side[el["id"]]
+            el["id"] = f"{tid}-{n:03d}"
+            dest.append(el)
+
+    for name, sec in new["sections"].items():
+        osec = out["sections"][name]
+        for key, v in sec.items():
+            if key == "nodes":
+                for node in v:
+                    target = next((x for x in osec["nodes"] if x["node"] == node["node"]), None)
+                    if target is None:
+                        target = {"node": node["node"], "branches": []}
+                        osec["nodes"].append(target)
+                    take(node["branches"], target["branches"])
+                    for k, b in enumerate(target["branches"], start=1):
+                        b["order"] = k
+                osec["nodes"] = [x for x in osec["nodes"] if x["branches"]]
+            elif isinstance(v, list):
+                take(v, osec[key], dose=(key == "posologies"))
+            elif isinstance(v, dict) and "elements" in v:
+                take(v["elements"], osec[key]["elements"])
+                osec[key]["state"] = "filled" if osec[key]["elements"] else osec[key]["state"]
+        if name != "12_ordonnance" and any(_lines({k: x for k, x in osec.items()})):
+            osec["state"] = "filled"
+    out["meta"]["excluded_by_audience"] = list(dict.fromkeys([*out["meta"]["excluded_by_audience"], *new["meta"]["excluded_by_audience"]]))
+    return out, keyed
+
+
+def _lines(sec: dict) -> list[dict]:
+    lists = [v for v in sec.values() if isinstance(v, list)] + [v["elements"] for v in sec.values() if isinstance(v, dict) and "elements" in v]
+    lists += [n["branches"] for n in sec.get("nodes") or []]
+    return [el for lst in lists for el in lst if isinstance(el, dict) and "source" in el]
+
+
+def quote_check(fiche: dict, by_printed: dict[int, dict]) -> str:
+    """meta.quote_check recounted by code: lines whose quote is found on their printed page, out of all lines."""
+    lines = [el for sec in fiche["sections"].values() for el in _lines(sec)]
+    ok = sum(1 for el in lines if check.check(el["source"]["quote"], by_printed.get(el["source"]["page"])) != "failed")
+    return f"{ok}/{len(lines)}"

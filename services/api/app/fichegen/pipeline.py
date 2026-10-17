@@ -24,7 +24,7 @@ from .. import supabase as sb
 from ..settings import env
 from concurrent.futures import ThreadPoolExecutor
 
-from . import assemble, check, coverage, ingest, llm
+from . import assemble, check, coverage, ingest, llm, manual
 from .schema import SECTIONS, validate
 from .store import RestStore, now
 
@@ -110,6 +110,9 @@ def start_if_auto(caller, draft_id: str) -> None:
     """Generation right after ingestion when the upload asked for it (form.auto_generate): the default model,
     interactive (someone is waiting), the default fallback."""
     d = _draft(caller, draft_id)
+    if (d["form"] or {}).get("manual") and not d["content"]:  # built by hand: an empty fiche, no paid call
+        _update(caller, draft_id, content=assemble.empty_fiche(d["form"]), mode="manual")
+        return
     if not (d["form"] or {}).get("auto_generate") or d["page_offset"] is None:
         return
     _update(caller, draft_id, options={"model": llm.DEFAULT_MODEL, "batch": False}, stage="routing", stage_detail=None)
@@ -365,6 +368,10 @@ def generate_draft(caller, draft_id: str) -> None:
         fiche, side, dropped, errors, report = generate(RestStore(caller), d["document_id"], d["page_offset"], pdf, d["pdf_path"].rsplit("/", 1)[-1],
                                                    form, model, bool(opts.get("batch")), log,
                                                    lambda stage, detail: _update(caller, draft_id, stage=stage, stage_detail=detail), fallback)
+        current = _draft(caller, draft_id)["content"]
+        if current and manual.all_lines(current):  # "Suggérer" on a fiche being built: added to it, never replacing it
+            fiche, side = assemble.merge(current, fiche, side)
+            fiche["meta"]["quote_check"] = assemble.quote_check(fiche, {p["printed_page"]: p for p in ingest.as_layers(RestStore(caller).pages(d["document_id"]), d["page_offset"])})
         problems = validate(fiche)
         if problems:
             raise RuntimeError("fiche non conforme, non enregistrée : " + " ; ".join(problems[:5]))
