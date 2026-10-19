@@ -5,7 +5,7 @@ services:
     name: avero-api
     runtime: docker
     dockerfilePath: ./Dockerfile
-    plan: starter
+    plan: free
     region: frankfurt
     healthCheckPath: /health
     autoDeploy: true
