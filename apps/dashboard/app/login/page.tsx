@@ -33,8 +33,8 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-dvh items-center justify-center px-4">
       <form onSubmit={submit} className="w-full max-w-sm rounded-card border border-edge/[0.06] bg-surface p-7 shadow-surface">
-        <div className="mb-6 flex items-center gap-2.5">
-          <LogoMark size={32} />
+        <div className="mb-6 flex items-center gap-2">
+          <LogoMark size={24} />
           <div>
             <h1 className="font-semibold leading-tight">Avero</h1>
             <p className="text-xs text-muted">Fiche workshop · editorial team sign-in</p>
