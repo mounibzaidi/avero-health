@@ -188,6 +188,7 @@ export default function FicheEditor() {
   const review: Review = useMemo(() => ({
     verified,
     toggle: (line) => {
+      if (!session) return;  // view only
       const on = !verified(line);
       const s = sigOf(line);
       setReviews((m) => { const n = new Map(m); if (on) n.set(line.id, s); else n.delete(line.id); return n; });

@@ -229,7 +229,7 @@ def get_job(job_id: str, caller: sb.Caller = Depends(sb.require_admin)):
 # ─── A topic: its stored files, and uploading one ─────────────────────────────────────────────
 
 @router.get("/topics")
-def list_topics(caller: sb.Caller = Depends(sb.require_admin)):
+def list_topics(caller: sb.Caller = Depends(sb.require_viewer)):
     return [{"id": t["id"], "fr": t["fr"], "group": t["group_label"], "section": t["section"], "priority": t.get("priority")} for t in _topics().values()]
 
 
@@ -253,7 +253,7 @@ def _files(caller: sb.Caller, topic: str) -> list[dict]:
 
 
 @router.get("/topics/{topic}")
-def get_topic(topic: str, caller: sb.Caller = Depends(sb.require_admin)):
+def get_topic(topic: str, caller: sb.Caller = Depends(sb.require_viewer)):
     t = _topic(topic)
     return {"id": topic, "fr": t["fr"], "group": t["group_label"], "files": _files(caller, topic), "search": _saved(topic)}
 
@@ -286,7 +286,7 @@ def _fiche_folder(fiche: str) -> str:
 
 
 @router.get("/fiches/{fiche}/files")
-def fiche_files(fiche: str, caller: sb.Caller = Depends(sb.require_admin)):
+def fiche_files(fiche: str, caller: sb.Caller = Depends(sb.require_viewer)):
     """The PDFs stored for this fiche (its sources), for the editor's quote check."""
     return {"files": _files(caller, _fiche_folder(fiche))}
 
@@ -309,7 +309,7 @@ async def fiche_upload(fiche: str, file: UploadFile = File(...), caller: sb.Call
 
 
 @router.get("/file")
-def file_link(path: str, caller: sb.Caller = Depends(sb.require_admin)):
+def file_link(path: str, caller: sb.Caller = Depends(sb.require_viewer)):
     """A link that opens a stored PDF for an hour."""
     if ".." in path or not path.endswith(".pdf"):
         raise HTTPException(status_code=404, detail="File not found")

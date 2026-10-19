@@ -21,7 +21,7 @@ def _now() -> str:
 
 
 @router.get("/bodies")
-def bodies(caller: sb.Caller = Depends(sb.require_admin)):
+def bodies(caller: sb.Caller = Depends(sb.require_viewer)):
     doc = yaml.safe_load((SHARED / "guideline_bodies.yaml").read_text(encoding="utf-8"))
     return [{"id": b["id"], "name": b["name"], "region": b.get("region")} for b in doc["bodies"]]
 

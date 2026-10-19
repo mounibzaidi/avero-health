@@ -51,6 +51,13 @@ def require_admin(authorization: str = Header(default="")) -> Caller:
     return caller
 
 
+def require_viewer(authorization: str = Header(default="")) -> Caller:
+    """For reads, open to everyone: the signed-in caller, or a visitor acting as anon (reading is open in the database)."""
+    if authorization.removeprefix("Bearer ").strip():
+        return require_admin(authorization)
+    return Caller(uid="", token=setting("SUPABASE_ANON_KEY"))
+
+
 def upload(caller: Caller, path: str, body: bytes, content_type: str) -> None:
     r = httpx.post(f"{_base()}/storage/v1/object/{BUCKET}/{path}", content=body, headers={**_as(caller), "Content-Type": content_type}, timeout=120)
     # 409: the same file (same hash in its name) is already kept for this topic.

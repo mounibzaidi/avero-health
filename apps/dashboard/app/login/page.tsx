@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -50,6 +51,7 @@ export default function LoginPage() {
           <Button variant="primary" type="submit" disabled={busy}>
             {busy ? "Signing in…" : "Sign in"}
           </Button>
+          <Link href="/protocoles" className="text-center text-sm text-accentink hover:underline">Continue without signing in (view only)</Link>
         </div>
       </form>
     </div>

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Button, ButtonLink, Card, Empty, ErrorNote, inputCls, PageHeader, Spinner, Tag } from "@/components/ui";
 import { api, apiForm } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 import { deleteStored } from "@/lib/delete";
 import { dateFr } from "@/lib/labels";
 import { createClient } from "@/lib/supabase/client";
@@ -330,6 +331,7 @@ function TopicPanel({ id }: { id: string }) {
   const [job, setJob] = useState<Job | null>(null);
   const [searching, setSearching] = useState(false);
   const upload = useRef<HTMLInputElement>(null);
+  const { isAdmin } = useAuth();
 
   const load = useCallback(() => api<TopicView>(`/crawl/topics/${id}`).then((v) => (setView(v), setError(null)), (e) => setError((e as Error).message)), [id]);
   useEffect(() => {
@@ -369,12 +371,12 @@ function TopicPanel({ id }: { id: string }) {
   return (
     <div className="flex flex-col gap-5">
       <PageHeader title={view.fr} subtitle={`${view.group} · ${view.files.length} source(s) kept`}
-        actions={<div className="flex gap-2">
+        actions={isAdmin && <div className="flex gap-2">
           <Button disabled={searching} title="Librarian and AI classification (Claude), cached for a week" onClick={() => search(true)}>Analyse with AI (≈ $0.05)</Button>
           <Button variant="primary" disabled={searching} onClick={() => search()}>{searching ? <><Spinner /> Searching…</> : view.search ? "Search again" : "Search for guidelines"}</Button>
         </div>} />
       {error && <ErrorNote>{error}</ErrorNote>}
-      <FicheBox topic={id} />
+      {isAdmin && <FicheBox topic={id} />}
       <FollowedBodies topic={id} />
 
       <Card className="flex flex-col gap-3 p-4">
@@ -385,7 +387,7 @@ function TopicPanel({ id }: { id: string }) {
           <ul className="flex flex-col">
             {view.files.map((f, i) => (
               <li key={f.path ?? `lien-${i}`} className="group relative border-t border-line py-2 pe-20 first:border-0">
-                {(f.path ?? f.ref) && (
+                {isAdmin && (f.path ?? f.ref) && (
                   <button type="button" className="absolute right-0 top-2 rounded px-2 py-0.5 text-xs text-flag opacity-0 hover:bg-flagbg focus:opacity-100 group-hover:opacity-100"
                     onClick={() => void deleteStored((f.path ?? f.ref)!, decoded(f.title)).then((done) => { if (done) void load(); }, (e) => setError((e as Error).message))}>Delete</button>
                 )}
@@ -400,12 +402,12 @@ function TopicPanel({ id }: { id: string }) {
             ))}
           </ul>
         )}
-        <div className="flex flex-wrap items-center gap-2 border-t border-line pt-3">
+        {isAdmin && <div className="flex flex-wrap items-center gap-2 border-t border-line pt-3">
           <input className={`${inputCls} min-w-64 flex-1`} placeholder="Link to a PDF or a page, or a DOI (10.xxxx/…)" value={url} onChange={(e) => setUrl(e.target.value)} />
           <Button disabled={busy || !typed} onClick={() => (keep(typed, direct), setUrl(""))}>Add by URL or DOI</Button>
           <input ref={upload} type="file" accept="application/pdf" className="hidden" onChange={(e) => e.target.files?.[0] && void send(e.target.files[0])} />
           <Button onClick={() => upload.current?.click()}>Upload a PDF</Button>
-        </div>
+        </div>}
         {job && (
           <div className={`rounded-lg px-3 py-2 text-sm ${job.status === "running" ? "bg-panel text-soft" : job.status === "failed" ? "bg-flagbg text-flag" : "bg-tint text-accentink"}`}>
             {job.status === "running" ? <><Spinner className="mr-2" />Downloading… ({job.stage})</> : job.status === "failed" ? `Failed: ${job.error ?? "see the log"}`
@@ -420,7 +422,7 @@ function TopicPanel({ id }: { id: string }) {
           {view.search?.searched_at && <span className="text-xs text-muted">on {dateFr(view.search.searched_at)}</span>}
         </div>
         {searching ? <p className="text-sm text-soft"><Spinner className="mr-2" />PubMed, Europe PMC and the pages of the French and Algerian bodies…</p>
-          : view.search ? <Results result={view.search} onKeep={keep} busy={busy} />
+          : view.search ? <Results result={view.search} onKeep={keep} busy={busy || !isAdmin} />
           : <Empty>No search for this topic yet.</Empty>}
       </Card>
     </div>
@@ -495,6 +497,7 @@ export default function CollectePage() {
   const [error, setError] = useState<string | null>(null);
   const [q, setQ] = useState("");
   const [open, setOpen] = useState<string | null>(null);
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     api<Topic[]>("/crawl/topics").then(setTopics, (e) => setError((e as Error).message));
@@ -528,7 +531,7 @@ export default function CollectePage() {
         </div>
       </aside>
       <main className="mx-auto w-full max-w-[1000px] px-5 py-8">
-        {open ? <TopicPanel key={open} id={open} /> : <FreeSearch />}
+        {open ? <TopicPanel key={open} id={open} /> : isAdmin ? <FreeSearch /> : <Empty>Pick a topic on the left to see its sources and the guidelines found.</Empty>}
       </main>
     </div>
   );

@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 
 import { Button, LogoMark, Spinner } from "@/components/ui";
 import { useAuth } from "@/lib/auth";
@@ -18,21 +18,16 @@ const NAV = [
 export default function StaffLayout({ children }: { children: React.ReactNode }) {
   const supabase = useMemo(() => createClient(), []);
   const { loading, session, staff } = useAuth();
-  const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (!loading && !session) router.replace("/login");
-  }, [loading, session, router]);
-
-  if (loading || !session) {
+  if (loading) {
     return (
       <div className="flex h-dvh items-center justify-center text-muted">
         <Spinner />
       </div>
     );
   }
-  if (!staff) {
+  if (session && !staff) {
     return (
       <div className="flex h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
         <p className="max-w-sm text-sm text-soft">
@@ -63,11 +58,20 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
             })}
           </nav>
           <div className="flex shrink-0 items-center gap-3 text-sm text-soft">
-            <span className="hidden md:inline">{staff.name || session.user.email}</span>
-            <span className="hidden rounded border border-line px-1.5 py-0.5 text-xs text-muted sm:inline">{staff.role === "admin" ? "Administrator" : "Reviewer"}</span>
-            <Button variant="ghost" className="h-8" onClick={() => supabase.auth.signOut()}>
-              Sign out
-            </Button>
+            {session && staff ? (
+              <>
+                <span className="hidden md:inline">{staff.name || session.user.email}</span>
+                <span className="hidden rounded border border-line px-1.5 py-0.5 text-xs text-muted sm:inline">{staff.role === "admin" ? "Administrator" : "Reviewer"}</span>
+                <Button variant="ghost" className="h-8" onClick={() => supabase.auth.signOut()}>
+                  Sign out
+                </Button>
+              </>
+            ) : (
+              <>
+                <span className="rounded border border-line px-1.5 py-0.5 text-xs text-muted" title="Everything can be read; changes are not saved">View only</span>
+                <Link href="/login" className="text-sm text-accentink hover:underline">Sign in</Link>
+              </>
+            )}
           </div>
         </div>
       </header>

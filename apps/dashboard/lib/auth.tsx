@@ -17,9 +17,11 @@ interface AuthState {
   /** null when signed in but not listed in staff */
   staff: Staff | null;
   isAdmin: boolean;
+  /** Not signed in: everything can be read, nothing saved. */
+  viewOnly: boolean;
 }
 
-const AuthContext = createContext<AuthState>({ loading: true, session: null, staff: null, isAdmin: false });
+const AuthContext = createContext<AuthState>({ loading: true, session: null, staff: null, isAdmin: false, viewOnly: false });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const supabase = useMemo(() => createClient(), []);
@@ -53,7 +55,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const current = userId && staff?.user === userId ? staff.staff : null;
   const loading = !ready || (!!userId && staff?.user !== userId);
-  return <AuthContext.Provider value={{ loading, session, staff: current, isAdmin: current?.role === "admin" }}>{children}</AuthContext.Provider>;
+  const viewOnly = ready && !session;
+  return <AuthContext.Provider value={{ loading, session, staff: current, isAdmin: current?.role === "admin", viewOnly }}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => useContext(AuthContext);
