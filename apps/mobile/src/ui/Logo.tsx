@@ -1,7 +1,7 @@
 import { Image, Text, View } from "react-native";
 
 const MARK = require("../../assets/logo-mark.png");
-const RATIO = 304 / 212; // the image's width over its height
+const RATIO = 228 / 212; // the image's width over its height
 
 /** The Avero mark, from the brand board (the A and its leaf, transparent); `size` is its height. */
 export function LogoMark({ size = 14 }: { size?: number }) {
