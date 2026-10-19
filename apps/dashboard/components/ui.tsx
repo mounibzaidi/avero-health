@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { ComponentProps, ReactNode } from "react";
+import { useId, type ComponentProps, type ReactNode } from "react";
 
 // The old dashboard kit, on the app's tokens (Q5): wash = tint, bad = flag, warn = caution, ok = accent.
 
@@ -78,12 +78,19 @@ export function ErrorNote({ children }: { children: ReactNode }) {
   return <div className="rounded-lg border border-flag/30 bg-flagbg px-3 py-2 text-sm text-flag">{children}</div>;
 }
 
-/** The Avero mark: a solid white A on the brand green square (same as the app and the favicon). */
+/** The Avero mark: a solid A in the brand green, light emerald at the apex to deep green at the feet (same as the
+ * app and the favicon). */
 export function LogoMark({ size = 24 }: { size?: number }) {
+  const id = `avero-a${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`; // url(#…) breaks on the ":" or "«" of React ids
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden>
-      <rect width="64" height="64" rx="16" fill="#245C49" />
-      <path fillRule="evenodd" fill="#FFFFFF" d="M30 13 L34 13 L51 50 L43 50 L39.8 43 L24.2 43 L21 50 L13 50 Z M32 26.5 L36.6 37 L27.4 37 Z" />
+    <svg width={size} height={size} viewBox="10 10 44 44" aria-hidden>
+      <defs>
+        <linearGradient id={id} x1="0" y1="13" x2="0" y2="50" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#3A9473" />
+          <stop offset="1" stopColor="#1E4F3E" />
+        </linearGradient>
+      </defs>
+      <path fillRule="evenodd" fill={`url(#${id})`} d="M30 13 L34 13 L51 50 L43 50 L39.8 43 L24.2 43 L21 50 L13 50 Z M32 26.5 L36.6 37 L27.4 37 Z" />
     </svg>
   );
 }
