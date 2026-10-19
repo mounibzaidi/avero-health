@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Button, ButtonLink, Card, Empty, ErrorNote, inputCls, PageHeader, Spinner, Tag } from "@/components/ui";
-import { api, apiForm } from "@/lib/api";
+import { api, apiForm, HAS_API } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { deleteStored } from "@/lib/delete";
 import { dateFr } from "@/lib/labels";
@@ -493,6 +493,11 @@ function FreeSearch() {
 
 /** Collecte: a free search, and the topics of shared/topics.yaml with their sources. */
 export default function CollectePage() {
+  if (!HAS_API) return <div className="mx-auto max-w-[700px] px-5 py-10"><Empty>The guideline search runs on the Avero API (services/api and the crawler), which is not deployed in this demo. See the README to run it locally.</Empty></div>;
+  return <Collecte />;
+}
+
+function Collecte() {
   const [topics, setTopics] = useState<Topic[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [q, setQ] = useState("");

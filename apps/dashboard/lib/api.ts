@@ -2,8 +2,10 @@
 
 import { createClient } from "./supabase/client";
 
-/** The Avero service (services/api), called with the staff member's session. */
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+/** The Avero service (services/api), called with the staff member's session. A deployed dashboard without
+ * NEXT_PUBLIC_API_URL has no API: the pages that need it (Sources, PDFs) say so instead of failing. */
+const BASE = process.env.NEXT_PUBLIC_API_URL ?? (process.env.NODE_ENV === "production" ? "" : "http://localhost:8000");
+export const HAS_API = BASE !== "";
 
 /** The session's bearer header, none when signed out (reading is open). */
 async function auth(): Promise<Record<string, string>> {
@@ -13,6 +15,7 @@ async function auth(): Promise<Record<string, string>> {
 }
 
 async function call<T>(path: string, init: RequestInit = {}): Promise<T> {
+  if (!HAS_API) throw new Error("Not available in this demo: it needs the Avero API, which is not deployed here.");
   let r: Response;
   try {
     r = await fetch(`${BASE}${path}`, { ...init, headers: { ...(await auth()), ...(init.headers ?? {}) } });

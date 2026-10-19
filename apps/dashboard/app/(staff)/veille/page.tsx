@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Button, Card, Empty, ErrorNote, inputCls, PageHeader, Spinner, Tag } from "@/components/ui";
-import { api } from "@/lib/api";
+import { api, HAS_API } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { dateFr } from "@/lib/labels";
 import { createClient } from "@/lib/supabase/client";
@@ -176,6 +176,7 @@ export default function VeillePage() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- first load of the page's data
     void load();
+    if (!HAS_API) return;
     api<Topic[]>("/crawl/topics").then(setTopics, () => {});
     api<Body[]>("/registry/bodies").then(setBodies, () => {});
   }, [load]);

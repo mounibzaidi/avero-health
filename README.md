@@ -58,7 +58,7 @@ Avero is a reference tool, not a diagnosis tool.
 - **Extraction:** pdftotext (Poppler)
 - **AI tools:** in the product, only the optional search classifier (Claude Haiku through OpenRouter). To build it:
   Claude Code (AI pair programming)
-- **Hosting:** Supabase (EU). Dashboard: Vercel; API: a container host (Render or Railway); both still to be deployed
+- **Hosting:** Supabase (EU) and Vercel (dashboard). The Python API runs locally for now
 
 ## Project structure
 
@@ -136,15 +136,19 @@ cd services/api && .venv/bin/python -m pytest
 
 ## Deploy
 
-Supabase is already hosted. The rest deploys from this repository, and every push to `main` redeploys.
+Supabase is already hosted. The dashboard deploys on [Vercel](https://vercel.com/new) from this repository, and
+every push to `main` redeploys it:
 
-| Part | Host | Settings |
-|---|---|---|
-| Dashboard | [Vercel](https://vercel.com/new): import the repo, Root Directory `apps/dashboard` (Next.js is detected) | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_API_URL` = the API's address |
-| API and crawler | [Render](https://dashboard.render.com/blueprints): New Blueprint, this repo (`render.yaml`, `Dockerfile`) | `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `CORS_ORIGINS` = the dashboard's address; optional NCBI and OpenRouter keys |
-| App for the web (optional) | Vercel, a second project with Root Directory `apps/mobile` (`apps/mobile/vercel.json`) | `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` |
+- Import the repo, set **Root Directory** to `apps/dashboard` (Next.js is detected)
+- Environment variables: `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (publishable key
+  only: the database's own rules protect every write)
 
-Only publishable keys are used: the database's own rules protect every write.
+Without `NEXT_PUBLIC_API_URL` the deployed dashboard runs without the Python API: protocols, fiches, the Schema page
+and the guideline watch work; the guideline search (Sources) and the quote check on the PDF are hidden. Set
+`NEXT_PUBLIC_API_URL` to an API you host to turn them on.
+
+The doctors' app can also go on Vercel as a second project: Root Directory `apps/mobile` (`apps/mobile/vercel.json`),
+with `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 
 ## Protocol format
 
@@ -161,7 +165,7 @@ which has a live validator.
   adult hypertension
 - The guideline PDFs of the two published protocols are not yet uploaded to storage, so the dashboard shows each
   line's quote but not the PDF page beside it
-- The guideline search needs the crawler and the API running; not deployed yet
+- The guideline search and the quote check need the Python API, which runs locally only for now
 - Content is for professional reference and must be verified against the linked source
 
 ## Who built what

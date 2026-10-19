@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
 import { Button, LogoMark, Spinner } from "@/components/ui";
+import { HAS_API } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
 
@@ -12,7 +13,7 @@ import { createClient } from "@/lib/supabase/client";
 // PDFs of each topic. Veille: the followed bodies, checked for newer guidelines. Schema: the fiche format.
 const NAV = [
   { href: "/protocoles", label: "Protocols", also: ["/fiche"] },
-  { href: "/collecte", label: "Sources", also: [] as string[] },
+  ...(HAS_API ? [{ href: "/collecte", label: "Sources", also: [] as string[] }] : []),
   { href: "/veille", label: "Watch", also: [] as string[] },
   { href: "/schema", label: "Schema", also: [] as string[] },
 ];
