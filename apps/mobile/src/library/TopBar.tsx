@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { Pressable, Text, useWindowDimensions, View } from "react-native";
 
-import { breakpoint } from "@medguides/ui-tokens";
+import { breakpoint } from "@avero/ui-tokens";
 
 import { t } from "@/strings/fr";
 import { PillIcon, StarIcon, UserIcon } from "@/ui/Icons";

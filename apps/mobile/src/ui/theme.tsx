@@ -3,11 +3,12 @@ import { vars } from "nativewind";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Platform, View } from "react-native";
 
-import { cssVars, defaultTheme, hex, type ThemeName } from "@medguides/ui-tokens";
+import { cssVars, defaultTheme, hex, type ThemeName } from "@avero/ui-tokens";
 
 export type { ThemeName };
 
-const KEY = "medguides.theme";
+const KEY = "avero.theme";
+const LEGACY_KEY = "medguides.theme"; // the app's former name, read until the theme is saved again
 const TOKENS = { light: vars(cssVars("light")), dark: vars(cssVars("dark")) };
 const HEX = { light: hex("light"), dark: hex("dark") };
 
@@ -24,7 +25,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<ThemeName>(defaultTheme);
 
   useEffect(() => {
-    AsyncStorage.getItem(KEY)
+    AsyncStorage.multiGet([KEY, LEGACY_KEY]).then(([[, now], [, before]]) => now ?? before)
       .then((v) => (v === "light" || v === "dark") && setThemeState(v))
       .catch(() => {});
   }, []);

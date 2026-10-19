@@ -2,11 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 
-/** A list of fiche ids kept on the device (favourites, recents), shared by every screen. */
-function storedList(key: string) {
+/** A list of fiche ids kept on the device (favourites, recents), shared by every screen. `legacy`: the same list
+ * under the app's former name, read until the list is first saved under the new one. */
+function storedList(key: string, legacy: string) {
   const read = async (): Promise<string[]> => {
     try {
-      const raw = await AsyncStorage.getItem(key);
+      const raw = (await AsyncStorage.getItem(key)) ?? (await AsyncStorage.getItem(legacy));
       return raw ? (JSON.parse(raw) as string[]) : [];
     } catch {
       return [];
@@ -29,8 +30,8 @@ function storedList(key: string) {
   };
 }
 
-const useFavoriteList = storedList("medguides.favorites");
-const useRecentList = storedList("medguides.recent");
+const useFavoriteList = storedList("avero.favorites", "medguides.favorites");
+const useRecentList = storedList("avero.recent", "medguides.recent");
 
 /** The fiches starred on this device: they open offline, like the whole library. */
 export function useFavorites() {

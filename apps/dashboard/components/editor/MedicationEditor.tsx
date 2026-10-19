@@ -1,6 +1,6 @@
 "use client";
 
-import { doseLine, MEDICATION_FIELD_LABELS, MedicationField, type Medication } from "@medguides/schema";
+import { doseLine, MEDICATION_FIELD_LABELS, MedicationField, type Medication } from "@avero/schema";
 
 import { DOSE_BASIS_LABEL, PHASE_LABEL, STRENGTH_LABEL } from "@/lib/labels";
 

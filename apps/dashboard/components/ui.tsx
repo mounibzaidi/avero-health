@@ -78,7 +78,7 @@ export function ErrorNote({ children }: { children: ReactNode }) {
   return <div className="rounded-lg border border-flag/30 bg-flagbg px-3 py-2 text-sm text-flag">{children}</div>;
 }
 
-/** The Avero Health mark: a teal square holding three steps (same as the app). */
+/** The Avero mark: a teal square holding three steps (same as the app). */
 export function LogoMark({ size = 24 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden>

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Avero Health",
-    "slug": "medguides",
+    "name": "Avero",
+    "slug": "avero",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -64,6 +64,6 @@
         }
       ]
     ],
-    "scheme": "medguides"
+    "scheme": "avero"
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Avero Health design tokens: the single source for the app (NativeWind) and the dashboard (Tailwind 4).
+ * Avero design tokens: the single source for the app (NativeWind) and the dashboard (Tailwind 4).
  * Values are copied from the old app (theme.tsx, tailwind.config.js, ui.tsx, global.css) through
  * carryover/design-tokens.json. Do not change a value here without changing the design.
  *

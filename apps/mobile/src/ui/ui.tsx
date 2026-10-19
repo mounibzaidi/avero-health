@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { AccessibilityInfo, Animated, Platform, Pressable, Text, View, type TextProps } from "react-native";
 
-import { shadow } from "@medguides/ui-tokens";
+import { shadow } from "@avero/ui-tokens";
 
 type T = TextProps & { className?: string };
 

@@ -1,6 +1,6 @@
-/** Design tokens come from @medguides/ui-tokens. Colours are CSS variables so light and dark swap at runtime. */
+/** Design tokens come from @avero/ui-tokens. Colours are CSS variables so light and dark swap at runtime. */
 const { platformSelect } = require("nativewind/theme");
-const { font } = require("@medguides/ui-tokens");
+const { font } = require("@avero/ui-tokens");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
   // "media") also stops NativeWind's web runtime from throwing when it initialises dark mode.
   darkMode: "class",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  presets: [require("nativewind/preset"), require("@medguides/ui-tokens/tailwind-preset")],
+  presets: [require("nativewind/preset"), require("@avero/ui-tokens/tailwind-preset")],
   theme: {
     extend: {
       fontFamily: { mono: platformSelect({ ios: font.mono.ios, android: font.mono.default, default: font.mono.web }) },

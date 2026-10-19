@@ -3,7 +3,7 @@
 import {
   AVAILABILITY_LABEL, doseLine, pathwayProblems, PHASE_LABEL, PRESCRIBER_LABEL, SECTION_TITLE, STRENGTH_LABEL, URGENCY_LABEL,
   type Evidence, type FollowUp, type Item, type Medication, type Pathway, type PathwayNode, type Protocol, type Referral, type Strength, type Urgency,
-} from "@medguides/schema";
+} from "@avero/schema";
 import { createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import { IssuesCtx, LineIssues, ReviewCtx, ShowCtx, type Reviewed } from "./fields";

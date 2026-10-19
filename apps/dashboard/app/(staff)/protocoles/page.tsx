@@ -1,6 +1,6 @@
 "use client";
 
-import { evidenceLines, publicationGate, validateStructure, type Protocol } from "@medguides/schema";
+import { evidenceLines, publicationGate, validateStructure, type Protocol } from "@avero/schema";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 

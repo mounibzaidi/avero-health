@@ -1,4 +1,4 @@
-import { breakpoint } from "@medguides/ui-tokens";
+import { breakpoint } from "@avero/ui-tokens";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMemo, useState, type ReactNode } from "react";
 import { Pressable, RefreshControl, ScrollView, Text, useWindowDimensions, View } from "react-native";

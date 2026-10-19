@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeLogEntry, Meta, Review, Scope, Source } from "@medguides/schema";
+import type { ChangeLogEntry, Meta, Review, Scope, Source } from "@avero/schema";
 import { useEffect, useState } from "react";
 
 import { inputCls } from "@/components/ui";

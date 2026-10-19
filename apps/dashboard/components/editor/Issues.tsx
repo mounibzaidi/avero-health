@@ -1,6 +1,6 @@
 "use client";
 
-import type { Issue, Rule } from "@medguides/schema";
+import type { Issue, Rule } from "@avero/schema";
 
 const RULE_LABEL: Record<Rule, string> = {
   structure: "Format", required: "Field to fill", ids: "Ids", evidence: "Evidence", basis: "Local adaptation", quote: "Quotes",

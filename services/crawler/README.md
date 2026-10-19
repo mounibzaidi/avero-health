@@ -13,7 +13,7 @@ Every request of every collector goes through `polite.py`; none opens its own HT
   a 401/403 answer stops there. No collector sends credentials.
 - robots.txt is **not** applied: `OBEY_ROBOTS = False` in `polite.py` (the project owner's decision,
   2026-10-02), so a page is fetched even when the site's robots.txt closes it to crawlers. Set it to
-  `True` to obey robots.txt again, for the group that names our crawler (`AveroHealthBot`) first,
+  `True` to obey robots.txt again, for the group that names our crawler (`AveroBot`) first,
   else `*`; the hosts of `DOCUMENTED_APIS` (NCBI E-utilities, data.gouv.fr) then stay exempt.
 
 ## Add one PDF by its link

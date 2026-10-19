@@ -1,4 +1,4 @@
-# Avero Health API (services/api)
+# Avero API (services/api)
 
 FastAPI service for the dashboard. It acts as the signed-in staff member (their Supabase session and the
 publishable key), so the database's own rules apply; it needs no secret key.

@@ -1,4 +1,4 @@
-import { breakpoint } from "@medguides/ui-tokens";
+import { breakpoint } from "@avero/ui-tokens";
 import { useRouter } from "expo-router";
 import type { ComponentType } from "react";
 import { Pressable, RefreshControl, ScrollView, Text, useWindowDimensions, View } from "react-native";
@@ -135,7 +135,7 @@ export function HomeScreen() {
       <View className={`mx-auto w-full ${wide ? "max-w-[1080px] gap-[32px] px-8 pb-14 pt-6" : "max-w-[560px] gap-[20px] px-4 pb-8 pt-3"}`}>
         {!wide && (
           <View className="flex-row items-center justify-between">
-            <Text accessibilityRole="header" className="text-[16px] font-extrabold uppercase text-accent" style={{ letterSpacing: 2.2 }}>Avero Health</Text>
+            <Text accessibilityRole="header" className="text-[16px] font-extrabold uppercase text-accent" style={{ letterSpacing: 2.2 }}>Avero</Text>
             <Pressable accessibilityRole="link" accessibilityLabel={t("account")} onPress={() => router.navigate("/profil")} className="h-10 w-10 items-center justify-center rounded-full bg-tint active:opacity-70">
               <UserIcon size={17} color={c.accentink} />
             </Pressable>

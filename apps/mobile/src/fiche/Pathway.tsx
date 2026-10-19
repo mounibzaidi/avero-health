@@ -1,4 +1,4 @@
-import type { Pathway as PathwayData, PathwayNode } from "@medguides/schema";
+import type { Pathway as PathwayData, PathwayNode } from "@avero/schema";
 import { Text, View } from "react-native";
 
 import { t } from "@/strings/fr";

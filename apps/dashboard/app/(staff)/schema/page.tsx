@@ -1,6 +1,6 @@
 "use client";
 
-import { protocolJsonSchema, publicationGate, validateStructure, type Issue, type Rule } from "@medguides/schema";
+import { protocolJsonSchema, publicationGate, validateStructure, type Issue, type Rule } from "@avero/schema";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -321,7 +321,7 @@ export default function SchemaPage() {
     <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-12 px-5 py-8">
       <div>
         <PageHeader title="The fiche format"
-          subtitle="Protocol Schema v1.1, frozen. Every fiche in Avero Health is one JSON file that passes it: one condition, 1 to 5 phone screens."
+          subtitle="Protocol Schema v1.1, frozen. Every fiche in Avero is one JSON file that passes it: one condition, 1 to 5 phone screens."
           actions={<Button onClick={download}>Download the JSON Schema</Button>} />
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {[

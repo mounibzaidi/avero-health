@@ -1,6 +1,6 @@
 "use client";
 
-import { evidenceLines, fromLegacy, isLegacy, validateStructure, type Protocol } from "@medguides/schema";
+import { evidenceLines, fromLegacy, isLegacy, validateStructure, type Protocol } from "@avero/schema";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";

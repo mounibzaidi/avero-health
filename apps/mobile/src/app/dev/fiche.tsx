@@ -1,4 +1,4 @@
-import { validateStructure } from "@medguides/schema";
+import { validateStructure } from "@avero/schema";
 
 import { FicheScreen } from "@/fiche/FicheScreen";
 

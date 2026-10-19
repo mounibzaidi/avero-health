@@ -10,7 +10,7 @@ import { supabase } from "./supabase";
 export type Product = { brand: string; dci: string; form: string; dosage: string; pack: string; hospital: boolean; code: string | null };
 type Stored = { products: Product[]; version: string | null; at: string };
 
-const KEY = "medguides.medicaments.v1";
+const KEY = "avero.medicaments.v1";
 const WEEK = 7 * 24 * 3600 * 1000;
 
 async function readCache(): Promise<Stored | null> {

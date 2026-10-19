@@ -1,4 +1,4 @@
-"""Avero Health service: Collecte (search, source PDFs), the topic registry and its checks, and the quote check of a fiche."""
+"""Avero service: Collecte (search, source PDFs), the topic registry and its checks, and the quote check of a fiche."""
 
 import httpx
 from fastapi import FastAPI
@@ -8,7 +8,7 @@ from fastapi.responses import JSONResponse
 from . import checks, crawl, registry
 from .settings import env
 
-app = FastAPI(title="Avero Health API")
+app = FastAPI(title="Avero API")
 app.add_middleware(CORSMiddleware, allow_origins=env().get("CORS_ORIGINS", "http://localhost:3000").split(","), allow_methods=["*"], allow_headers=["*"])
 
 

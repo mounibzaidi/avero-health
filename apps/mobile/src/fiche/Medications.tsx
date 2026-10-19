@@ -1,4 +1,4 @@
-import { AVAILABILITY_LABEL, doseLine, PHASE_LABEL, PRESCRIBER_LABEL, type Medication } from "@medguides/schema";
+import { AVAILABILITY_LABEL, doseLine, PHASE_LABEL, PRESCRIBER_LABEL, type Medication } from "@avero/schema";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 

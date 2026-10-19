@@ -1,4 +1,4 @@
-import { fixed } from "@medguides/ui-tokens";
+import { fixed } from "@avero/ui-tokens";
 import { Text, View } from "react-native";
 import Svg, { Rect } from "react-native-svg";
 
@@ -16,10 +16,10 @@ export function LogoMark({ size = 28 }: { size?: number }) {
 
 export function Logo({ size = 28, textSize = 16 }: { size?: number; textSize?: number }) {
   return (
-    <View className="flex-row items-center gap-[9px]" accessibilityRole="header" accessibilityLabel="Avero Health">
+    <View className="flex-row items-center gap-[9px]" accessibilityRole="header" accessibilityLabel="Avero">
       <LogoMark size={size} />
       <Text className="font-semibold text-ink" style={{ fontSize: textSize, letterSpacing: -textSize * 0.01 }}>
-        Avero Health
+        Avero
       </Text>
     </View>
   );

@@ -2,7 +2,7 @@
 
 import { createClient } from "./supabase/client";
 
-/** The Avero Health service (services/api), called with the staff member's session. */
+/** The Avero service (services/api), called with the staff member's session. */
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 /** The session's bearer header, none when signed out (reading is open). */

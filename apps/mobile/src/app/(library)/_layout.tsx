@@ -1,4 +1,4 @@
-import { breakpoint } from "@medguides/ui-tokens";
+import { breakpoint } from "@avero/ui-tokens";
 import { Slot, usePathname } from "expo-router";
 import { useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

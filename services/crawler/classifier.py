@@ -115,7 +115,7 @@ def _ask(batch: list[tuple[int, dict]], topic: dict) -> dict[int, dict]:
             + json.dumps({"records": [_payload(i, r) for i, r in batch]}, ensure_ascii=False))
     for model in models:
         try:
-            resp = httpx.post(OPENROUTER, timeout=TIMEOUT_S, headers={"Authorization": f"Bearer {key}", "X-Title": "Avero Health"}, json={
+            resp = httpx.post(OPENROUTER, timeout=TIMEOUT_S, headers={"Authorization": f"Bearer {key}", "X-Title": "Avero"}, json={
                 "model": model, "max_tokens": 4000, "response_format": {"type": "json_object"}, "reasoning": {"enabled": False},
                 "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}]})
             resp.raise_for_status()

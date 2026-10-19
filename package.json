@@ -1,16 +1,16 @@
 {
-  "name": "medguides",
+  "name": "avero",
   "private": true,
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "mobile": "npm run web --workspace @medguides/mobile",
-    "dashboard": "npm run dev --workspace @medguides/dashboard",
+    "mobile": "npm run web --workspace @avero/mobile",
+    "dashboard": "npm run dev --workspace @avero/dashboard",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
-    "tokens:check": "npm run check --workspace @medguides/ui-tokens",
+    "tokens:check": "npm run check --workspace @avero/ui-tokens",
     "test": "npm run test --workspaces --if-present",
     "api": "cd services/api && .venv/bin/uvicorn app.main:app --port 8000",
     "db:sql": "services/api/.venv/bin/python -I tools/db/run_sql.py",

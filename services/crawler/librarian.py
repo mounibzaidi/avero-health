@@ -220,7 +220,7 @@ def ask(topic: dict) -> dict:
     errors = []
     for model in models:
         try:
-            r = httpx.post(OPENROUTER, timeout=TIMEOUT_S, headers={"Authorization": f"Bearer {key}", "X-Title": "Avero Health"}, json={
+            r = httpx.post(OPENROUTER, timeout=TIMEOUT_S, headers={"Authorization": f"Bearer {key}", "X-Title": "Avero"}, json={
                 "model": model, "max_tokens": 10000, "response_format": {"type": "json_object"}, "reasoning": {"effort": "low"},
                 "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt(topic)}]})
             r.raise_for_status()

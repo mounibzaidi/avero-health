@@ -2,7 +2,7 @@
 
 import {
   quoteKey, type Evidence, type Item, type QuoteResult, type Source,
-} from "@medguides/schema";
+} from "@avero/schema";
 import { createContext, useContext } from "react";
 
 import { ORIGIN_LABEL, STRENGTH_LABEL, TIMING_LABEL, TO_COMPLETE } from "@/lib/labels";

@@ -1,5 +1,5 @@
 {
-  "name": "@medguides/dashboard",
+  "name": "@avero/dashboard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -21,8 +21,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@medguides/schema": "^0.1.0",
-    "@medguides/ui-tokens": "^0.1.0",
+    "@avero/schema": "^0.1.0",
+    "@avero/ui-tokens": "^0.1.0",
     "@supabase/ssr": "0.12.7",
     "@supabase/supabase-js": "2.117.2",
     "next": "16.3.6",

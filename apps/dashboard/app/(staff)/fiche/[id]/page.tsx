@@ -2,7 +2,7 @@
 
 import {
   evidenceLines, publicationGate, quoteKey, validateStructure, type Issue, type Protocol, type QuoteResult,
-} from "@medguides/schema";
+} from "@avero/schema";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";

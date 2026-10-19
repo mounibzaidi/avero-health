@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { allItems, validateStructure, type Protocol } from "@medguides/schema";
+import { allItems, validateStructure, type Protocol } from "@avero/schema";
 import { useQuery } from "@tanstack/react-query";
 
 import SYNONYMS from "../../../../shared/search-synonyms.json";
@@ -14,7 +14,7 @@ import { supabase } from "./supabase";
 
 export type Library = { fiches: Record<string, { version: number; content: Protocol }>; syncedAt: string | null; offline: boolean };
 
-const CACHE_KEY = "medguides.library.v1.1"; // v1.1: fiches of Protocol Schema v1.1 only
+const CACHE_KEY = "avero.library.v1.1"; // v1.1: fiches of Protocol Schema v1.1 only
 const EMPTY: Library = { fiches: {}, syncedAt: null, offline: false };
 
 async function readCache(): Promise<Library> {

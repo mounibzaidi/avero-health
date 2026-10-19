@@ -1,4 +1,4 @@
--- MedGuides: fiches stored in the numbered schema (packages/schema) as versioned jsonb snapshots,
+-- Avero: fiches stored in the numbered schema (packages/schema) as versioned jsonb snapshots,
 -- the staff who edit and publish them, and the private bucket of source PDFs.
 -- For a new, empty project. Run in the Supabase SQL editor, or psql against the database URL.
 

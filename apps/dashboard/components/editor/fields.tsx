@@ -1,6 +1,6 @@
 "use client";
 
-import type { Evidence, Issue } from "@medguides/schema";
+import type { Evidence, Issue } from "@avero/schema";
 import { createContext, useContext, useState, type ReactNode } from "react";
 
 import { inputCls } from "@/components/ui";

@@ -1,6 +1,6 @@
 "use client";
 
-import { validateStructure } from "@medguides/schema";
+import { validateStructure } from "@avero/schema";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -251,7 +251,7 @@ export default function VeillePage() {
       {!rows ? (
         <div className="flex justify-center py-10 text-muted"><Spinner /></div>
       ) : rows.length === 0 ? (
-        <Empty>No body followed yet. For each topic, staff pick the bodies whose guideline is the reference; every week Avero Health checks them for a newer version and flags the fiches built on a replaced one.</Empty>
+        <Empty>No body followed yet. For each topic, staff pick the bodies whose guideline is the reference; every week Avero checks them for a newer version and flags the fiches built on a replaced one.</Empty>
       ) : (
         <div className="flex flex-col gap-5">
           {[...byTopic].map(([topic, list]) => (

@@ -1,7 +1,7 @@
 import { vars } from "nativewind";
 import { ScrollView, Text, View } from "react-native";
 
-import { COLOR_NAMES, cssVars, hex, radius, shadow, type ColorName, type ThemeName } from "@medguides/ui-tokens";
+import { COLOR_NAMES, cssVars, hex, radius, shadow, type ColorName, type ThemeName } from "@avero/ui-tokens";
 
 /** Token test screen (step 2): every token in light and dark, side by side. Dev only; sample text is fake. */
 

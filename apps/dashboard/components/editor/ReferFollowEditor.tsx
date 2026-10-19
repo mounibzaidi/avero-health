@@ -1,6 +1,6 @@
 "use client";
 
-import type { FollowUp, Referral } from "@medguides/schema";
+import type { FollowUp, Referral } from "@avero/schema";
 
 import { STRENGTH_LABEL } from "@/lib/labels";
 

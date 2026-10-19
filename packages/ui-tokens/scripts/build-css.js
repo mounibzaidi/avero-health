@@ -52,7 +52,7 @@ const out = path.join(__dirname, "..", "theme.css");
 if (process.argv.includes("--check")) {
   const current = fs.existsSync(out) ? fs.readFileSync(out, "utf8") : "";
   if (current !== css) {
-    console.error("theme.css is out of date: run npm run build --workspace @medguides/ui-tokens");
+    console.error("theme.css is out of date: run npm run build --workspace @avero/ui-tokens");
     process.exit(1);
   }
   console.log("theme.css is up to date");

@@ -1,5 +1,5 @@
-import { SECTION_TITLE, URGENCY_LABEL, type Protocol } from "@medguides/schema";
-import { breakpoint, size } from "@medguides/ui-tokens";
+import { SECTION_TITLE, URGENCY_LABEL, type Protocol } from "@avero/schema";
+import { breakpoint, size } from "@avero/ui-tokens";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Linking, Pressable, ScrollView, Text, useWindowDimensions, View } from "react-native";

@@ -1,4 +1,4 @@
-import { shadow } from "@medguides/ui-tokens";
+import { shadow } from "@avero/ui-tokens";
 import { useState } from "react";
 import { Pressable, TextInput, View } from "react-native";
 

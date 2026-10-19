@@ -1,4 +1,4 @@
-import { STRENGTH_LABEL, type Evidence, type Item, type Source, type Strength } from "@medguides/schema";
+import { STRENGTH_LABEL, type Evidence, type Item, type Source, type Strength } from "@avero/schema";
 import { createContext, useContext, type ReactNode } from "react";
 import { Text, View } from "react-native";
 

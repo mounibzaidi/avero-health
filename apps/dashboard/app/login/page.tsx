@@ -36,7 +36,7 @@ export default function LoginPage() {
         <div className="mb-6 flex items-center gap-2.5">
           <LogoMark size={32} />
           <div>
-            <h1 className="font-semibold leading-tight">Avero Health</h1>
+            <h1 className="font-semibold leading-tight">Avero</h1>
             <p className="text-xs text-muted">Fiche workshop · editorial team sign-in</p>
           </div>
         </div>

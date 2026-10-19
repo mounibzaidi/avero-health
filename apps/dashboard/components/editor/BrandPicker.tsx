@@ -1,6 +1,6 @@
 "use client";
 
-import type { AvailabilityStatus, Medication, Prescriber } from "@medguides/schema";
+import type { AvailabilityStatus, Medication, Prescriber } from "@avero/schema";
 import { useMemo, useState } from "react";
 
 import { AVAILABILITY_LABEL, PRESCRIBER_LABEL, TO_COMPLETE } from "@/lib/labels";

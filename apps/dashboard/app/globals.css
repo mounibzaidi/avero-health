@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "@medguides/ui-tokens/theme.css";
+@import "@avero/ui-tokens/theme.css";
 
 /* Same tokens as the app (Q5). Light by default; data-theme="dark" on <html> switches. */
 html,
