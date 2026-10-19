@@ -2,7 +2,7 @@
 
 Avero gives Algerian doctors one trusted place for up-to-date clinical protocols, with every recommendation linked to its official source.
 
-<!-- **Live demo:** add the link once deployed -->
+**Live demo (dashboard, open without an account):** https://avero-health-sandy.vercel.app
 <!-- **Demo video:** add the link -->
 
 ## The problem
