@@ -15,10 +15,10 @@ async function call<T>(path: string, init: RequestInit = {}): Promise<T> {
   try {
     r = await fetch(`${BASE}${path}`, { ...init, headers: { Authorization: `Bearer ${await token()}`, ...(init.headers ?? {}) } });
   } catch {
-    throw new Error("Service injoignable : lancez services/api (voir son README).");
+    throw new Error("API unreachable: start services/api (see its README).");
   }
   const body = await r.json().catch(() => null);
-  if (!r.ok) throw new Error((body as { detail?: string } | null)?.detail ?? `Erreur ${r.status}`);
+  if (!r.ok) throw new Error((body as { detail?: string } | null)?.detail ?? `Error ${r.status}`);
   return body as T;
 }
 
@@ -27,10 +27,3 @@ export const api = <T,>(path: string, init: RequestInit = {}) =>
 
 /** A multipart upload (the browser sets the boundary). */
 export const apiForm = <T,>(path: string, form: FormData) => call<T>(path, { method: "POST", body: form });
-
-/** A binary response (a page image), as an object URL to show; the caller revokes it. */
-export async function apiBlob(path: string): Promise<string> {
-  const r = await fetch(`${BASE}${path}`, { headers: { Authorization: `Bearer ${await token()}` } });
-  if (!r.ok) throw new Error(`Erreur ${r.status}`);
-  return URL.createObjectURL(await r.blob());
-}

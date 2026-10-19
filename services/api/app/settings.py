@@ -23,5 +23,5 @@ def env() -> dict[str, str]:
 def setting(name: str) -> str:
     value = env().get(name)
     if not value:
-        raise RuntimeError(f"{name} manquant dans .env.local")
+        raise RuntimeError(f"{name} missing from .env.local")
     return value

@@ -19,13 +19,6 @@ export type EditorEnv = {
 };
 export const EnvCtx = createContext<EditorEnv>({ sources: [], quotes: {}, newId: (p) => p });
 
-/** "AHA/ACC p. 1678" for a line's first evidence. */
-export function citeShort(e: Evidence | undefined, sources: Source[]): string | null {
-  if (!e) return null;
-  const s = sources.find((x) => x.id === e.source_id);
-  return `${s?.organisation || e.source_id || "?"}${e.page ? ` p. ${e.page}` : ""}`;
-}
-
 function QuoteState({ r }: { r: QuoteResult | undefined }) {
   if (!r) return <span className="text-xs text-muted">not checked</span>;
   return r.found
