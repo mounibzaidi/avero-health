@@ -78,7 +78,7 @@ export function ErrorNote({ children }: { children: ReactNode }) {
   return <div className="rounded-lg border border-flag/30 bg-flagbg px-3 py-2 text-sm text-flag">{children}</div>;
 }
 
-/** The Avero mark: a solid A in the brand green, light emerald at the apex to deep green at the feet (same as the
+/** The Avero mark: an A without its crossbar (an inverted V) in the brand green, light emerald at the apex to deep green at the feet (same as the
  * app and the favicon). */
 export function LogoMark({ size = 24 }: { size?: number }) {
   const id = `avero-a${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`; // url(#…) breaks on the ":" or "«" of React ids
@@ -90,7 +90,7 @@ export function LogoMark({ size = 24 }: { size?: number }) {
           <stop offset="1" stopColor="#1E4F3E" />
         </linearGradient>
       </defs>
-      <path fillRule="evenodd" fill={`url(#${id})`} d="M30 13 L34 13 L51 50 L43 50 L39.8 43 L24.2 43 L21 50 L13 50 Z M32 26.5 L36.6 37 L27.4 37 Z" />
+      <path fillRule="evenodd" fill={`url(#${id})`} d="M30 13 L34 13 L51 50 L43 50 L32 26 L21 50 L13 50 Z" />
     </svg>
   );
 }

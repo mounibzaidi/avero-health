@@ -2,7 +2,7 @@ import { useId } from "react";
 import { Text, View } from "react-native";
 import Svg, { Defs, LinearGradient, Path, Stop } from "react-native-svg";
 
-/** The mark: a solid A in the brand green, light emerald at the apex to deep green at the feet (same as the
+/** The mark: an A without its crossbar (an inverted V) in the brand green, light emerald at the apex to deep green at the feet (same as the
  * dashboard and the icons). */
 export function LogoMark({ size = 28 }: { size?: number }) {
   const id = `avero-a${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`; // url(#…) breaks on the ":" or "«" of React ids
@@ -14,7 +14,7 @@ export function LogoMark({ size = 28 }: { size?: number }) {
           <Stop offset="1" stopColor="#1E4F3E" />
         </LinearGradient>
       </Defs>
-      <Path fillRule="evenodd" fill={`url(#${id})`} d="M30 13 L34 13 L51 50 L43 50 L39.8 43 L24.2 43 L21 50 L13 50 Z M32 26.5 L36.6 37 L27.4 37 Z" />
+      <Path fillRule="evenodd" fill={`url(#${id})`} d="M30 13 L34 13 L51 50 L43 50 L32 26 L21 50 L13 50 Z" />
     </Svg>
   );
 }
