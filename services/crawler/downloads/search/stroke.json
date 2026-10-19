@@ -1,0 +1,5397 @@
+{
+  "topic": "stroke",
+  "searched_at": "2026-10-14T19:48:37+00:00",
+  "sources": [
+    {
+      "type": "source",
+      "id": "who",
+      "name": "World Health Organization",
+      "reuse": "open",
+      "priority": 1,
+      "lang": "en,fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 88021,
+      "partial": false,
+      "results": [
+        {
+          "title": "tobacco large canada stroke 01 en",
+          "titled": false,
+          "url": "http://www.who.int/tobacco/healthwarningsdatabase/tobacco_large_canada_stroke_01_en/en/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 43,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 10,
+              "why": "origine : États-Unis ou Canada"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "na",
+          "on_topic": true
+        },
+        {
+          "title": "tobacco large canada stroke 01 fr",
+          "titled": false,
+          "url": "http://www.who.int/tobacco/healthwarningsdatabase/tobacco_large_canada_stroke_01_fr/en/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 43,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 10,
+              "why": "origine : États-Unis ou Canada"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "na",
+          "on_topic": true
+        },
+        {
+          "title": "Priority medical devices for management of cardiac diseases, stroke, and diabetes",
+          "titled": false,
+          "url": "https://www.who.int/news-room/feature-stories/detail/priority-medical-devices-for-management-of-cardiac-diseases-stroke-diabetes",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": true,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "patient_story",
+          "year": null,
+          "rank": 48,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "témoignage",
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "Promoting independence following a stroke",
+          "titled": false,
+          "url": "https://www.who.int/publications-detail-redirect/promoting-independence-following-a-stroke",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 33,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "stroke",
+          "titled": false,
+          "url": "http://www.who.int/ncds/surveillance/steps/stroke/en/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 33,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "tobacco large Africa stroke 01 en",
+          "titled": false,
+          "url": "http://www.who.int/tobacco/healthwarningsdatabase/tobacco_large_Africa_stroke_01_en/en/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 33,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "tobacco large Africa stroke 02 en",
+          "titled": false,
+          "url": "http://www.who.int/tobacco/healthwarningsdatabase/tobacco_large_Africa_stroke_02_en/en/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 33,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "tobacco large Africa stroke 03 en",
+          "titled": false,
+          "url": "http://www.who.int/tobacco/healthwarningsdatabase/tobacco_large_Africa_stroke_03_en/en/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 33,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "tobacco large mauritius strokes 01 en",
+          "titled": false,
+          "url": "http://www.who.int/tobacco/healthwarningsdatabase/tobacco_large_mauritius_strokes_01_en/en/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 33,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "provision for care of acute stroke and rehabilitation in more than 50 of public sector health facilities",
+          "titled": false,
+          "url": "https://www.who.int/data/gho/data/indicators/indicator-details/GHO/provision-for-care-of-acute-stroke-and-rehabilitation-in-more-than-50-of-public-sector-health-facilities",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 13,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -40,
+              "why": "thème voisin : « rehabilitation »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "Global, regional and national burdens of ischemic heart disease and stroke attributable to exposure to long working hours for 194 countries, 2000-2016",
+          "titled": false,
+          "url": "https://www.who.int/news-room/q-a-detail/global-regional-and-national-burdens-of-ischemic-heart-disease-and-stroke-attributable-to-exposure-to-long-working-hours-for-194-countries-2000-2016",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2016,
+          "rank": 38,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "ancienne : plus de 8 ans (2016)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": true,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "New WHO pocket-charts will save lives by predicting heart attack and stroke",
+          "titled": false,
+          "url": "https://www.who.int/news/item/08-12-2010-new-who-pocket-charts-will-save-lives-by-predicting-heart-attack-and-stroke",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2010,
+          "rank": 38,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "ancienne : plus de 8 ans (2010)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": true,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "Number of deaths, stroke attributable to exposure to long working hours, by sex and age group, globally, regionally and by country for 183 countries, for the year 2016",
+          "titled": false,
+          "url": "https://www.who.int/publications/m/item/number-of-deaths-stroke-attributable-to-exposure-to-long-working-hours-by-sex-and-age-group-globally-regionally-and-by-country-for-183-countries-for-the-year-2016",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2016,
+          "rank": 23,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -15,
+              "why": "ancienne : plus de 8 ans (2016)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": true,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "Number of disability-adjusted life years, stroke attributable to exposure to long working hours, by sex and age group, globally, regionally and by country for 183 countries, for the year 2016",
+          "titled": false,
+          "url": "https://www.who.int/publications/m/item/number-of-disability-adjusted-life-years-stroke-attributable-to-exposure-to-long-working-hours-by-sex-and-age-group-globally-regionally-and-by-country-for-183-countries-for-the-year-2016",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2016,
+          "rank": 23,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -15,
+              "why": "ancienne : plus de 8 ans (2016)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": true,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "منظمة الصحة العالمية ومنظمة العمل الدولية تؤكدان: ساعات العمل الطويلة تزيد عدد الوفيات الناجمة عن أمراض القلب والسكتة",
+          "titled": false,
+          "url": "https://www.who.int/ar/news/item/05-10-1442-long-working-hours-increasing-deaths-from-heart-disease-and-stroke-who-ilo",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": null,
+          "rank": -12,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": false
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "sfd",
+      "name": "Société Francophone du Diabète",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 441,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "tn-ineas",
+      "name": "INEAS (Tunisie)",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "fr",
+      "status": "error",
+      "error": "RuntimeError: ni sitemap ni liens exploitables",
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "erc",
+      "name": "European Resuscitation Council",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 168,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "dz-pasteur",
+      "name": "Institut Pasteur d'Algérie",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 162,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "gina",
+      "name": "Global Initiative for Asthma (GINA)",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "en",
+      "status": "error",
+      "error": "Blocked: page protégée ou refusée (HTTP 403) : https://ginasthma.org",
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "dz-insp",
+      "name": "Institut National de Santé Publique (Algérie)",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "fr",
+      "status": "done",
+      "method": "crawl",
+      "pages": 985,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "msf",
+      "name": "MSF Medical Guidelines",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "en,fr",
+      "status": "done",
+      "method": "crawl",
+      "pages": 2719,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "dz-ministry",
+      "name": "Ministère de la Santé (Algérie)",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 1882,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "eaaci",
+      "name": "EAACI (allergy)",
+      "reuse": "check",
+      "priority": 1,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 2428,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "esc",
+      "name": "European Society of Cardiology",
+      "reuse": "link_only",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 2506,
+      "partial": false,
+      "results": [
+        {
+          "title": "A new ESC consensus statement on stroke risk management in carotid atherosclerotic disease",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/stroke/scientific-documents-and-publications/heart-and-stroke-blog/Heart-and-Stroke-Blog-Title-1/",
+          "lastmod": "2026-01-11",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Advancing Stroke Prevention in Carotid Atherosclerosis: The Clinical Relevance of Plaque Vulnerability Assessment",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/stroke/scientific-documents-and-publications/heart-and-stroke-blog/advancing-stroke-prevention-in-carotid-atherosclerosis-the-clinical-relevance-of-plaque-vulnerability-assessment/",
+          "lastmod": "2026-01-29",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Five-minute test during routine GP appointments could prevent stroke",
+          "titled": false,
+          "url": "https://www.escardio.org/news/press/press-releases/Five-minute-test-during-routine-GP-appointments-could-prevent-stroke/",
+          "lastmod": "2026-08-27",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Heart and Stroke - Blog",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/stroke/scientific-documents-and-publications/heart-and-stroke-blog/",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "New systematic review and meta-analysis shows an association between shingles vaccination and lower risk of heart attack and stroke",
+          "titled": false,
+          "url": "https://www.escardio.org/news/press/press-releases/New-systematic-review-and-meta-analysis-shows-an-association-between-shingles-vaccination-and-lower-risk-of-heart-attack-and-stroke/",
+          "lastmod": "2026-08-27",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "OCEANIC-STROKE and the Evolving Role of Dual Pathway Inhibition",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/stroke/scientific-documents-and-publications/heart-and-stroke-blog/oceanic-stroke-and-the-evolving-role-of-dual-pathway-inhibition/",
+          "lastmod": "2026-05-11",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "PRESTIGE-AF: a new randomized trial to address stroke prevention in intracerebral haemorrhage survivors with atrial fibrillation",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/stroke/scientific-documents-and-publications/heart-and-stroke-blog/prestige-af-a-new-randomized-trial-to-address-stroke-prevention-in-intracerebral-haemorrhage-survivors-with-atrial-fibrillation/",
+          "lastmod": "2026-01-29",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "People with atrial fibrillation at intermediate risk of stroke benefit from oral anticoagulants",
+          "titled": false,
+          "url": "https://www.escardio.org/news/press/press-releases/people-with-atrial-fibrillation-at-intermediate-risk-of-stroke-benefit-from-oral-anticoagulants/",
+          "lastmod": "2026-09-17",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Safer stroke prevention strategies are needed for patients with atrial fibrillation after intracranial haemorrhage",
+          "titled": false,
+          "url": "https://www.escardio.org/news/press/press-releases/safer-stroke-prevention-strategies-are-needed-for-patients-with-atrial-fibrillation-after-intracranial-haemorrhage/",
+          "lastmod": "2026-09-17",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Transforming the Management of AF-Related Stroke with Virtual Twins and AI: The TARGET Project",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/stroke/scientific-documents-and-publications/heart-and-stroke-blog/transforming-the-management-of-af-related-stroke-with-virtual-twins-and-ai-the-target-project2/",
+          "lastmod": "2026-01-29",
+          "pdf": false,
+          "guidance": true,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Walking further and faster is linked to a reduced risk of heart attacks, heart failure and stroke in people with high blood pressure",
+          "titled": false,
+          "url": "https://www.escardio.org/news/press/press-releases/Walking-further-and-faster-is-linked-to-a-reduced-risk-of-heart-attacks-heart-failure-and-stroke-in-people-with-high-blood-pressure/",
+          "lastmod": "2026-08-27",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 70,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Cryptogenic stroke and asymptomatic atrial fibrillation screening",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/cardiology-practice/education/cardiopractice/cryptogenic-stroke-and-asymptomatic-atrial-fibrillation-screening/",
+          "lastmod": "2026-01-14",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "ESC Council on Stroke Mechanical Thrombectomy Grant",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/stroke/education/esc-council-on-stroke-mechanical-thrombectomy-grant/",
+          "lastmod": "2026-09-15",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Elections Stroke",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/stroke/about/elections-stroke/",
+          "lastmod": "2026-07-15",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Patent foramen ovale in patients with cryptogenic stroke: to close or not to close?",
+          "titled": false,
+          "url": "https://www.escardio.org/communities/councils/cardiology-practice/education/cardiopractice/Patent-foramen-ovale-in-patients-with-cryptogenic-stroke-to-close-or-not-to-close/",
+          "lastmod": "2026-01-14",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "ilcor",
+      "name": "ILCOR (resuscitation science)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "crawl",
+      "pages": 528,
+      "partial": false,
+      "results": [
+        {
+          "title": "EtD: Heat Stroke Cooling",
+          "titled": true,
+          "url": "https://costr.ilcor.org/document/assets/images/photos/Etd_Heat-Stroke-Cooling-FINAL_SAC_Approved_27-Nov-2019.pdf",
+          "lastmod": null,
+          "pdf": true,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "consensus",
+          "year": 2019,
+          "rank": 73,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 20,
+              "why": "type : consensus"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "First Aid Cooling Techniques for Heat Stroke and Exertional Hyperthermia (FA): Systematic Review · ILCOR staff · Final CoSTR Visits: 4353",
+          "titled": true,
+          "url": "https://costr.ilcor.org/document/first-aid-cooling-techniques-for-heat-stroke-and-exertional-hyperthermia",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "systematic_review",
+          "year": null,
+          "rank": 56,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 8,
+              "why": "type : revue"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "See Final CoSTR",
+          "titled": true,
+          "url": "https://costr.ilcor.org/document/first-aid-cooling-techniques-for-heat-stroke-and-exertional-hyperthermia?status=final",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "consensus",
+          "year": null,
+          "rank": 8,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": 20,
+              "why": "type : consensus"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": false
+        },
+        {
+          "title": "See draft for public comment",
+          "titled": true,
+          "url": "https://costr.ilcor.org/document/first-aid-cooling-techniques-for-heat-stroke-and-exertional-hyperthermia?status=draft",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "consensus",
+          "year": null,
+          "rank": 8,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": 20,
+              "why": "type : consensus"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": false
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "srlf",
+      "name": "Société de Réanimation de Langue Française",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 4006,
+      "partial": false,
+      "results": [
+        {
+          "title": "Accident vasculaire cérébral | SRLF",
+          "titled": false,
+          "url": "https://www.srlf.org/media/accident-vasculaire-cerebral",
+          "lastmod": "2024-08-22",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Accident vasculaire cérébral"
+          ],
+          "kind": "research",
+          "year": 2024,
+          "rank": 98,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Accident vasculaire cérébral »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "fr",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        },
+        {
+          "title": "One-year survival in acute stroke patients requiring mechanical ventilation: a multicenter cohort study | SRLF",
+          "titled": false,
+          "url": "https://www.srlf.org/article-revue/one-year-survival-acute-stroke-patients-requiring-mechanical-ventilation-multicenter",
+          "lastmod": "2021-02-10",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2021,
+          "rank": 88,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2021)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        },
+        {
+          "title": "Association between total antioxidant capacity and mortality in ischemic stroke patients | SRLF",
+          "titled": false,
+          "url": "https://www.srlf.org/article-revue/association-between-total-antioxidant-capacity-and-mortality-ischemic-stroke-patients",
+          "lastmod": "2021-02-10",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2021,
+          "rank": 68,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2021)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        },
+        {
+          "title": "Low cardiac index and stroke volume on admission are associated with poor outcome in critically ill burn patients: a retrospective cohort study | SRLF",
+          "titled": false,
+          "url": "https://www.srlf.org/article-revue/low-cardiac-index-and-stroke-volume-admission-are-associated-poor-outcome-critically",
+          "lastmod": "2021-02-10",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2021,
+          "rank": 68,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2021)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "ada",
+      "name": "American Diabetes Association (Standards of Care)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 2623,
+      "partial": false,
+      "results": [
+        {
+          "title": "Helping Spanish speakers link type 2 diabetes and heart disease and stroke | American Diabetes Association",
+          "titled": false,
+          "url": "https://diabetes.org/newsroom/helping-Spanish-speakers-link-type-2-diabetes-and-heart-disease-and-stroke",
+          "lastmod": "2026-09-29",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 73,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 10,
+              "why": "origine : États-Unis ou Canada"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "na",
+          "on_topic": true
+        },
+        {
+          "title": "New Voices Chosen to Elevate the Link between Type 2 Diabetes, Heart Disease and Stroke | American Diabetes Association",
+          "titled": false,
+          "url": "https://diabetes.org/newsroom/new-voices-chosen-to-elevate-the-link-between-t2d-heart-disease-and-stroke",
+          "lastmod": "2026-09-29",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 73,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 10,
+              "why": "origine : États-Unis ou Canada"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "na",
+          "on_topic": true
+        },
+        {
+          "title": "Get serious about stroke prevention | American Diabetes Association",
+          "titled": false,
+          "url": "https://diabetes.org/about-diabetes/complications/stroke",
+          "lastmod": "2025-02-18",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2025,
+          "rank": 58,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2025)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 10,
+              "why": "origine : États-Unis ou Canada"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "na",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "ansm",
+      "name": "ANSM",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "crawl",
+      "pages": 1410,
+      "partial": false,
+      "results": [
+        {
+          "title": ".st0{fill:#FFFFFF;stroke:#5E2A7E;stroke-width:0.25;} .st1{fill:#E6E6E6;} .st2{fill:#FFFFFF;} .st3{fill:none;stroke:#E6E6E6;stroke-width:1.3333;stroke-linecap:round;stroke-linejoin:round;} .st4{fill:#E",
+          "titled": true,
+          "url": "https://data.ansm.sante.fr/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 63,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "fr",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "hcsp",
+      "name": "Haut Conseil de la santé publique",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "crawl",
+      "pages": 2867,
+      "partial": false,
+      "results": [
+        {
+          "title": "Apports du PMSI SSR chaîné au PMSI MCO : enseignement d’une étude sur les hospitalisations en soins de suite et de réadaptation à la suite d’un accident vasculaire cérébral",
+          "titled": true,
+          "url": "https://www.hcsp.fr/Explore.cgi/avisrapportsdomaine?clefr=438",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Accident vasculaire cérébral"
+          ],
+          "kind": "research",
+          "year": null,
+          "rank": 43,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Accident vasculaire cérébral »"
+            },
+            {
+              "points": -40,
+              "why": "thème voisin : « réadaptation »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "fr",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "inesss",
+      "name": "INESSS (Québec)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 3689,
+      "partial": false,
+      "results": [
+        {
+          "title": "INESSS: Publication: L’organisation et la prestation de services de réadaptation pour les personnes ayant subi un accident vasculaire cérébral (AVC) et leurs proches",
+          "titled": false,
+          "url": "https://www.inesss.qc.ca/publications/repertoire-des-publications/publication/lorganisation-et-la-prestation-de-services-de-readaptation-pour-les-personnes-ayant-subi-un-accident-vasculaire-cerebral-avc-et-leurs-proches.html",
+          "lastmod": "2020-03-19",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Accident vasculaire cérébral"
+          ],
+          "kind": "research",
+          "year": 2020,
+          "rank": 8,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Accident vasculaire cérébral »"
+            },
+            {
+              "points": -40,
+              "why": "thème voisin : « réadaptation »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 10,
+              "why": "origine : États-Unis ou Canada"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "fr",
+          "old": false,
+          "origin": "na",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "dz-cnt",
+      "name": "Centre National de Toxicologie (Algérie)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "error",
+      "error": "RuntimeError: ni sitemap ni liens exploitables",
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "antibioclic",
+      "name": "Antibioclic",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "crawl",
+      "pages": 153,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "gfrup",
+      "name": "GFRUP (réanimation et urgences pédiatriques)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 159,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "cdc",
+      "name": "CDC (US)",
+      "reuse": "open",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 1897,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "snfge",
+      "name": "SNFGE (gastro-entérologie)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 914,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfp",
+      "name": "Société Française de Pédiatrie",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 377,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "cmg",
+      "name": "Collège de la Médecine Générale",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 4002,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "splf",
+      "name": "Société de Pneumologie de Langue Française",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 5043,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "resus-uk",
+      "name": "Resuscitation Council UK",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 441,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfa",
+      "name": "Société Française d'Allergologie",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 181,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "wao",
+      "name": "World Allergy Organization",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "crawl",
+      "pages": 587,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "ssc",
+      "name": "Surviving Sepsis Campaign (SCCM)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 603,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "gold",
+      "name": "GOLD (COPD)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 360,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "ispad",
+      "name": "ISPAD (paediatric diabetes)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 387,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "cngof",
+      "name": "CNGOF (gynécologie-obstétrique)",
+      "reuse": "check",
+      "priority": 2,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 13513,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "who-afro",
+      "name": "WHO Regional Office for Africa",
+      "reuse": "open",
+      "priority": 2,
+      "lang": "en,fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 22656,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "eso",
+      "name": "European Stroke Organisation",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 1348,
+      "partial": false,
+      "results": [
+        {
+          "title": "APPLY NOW: Hands-on Simulation Workshops at ESOC 2026: train for real-world acute stroke care",
+          "titled": false,
+          "url": "https://eso-stroke.org/apply-now-hands-on-simulation-workshops-at-esoc-2026-train-for-real-world-acute-stroke-care/",
+          "lastmod": "2026-03-27",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "course",
+          "year": 2026,
+          "rank": 98,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "formation",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Acute management of patients with ischaemic stroke and isolated cervical internal carotid artery occlusion",
+          "titled": false,
+          "url": "https://eso-stroke.org/blog-acute-management-of-patients-with-ischaemic-stroke-and-isolated-cervical-internal-carotid-artery-occlusion/",
+          "lastmod": "2025-07-17",
+          "pdf": false,
+          "guidance": true,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "news",
+          "year": 2025,
+          "rank": 98,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2025)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "From restriction to open but controlled inclusion: The new ESO/ESMINT guidelines on mechanical thrombectomy in acute ischaemic stroke - European Stroke Organisation",
+          "titled": false,
+          "url": "https://eso-stroke.org/from-restriction-to-open-but-controlled-inclusion-the-new-esoesmint-guidelines-on-mechanical-thrombectomy-in-acute-ischaemic-stroke/",
+          "lastmod": "2019-02-26",
+          "pdf": false,
+          "guidance": true,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "guideline",
+          "year": 2019,
+          "rank": 93,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": 30,
+              "why": "type : recommandation"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Artificial Intelligence in Acute Stroke Imaging",
+          "titled": false,
+          "url": "https://eso-stroke.org/artificial-intelligence-acute-stroke-imaging-2/",
+          "lastmod": "2026-09-28",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 83,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Blood pressure treatment in acute ischemic stroke: an elusive target",
+          "titled": false,
+          "url": "https://eso-stroke.org/blood-pressure-treatment-in-acute-ischemic-stroke-an-elusive-target/",
+          "lastmod": "2024-08-02",
+          "pdf": false,
+          "guidance": true,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2024,
+          "rank": 83,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Dual antiplatelet therapy vs thrombolysis in non-disabling acute ischemic stroke",
+          "titled": false,
+          "url": "https://eso-stroke.org/dual-antiplatelet-therapy-vs-thrombolysis-in-non-disabling-acute-ischemic-stroke/",
+          "lastmod": "2024-12-06",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2024,
+          "rank": 83,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "ESOC 2023 Session Report - Organising the Acute Chain of Stroke Care - European Stroke Organisation",
+          "titled": false,
+          "url": "https://eso-stroke.org/esoc-2023-session-report-organizing-the-acute-chain-of-stroke-care/",
+          "lastmod": "2024-05-02",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "news",
+          "year": 2023,
+          "rank": 73,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "ESOC 2021 Session Report - Acute Stroke Treatment in Difficult Clinical Situations - European Stroke Organisation",
+          "titled": false,
+          "url": "https://eso-stroke.org/esoc-2021-session-report-acute-stroke-treatment-in-difficult-clinical-situations/",
+          "lastmod": "2021-09-07",
+          "pdf": false,
+          "guidance": true,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "news",
+          "year": 2021,
+          "rank": 68,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 5,
+              "why": "récente (2021)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Session ID SC18: Thrombolysis for Acute Ischemic Stroke - Exploring the Grey - European Stroke Organisation",
+          "titled": false,
+          "url": "https://eso-stroke.org/session-id-sc18-thrombolysis-for-acute-ischemic-stroke-exploring-the-grey/",
+          "lastmod": "2024-05-17",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2024,
+          "rank": 58,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Session ID SS4: Back to Basics: Non-Contrast CT in Acute Stroke Care - European Stroke Organisation",
+          "titled": false,
+          "url": "https://eso-stroke.org/back-to-basics-non-contrast-ct-in-acute-stroke-care/",
+          "lastmod": "2024-05-16",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2024,
+          "rank": 58,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Session ID TC6: Management of Stroke Complications (Acute & Subacute) - European Stroke Organisation",
+          "titled": false,
+          "url": "https://eso-stroke.org/session-id-tc6-management-of-stroke-complications-acute-subacute/",
+          "lastmod": "2024-05-17",
+          "pdf": false,
+          "guidance": true,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2024,
+          "rank": 58,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "INTRACRANIAL ARTERIAL DOLICHOECTASIA AND ACUTE ISCHAEMIC STROKE - European Stroke Organisation",
+          "titled": false,
+          "url": "https://eso-stroke.org/intracranarterial-dolchoectasia-and-acute-ischaemic-stroke/",
+          "lastmod": "2023-04-07",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2023,
+          "rank": 58,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Slow-flow in acute ischaemic stroke - European Stroke Organisation",
+          "titled": false,
+          "url": "https://eso-stroke.org/slow-flow-in-acute-ischaemic-stroke/",
+          "lastmod": "2023-02-03",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2023,
+          "rank": 58,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Acute stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Session report - The teaching course on rare intracranial vasculopathies",
+          "titled": false,
+          "url": "https://eso-stroke.org/session-report-acute-stroke-imaging/",
+          "lastmod": "2026-05-08",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 18,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": false
+        },
+        {
+          "title": "Session report ESOC 2025: Acute reperfusion treatment",
+          "titled": false,
+          "url": "https://eso-stroke.org/https-eso-stroke-org-blog-session-acute-reperfusion/",
+          "lastmod": "2025-05-22",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "news",
+          "year": 2025,
+          "rank": 18,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2025)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": false
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "nice",
+      "name": "NICE",
+      "reuse": "link_only",
+      "priority": 3,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 3240,
+      "partial": false,
+      "results": [
+        {
+          "title": "Stroke and ischaemic attack: review 6 months after discharge | Indicators | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/indicators/ind31-stroke-and-ischaemic-attack-review-6-months-after-discharge",
+          "lastmod": "2023-10-18",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "systematic_review",
+          "year": 2023,
+          "rank": 78,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 8,
+              "why": "type : revue"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke and ischaemic attack: care plan on discharge | Indicators | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/indicators/ind30-stroke-and-ischaemic-attack-care-plan-on-discharge",
+          "lastmod": "2023-10-18",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2023,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke and ischaemic attack: early supported discharge | Indicators | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/indicators/ind32-stroke-and-ischaemic-attack-early-supported-discharge",
+          "lastmod": "2023-10-18",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2023,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke and ischaemic attack: register | Indicators | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/indicators/ind259-stroke-and-ischaemic-attack-register",
+          "lastmod": "2023-08-19",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2023,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Hundreds of thousands set to benefit from new treatment to prevent heart attacks and strokes | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/news/articles/hundreds-of-thousands-set-to-benefit-from-new-treatment-to-prevent-heart-attacks-and-strokes",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": true,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": null,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Injection for more than a million people to help prevent heart attacks and strokes recommended | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/news/articles/semaglutide-injection-to-help-prevent-heart-attacks-and-strokes",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": null,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "More people are benefitting from NICE-recommended statins to reduce heart attacks and strokes | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/news/articles/more-people-are-benefitting-from-nice-recommended-statins-to-reduce-heart-attacks-and-strokes",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": null,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "NICE launches second consultation on genetic testing to guide treatment after a stroke | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/news/articles/nice-launches-second-consultation-on-genetic-testing-to-guide-treatment-after-a-stroke",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": true,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": null,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Statins a choice for more people to reduce risk of heart attacks and strokes | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/news/articles/statins-a-choice-for-more-people-to-reduce-risk-of-heart-attacks-and-strokes",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": null,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Testing could help prevent further strokes in people with gene variant | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/news/articles/testing-could-help-prevent-further-strokes-in-people-with-gene-variant",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": null,
+          "rank": 55,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke and ischaemic attack: blood pressure (79 years and under) | Indicators | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/indicators/ind243-stroke-and-ischaemic-attack-blood-pressure-79-years-and-under",
+          "lastmod": "2022-08-23",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2022,
+          "rank": 50,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2022)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke and ischaemic attack: blood pressure (80 years and over) | Indicators | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/indicators/ind244-stroke-and-ischaemic-attack-blood-pressure-80-years-and-over",
+          "lastmod": "2022-08-23",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2022,
+          "rank": 50,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2022)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke and transient ischaemic attack in over 16s: diagnosis and initial management | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/researchrecommendation/does-modified-release-dipyridamole-or-clopidogrel-with-aspirin-improve-outcome-compared-with-aspirin-alone-when-administered-early-after-acute-ischaemic-stroke",
+          "lastmod": "2022-05-11",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2022,
+          "rank": 50,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2022)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke and transient ischaemic attack in over 16s: diagnosis and initial management | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/researchrecommendation/does-the-withdrawal-of-oral-liquids-or-the-use-of-modified-thickened-oral-fluids-prevent-the-development-of-aspiration-pneumonia-after-an-acute-stroke",
+          "lastmod": "2022-05-11",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2022,
+          "rank": 50,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2022)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke and transient ischaemic attack in over 16s: diagnosis and initial management | NICE",
+          "titled": false,
+          "url": "https://www.nice.org.uk/researchrecommendation/how-safe-and-effective-is-very-early-mobilisation-delivered-by-appropriately-trained-healthcare-professionals-after-stroke",
+          "lastmod": "2022-05-11",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2022,
+          "rank": 50,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2022)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 0,
+              "why": "lien seulement"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "who-emro",
+      "name": "WHO Regional Office for the Eastern Mediterranean",
+      "reuse": "open",
+      "priority": 3,
+      "lang": "en,fr,ar",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 45672,
+      "partial": false,
+      "results": [
+        {
+          "title": "WHO EMRO - Accident vasculaire cérébral",
+          "titled": false,
+          "url": "https://www.emro.who.int/fr/health-topics/stroke-cerebrovascular-accident/",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 68,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Accident vasculaire cérébral »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "WHO EMRO - Poor nutrition is increasing rates of diabetes, cancers, heart attacks and stroke",
+          "titled": false,
+          "url": "https://www.emro.who.int/media/news/poor-nutrition-is-increasing-rates-of-diabetes-cancers-heart-attacks-and-stroke.html",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 63,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "WHO EMRO - Long working hours increasing deaths from heart disease and stroke: WHO, ILO",
+          "titled": false,
+          "url": "https://www.emro.who.int/ceha/ceha-news/long-working-hours-increasing-deaths-from-heart-disease-and-stroke-who-ilo.html",
+          "lastmod": "2026-10-12",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 48,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "WHO EMRO - Stroke, Cerebrovascular accident",
+          "titled": false,
+          "url": "https://www.emro.who.int/health-topics/stroke-cerebrovascular-accident/",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 48,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "WHO EMRO - Outcome of heat stroke patients referred to a tertiary hospital in Pakistan: a retrospective study",
+          "titled": false,
+          "url": "https://www.emro.who.int/emhj-volume-25-2019/volume-25-issue-7/outcome-of-heat-stroke-patients-referred-to-a-tertiary-hospital-in-pakistan-a-retrospective-study.html",
+          "lastmod": "2026-10-12",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 18,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": -30,
+              "why": "origine : autre pays"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "other",
+          "on_topic": true
+        },
+        {
+          "title": "WHO EMRO - Why does Pakistan lag in the use of fibrinolytics in patients with ischemic stroke?",
+          "titled": false,
+          "url": "https://www.emro.who.int/emhj-volume-32-2026/volume-32-number-7/why-does-pakistan-lag-in-the-use-of-fibrinolytics-in-patients-with-ischemic-stroke.html",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 18,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": -30,
+              "why": "origine : autre pays"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "other",
+          "on_topic": true
+        },
+        {
+          "title": "WHO EMRO - سوء التغذية يزيد معدلات الإصابة بالسكري والسرطانات والنوبات القلبية والسكتة",
+          "titled": false,
+          "url": "https://www.emro.who.int/ar/media/news/poor-nutrition-is-increasing-rates-of-diabetes-cancers-heart-attacks-and-stroke.html",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 3,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": false
+        },
+        {
+          "title": "WHO EMRO - سوء التغذية يزيد معدلات الإصابة بالسكري والسرطانات والنوبات القلبية والسكتة",
+          "titled": false,
+          "url": "https://www.emro.who.int/ar/media/news/poor-nutrition-is-increasing-rates-of-diabetes-cancers-heart-attacks-and-stroke.html?layout=who_emro:news",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 3,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": false
+        },
+        {
+          "title": "WHO EMRO - السكتة والحادثة الدماغية الوعائية",
+          "titled": false,
+          "url": "https://www.emro.who.int/ar/health-topics/stroke-cerebrovascular-accident/",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": -12,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": false
+        },
+        {
+          "title": "WHO EMRO - منظمة الصحة العالمية ومنظمة العمل الدولية تؤكدان: ساعات العمل الطويلة تزيد عدد الوفيات الناجمة عن أمراض القلب والسكتة",
+          "titled": false,
+          "url": "https://www.emro.who.int/ar/ceha/ceha-news/long-working-hours-increasing-deaths-from-heart-disease-and-stroke-who-ilo.html",
+          "lastmod": "2026-10-12",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": -12,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": false
+        },
+        {
+          "title": "WHO EMRO - منظمة الصحة العالمية ومنظمة العمل الدولية تؤكدان: ساعات العمل الطويلة تزيد عدد الوفيات الناجمة عن أمراض القلب والسكتة",
+          "titled": false,
+          "url": "https://www.emro.who.int/ar/ceha/ceha-news/long-working-hours-increasing-deaths-from-heart-disease-and-stroke-who-ilo.html?layout=who_emro:news",
+          "lastmod": "2026-10-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": -12,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": false
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "idf",
+      "name": "International Diabetes Federation",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en,fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 2523,
+      "partial": false,
+      "results": [
+        {
+          "title": "On World Stroke Day, we join the international community to raise awarenss of the seriousness of strokes - IDF Europe Site",
+          "titled": false,
+          "url": "https://idf.org/europe/news/on-world-stroke-day-we-join-the-international-community-to-raise-awarenss-of-the-seriousness-of-strokes/",
+          "lastmod": "2023-04-13",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2023,
+          "rank": 78,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "World Stroke Day 2023 – Greater than Stroke by strengthening the diabetes care delivery for stroke prevention - IDF Europe Site",
+          "titled": false,
+          "url": "https://idf.org/europe/news/world-stroke-day-2023-greater-than-stroke-by-strengthening-the-diabetes-care-delivery-for-stroke-prevention/",
+          "lastmod": "2023-10-30",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2023,
+          "rank": 78,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Uzbekistan implements National Programme “Combating heart attack and stroke” - IDF Europe Site",
+          "titled": false,
+          "url": "https://idf.org/europe/members-news/uzbekistan-implements-national-programme-combating-heart-attack-and-stroke/",
+          "lastmod": "2026-02-02",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": 63,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "WHA79 Resolution on Reducing the burden of stroke - Agenda Item 9 - International Diabetes Federation",
+          "titled": false,
+          "url": "https://idf.org/news-and-resources/resources/wha79-resolution-on-reducing-the-burden-of-stroke-agenda-item-9/",
+          "lastmod": "2026-05-26",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 63,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "15th World Stroke Congress 2023",
+          "titled": false,
+          "url": "https://idf.org/congress-and-events/upcoming-diabetes-events/15th-world-stroke-congress-2023/",
+          "lastmod": "2023-08-24",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "course",
+          "year": 2023,
+          "rank": 63,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "formation",
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        },
+        {
+          "title": "World Stroke Organisation statement on the WHO rehabilitation report - International Diabetes Federation",
+          "titled": false,
+          "url": "https://idf.org/news-and-resources/news/world-stroke-organisation-statement-on-the-who-rehabilitation-report/",
+          "lastmod": "2023-04-14",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2023,
+          "rank": -2,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -40,
+              "why": "thème voisin : « rehabilitation »"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2023)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 0,
+              "why": "origine : internationale"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "en",
+          "old": false,
+          "origin": "intl",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "kce",
+      "name": "KCE (Belgique)",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr,en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 5525,
+      "partial": false,
+      "results": [
+        {
+          "title": "Accident vasculaire cérébral : l’admission urgente dans une",
+          "titled": false,
+          "url": "https://www.kce.be/fr/a-propos-de-nous/communique-de-presse/accident-vasculaire-cerebral-ladmission-urgente-dans-une-unite-specialisee-est-cruciale",
+          "lastmod": "2024-07-09",
+          "pdf": false,
+          "guidance": false,
+          "score": 10,
+          "matched": [
+            "Accident vasculaire cérébral"
+          ],
+          "kind": "news",
+          "year": 2024,
+          "rank": 103,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Accident vasculaire cérébral »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "fr",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "[KCE] Press release : KCE Reports 181 Stroke units",
+          "titled": false,
+          "url": "https://www.kce.be/en/about-us/press-release/kce-press-release-kce-reports-181-stroke-units-efficacy-quality-indicators-and-organisation",
+          "lastmod": "2024-07-09",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2024,
+          "rank": 83,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "fr",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke units: Doeltreffendheid en kwaliteitsindicatoren",
+          "titled": false,
+          "url": "https://www.kce.be/nl/publicaties/alle-rapporten/stroke-units-doeltreffendheid-en-kwaliteitsindicatoren",
+          "lastmod": "2025-09-03",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2025,
+          "rank": 68,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2025)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "fr",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Beroerte: snelle opname in gespecialiseerde stroke unit",
+          "titled": false,
+          "url": "https://www.kce.be/nl/over-ons/persberichten/beroerte-snelle-opname-in-gespecialiseerde-stroke-unit-cruciaal",
+          "lastmod": "2024-07-09",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2024,
+          "rank": 63,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "Stroke units: efficacy, quality indicators and organisation",
+          "titled": false,
+          "url": "https://www.kce.be/en/publications/all-reports/stroke-units-efficacy-quality-indicators-and-organisation",
+          "lastmod": "2025-09-03",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2025,
+          "rank": 38,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -25,
+              "why": "champ étroit (télémédecine, organisation, registre, indicateurs, coûts)"
+            },
+            {
+              "points": 10,
+              "why": "récente (2025)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "CASES: Carotid Artery Stenting during Endovascular treatment",
+          "titled": false,
+          "url": "https://www.kce.be/en/kce-trials/funded-trials/cases-carotid-artery-stenting-during-endovascular-treatment-of-acute-ischemic-stroke-versus-deferred",
+          "lastmod": "2026-01-13",
+          "pdf": false,
+          "guidance": true,
+          "score": 10,
+          "matched": [
+            "Acute stroke"
+          ],
+          "kind": "research",
+          "year": 2026,
+          "rank": -12,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": -20,
+              "why": "document interventionnel ou chirurgical"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "fr",
+          "old": false,
+          "origin": "eu",
+          "on_topic": false
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "sfnv",
+      "name": "Société Française Neurovasculaire",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 182,
+      "partial": false,
+      "results": [
+        {
+          "title": "Nouvelle recommandation de l’ESO et de l’European Association of Neurosurgical Societies concernant l’accident vasculaire cérébral dû à une hémorragie intracérébrale spontannée",
+          "titled": false,
+          "url": "https://www.societe-francaise-neurovasculaire.fr/single-post/nouvelle-recommandationde-l-european-stroke-organisation-eso-et-de-l-european-association-of-neuro",
+          "lastmod": "2026-06-11",
+          "pdf": false,
+          "guidance": true,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "news",
+          "year": 2026,
+          "rank": 93,
+          "reasons": [
+            {
+              "points": 60,
+              "why": "le titre nomme le thème : « Accident vasculaire cérébral »"
+            },
+            {
+              "points": -20,
+              "why": "document interventionnel ou chirurgical"
+            },
+            {
+              "points": 10,
+              "why": "récente (2026)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "actualité",
+          "language": "fr",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        },
+        {
+          "title": "ENQUETE EN COURS - DeCisionS : Decision-making and Care in Severe Stroke. Processus décisionnel dans la prise en charge de l'AVC aigu grave en unité de neurologie vasculaire",
+          "titled": false,
+          "url": "https://www.societe-francaise-neurovasculaire.fr/single-post/enquete-en-cours-decisions-decision-making-and-care-in-severe-stroke-processus-décisionnel-dans",
+          "lastmod": "2024-12-03",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "course",
+          "year": 2024,
+          "rank": 93,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme un synonyme : « AVC »"
+            },
+            {
+              "points": 10,
+              "why": "récente (2024)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": "formation",
+          "language": "fr",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        },
+        {
+          "title": "Strategic infarct locations for post-stroke cognitive impairment: a pooled analysis of individual...",
+          "titled": false,
+          "url": "https://www.societe-francaise-neurovasculaire.fr/single-post/strategic-infarct-locations-for-post-stroke-cognitive-impairment-a-pooled-analysis-of-individual",
+          "lastmod": "2021-12-10",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "research",
+          "year": 2021,
+          "rank": 28,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": -40,
+              "why": "thème voisin : « post-stroke »"
+            },
+            {
+              "points": -15,
+              "why": "type : article ou page qui n'est pas une recommandation"
+            },
+            {
+              "points": 5,
+              "why": "récente (2021)"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "fr",
+          "on_topic": true
+        },
+        {
+          "title": "Bénéfices, risques et limites de l’altéplase",
+          "titled": false,
+          "url": "https://www.societe-francaise-neurovasculaire.fr/single-post/2017/01/10/méta-analyse-internationale-stroke-thrombolysis-trialists-stt-2014",
+          "lastmod": "2017-01-10",
+          "pdf": false,
+          "guidance": false,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "systematic_review",
+          "year": 2017,
+          "rank": 16,
+          "reasons": [
+            {
+              "points": -20,
+              "why": "le titre ne nomme pas le thème (trouvé par l'adresse ou le lien)"
+            },
+            {
+              "points": 8,
+              "why": "type : revue"
+            },
+            {
+              "points": -15,
+              "why": "ancienne : plus de 8 ans (2017)"
+            },
+            {
+              "points": 10,
+              "why": "en français"
+            },
+            {
+              "points": 25,
+              "why": "origine : France"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "fr",
+          "old": true,
+          "origin": "fr",
+          "on_topic": false
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "sign",
+      "name": "SIGN (Scotland)",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en",
+      "status": "done",
+      "method": "crawl",
+      "pages": 578,
+      "partial": false,
+      "results": [
+        {
+          "title": "National Clinical Guideline for Stroke",
+          "titled": true,
+          "url": "https://www.sign.ac.uk/patient-public-involvement/plain-language-versions-of-guidelines/stroke/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": true,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "guideline",
+          "year": null,
+          "rank": 93,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 30,
+              "why": "type : recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        },
+        {
+          "title": "National clinical guideline for stroke for the UK and Ireland",
+          "titled": true,
+          "url": "https://www.sign.ac.uk/guidelines/national-clinical-guideline-for-stroke-for-the-uk-and-ireland/",
+          "lastmod": null,
+          "pdf": false,
+          "guidance": true,
+          "score": 8,
+          "matched": [
+            "stroke"
+          ],
+          "kind": "guideline",
+          "year": null,
+          "rank": 93,
+          "reasons": [
+            {
+              "points": 40,
+              "why": "le titre nomme le thème sans son qualificatif : « stroke »"
+            },
+            {
+              "points": 30,
+              "why": "type : recommandation"
+            },
+            {
+              "points": -5,
+              "why": "année inconnue"
+            },
+            {
+              "points": 5,
+              "why": "en anglais"
+            },
+            {
+              "points": 15,
+              "why": "origine : Europe"
+            },
+            {
+              "points": 8,
+              "why": "téléchargeable"
+            }
+          ],
+          "hidden": null,
+          "language": "en",
+          "old": false,
+          "origin": "eu",
+          "on_topic": true
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "id": "spf",
+      "name": "Santé publique France",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "error",
+      "error": "Blocked: page protégée ou refusée (HTTP 403) : https://www.santepubliquefrance.fr",
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfmg",
+      "name": "Société Française de Médecine Générale",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 907,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "antipoison",
+      "name": "Centres antipoison (France)",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 217,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfe",
+      "name": "Société Française d'Endocrinologie",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 2023,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfndt",
+      "name": "Société Francophone de Néphrologie, Dialyse et Transplantation",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 773,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfn",
+      "name": "Société Française de Neurologie",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 184,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfdermato",
+      "name": "Société Française de Dermatologie",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "crawl",
+      "pages": 1942,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfgg",
+      "name": "Société Française de Gériatrie et Gérontologie",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 1246,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sforl",
+      "name": "Société Française d'ORL",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 119,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "sfr",
+      "name": "Société Française de Rhumatologie",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 507,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "ebpracticenet",
+      "name": "EBPracticeNet (Belgique)",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr,nl",
+      "status": "done",
+      "method": "crawl",
+      "pages": 255,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "wses",
+      "name": "World Society of Emergency Surgery",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 176,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "kdigo",
+      "name": "KDIGO",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 472,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "idsa",
+      "name": "Infectious Diseases Society of America",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 2532,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "escmid",
+      "name": "ESCMID",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en",
+      "status": "done",
+      "method": "crawl",
+      "pages": 165,
+      "partial": true,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "ilae",
+      "name": "International League Against Epilepsy",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en",
+      "status": "error",
+      "error": "Blocked: page protégée ou refusée (HTTP 403) : https://www.ilae.org",
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "figo",
+      "name": "FIGO",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "en",
+      "status": "done",
+      "method": "sitemap",
+      "pages": 1442,
+      "partial": false,
+      "results": []
+    },
+    {
+      "type": "source",
+      "id": "ma-sante",
+      "name": "Ministère de la Santé (Maroc)",
+      "reuse": "check",
+      "priority": 3,
+      "lang": "fr",
+      "status": "error",
+      "error": "ConnectError: [Errno 111] Connection refused",
+      "results": []
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "dz-cnt": {
+    "name": "Centre National de Toxicologie (Algérie)",
+    "url": "https://www.cnt.dz",
+    "first_failed_at": "2026-10-14T19:47:39+00:00",
+    "topics": [
+      "pulmonary-embolism",
+      "stroke"
+    ],
+    "error": "RuntimeError: ni sitemap ni liens exploitables",
+    "last_failed_at": "2026-10-14T19:48:37+00:00"
+  },
+  "gina": {
+    "name": "Global Initiative for Asthma (GINA)",
+    "url": "https://ginasthma.org",
+    "first_failed_at": "2026-10-14T19:47:39+00:00",
+    "topics": [
+      "pulmonary-embolism",
+      "stroke"
+    ],
+    "error": "Blocked: page protégée ou refusée (HTTP 403) : https://ginasthma.org",
+    "last_failed_at": "2026-10-14T19:48:37+00:00"
+  },
+  "ilae": {
+    "name": "International League Against Epilepsy",
+    "url": "https://www.ilae.org",
+    "first_failed_at": "2026-10-14T19:47:39+00:00",
+    "topics": [
+      "pulmonary-embolism",
+      "stroke"
+    ],
+    "error": "Blocked: page protégée ou refusée (HTTP 403) : https://www.ilae.org",
+    "last_failed_at": "2026-10-14T19:48:37+00:00"
+  },
+  "ma-sante": {
+    "name": "Ministère de la Santé (Maroc)",
+    "url": "https://www.sante.gov.ma",
+    "first_failed_at": "2026-10-14T19:47:39+00:00",
+    "topics": [
+      "pulmonary-embolism",
+      "stroke"
+    ],
+    "error": "ConnectError: [Errno 111] Connection refused",
+    "last_failed_at": "2026-10-14T19:48:37+00:00"
+  },
+  "spf": {
+    "name": "Santé publique France",
+    "url": "https://www.santepubliquefrance.fr",
+    "first_failed_at": "2026-10-14T19:47:39+00:00",
+    "topics": [
+      "pulmonary-embolism",
+      "stroke"
+    ],
+    "error": "Blocked: page protégée ou refusée (HTTP 403) : https://www.santepubliquefrance.fr",
+    "last_failed_at": "2026-10-14T19:48:37+00:00"
+  },
+  "tn-ineas": {
+    "name": "INEAS (Tunisie)",
+    "url": "https://www.ineas.tn",
+    "first_failed_at": "2026-10-14T19:47:39+00:00",
+    "topics": [
+      "pulmonary-embolism",
+      "stroke"
+    ],
+    "error": "RuntimeError: ni sitemap ni liens exploitables",
+    "last_failed_at": "2026-10-14T19:48:37+00:00"
+  }
+}

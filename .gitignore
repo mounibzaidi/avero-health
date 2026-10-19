@@ -14,5 +14,7 @@ __pycache__/
 .env.*
 *.local
 !.env.example
-services/crawler/downloads/
+services/crawler/downloads/*
+# the saved guideline searches, shown on the Sources page (titles and links only)
+!services/crawler/downloads/search/
 .pytest_cache/

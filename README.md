@@ -134,6 +134,18 @@ npm run typecheck && npm run lint && npm test
 cd services/api && .venv/bin/python -m pytest
 ```
 
+## Deploy
+
+Supabase is already hosted. The rest deploys from this repository, and every push to `main` redeploys.
+
+| Part | Host | Settings |
+|---|---|---|
+| Dashboard | [Vercel](https://vercel.com/new): import the repo, Root Directory `apps/dashboard` (Next.js is detected) | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_API_URL` = the API's address |
+| API and crawler | [Render](https://dashboard.render.com/blueprints): New Blueprint, this repo (`render.yaml`, `Dockerfile`) | `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `CORS_ORIGINS` = the dashboard's address; optional NCBI and OpenRouter keys |
+| App for the web (optional) | Vercel, a second project with Root Directory `apps/mobile` (`apps/mobile/vercel.json`) | `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` |
+
+Only publishable keys are used: the database's own rules protect every write.
+
 ## Protocol format
 
 Each protocol is one JSON document (stored in Postgres as numbered versions) with these sections: red box (when to

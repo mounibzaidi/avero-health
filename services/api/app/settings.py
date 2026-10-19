@@ -1,5 +1,6 @@
-"""Settings from the repo-root .env.local (names in .env.example). Never logged."""
+"""Settings from the environment (a host's variables), else the repo-root .env.local (names in .env.example). Never logged."""
 
+import os
 from functools import lru_cache
 from pathlib import Path
 
@@ -17,11 +18,11 @@ def env() -> dict[str, str]:
         key, sep, value = line.partition("=")
         if sep and not key.startswith("#"):
             out[key.strip()] = value.strip().strip('"\'')
-    return out
+    return {**out, **{k: v for k, v in os.environ.items() if v}}
 
 
 def setting(name: str) -> str:
     value = env().get(name)
     if not value:
-        raise RuntimeError(f"{name} missing from .env.local")
+        raise RuntimeError(f"{name} missing: set it in the environment or in .env.local")
     return value
