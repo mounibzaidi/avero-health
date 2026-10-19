@@ -8,12 +8,11 @@ import { Button, LogoMark, Spinner } from "@/components/ui";
 import { useAuth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
 
-// Protocoles: every fiche with its checks and its publication. Collecte: the source PDFs of each topic.
+// Protocoles: every fiche, created from its JSON and PDF, checked block by block, published. Collecte: the source
+// PDFs of each topic.
 const NAV = [
-  { href: "/protocoles", label: "Protocoles", also: ["/fiche"] },
-  { href: "/collecte", label: "Collecte", also: [] as string[] },
-  { href: "/generation", label: "Génération", also: [] as string[] },
-  { href: "/veille", label: "Veille", also: [] as string[] },
+  { href: "/protocoles", label: "Protocols", also: ["/fiche"] },
+  { href: "/collecte", label: "Sources", also: [] as string[] },
 ];
 
 export default function StaffLayout({ children }: { children: React.ReactNode }) {
@@ -37,9 +36,9 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
     return (
       <div className="flex h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
         <p className="max-w-sm text-sm text-soft">
-          Ce compte ({session.user.email}) n&apos;a pas accès à l&apos;atelier. Demandez à un administrateur de vous ajouter à l&apos;équipe.
+          This account ({session.user.email}) has no access to the workshop. Ask an administrator to add you to the team.
         </p>
-        <Button onClick={() => supabase.auth.signOut()}>Se déconnecter</Button>
+        <Button onClick={() => supabase.auth.signOut()}>Sign out</Button>
       </div>
     );
   }
@@ -65,9 +64,9 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
           </nav>
           <div className="flex shrink-0 items-center gap-3 text-sm text-soft">
             <span className="hidden md:inline">{staff.name || session.user.email}</span>
-            <span className="hidden rounded border border-line px-1.5 py-0.5 text-xs text-muted sm:inline">{staff.role === "admin" ? "Administrateur" : "Relecteur"}</span>
+            <span className="hidden rounded border border-line px-1.5 py-0.5 text-xs text-muted sm:inline">{staff.role === "admin" ? "Administrator" : "Reviewer"}</span>
             <Button variant="ghost" className="h-8" onClick={() => supabase.auth.signOut()}>
-              Déconnexion
+              Sign out
             </Button>
           </div>
         </div>

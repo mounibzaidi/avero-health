@@ -32,10 +32,10 @@ describe("publication gate", () => {
   it("fails evidence on a source the fiche does not list, or without page or quote", () => {
     const issues = gate((p) => (p.red_box.signs[0].evidence = [{ source_id: "autre", page: null, quote: "" }]), { ctxAfter: true });
     expect(issues.filter((i) => i.item_id === "t-1").map((i) => i.message)).toEqual([
-      expect.stringContaining("n'est pas dans les sources"),
-      expect.stringContaining("page à compléter"),
-      expect.stringContaining("citation à compléter"),
-      expect.stringContaining("Nombre absent des citations : 12"),
+      expect.stringContaining("is not in the fiche's sources"),
+      expect.stringContaining("page missing"),
+      expect.stringContaining("quote missing"),
+      expect.stringContaining("Number not in the quotes: 12"),
     ]);
   });
 
@@ -46,14 +46,14 @@ describe("publication gate", () => {
     delete (quotes as Record<string, unknown>)[quoteKey("m-1", 0)];
     const issues = publicationGate(p, { ...ctx, quotes });
     expect(issues).toEqual([
-      expect.objectContaining({ item_id: "t-1", rule: "quote", message: expect.stringContaining("introuvable") }),
-      expect.objectContaining({ item_id: "m-1", rule: "quote", message: expect.stringContaining("non vérifiée") }),
+      expect.objectContaining({ item_id: "t-1", rule: "quote", message: expect.stringContaining("not found") }),
+      expect.objectContaining({ item_id: "m-1", rule: "quote", message: expect.stringContaining("not checked") }),
     ]);
   });
 
   it("fails a number of the text that no quote states", () => {
     const issues = gate((p) => (p.red_box.signs[0].text = "Ligne de test : 13 unités."));
-    expect(issues).toEqual([{ item_id: "t-1", rule: "numbers", message: "Nombre absent des citations : 13" }]);
+    expect(issues).toEqual([{ item_id: "t-1", rule: "numbers", message: "Number not in the quotes: 13" }]);
   });
 
   it("fails a medication dose, frequency or duration that its quote does not state", () => {
@@ -63,9 +63,9 @@ describe("publication gate", () => {
 
   it("fails a medication with missing fields, and one with an empty prescribing field not listed as missing", () => {
     const missing = gate((p) => (p.treat.medications[0].missing = ["route"]));
-    expect(missing).toEqual([expect.objectContaining({ item_id: "m-1", rule: "missing", message: "Champs manquants : voie" })]);
+    expect(missing).toEqual([expect.objectContaining({ item_id: "m-1", rule: "missing", message: "Missing fields: route" })]);
     const empty = gate((p) => (p.treat.medications[0].route = null));
-    expect(empty).toEqual([expect.objectContaining({ item_id: "m-1", rule: "required", message: "voie à compléter" })]);
+    expect(empty).toEqual([expect.objectContaining({ item_id: "m-1", rule: "required", message: "route missing" })]);
   });
 
   it("fails a medication whose availability was not taken from the nomenclature", () => {
@@ -89,7 +89,7 @@ describe("publication gate", () => {
 
   it("fails a pathway dead end", () => {
     const issues = gate((p) => (p.assess.pathway.nodes[0].branches[1].next_node_id = null));
-    expect(issues).toEqual([expect.objectContaining({ item_id: "n1", rule: "pathway", message: expect.stringContaining("Impasse") })]);
+    expect(issues).toEqual([expect.objectContaining({ item_id: "n1", rule: "pathway", message: expect.stringContaining("Dead end") })]);
   });
 
   it("fails duplicate IDs", () => {

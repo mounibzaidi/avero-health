@@ -1,8 +1,9 @@
 "use client";
 
-import { AVAILABILITY_LABEL, PRESCRIBER_LABEL, type AvailabilityStatus, type Medication, type Prescriber } from "@medguides/schema";
+import type { AvailabilityStatus, Medication, Prescriber } from "@medguides/schema";
 import { useMemo, useState } from "react";
 
+import { AVAILABILITY_LABEL, PRESCRIBER_LABEL, TO_COMPLETE } from "@/lib/labels";
 import { Button, inputCls, Spinner } from "@/components/ui";
 import { createClient } from "@/lib/supabase/client";
 
@@ -92,27 +93,27 @@ export function BrandPicker({ med, onChange }: { med: Medication; onChange: (pat
     <div className="flex flex-col gap-2 rounded-lg bg-panel/60 p-2">
       <div className="flex flex-wrap items-end gap-2">
         <label className="flex flex-col gap-1">
-          <span className="text-xs font-medium text-muted">Rechercher la DCI dans la nomenclature</span>
+          <span className="text-xs font-medium text-muted">Search the INN in the nomenclature</span>
           <input className={`${inputCls} w-64`} value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), void search())} />
         </label>
         <Button className="h-9" onClick={search} disabled={busy || !q.trim()}>{busy ? <Spinner /> : "Chercher"}</Button>
         <div className="pb-2 text-xs text-soft">
-          Statut : <b className="text-ink">{med.local_availability.status ? AVAILABILITY_LABEL[med.local_availability.status] : "[à compléter]"}</b>
-          {" · "}Prescripteur : <b className="text-ink">{med.prescriber ? PRESCRIBER_LABEL[med.prescriber] : med.local_availability.status === "aucune_presentation" ? "sans objet" : "[à compléter]"}</b>
+          Status: <b className="text-ink">{med.local_availability.status ? AVAILABILITY_LABEL[med.local_availability.status] : TO_COMPLETE}</b>
+          {" · "}Prescriber: <b className="text-ink">{med.prescriber ? PRESCRIBER_LABEL[med.prescriber] : med.local_availability.status === "aucune_presentation" ? "not applicable" : TO_COMPLETE}</b>
         </div>
       </div>
       {error && <p className="text-xs text-flag">{error}</p>}
       {found && (
         found.brands.length === 0 ? (
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-caution">Aucune présentation de « {found.q} » dans la nomenclature.</span>
-            {med.local_availability.status !== "aucune_presentation" && <Button className="h-8" onClick={none}>Marquer « aucune présentation »</Button>}
+            <span className="text-caution">No presentation of “{found.q}” in the nomenclature.</span>
+            {med.local_availability.status !== "aucune_presentation" && <Button className="h-8" onClick={none}>Mark “no presentation”</Button>}
           </div>
         ) : (
           <div className="flex flex-col gap-0.5">
             <p className="text-xs text-muted">
-              {found.from === "officine" ? "Enregistrés et disponibles en officine (medicaments_officine)" : "Aucun en officine : toute la nomenclature (hôpital, non renouvelés, retirés)"}
-              {" · "}{found.brands.length} marque(s). Cochez celles à afficher.
+              {found.from === "officine" ? "Registered and available in pharmacies (medicaments_officine)" : "None in pharmacies: the whole nomenclature (hospital, not renewed, withdrawn)"}
+              {" · "}{found.brands.length} brand(s). Tick the ones to show.
             </p>
             <div className="grid max-h-64 grid-cols-1 gap-x-4 overflow-auto md:grid-cols-2">
               {found.brands.map((b) => (
@@ -133,7 +134,7 @@ export function BrandPicker({ med, onChange }: { med: Medication; onChange: (pat
         )
       )}
       {med.local_availability.brands.length > 0 && (
-        <p className="text-xs text-soft">Marques retenues : <span className="text-ink">{med.local_availability.brands.join(", ")}</span>{!found && " (cherchez pour modifier)"}</p>
+        <p className="text-xs text-soft">Brands kept: <span className="text-ink">{med.local_availability.brands.join(", ")}</span>{!found && " (search to change)"}</p>
       )}
     </div>
   );

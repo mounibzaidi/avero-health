@@ -76,17 +76,17 @@ def test_quotes_and_whitespace_do_not_matter(text):
 
 def test_number_inside_a_larger_number_is_not_found(text):
     r = check(text, "adjusted test threshold of 5 units")
-    assert not r.found and r.message == "absente de la page 11"
+    assert not r.found and r.message == "not on page 11"
 
 
 def test_quote_on_another_page(text):
     r = check(text, "a unique test sentence lives here")
-    assert not r.found and r.message == "trouvée page 12, pas page 11"
+    assert not r.found and r.message == "found on page 12, not page 11"
 
 
 def test_not_found_too_short_and_out_of_the_document(text):
-    assert check(text, "this sentence is in no page at all").message == "absente de la page 11"
-    assert check(text, "test").message == "citation trop courte pour être vérifiée"
+    assert check(text, "this sentence is in no page at all").message == "not on page 11"
+    assert check(text, "test").message == "quote too short to check"
     assert not check(text, "The test dose is 12 mg", page=40).found
 
 
@@ -112,7 +112,7 @@ def test_endpoint_returns_found_or_not_per_evidence(monkeypatch):
     got = {x["key"]: (x["found"], x["message"]) for x in r.json()["results"]}
     assert got == {
         "t-1#0": (True, None),
-        "t-1#1": (False, "trouvée page 11, pas page 10"),
-        "t-2#0": (False, "aucun PDF associé à cette source"),
-        "t-3#0": (False, "page ou citation manquante"),
+        "t-1#1": (False, "found on page 11, not page 10"),
+        "t-2#0": (False, "no PDF linked to this source"),
+        "t-3#0": (False, "page or quote missing"),
     }

@@ -40,7 +40,7 @@ export function validateStructure(input: unknown): { protocol: Protocol | null; 
   const issues = r.error.issues.map((i) => ({
     item_id: itemIdAt(input, i.path),
     rule: "structure" as const,
-    message: `${i.path.join(".") || "(racine)"} : ${i.message}`,
+    message: `${i.path.join(".") || "(root)"} : ${i.message}`,
   }));
   return { protocol: null, issues };
 }

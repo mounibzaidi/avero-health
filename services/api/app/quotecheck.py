@@ -71,6 +71,22 @@ class PdfText:
     def on_page(self, needles: list[str], index: int) -> bool:
         return any(index < len(m) and any(_contains(f, n) for f in m[index] for n in needles) for m in self.modes)
 
+    def score(self, needles: list[str], index: int) -> int:
+        """How much of the quote is on the page, 0 to 100: the share of its runs of three words found there (any
+        reading, any form of the quote); 100 when it is there word for word."""
+        best = 0.0
+        for needle in needles:
+            words = needle.split()
+            grams = {" ".join(words[i:i + 3]) for i in range(max(1, len(words) - 2))}
+            if not grams:
+                continue
+            for m in self.modes:
+                if index < len(m):
+                    for form in m[index]:
+                        hay = f" {form} "
+                        best = max(best, sum(f" {g} " in hay for g in grams) / len(grams))
+        return round(100 * best)
+
     def pages_with(self, needles: list[str]) -> list[int]:
         return [i + 1 for i in range(self.page_count) if self.on_page(needles, i)]
 
@@ -87,6 +103,7 @@ class QuoteResult:
     found: bool
     pdf_page: int | None
     message: str | None = None
+    score: int | None = None  # 0 to 100: how much of the quote is on its page (PdfText.score)
 
 
 def check_quote(text: PdfText, quote: str, page: int, page_offset: int) -> QuoteResult:
@@ -94,12 +111,13 @@ def check_quote(text: PdfText, quote: str, page: int, page_offset: int) -> Quote
     pdf_page = page + page_offset
     needles = quote_forms(quote)
     if len(needles[0].replace(" ", "")) < MIN_QUOTE_CHARS:
-        return QuoteResult(False, pdf_page, "citation trop courte pour être vérifiée")
+        return QuoteResult(False, pdf_page, "quote too short to check")
     if not 1 <= pdf_page <= text.page_count:
-        return QuoteResult(False, pdf_page, f"page {page} hors du document (PDF page {pdf_page}, {text.page_count} pages)")
+        return QuoteResult(False, pdf_page, f"page {page} is outside the document (PDF page {pdf_page}, {text.page_count} pages)")
     if text.on_page(needles, pdf_page - 1):
-        return QuoteResult(True, pdf_page)
+        return QuoteResult(True, pdf_page, score=100)
+    score = text.score(needles, pdf_page - 1)
     elsewhere = [p - page_offset for p in text.pages_with(needles)]
     if elsewhere:
-        return QuoteResult(False, pdf_page, "trouvée page " + ", ".join(map(str, elsewhere)) + f", pas page {page}")
-    return QuoteResult(False, pdf_page, f"absente de la page {page}")
+        return QuoteResult(False, pdf_page, "found on page " + ", ".join(map(str, elsewhere)) + f", not page {page}", score)
+    return QuoteResult(False, pdf_page, f"not on page {page}", score)

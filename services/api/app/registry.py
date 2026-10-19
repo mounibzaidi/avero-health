@@ -28,10 +28,10 @@ def bodies(caller: sb.Caller = Depends(sb.require_admin)):
 
 def _run(script: str, args: list[str], stdin: str | None = None, timeout: int = 600) -> object:
     if not PYTHON.exists():
-        raise HTTPException(status_code=503, detail="Crawler non installé (services/crawler/.venv)")
+        raise HTTPException(status_code=503, detail="Crawler not installed (services/crawler/.venv)")
     done = subprocess.run([str(PYTHON), str(CRAWLER / script), *args], input=stdin, capture_output=True, text=True, timeout=timeout, cwd=CRAWLER)
     if done.returncode != 0:
-        raise HTTPException(status_code=502, detail=f"Vérification impossible : {(done.stderr or done.stdout).strip().splitlines()[-1:]}")
+        raise HTTPException(status_code=502, detail=f"Check failed: {(done.stderr or done.stdout).strip().splitlines()[-1:]}")
     return json.loads(done.stdout)
 
 
@@ -59,7 +59,7 @@ def check(caller: sb.Caller = Depends(sb.require_admin)):
 def _alert(caller: sb.Caller, alert_id: str) -> dict:
     found = sb.rest(caller, "GET", "guideline_alerts", {"id": f"eq.{alert_id}", "select": "*,topic_sources(*)"}) or []
     if not found:
-        raise HTTPException(status_code=404, detail="Alerte introuvable")
+        raise HTTPException(status_code=404, detail="Alert not found")
     return found[0]
 
 

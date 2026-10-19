@@ -19,7 +19,7 @@ body {
   outline-offset: 2px;
 }
 
-/* Quote highlight inside the pdf.js text layer (PdfViewer). The layer's text is transparent over the rendered
+/* Quote highlight inside the pdf.js text layer (ContinuousPdf). The layer's text is transparent over the rendered
    page, so the mark paints a translucent band behind the real glyphs. */
 .pdf-page .textLayer mark {
   background: color-mix(in srgb, #ffe58a 70%, transparent);

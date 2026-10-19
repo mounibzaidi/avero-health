@@ -18,18 +18,18 @@ export function pathwayProblems(pathway: Pathway): PathwayProblem[] {
   const out: PathwayProblem[] = [];
   const byId = new Map(nodes.map((n) => [n.id, n]));
 
-  if (!start_node_id) out.push({ node_id: null, branch_id: null, kind: "no_start", message: "Aucun nœud de départ choisi" });
-  else if (!byId.has(start_node_id)) out.push({ node_id: null, branch_id: null, kind: "bad_start", message: `Le nœud de départ « ${start_node_id} » n'existe pas` });
+  if (!start_node_id) out.push({ node_id: null, branch_id: null, kind: "no_start", message: "No start node chosen" });
+  else if (!byId.has(start_node_id)) out.push({ node_id: null, branch_id: null, kind: "bad_start", message: `Start node "${start_node_id}" does not exist` });
 
   for (const n of nodes) {
     if (n.type === "end") {
-      if (n.branches.length) out.push({ node_id: n.id, branch_id: null, kind: "end_with_branches", message: `Le nœud de fin « ${n.id} » a des branches` });
+      if (n.branches.length) out.push({ node_id: n.id, branch_id: null, kind: "end_with_branches", message: `End node "${n.id}" has branches` });
       continue;
     }
-    if (!n.branches.length) out.push({ node_id: n.id, branch_id: null, kind: "dead_end", message: `Impasse : le nœud « ${n.id} » n'a aucune branche et n'est pas une fin` });
+    if (!n.branches.length) out.push({ node_id: n.id, branch_id: null, kind: "dead_end", message: `Dead end: node "${n.id}" has no branch and is not an end` });
     for (const b of n.branches) {
-      if (!b.next_node_id) out.push({ node_id: n.id, branch_id: b.id, kind: "dead_end", message: `Impasse : la branche « ${b.label || b.id} » du nœud « ${n.id} » ne mène nulle part` });
-      else if (!byId.has(b.next_node_id)) out.push({ node_id: n.id, branch_id: b.id, kind: "dead_end", message: `Impasse : la branche « ${b.label || b.id} » du nœud « ${n.id} » mène à « ${b.next_node_id} », qui n'existe pas` });
+      if (!b.next_node_id) out.push({ node_id: n.id, branch_id: b.id, kind: "dead_end", message: `Dead end: branch "${b.label || b.id}" of node "${n.id}" leads nowhere` });
+      else if (!byId.has(b.next_node_id)) out.push({ node_id: n.id, branch_id: b.id, kind: "dead_end", message: `Dead end: branch "${b.label || b.id}" of node "${n.id}" leads to "${b.next_node_id}", which does not exist` });
     }
   }
 
@@ -43,7 +43,7 @@ export function pathwayProblems(pathway: Pathway): PathwayProblem[] {
   }
   if (start_node_id && byId.has(start_node_id)) {
     for (const n of nodes) {
-      if (!reached.has(n.id)) out.push({ node_id: n.id, branch_id: null, kind: "unreachable", message: `Le nœud « ${n.id} » n'est atteint depuis aucun chemin partant du départ` });
+      if (!reached.has(n.id)) out.push({ node_id: n.id, branch_id: null, kind: "unreachable", message: `Node "${n.id}" is not reached by any path from the start` });
     }
   }
   return out;

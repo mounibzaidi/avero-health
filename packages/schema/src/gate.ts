@@ -20,10 +20,10 @@ const PRESCRIBING_FIELDS: MedicationField[] = ["phase", "dose", "dose_unit", "do
 
 const blank = (s: string | null | undefined) => !s || !s.trim();
 
-/** The French label of a medication field, for messages and "[à compléter]". */
+/** The label of a medication field, for the dashboard's messages. */
 export const MEDICATION_FIELD_LABELS: Record<MedicationField, string> = {
-  phase: "phase", dose: "dose", dose_unit: "unité", dose_basis: "base de dose", route: "voie", frequency: "fréquence",
-  duration: "durée", max_dose: "dose maximale", adjustments: "adaptations", contraindications: "contre-indications", strength: "force",
+  phase: "phase", dose: "dose", dose_unit: "unit", dose_basis: "dose basis", route: "route", frequency: "frequency",
+  duration: "duration", max_dose: "max dose", adjustments: "adjustments", contraindications: "contraindications", strength: "strength",
 };
 
 /** The text of a line whose numbers must be in its quotes (sourcing rule 2). */
@@ -50,83 +50,83 @@ export function publicationGate(p: Protocol, ctx: GateContext): Issue[] {
   const seen = new Set<string>();
   const ids = [...allItems(p), ...p.treat.medications, ...p.assess.pathway.nodes, ...p.refer_follow.refer, ...p.refer_follow.follow_up, ...p.sources].map((x) => x.id);
   for (const id of ids) {
-    if (seen.has(id)) add(id, "ids", `L'identifiant « ${id} » est utilisé plusieurs fois`);
+    if (seen.has(id)) add(id, "ids", `The id "${id}" is used more than once`);
     seen.add(id);
   }
   for (const n of p.assess.pathway.nodes) {
     const b = n.branches.map((x) => x.id);
-    for (const id of new Set(b.filter((x, i) => b.indexOf(x) !== i))) add(n.id, "ids", `La branche « ${id} » apparaît plusieurs fois dans le nœud « ${n.id} »`);
+    for (const id of new Set(b.filter((x, i) => b.indexOf(x) !== i))) add(n.id, "ids", `Branch "${id}" appears more than once in node "${n.id}"`);
   }
 
   // Evidence of one line: each entry complete, on a known source, its quote found on its page; every number in a quote.
   const checkEvidence = (id: string, evidence: Evidence[], stated: string) => {
     evidence.forEach((e, i) => {
       const n = i + 1;
-      if (blank(e.source_id)) add(id, "evidence", `Preuve ${n} : source à choisir`);
-      else if (!sourceIds.has(e.source_id)) add(id, "evidence", `Preuve ${n} : la source « ${e.source_id} » n'est pas dans les sources de la fiche`);
-      if (e.page == null) add(id, "evidence", `Preuve ${n} : page à compléter`);
-      if (blank(e.quote)) add(id, "evidence", `Preuve ${n} : citation à compléter`);
+      if (blank(e.source_id)) add(id, "evidence", `Evidence ${n}: choose a source`);
+      else if (!sourceIds.has(e.source_id)) add(id, "evidence", `Evidence ${n}: source "${e.source_id}" is not in the fiche's sources`);
+      if (e.page == null) add(id, "evidence", `Evidence ${n}: page missing`);
+      if (blank(e.quote)) add(id, "evidence", `Evidence ${n}: quote missing`);
       else {
         const q = ctx.quotes[quoteKey(id, i)];
-        if (!q) add(id, "quote", `Preuve ${n} : citation non vérifiée sur le PDF`);
-        else if (!q.found) add(id, "quote", `Preuve ${n} : citation introuvable à la page indiquée${q.message ? ` (${q.message})` : ""}`);
+        if (!q) add(id, "quote", `Evidence ${n}: quote not checked against the PDF`);
+        else if (!q.found) add(id, "quote", `Evidence ${n}: quote not found on the given page${q.message ? ` (${q.message})` : ""}`);
       }
     });
     const missing = numbersMissingFromQuotes(stated, evidence.map((e) => e.quote));
-    if (missing.length && evidence.length) add(id, "numbers", `Nombre absent des citations : ${missing.join(", ")}`);
-    else if (missing.length) add(id, "numbers", `Nombre sans citation : ${missing.join(", ")}`);
+    if (missing.length && evidence.length) add(id, "numbers", `Number not in the quotes: ${missing.join(", ")}`);
+    else if (missing.length) add(id, "numbers", `Number without a quote: ${missing.join(", ")}`);
   };
 
   for (const it of allItems(p)) {
-    if (blank(it.text)) add(it.id, "required", "Texte à compléter");
+    if (blank(it.text)) add(it.id, "required", "Text missing");
     if (it.origin === "adaptation_locale") {
-      if (blank(it.basis)) add(it.id, "basis", "Adaptation locale sans justification (basis)");
-    } else if (!it.evidence.length) add(it.id, "evidence", "Aucune preuve : ajoutez une citation ou marquez l'item comme adaptation locale");
+      if (blank(it.basis)) add(it.id, "basis", "Local adaptation without a justification (basis)");
+    } else if (!it.evidence.length) add(it.id, "evidence", "No evidence: add a quote or mark the item as a local adaptation");
     // A local adaptation's numbers come from its basis, not from a quote; any evidence it has is still checked.
     if (it.origin === "source" || it.evidence.length) checkEvidence(it.id, it.evidence, statedText(it));
     for (const ref of it.refs) {
-      if (!ctx.published.has(ref)) add(it.id, "refs", `La référence « ${ref} » n'existe pas ou n'est pas publiée`);
+      if (!ctx.published.has(ref)) add(it.id, "refs", `Reference "${ref}" does not exist or is not published`);
     }
   }
 
   for (const m of p.treat.medications) {
-    if (blank(m.inn)) add(m.id, "required", "DCI à compléter");
-    if (m.missing.length) add(m.id, "missing", `Champs manquants : ${m.missing.map((f) => MEDICATION_FIELD_LABELS[f]).join(", ")}`);
+    if (blank(m.inn)) add(m.id, "required", "INN missing");
+    if (m.missing.length) add(m.id, "missing", `Missing fields: ${m.missing.map((f) => MEDICATION_FIELD_LABELS[f]).join(", ")}`);
     for (const f of PRESCRIBING_FIELDS) {
       const v = m[f as keyof Medication];
-      if ((v == null || (typeof v === "string" && blank(v))) && !m.missing.includes(f)) add(m.id, "required", `${MEDICATION_FIELD_LABELS[f]} à compléter`);
+      if ((v == null || (typeof v === "string" && blank(v))) && !m.missing.includes(f)) add(m.id, "required", `${MEDICATION_FIELD_LABELS[f]} missing`);
     }
-    if (!m.local_availability.status) add(m.id, "availability", "Disponibilité en Algérie non renseignée : choisissez les marques dans la nomenclature");
-    else if (m.local_availability.status !== "aucune_presentation" && !m.prescriber) add(m.id, "availability", "Prescripteur (officine ou hôpital) non renseigné");
-    if (!m.evidence.length) add(m.id, "evidence", "Aucune preuve");
+    if (!m.local_availability.status) add(m.id, "availability", "Availability in Algeria not set: pick the brands from the nomenclature");
+    else if (m.local_availability.status !== "aucune_presentation" && !m.prescriber) add(m.id, "availability", "Prescriber (pharmacy or hospital) not set");
+    if (!m.evidence.length) add(m.id, "evidence", "No evidence");
     checkEvidence(m.id, m.evidence, statedText(m));
   }
 
   for (const r of p.refer_follow.refer) {
-    if (blank(r.criteria)) add(r.id, "required", "Critères à compléter");
-    if (!r.urgency) add(r.id, "required", "Urgence à choisir");
-    if (!r.evidence.length) add(r.id, "evidence", "Aucune preuve");
+    if (blank(r.criteria)) add(r.id, "required", "Criteria missing");
+    if (!r.urgency) add(r.id, "required", "Choose an urgency");
+    if (!r.evidence.length) add(r.id, "evidence", "No evidence");
     checkEvidence(r.id, r.evidence, statedText(r));
   }
 
   for (const f of p.refer_follow.follow_up) {
-    if (blank(f.when) || blank(f.what)) add(f.id, "required", "Quand et quoi à compléter");
-    if (!f.evidence.length) add(f.id, "evidence", "Aucune preuve");
+    if (blank(f.when) || blank(f.what)) add(f.id, "required", "When and what missing");
+    if (!f.evidence.length) add(f.id, "evidence", "No evidence");
     checkEvidence(f.id, f.evidence, statedText(f));
   }
 
   for (const n of p.assess.pathway.nodes) {
-    if (n.type === "decision" && blank(n.question)) add(n.id, "required", "Question à compléter");
-    for (const b of n.branches) if (blank(b.label)) add(n.id, "required", `Libellé de la branche « ${b.id} » à compléter`);
+    if (n.type === "decision" && blank(n.question)) add(n.id, "required", "Question missing");
+    for (const b of n.branches) if (blank(b.label)) add(n.id, "required", `Label of branch "${b.id}" missing`);
   }
   for (const pb of pathwayProblems(p.assess.pathway)) add(pb.node_id, "pathway", pb.message);
 
   for (const s of p.sources) {
-    if (blank(s.title) || blank(s.organisation)) add(s.id, "required", "Titre et organisation de la source à compléter");
+    if (blank(s.title) || blank(s.organisation)) add(s.id, "required", "Source title and organisation missing");
   }
 
-  if (!p.review.clinical_approval) add(null, "approval", "Validation clinique manquante (review.clinical_approval)");
-  else if (blank(p.review.reviewer) || blank(p.review.reviewed_at)) add(null, "approval", "Validation clinique sans médecin nommé ou sans date");
+  if (!p.review.clinical_approval) add(null, "approval", "Clinical approval missing (review.clinical_approval)");
+  else if (blank(p.review.reviewer) || blank(p.review.reviewed_at)) add(null, "approval", "Clinical approval without a named doctor or a date");
 
   return issues;
 }

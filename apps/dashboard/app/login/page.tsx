@@ -26,7 +26,7 @@ export default function LoginPage() {
     setError(null);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (error) setError("Email ou mot de passe incorrect.");
+    if (error) setError("Wrong email or password.");
   }
 
   return (
@@ -35,20 +35,20 @@ export default function LoginPage() {
         <div className="mb-6 flex items-center gap-2.5">
           <LogoMark size={32} />
           <div>
-            <h1 className="font-semibold leading-tight">Atelier des fiches</h1>
-            <p className="text-xs text-muted">Réservé à l&apos;équipe éditoriale</p>
+            <h1 className="font-semibold leading-tight">Fiche workshop</h1>
+            <p className="text-xs text-muted">For the editorial team only</p>
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <Field label="Email">
             <input className={inputCls} type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
           </Field>
-          <Field label="Mot de passe">
+          <Field label="Password">
             <input className={inputCls} type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
           </Field>
           {error && <ErrorNote>{error}</ErrorNote>}
           <Button variant="primary" type="submit" disabled={busy}>
-            {busy ? "Connexion…" : "Se connecter"}
+            {busy ? "Signing in…" : "Sign in"}
           </Button>
         </div>
       </form>

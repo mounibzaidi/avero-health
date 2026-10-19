@@ -48,7 +48,7 @@ def _topics() -> dict[str, dict]:
 def _topic(topic_id: str) -> dict:
     t = _topics().get(topic_id)
     if not t:
-        raise HTTPException(status_code=404, detail=f"Thème inconnu : {topic_id}")
+        raise HTTPException(status_code=404, detail=f"Unknown topic: {topic_id}")
     return t
 
 
@@ -68,7 +68,7 @@ def _is_private(host: str) -> bool:
 
 def _require_crawler() -> None:
     if not PYTHON.exists():
-        raise HTTPException(status_code=503, detail="Crawler non installé (services/crawler/.venv manquant, voir services/crawler/README.md)")
+        raise HTTPException(status_code=503, detail="Crawler not installed (services/crawler/.venv missing, see services/crawler/README.md)")
 
 
 def _stored_name(topic: str, filename: str, sha256: str) -> str:
@@ -194,12 +194,12 @@ def collect(body: CollectIn, caller: sb.Caller = Depends(sb.require_admin)):
         url, body = ref["pdf_url"], body.model_copy(update={"single": True})
     parsed = urlparse(url)
     if parsed.scheme not in ("http", "https") or not parsed.hostname or _is_private(parsed.hostname):
-        raise HTTPException(status_code=422, detail="Adresse web publique attendue (http ou https)")
+        raise HTTPException(status_code=422, detail="A public web address is expected (http or https)")
     _topic(body.topic)
     _require_crawler()
     with _lock:
         if any(j["status"] == "running" for j in _jobs.values()):
-            raise HTTPException(status_code=409, detail="Une collecte est déjà en cours")
+            raise HTTPException(status_code=409, detail="A download is already running")
         job_id = uuid.uuid4().hex[:12]
         job = {"id": job_id, "url": url, "topic": body.topic, "status": "running", "stage": "start", "page_title": None,
                "documents": [], "skipped": [], "stored": [], "log": [], "error": None, "started_at": _now(), "finished_at": None}
@@ -222,7 +222,7 @@ def get_job(job_id: str, caller: sb.Caller = Depends(sb.require_admin)):
     with _lock:
         job = _jobs.get(job_id)
         if not job:
-            raise HTTPException(status_code=404, detail="Collecte inconnue (le service a redémarré ?)")
+            raise HTTPException(status_code=404, detail="Unknown download (did the service restart?)")
         return job
 
 
@@ -239,7 +239,7 @@ def _files(caller: sb.Caller, topic: str) -> list[dict]:
         name = o.get("name") or ""
         if name.endswith("-lien.json"):
             ref = json.loads(sb.download(caller, f"{topic}/{name}") or b"{}")
-            out.append({"path": None, "title": ref.get("title") or name, "bytes": None, "document_url": ref.get("url"), "source_page_url": None,
+            out.append({"path": None, "ref": f"{topic}/{name}", "title": ref.get("title") or name, "bytes": None, "document_url": ref.get("url"), "source_page_url": None,
                         "fetched_at": ref.get("stored_at"), "licence": None, "scraper": "lien seulement (pas de PDF en accès libre)", "link_only": True})
             continue
         if not name.endswith(".pdf"):
@@ -265,7 +265,7 @@ async def upload(topic: str, file: UploadFile = File(...), caller: sb.Caller = D
     _topic(topic)
     body = await file.read()
     if not body.startswith(b"%PDF"):
-        raise HTTPException(status_code=422, detail="Un fichier PDF est attendu")
+        raise HTTPException(status_code=422, detail="A PDF file is expected")
     sha = hashlib.sha256(body).hexdigest()
     path = _stored_name(topic, file.filename or "document.pdf", sha)
     sb.upload(caller, path, body, "application/pdf")
@@ -281,7 +281,7 @@ _FICHE_ID = re.compile(r"^[a-z0-9-]{1,80}$")
 
 def _fiche_folder(fiche: str) -> str:
     if not _FICHE_ID.match(fiche):
-        raise HTTPException(status_code=404, detail=f"Identifiant de fiche invalide : {fiche}")
+        raise HTTPException(status_code=404, detail=f"Invalid fiche id: {fiche}")
     return f"fiches/{fiche}"
 
 
@@ -299,7 +299,7 @@ async def fiche_upload(fiche: str, file: UploadFile = File(...), caller: sb.Call
     folder = _fiche_folder(fiche)
     body = await file.read()
     if not body.startswith(b"%PDF"):
-        raise HTTPException(status_code=422, detail="Un fichier PDF est attendu")
+        raise HTTPException(status_code=422, detail="A PDF file is expected")
     sha = hashlib.sha256(body).hexdigest()
     path = _stored_name(folder, file.filename or "document.pdf", sha)
     sb.upload(caller, path, body, "application/pdf")
@@ -312,8 +312,18 @@ async def fiche_upload(fiche: str, file: UploadFile = File(...), caller: sb.Call
 def file_link(path: str, caller: sb.Caller = Depends(sb.require_admin)):
     """A link that opens a stored PDF for an hour."""
     if ".." in path or not path.endswith(".pdf"):
-        raise HTTPException(status_code=404, detail="Fichier introuvable")
+        raise HTTPException(status_code=404, detail="File not found")
     return {"url": sb.signed_url(caller, path)}
+
+
+@router.delete("/file")
+def file_delete(path: str, caller: sb.Caller = Depends(sb.require_admin)):
+    """A stored source deleted: the PDF and its record (or a link-only reference), and the fiche sources linked to it."""
+    if ".." in path or not (path.endswith(".pdf") or path.endswith("-lien.json")):
+        raise HTTPException(status_code=404, detail="File not found")
+    sb.remove(caller, [path, f"{path}.json"] if path.endswith(".pdf") else [path])
+    sb.rest(caller, "DELETE", "source_pdfs", params={"pdf_path": f"eq.{path}"})
+    return {"deleted": path}
 
 
 # ─── Guideline search: literature APIs + the French and Algerian listing pages (crawler/literature.py) ──
@@ -323,7 +333,7 @@ def _run_search(args: list[str]) -> dict:
     _require_crawler()
     done = subprocess.run([str(PYTHON), str(CRAWLER / "literature.py"), *args], capture_output=True, text=True, timeout=900, cwd=CRAWLER)  # a topic's first search waits for the librarian, the body crawls and the classifier
     if done.returncode != 0:
-        raise HTTPException(status_code=502, detail=f"Recherche impossible : {(done.stderr or done.stdout).strip().splitlines()[-1:] or ['erreur']}")
+        raise HTTPException(status_code=502, detail=f"Search failed: {(done.stderr or done.stdout).strip().splitlines()[-1:] or ['error']}")
     result = json.loads(done.stdout)
     result["searched_at"] = _now()
     return result
@@ -351,5 +361,5 @@ def search_topic(topic: str, ai: bool = False, caller: sb.Caller = Depends(sb.re
 def search_query(q: str, caller: sb.Caller = Depends(sb.require_admin)):
     """A free search ("maladie rénale chronique cardiovasculaire"), not saved."""
     if len(q.strip()) < 3:
-        raise HTTPException(status_code=422, detail="Recherche trop courte")
+        raise HTTPException(status_code=422, detail="Search too short")
     return _run_search(["--query", q.strip()])

@@ -48,18 +48,18 @@ def quotes(body: QuotesIn, caller: sb.Caller = Depends(sb.require_admin)):
 
     results = []
     for e in body.evidence:
-        def out(found: bool, message: str | None, pdf_page: int | None = None):
-            results.append({"key": e.key, "found": found, "pdf_page": pdf_page, "message": message})
+        def out(found: bool, message: str | None, pdf_page: int | None = None, score: int | None = None):
+            results.append({"key": e.key, "found": found, "pdf_page": pdf_page, "message": message, "score": score})
 
         if e.source_id not in offsets:
-            out(False, "source absente de la fiche")
+            out(False, "source not in the fiche")
         elif e.page is None or not e.quote.strip():
-            out(False, "page ou citation manquante")
+            out(False, "page or quote missing")
         elif e.source_id not in paths:
-            out(False, "aucun PDF associé à cette source")
+            out(False, "no PDF linked to this source")
         elif (text := _pdf(caller, paths[e.source_id])) is None:
-            out(False, f"PDF introuvable dans le stockage : {paths[e.source_id]}")
+            out(False, f"PDF not found in storage: {paths[e.source_id]}")
         else:
             r = quotecheck.check_quote(text, e.quote, e.page, offsets[e.source_id])
-            out(r.found, r.message, r.pdf_page)
+            out(r.found, r.message, r.pdf_page, r.score)
     return {"checked": len(results), "found": sum(r["found"] for r in results), "results": results}

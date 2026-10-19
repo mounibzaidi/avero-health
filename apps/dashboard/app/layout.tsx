@@ -6,12 +6,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "MedGuides · Fiches",
-  description: "Atelier de production des fiches cliniques",
+  description: "Clinical fiche production workshop",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full">
         <AuthProvider>{children}</AuthProvider>
       </body>

@@ -1,11 +1,12 @@
 "use client";
 
-import { publicationGate, TEMPLATE_LABEL, validateStructure, type Protocol } from "@medguides/schema";
-import { useEffect, useMemo, useState } from "react";
+import { publicationGate, validateStructure, type Protocol } from "@medguides/schema";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { ButtonLink, Card, Empty, ErrorNote, PageHeader, Spinner, Tag } from "@/components/ui";
+import { Button, ButtonLink, Card, Empty, ErrorNote, PageHeader, Spinner, Tag } from "@/components/ui";
 import { useAuth } from "@/lib/auth";
-import { doiKey } from "@/lib/labels";
+import { deleteFiche } from "@/lib/delete";
+import { doiKey, TEMPLATE_LABEL, TO_COMPLETE } from "@/lib/labels";
 import { createClient } from "@/lib/supabase/client";
 
 type VersionRow = { subject_id: string; version: number; content: unknown; published_at: string | null };
@@ -19,14 +20,14 @@ export default function ProtocolesPage() {
   const [error, setError] = useState<string | null>(null);
   const [replaced, setReplaced] = useState<Map<string, string>>(new Map());
 
-  useEffect(() => {
+  const load = useCallback(() => {
     void (async () => {
       const [rp, fv] = await Promise.all([
         supabase.from("guidelines_replaced").select("ref,title,year,replaced_by_title,replaced_by_year"),
         supabase.from("fiche_versions").select("subject_id,version,content,published_at").order("version", { ascending: false }),
       ]);
       setReplaced(new Map(((rp.data ?? []) as { ref: string | null; title: string | null; year: number | null; replaced_by_title: string; replaced_by_year: number | null }[])
-        .filter((r) => r.ref).map((r) => [doiKey(r.ref!), `${r.title ?? "?"} (${r.year ?? "?"}) remplacée par ${r.replaced_by_title} (${r.replaced_by_year ?? "?"})`])));
+        .filter((r) => r.ref).map((r) => [doiKey(r.ref!), `${r.title ?? "?"} (${r.year ?? "?"}) replaced by ${r.replaced_by_title} (${r.replaced_by_year ?? "?"})`])));
       if (fv.error) return setError(fv.error.message);
       const versions = fv.data as VersionRow[];
       const pubIds = new Set(versions.filter((v) => v.published_at).map((v) => v.subject_id));
@@ -48,19 +49,22 @@ export default function ProtocolesPage() {
         out.set(v.subject_id, { id: v.subject_id, version: v.version, content: protocol, live: !!v.published_at, published: v.published_at ? v.version : null, open });
       }
       setRows([...out.values()].sort((a, b) => a.content.meta.title.localeCompare(b.content.meta.title, "fr")));
-      setError(broken.length ? `Versions illisibles (pas au format v1.1) : ${broken.join(", ")}` : null);
+      setError(broken.length ? `Unreadable versions (not in the v1.1 format): ${broken.join(", ")}` : null);
     })();
   }, [supabase]);
+  useEffect(load, [load]);
+  const remove = (r: Row, what: "fiche" | "drafts") =>
+    deleteFiche(supabase, r.id, r.content.meta.title || r.id, what, r.published !== null).then((done) => done && load(), (e) => setError((e as Error).message));
 
   return (
     <div className="mx-auto w-full max-w-[1000px] px-5 py-8">
-      <PageHeader title="Tous les protocoles" subtitle={rows ? `${rows.length} fiche(s) · ${rows.filter((r) => r.published).length} publiée(s)` : undefined}
-        actions={isAdmin ? <ButtonLink href="/fiche/nouveau">Nouvelle fiche</ButtonLink> : undefined} />
+      <PageHeader title="All protocols" subtitle={rows ? `${rows.length} fiche(s) · ${rows.filter((r) => r.published).length} published` : undefined}
+        actions={isAdmin ? <ButtonLink href="/fiche/nouveau">New fiche</ButtonLink> : undefined} />
       {error && <div className="mb-4"><ErrorNote>{error}</ErrorNote></div>}
       {!rows ? (
         <div className="flex justify-center py-10 text-muted"><Spinner /></div>
       ) : rows.length === 0 ? (
-        <Empty>Aucune fiche pour l&apos;instant.</Empty>
+        <Empty>No fiches yet.</Empty>
       ) : (
         <div className="flex flex-col gap-3">
           {rows.map((r) => {
@@ -69,17 +73,19 @@ export default function ProtocolesPage() {
             return (
               <Card key={r.id} className="p-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="text-base font-semibold text-ink">{m.title || "[à compléter]"}</h2>
+                  <h2 className="text-base font-semibold text-ink">{m.title || TO_COMPLETE}</h2>
                   <Tag tone={m.template === "urgence" ? "urgent" : "neutral"}>{TEMPLATE_LABEL[m.template]}</Tag>
-                  <Tag tone={r.live ? "accent" : "neutral"}>{r.live ? "publiée" : r.published ? `brouillon (v${r.published} publiée)` : "brouillon"}</Tag>
+                  <Tag tone={r.live ? "accent" : "neutral"}>{r.live ? "published" : r.published ? `draft (v${r.published} published)` : "draft"}</Tag>
                   <Tag>v{r.version}</Tag>
                   <span className="min-w-0 flex-1 text-xs text-muted">{m.specialite} · {r.content.sources.map((s) => s.organisation).filter(Boolean).join(", ")}</span>
-                  <ButtonLink className="h-8" href={`/fiche/${r.id}`}>Ouvrir et modifier</ButtonLink>
+                  <ButtonLink className="h-8" href={`/fiche/${r.id}`}>Open and check</ButtonLink>
+                  {isAdmin && r.published !== null && !r.live && <Button variant="ghost" className="h-8 text-xs text-flag" onClick={() => void remove(r, "drafts")}>Delete draft</Button>}
+                  {isAdmin && <Button variant="ghost" className="h-8 text-xs text-flag" onClick={() => void remove(r, "fiche")}>Delete</Button>}
                 </div>
                 <p className={`mt-2 text-sm ${r.open ? "text-flag" : "text-accent"}`}>
-                  {r.open ? `${r.open} point(s) bloquant(s) avant publication (hors citations)` : "Prête, sous réserve de la vérification des citations"}
+                  {r.open ? `${r.open} blocking issue(s) before publishing (quotes aside)` : "Ready, pending the quote check"}
                 </p>
-                {outdated.length > 0 && <p className="mt-2 rounded-lg bg-flagbg px-3 py-2 text-sm font-medium text-flag">Source mise à jour, fiche à revoir : {outdated.join(" ; ")}</p>}
+                {outdated.length > 0 && <p className="mt-2 rounded-lg bg-flagbg px-3 py-2 text-sm font-medium text-flag">Source updated, fiche to review: {outdated.join(" ; ")}</p>}
               </Card>
             );
           })}
