@@ -86,8 +86,8 @@ docs                protocol format and screenshots
 ### Setup
 
 ```bash
-git clone https://github.com/mounibzaidi/avero.git
-cd avero
+git clone https://github.com/mounibzaidi/avero-health.git
+cd avero-health
 npm install
 python3 -m venv services/api/.venv && services/api/.venv/bin/pip install -r services/api/requirements.txt
 ```
