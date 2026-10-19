@@ -1,7 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useId, type ComponentProps, type ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
+
+import mark from "./avero-mark.png";
 
 // The old dashboard kit, on the app's tokens (Q5): wash = tint, bad = flag, warn = caution, ok = accent.
 
@@ -78,19 +81,7 @@ export function ErrorNote({ children }: { children: ReactNode }) {
   return <div className="rounded-lg border border-flag/30 bg-flagbg px-3 py-2 text-sm text-flag">{children}</div>;
 }
 
-/** The Avero mark: an A without its crossbar (an inverted V) in the brand green, light emerald at the apex to deep green at the feet (same as the
- * app and the favicon). */
+/** The Avero mark, from the brand board (the A and its leaf, transparent); `size` is its height. */
 export function LogoMark({ size = 24 }: { size?: number }) {
-  const id = `avero-a${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`; // url(#…) breaks on the ":" or "«" of React ids
-  return (
-    <svg width={size} height={size} viewBox="10 10 44 44" aria-hidden>
-      <defs>
-        <linearGradient id={id} x1="0" y1="13" x2="0" y2="50" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#3A9473" />
-          <stop offset="1" stopColor="#1E4F3E" />
-        </linearGradient>
-      </defs>
-      <path fillRule="evenodd" fill={`url(#${id})`} d="M30 13 L34 13 L51 50 L43 50 L32 26 L21 50 L13 50 Z" />
-    </svg>
-  );
+  return <Image src={mark} alt="" aria-hidden height={size} width={Math.round((size * mark.width) / mark.height)} priority />;
 }
