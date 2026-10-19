@@ -483,7 +483,7 @@ export function FichePreview({ f, edit, stat, readOnly = false }: { f: Protocol;
               {s !== "red_box" && (
                 <div className="flex items-baseline gap-2">
                   <h2 className="text-[17px] font-semibold leading-[22px] text-ink">{SECTION_TITLE[s]}</h2>
-                  {count > 0 && <span className={`text-xs tabular-nums ${done === count ? "text-accent" : "text-muted"}`}>{done}/{count} checked</span>}
+                  {count > 0 && !readOnly && <span className={`text-xs tabular-nums ${done === count ? "text-accent" : "text-muted"}`}>{done}/{count} checked</span>}
                 </div>
               )}
               {body(s)}
