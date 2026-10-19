@@ -45,7 +45,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-20 border-b border-line bg-surface/95 backdrop-blur">
         <div className="flex h-12 items-center gap-3 px-4 sm:gap-6 sm:px-5">
-          <Link href="/protocoles" className="flex shrink-0 items-center gap-1.5 font-semibold tracking-tight">
+          <Link href="/protocoles" className="flex shrink-0 items-center gap-[5px] font-semibold tracking-tight">
             <LogoMark />
             Avero
           </Link>

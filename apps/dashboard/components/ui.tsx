@@ -82,6 +82,6 @@ export function ErrorNote({ children }: { children: ReactNode }) {
 }
 
 /** The Avero mark, from the brand board (the A and its leaf, transparent); `size` is its height. */
-export function LogoMark({ size = 16 }: { size?: number }) {
+export function LogoMark({ size = 14 }: { size?: number }) {
   return <Image src={mark} alt="" aria-hidden height={size} width={Math.round((size * mark.width) / mark.height)} priority />;
 }
