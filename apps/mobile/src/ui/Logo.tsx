@@ -1,15 +1,13 @@
 import { fixed } from "@avero/ui-tokens";
 import { Text, View } from "react-native";
-import Svg, { Rect } from "react-native-svg";
+import Svg, { Path, Rect } from "react-native-svg";
 
-/** The mark: a teal square holding three steps. */
+/** The mark: a solid white A on the brand green square (same as the dashboard and the icons). */
 export function LogoMark({ size = 28 }: { size?: number }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64">
       <Rect width={64} height={64} rx={16} fill={fixed.logoSquare} />
-      <Rect x={17} y={18} width={30} height={7} rx={3.5} fill="#FFFFFF" />
-      <Rect x={17} y={28.5} width={22} height={7} rx={3.5} fill="#FFFFFF" />
-      <Rect x={17} y={39} width={14} height={7} rx={3.5} fill="#FFFFFF" />
+      <Path fillRule="evenodd" fill="#FFFFFF" d="M30 13 L34 13 L51 50 L43 50 L39.8 43 L24.2 43 L21 50 L13 50 Z M32 26.5 L36.6 37 L27.4 37 Z" />
     </Svg>
   );
 }

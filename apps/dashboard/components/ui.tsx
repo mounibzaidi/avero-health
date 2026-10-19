@@ -78,14 +78,12 @@ export function ErrorNote({ children }: { children: ReactNode }) {
   return <div className="rounded-lg border border-flag/30 bg-flagbg px-3 py-2 text-sm text-flag">{children}</div>;
 }
 
-/** The Avero mark: a teal square holding three steps (same as the app). */
+/** The Avero mark: a solid white A on the brand green square (same as the app and the favicon). */
 export function LogoMark({ size = 24 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden>
       <rect width="64" height="64" rx="16" fill="#245C49" />
-      <rect x="17" y="18" width="30" height="7" rx="3.5" fill="#FFFFFF" />
-      <rect x="17" y="28.5" width="22" height="7" rx="3.5" fill="#FFFFFF" />
-      <rect x="17" y="39" width="14" height="7" rx="3.5" fill="#FFFFFF" />
+      <path fillRule="evenodd" fill="#FFFFFF" d="M30 13 L34 13 L51 50 L43 50 L39.8 43 L24.2 43 L21 50 L13 50 Z M32 26.5 L36.6 37 L27.4 37 Z" />
     </svg>
   );
 }
