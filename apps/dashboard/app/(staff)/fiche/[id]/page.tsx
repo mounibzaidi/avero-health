@@ -84,7 +84,7 @@ export default function FicheEditor() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
-  const { session, staff, isAdmin } = useAuth();
+  const { session, staff, isAdmin, viewOnly } = useAuth();
   const me = staff?.name || session?.user.email || "";
 
   const [f, setF] = useState<Protocol | null>(null);
@@ -302,7 +302,7 @@ export default function FicheEditor() {
         </div>
         <div className="min-h-0 flex-1">
           {path && pdfUrl?.path === path ? <ContinuousPdf key={path} url={pdfUrl.url} focus={focus} usedOn={usedOn} onPage={setPdfPage} />
-            : <p className="p-6 text-sm text-muted">{path ? "Loading the PDF…" : "No PDF for this source: add it in Sources, at the bottom of the fiche."}</p>}
+            : <p className="p-6 text-sm text-muted">{path ? "Loading the PDF…" : viewOnly ? "The PDF of this source is not stored yet: its quotes are shown under each line." : "No PDF for this source: add it in Sources, at the bottom of the fiche."}</p>}
         </div>
       </section>
 
@@ -313,8 +313,8 @@ export default function FicheEditor() {
             <Link href="/protocoles" className="text-sm text-muted hover:text-accentink">‹</Link>
             <h1 className="min-w-0 flex-1 truncate text-base font-semibold tracking-tight">{f.meta.title || TO_COMPLETE}</h1>
             <Tag tone={isLive ? "accent" : "neutral"}>{isLive ? "published" : publishedVersion ? `draft (v${publishedVersion} published)` : "draft"}</Tag>
-            {dirty && <Button className="h-8" disabled={!!busy || !isAdmin} onClick={() => run("save")}>{busy === "save" ? <Spinner /> : "Save"}</Button>}
-            <Button className="h-8" variant="primary" disabled={!!busy || !canPublish || isLive} onClick={() => run("publish")}>{busy === "publish" ? <Spinner /> : "Publish"}</Button>
+            {dirty && isAdmin && <Button className="h-8" disabled={!!busy} onClick={() => run("save")}>{busy === "save" ? <Spinner /> : "Save"}</Button>}
+            {isAdmin && <Button className="h-8" variant="primary" disabled={!!busy || !canPublish || isLive} onClick={() => run("publish")}>{busy === "publish" ? <Spinner /> : "Publish"}</Button>}
             {isAdmin && (
               <details className="relative">
                 <summary className="grid h-8 w-8 cursor-pointer list-none place-items-center rounded-lg text-muted hover:bg-panel hover:text-ink" title="More">⋯</summary>
@@ -325,21 +325,22 @@ export default function FicheEditor() {
               </details>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+          {!viewOnly && <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
             <div className="h-1.5 w-24 overflow-hidden rounded-full bg-panel"><div className="h-full rounded-full bg-accent transition-[width]" style={{ width: `${pct}%` }} /></div>
             <span className="tabular-nums text-soft">{blocks.length - todo.length}/{blocks.length} blocks checked</span>
-            {todo.length > 0 && <button type="button" className="font-medium text-accentink hover:underline" onClick={() => { goTo(todo[0].id); const e = todo[0].evidence[0]; if (e) show({ evidence: e, label: "" }); }}>Next to check ›</button>}
+            {todo.length > 0 && !viewOnly && <button type="button" className="font-medium text-accentink hover:underline" onClick={() => { goTo(todo[0].id); const e = todo[0].evidence[0]; if (e) show({ evidence: e, label: "" }); }}>Next to check ›</button>}
             {problems > 0 && <button type="button" className="font-medium text-flag hover:underline" onClick={() => setShowIssues((x) => !x)}>{problems} problem{problems > 1 ? "s" : ""} to fix {showIssues ? "▴" : "▾"}</button>}
-            {!todo.length && !problems && !isLive && <span className="font-medium text-accent">Ready to publish</span>}
+            {!todo.length && !problems && !isLive && !viewOnly && <span className="font-medium text-accent">Ready to publish</span>}
             {note && <span className="text-accent">{note}</span>}
-          </div>
+          </div>}
           {showIssues && problems > 0 && <div className="max-h-64 overflow-auto rounded-xl border border-line bg-surface p-3"><Issues structure={structure} gate={gate} /></div>}
           {error && <ErrorNote>{error}</ErrorNote>}
         </div>
 
         <div className="mt-6 flex flex-col gap-5 pb-10">
-          <FichePreview f={f} edit={edit} stat={stat} />
+          <FichePreview f={f} edit={edit} stat={stat} readOnly={viewOnly} />
 
+          {!viewOnly && <>
           <h2 className="mt-6 border-t border-line pt-5 text-xs font-semibold uppercase tracking-wide text-muted">Settings</h2>
           <Section id="meta" title="Identity" closed issues={0}>
             <MetaEditor meta={f.meta} scope={f.scope} onMeta={(meta) => edit((d) => void (d.meta = { ...meta, id: d.meta.id }))} onScope={(scope) => edit((d) => void (d.scope = scope))} />
@@ -352,6 +353,7 @@ export default function FicheEditor() {
           <Section id="review" title={SECTION_TITLE.review} closed issues={sectionIssues("review")}>
             <ReviewEditor review={f.review} me={me} onChange={(r) => edit((d) => void (d.review = r))} />
           </Section>
+          </>}
         </div>
       </div>
     </div>

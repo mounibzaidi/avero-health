@@ -24,12 +24,16 @@ const ActiveCtx = createContext<{ active: string | null; setActive: (id: string)
   active: null, setActive: () => {}, focus: null, setFocus: () => {},
 });
 
+/** Read only (signed out): the fiche as published, its quotes shown on click, no editing tools. */
+const ReadOnlyCtx = createContext(false);
+
 /** Text typed in place: looks like the published text, grows with it; Enter calls `onEnter` (a new line below). */
 function Inline({ value, onChange, placeholder = TO_FILL, className = "", focusMe, onEnter }: {
   value: string | null | undefined; onChange: (v: string) => void; placeholder?: string; className?: string; focusMe?: boolean; onEnter?: () => void;
 }) {
   const ref = useRef<HTMLTextAreaElement>(null);
   const { setFocus } = useContext(ActiveCtx);
+  const ro = useContext(ReadOnlyCtx);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -42,10 +46,10 @@ function Inline({ value, onChange, placeholder = TO_FILL, className = "", focusM
     setFocus(null);
   }, [focusMe, setFocus]);
   return (
-    <textarea ref={ref} rows={1} value={value ?? ""} placeholder={placeholder}
+    <textarea ref={ref} rows={1} value={value ?? ""} placeholder={placeholder} readOnly={ro}
       onChange={(e) => onChange(e.target.value.replace(/\n/g, " "))}
       onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); onEnter?.(); } }}
-      className={`-mx-1 block w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-md bg-transparent px-1 outline-none placeholder:font-normal placeholder:text-caution/70 hover:bg-panel/70 focus:bg-surface focus:ring-2 focus:ring-accent/30 ${className}`} />
+      className={`-mx-1 block w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-md bg-transparent px-1 outline-none placeholder:font-normal placeholder:text-caution/70 ${ro ? "cursor-default" : "hover:bg-panel/70 focus:bg-surface focus:ring-2 focus:ring-accent/30"} ${className}`} />
   );
 }
 
@@ -79,6 +83,7 @@ function Row({ line, first, rule = "border-line", details, onMove, onDelete, can
   const { active, setActive } = useContext(ActiveCtx);
   const show = useContext(ShowCtx);
   const [open, setOpen] = useState(false);
+  const ro = useContext(ReadOnlyCtx);
   const done = review?.verified(line) ?? false;
   const on = active === line.id;
   const select = () => {
@@ -96,23 +101,24 @@ function Row({ line, first, rule = "border-line", details, onMove, onDelete, can
           {on && line.evidence[0]?.quote && <p className="mt-1 border-s-2 border-accent/40 ps-2 text-[12px] italic leading-[17px] text-soft">“{line.evidence[0].quote}”</p>}
         </div>
         <div className="flex shrink-0 items-start gap-1 pt-0.5">
-          <div className="pointer-events-none absolute -top-3 right-8 z-10 flex rounded-lg border border-edge/10 bg-surface p-0.5 opacity-0 shadow-control transition-opacity focus-within:pointer-events-auto focus-within:opacity-100 group-hover/row:pointer-events-auto group-hover/row:opacity-100">
+          {!ro && <div className="pointer-events-none absolute -top-3 right-8 z-10 flex rounded-lg border border-edge/10 bg-surface p-0.5 opacity-0 shadow-control transition-opacity focus-within:pointer-events-auto focus-within:opacity-100 group-hover/row:pointer-events-auto group-hover/row:opacity-100">
             <button type="button" className={`${tool} ${open ? "bg-panel text-ink" : ""}`} title="Other fields" onClick={() => setOpen(!open)}>⋯</button>
             <button type="button" className={tool} title="Move up" disabled={!canUp} onClick={() => onMove(-1)}>↑</button>
             <button type="button" className={tool} title="Move down" disabled={!canDown} onClick={() => onMove(1)}>↓</button>
             <button type="button" className={`${tool} hover:text-flag`} title="Delete" onClick={onDelete}>✕</button>
-          </div>
-          {issues.length > 0 && (
+          </div>}
+          {issues.length > 0 && !ro && (
             <button type="button" title={issues.map((i) => i.message).join("\n")} onClick={() => setOpen(true)}
               className="grid h-6 min-w-6 place-items-center rounded-md bg-flagbg px-1 text-[11px] font-semibold text-flag">{issues.length}</button>
           )}
-          {review && (
+          {review && ro ? (done && <span title="Checked against the PDF" className="grid size-6 place-items-center rounded-full bg-accent text-[12px] font-bold text-surface">✓</span>)
+            : review && (
             <button type="button" title={done ? "Checked against the PDF (click to undo)" : "Mark as checked against the PDF"} onClick={() => review.toggle(line)}
               className={`grid size-6 place-items-center rounded-full border text-[12px] font-bold transition-colors ${done ? "border-accent bg-accent text-surface" : "border-edge/25 text-transparent hover:border-accent hover:text-accent"}`}>✓</button>
           )}
         </div>
       </div>
-      {open && (
+      {open && !ro && (
         <div className="mb-3 flex flex-col gap-2 rounded-xl border border-line bg-panel/50 p-3">
           {details}
           <LineIssues id={line.id} />
@@ -133,9 +139,10 @@ function ops<T>(items: T[], onChange: (v: T[]) => void) {
   };
 }
 
-const AddButton = ({ onClick, children }: { onClick: () => void; children: ReactNode }) => (
-  <button type="button" onClick={onClick} className="self-start rounded-md py-2 text-[13px] font-semibold text-accent hover:underline">+ {children}</button>
-);
+function AddButton({ onClick, children }: { onClick: () => void; children: ReactNode }) {
+  if (useContext(ReadOnlyCtx)) return null;
+  return <button type="button" onClick={onClick} className="self-start rounded-md py-2 text-[13px] font-semibold text-accent hover:underline">+ {children}</button>;
+}
 
 /** Lines of a card: "Si …", the text, the tag; Enter in a text starts a new line below. */
 function ItemList({ items, onChange, add, rule, textClass = "text-ink" }: { items: Item[]; onChange: (v: Item[]) => void; add: string; rule?: string; textClass?: string }) {
@@ -247,6 +254,7 @@ function steps(p: Pathway): PathwayNode[] {
 function PathwayCard({ p, onChange }: { p: Pathway; onChange: (p: Pathway) => void }) {
   const { newId } = useContext(EnvCtx);
   const { focus, setFocus } = useContext(ActiveCtx);
+  const ro = useContext(ReadOnlyCtx);
   const list = steps(p);
   const step = new Map(list.map((n, i) => [n.id, i + 1]));
   // the tree's problems, worded with step numbers instead of node ids
@@ -278,7 +286,7 @@ function PathwayCard({ p, onChange }: { p: Pathway; onChange: (p: Pathway) => vo
                 <Inline value={n.question} focusMe={focus === n.id} placeholder={n.type === "end" ? "Fin" : n.type === "action" ? "Titre de l'étape (facultatif)" : "Question…"}
                   onChange={(v) => setNode({ ...n, question: v || null })} className="text-[14.5px] font-semibold leading-[21px] text-ink" />
               </div>
-              <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover/node:opacity-100">
+              {!ro && <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover/node:opacity-100">
                 <select value={n.type} title="Step type" className="h-6 rounded-md bg-panel px-1 text-[11px] text-soft"
                   onChange={(e) => setNode({ ...n, type: e.target.value as PathwayNode["type"], branches: e.target.value === "end" ? [] : n.branches })}>
                   <option value="decision">question</option><option value="action">action</option><option value="end">end</option>
@@ -287,7 +295,7 @@ function PathwayCard({ p, onChange }: { p: Pathway; onChange: (p: Pathway) => vo
                   onClick={() => { const it = blankItem(newId("it")); setNode({ ...n, items: [...n.items, it] }); setFocus(it.id); }}>+ line</button>
                 {!isStart && <button type="button" className="h-6 rounded-md px-1.5 text-[11px] text-soft hover:bg-panel" onClick={() => onChange({ ...p, start_node_id: n.id })}>Make start</button>}
                 <button type="button" className={`${tool} hover:text-flag`} title="Delete the step" onClick={() => removeStep(n.id)}>✕</button>
-              </div>
+              </div>}
             </div>
             {own.map((x, k) => <p key={k} className="ps-[38px] text-[12px] font-medium text-caution">⚠ {x.message}</p>)}
             {n.items.length > 0 && (
@@ -304,8 +312,8 @@ function PathwayCard({ p, onChange }: { p: Pathway; onChange: (p: Pathway) => vo
                     <div key={b.id} className="group/branch flex items-center gap-2 rounded-branch bg-panel px-3 py-[6px]">
                       <div className="min-w-0 flex-1"><Inline value={b.label} placeholder="Réponse…" onChange={(label) => setB({ label })} className="text-[13.5px] font-medium leading-[19px] text-ink" /></div>
                       <span className="text-[13px] font-bold text-accent">→</span>
-                      <select value={b.next_node_id && step.has(b.next_node_id) ? b.next_node_id : ""}
-                        className={`max-w-48 rounded-md bg-transparent py-0.5 text-[13px] font-semibold hover:bg-surface ${broken ? "text-caution" : "text-accentink"}`}
+                      <select value={b.next_node_id && step.has(b.next_node_id) ? b.next_node_id : ""} disabled={ro}
+                        className={`max-w-48 disabled:appearance-none rounded-md bg-transparent py-0.5 text-[13px] font-semibold hover:bg-surface ${broken ? "text-caution" : "text-accentink"}`}
                         onChange={(e) => {
                           if (e.target.value !== "__new") return setB({ next_node_id: e.target.value || null });
                           const m = blank();
@@ -316,8 +324,8 @@ function PathwayCard({ p, onChange }: { p: Pathway; onChange: (p: Pathway) => vo
                         {list.filter((x) => x.id !== n.id).map((x) => <option key={x.id} value={x.id}>étape {step.get(x.id)}{x.question ? ` · ${x.question.slice(0, 40)}` : ""}</option>)}
                         <option value="__new">+ new step</option>
                       </select>
-                      <button type="button" className={`${tool} opacity-0 hover:text-flag group-hover/branch:opacity-100`} title="Delete the answer"
-                        onClick={() => setNode({ ...n, branches: n.branches.filter((_, j) => j !== k) })}>✕</button>
+                      {!ro && <button type="button" className={`${tool} opacity-0 hover:text-flag group-hover/branch:opacity-100`} title="Delete the answer"
+                        onClick={() => setNode({ ...n, branches: n.branches.filter((_, j) => j !== k) })}>✕</button>}
                     </div>
                   );
                 })}
@@ -336,6 +344,7 @@ function ReferList({ items, onChange }: { items: Referral[]; onChange: (v: Refer
   const { newId } = useContext(EnvCtx);
   const { focus, setFocus } = useContext(ActiveCtx);
   const o = ops(items, onChange);
+  const ro = useContext(ReadOnlyCtx);
   return (
     <div className={CARD}>
       <p className="pb-[2px] text-[15px] font-bold text-ink">Orienter</p>
@@ -347,8 +356,8 @@ function ReferList({ items, onChange }: { items: Referral[]; onChange: (v: Refer
           </div>
           <div className="flex flex-wrap items-baseline gap-1 text-[14.5px] leading-[21px] text-ink">
             <b className="font-bold">Adressez</b>
-            <select value={r.urgency ?? ""} onChange={(e) => o.set(i, { ...r, urgency: (e.target.value || null) as Urgency | null })}
-              className={`rounded-md bg-transparent font-bold hover:bg-panel/70 ${r.urgency ? "text-ink" : "text-caution"}`}>
+            <select value={r.urgency ?? ""} disabled={ro} onChange={(e) => o.set(i, { ...r, urgency: (e.target.value || null) as Urgency | null })}
+              className={`rounded-md disabled:appearance-none bg-transparent font-bold hover:bg-panel/70 ${r.urgency ? "text-ink" : "text-caution"}`}>
               <option value="">{TO_FILL}</option>
               {Object.entries(URGENCY_LABEL).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
@@ -397,7 +406,7 @@ const ORDER: Record<Protocol["meta"]["template"], SectionId[]> = {
 };
 
 /** The whole fiche as published, editable: header, then the sections in the template's order. */
-export function FichePreview({ f, edit, stat }: { f: Protocol; edit: Edit; stat: (section: string) => { count: number; done: number } }) {
+export function FichePreview({ f, edit, stat, readOnly = false }: { f: Protocol; edit: Edit; stat: (section: string) => { count: number; done: number }; readOnly?: boolean }) {
   const [active, setActive] = useState<string | null>(null);
   const [focus, setFocus] = useState<string | null>(null);
   const urgent = f.meta.template === "urgence";
@@ -445,21 +454,22 @@ export function FichePreview({ f, edit, stat }: { f: Protocol; edit: Edit; stat:
                 <p className="text-[12px] leading-[17px] text-soft">{s.citation}</p>
               </div>
             ))}
-            <button type="button" className="py-2 text-[13px] font-semibold text-accent hover:underline"
-              onClick={() => document.getElementById("section-sources")?.scrollIntoView({ behavior: "smooth", block: "start" })}>Edit sources ↓</button>
+            {!readOnly && <button type="button" className="py-2 text-[13px] font-semibold text-accent hover:underline"
+              onClick={() => document.getElementById("section-sources")?.scrollIntoView({ behavior: "smooth", block: "start" })}>Edit sources ↓</button>}
           </Card>
         );
     }
   };
 
   return (
+    <ReadOnlyCtx.Provider value={readOnly}>
     <ActiveCtx.Provider value={{ active, setActive, focus, setFocus }}>
       <div className="mx-auto flex w-full max-w-[720px] flex-col gap-7">
         <div className="flex flex-col gap-3">
           <Inline value={f.meta.title} placeholder="Titre de la fiche" onChange={(title) => edit((d) => void (d.meta.title = title))} className="text-[24px] font-bold leading-[29px] tracking-[-0.5px] text-ink" />
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[13px]">
-            <select value={f.meta.template} onChange={(e) => edit((d) => void (d.meta.template = e.target.value as Protocol["meta"]["template"]))}
-              className={`rounded-md bg-transparent hover:bg-panel/70 ${urgent ? "font-semibold text-flag" : "text-soft"}`}>
+            <select value={f.meta.template} disabled={readOnly} onChange={(e) => edit((d) => void (d.meta.template = e.target.value as Protocol["meta"]["template"]))}
+              className={`rounded-md bg-transparent hover:bg-panel/70 disabled:appearance-none ${urgent ? "font-semibold text-flag" : "text-soft"}`}>
               <option value="urgence">Urgence</option><option value="pathologie">Pathologie</option>
             </select>
             {!urgent && <div className="w-40"><Inline value={f.meta.specialite} placeholder="spécialité" onChange={(v) => edit((d) => void (d.meta.specialite = v))} className="text-soft" /></div>}
@@ -482,5 +492,6 @@ export function FichePreview({ f, edit, stat }: { f: Protocol; edit: Edit; stat:
         })}
       </div>
     </ActiveCtx.Provider>
+    </ReadOnlyCtx.Provider>
   );
 }

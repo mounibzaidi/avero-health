@@ -53,7 +53,7 @@ def require_admin(authorization: str = Header(default="")) -> Caller:
 
 def require_viewer(authorization: str = Header(default="")) -> Caller:
     """For reads, open to everyone: the signed-in caller, or a visitor acting as anon (reading is open in the database)."""
-    if authorization.removeprefix("Bearer ").strip():
+    if authorization.removeprefix("Bearer").strip():
         return require_admin(authorization)
     return Caller(uid="", token=setting("SUPABASE_ANON_KEY"))
 

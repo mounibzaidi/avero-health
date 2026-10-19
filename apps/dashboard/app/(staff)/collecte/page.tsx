@@ -512,9 +512,9 @@ export default function CollectePage() {
       <aside className="border-e border-line bg-panel">
         <div className="sticky top-12 flex max-h-[calc(100dvh-3rem)] flex-col">
           <div className="p-3">
-            <button type="button" className={`mb-2 w-full rounded-lg px-2 py-1.5 text-left text-sm font-semibold ${open === null ? "bg-surface" : "hover:bg-surface/60"}`} onClick={() => setOpen(null)}>
+            {isAdmin && <button type="button" className={`mb-2 w-full rounded-lg px-2 py-1.5 text-left text-sm font-semibold ${open === null ? "bg-surface" : "hover:bg-surface/60"}`} onClick={() => setOpen(null)}>
               Free search
-            </button>
+            </button>}
             <input className={`${inputCls} w-full`} placeholder="Filter topics…" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
           <div className="min-h-0 flex-1 overflow-auto">

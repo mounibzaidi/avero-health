@@ -5,15 +5,17 @@ import { createClient } from "./supabase/client";
 /** The MedGuides service (services/api), called with the staff member's session. */
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
-async function token(): Promise<string> {
+/** The session's bearer header, none when signed out (reading is open). */
+async function auth(): Promise<Record<string, string>> {
   const { data } = await createClient().auth.getSession();
-  return data.session?.access_token ?? "";
+  const token = data.session?.access_token;
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 async function call<T>(path: string, init: RequestInit = {}): Promise<T> {
   let r: Response;
   try {
-    r = await fetch(`${BASE}${path}`, { ...init, headers: { Authorization: `Bearer ${await token()}`, ...(init.headers ?? {}) } });
+    r = await fetch(`${BASE}${path}`, { ...init, headers: { ...(await auth()), ...(init.headers ?? {}) } });
   } catch {
     throw new Error("API unreachable: start services/api (see its README).");
   }

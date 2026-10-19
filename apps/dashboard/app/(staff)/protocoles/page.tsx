@@ -1,9 +1,10 @@
 "use client";
 
-import { publicationGate, validateStructure, type Protocol } from "@medguides/schema";
+import { evidenceLines, publicationGate, validateStructure, type Protocol } from "@medguides/schema";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { Button, ButtonLink, Card, Empty, ErrorNote, PageHeader, Spinner, Tag } from "@/components/ui";
+import { ButtonLink, Card, Empty, ErrorNote, PageHeader, Spinner, Tag } from "@/components/ui";
 import { useAuth } from "@/lib/auth";
 import { deleteFiche } from "@/lib/delete";
 import { doiKey, TEMPLATE_LABEL, TO_COMPLETE } from "@/lib/labels";
@@ -56,39 +57,63 @@ export default function ProtocolesPage() {
   const remove = (r: Row, what: "fiche" | "drafts") =>
     deleteFiche(supabase, r.id, r.content.meta.title || r.id, what, r.published !== null).then((done) => done && load(), (e) => setError((e as Error).message));
 
+  const card = (r: Row) => {
+    const m = r.content.meta;
+    const outdated = r.content.sources.flatMap((s) => { const hit = s.url ? replaced.get(doiKey(s.url)) : undefined; return hit ? [hit] : []; });
+    const sources = r.content.sources.map((s) => s.organisation).filter(Boolean).join(", ");
+    const lines = evidenceLines(r.content).length;
+    return (
+      <Card key={r.id} className="group relative transition-[border-color,box-shadow] hover:border-accent/25 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.18)]">
+        <Link href={`/fiche/${r.id}`} className="flex items-center gap-4 p-4 pe-14">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="truncate text-[15px] font-semibold text-ink group-hover:text-accentink">{m.title || TO_COMPLETE}</h3>
+              <Tag tone={m.template === "urgence" ? "urgent" : "neutral"}>{TEMPLATE_LABEL[m.template]}</Tag>
+              {r.live ? <Tag tone="accent">live in the app</Tag> : r.published ? <Tag tone="caution">new draft (v{r.published} live)</Tag> : null}
+            </div>
+            <p className="mt-1 truncate text-xs text-muted">{[m.specialite, sources, `${lines} clinical line${lines === 1 ? "" : "s"}`, `v${r.version}`].filter(Boolean).join(" · ")}</p>
+            <p className={`mt-2 flex items-center gap-1.5 text-xs font-medium ${r.open ? "text-caution" : "text-accent"}`}>
+              <span className={`size-1.5 rounded-full ${r.open ? "bg-caution" : "bg-accent"}`} />
+              {r.open ? `${r.open} issue${r.open > 1 ? "s" : ""} to resolve before publishing` : r.live ? "Passed the publication gate" : "Passes the publication gate, quotes to check"}
+            </p>
+            {outdated.length > 0 && <p className="mt-2 rounded-lg bg-flagbg px-3 py-2 text-xs font-medium text-flag">Source updated, fiche to review: {outdated.join(" ; ")}</p>}
+          </div>
+          <span aria-hidden className="text-lg text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accentink">›</span>
+        </Link>
+        {isAdmin && (
+          <details className="absolute right-3 top-3">
+            <summary className="grid size-8 cursor-pointer list-none place-items-center rounded-lg text-muted hover:bg-panel hover:text-ink" title="More">⋯</summary>
+            <div className="absolute right-0 z-30 mt-1 flex w-48 flex-col rounded-xl border border-edge/15 bg-surface p-1 text-sm shadow-[0_12px_40px_-12px_rgba(0,0,0,0.35)]">
+              {r.published !== null && !r.live && <button type="button" className="rounded-lg px-3 py-2 text-left text-flag hover:bg-flagbg" onClick={() => void remove(r, "drafts")}>Delete the draft</button>}
+              <button type="button" className="rounded-lg px-3 py-2 text-left text-flag hover:bg-flagbg" onClick={() => void remove(r, "fiche")}>Delete the fiche</button>
+            </div>
+          </details>
+        )}
+      </Card>
+    );
+  };
+  const groups = rows ? [
+    { title: "In the app", rows: rows.filter((r) => r.published !== null) },
+    { title: "Drafts", rows: rows.filter((r) => r.published === null) },
+  ].filter((g) => g.rows.length) : [];
+
   return (
     <div className="mx-auto w-full max-w-[1000px] px-5 py-8">
-      <PageHeader title="All protocols" subtitle={rows ? `${rows.length} fiche(s) · ${rows.filter((r) => r.published).length} published` : undefined}
-        actions={isAdmin ? <ButtonLink href="/fiche/nouveau">New fiche</ButtonLink> : undefined} />
+      <PageHeader title="Protocols" subtitle={rows ? `${rows.length} fiche${rows.length === 1 ? "" : "s"} · ${rows.filter((r) => r.published !== null).length} in the app · every line sourced from a guideline page` : undefined}
+        actions={isAdmin ? <ButtonLink variant="primary" href="/fiche/nouveau">New fiche</ButtonLink> : undefined} />
       {error && <div className="mb-4"><ErrorNote>{error}</ErrorNote></div>}
       {!rows ? (
         <div className="flex justify-center py-10 text-muted"><Spinner /></div>
       ) : rows.length === 0 ? (
         <Empty>No fiches yet.</Empty>
       ) : (
-        <div className="flex flex-col gap-3">
-          {rows.map((r) => {
-            const m = r.content.meta;
-            const outdated = r.content.sources.flatMap((s) => { const hit = s.url ? replaced.get(doiKey(s.url)) : undefined; return hit ? [hit] : []; });
-            return (
-              <Card key={r.id} className="p-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="text-base font-semibold text-ink">{m.title || TO_COMPLETE}</h2>
-                  <Tag tone={m.template === "urgence" ? "urgent" : "neutral"}>{TEMPLATE_LABEL[m.template]}</Tag>
-                  <Tag tone={r.live ? "accent" : "neutral"}>{r.live ? "published" : r.published ? `draft (v${r.published} published)` : "draft"}</Tag>
-                  <Tag>v{r.version}</Tag>
-                  <span className="min-w-0 flex-1 text-xs text-muted">{m.specialite} · {r.content.sources.map((s) => s.organisation).filter(Boolean).join(", ")}</span>
-                  <ButtonLink className="h-8" href={`/fiche/${r.id}`}>Open and check</ButtonLink>
-                  {isAdmin && r.published !== null && !r.live && <Button variant="ghost" className="h-8 text-xs text-flag" onClick={() => void remove(r, "drafts")}>Delete draft</Button>}
-                  {isAdmin && <Button variant="ghost" className="h-8 text-xs text-flag" onClick={() => void remove(r, "fiche")}>Delete</Button>}
-                </div>
-                <p className={`mt-2 text-sm ${r.open ? "text-flag" : "text-accent"}`}>
-                  {r.open ? `${r.open} blocking issue(s) before publishing (quotes aside)` : "Ready, pending the quote check"}
-                </p>
-                {outdated.length > 0 && <p className="mt-2 rounded-lg bg-flagbg px-3 py-2 text-sm font-medium text-flag">Source updated, fiche to review: {outdated.join(" ; ")}</p>}
-              </Card>
-            );
-          })}
+        <div className="flex flex-col gap-8">
+          {groups.map((g) => (
+            <section key={g.title} className="flex flex-col gap-3">
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">{g.title} <span className="font-normal">({g.rows.length})</span></h2>
+              {g.rows.map(card)}
+            </section>
+          ))}
         </div>
       )}
     </div>
