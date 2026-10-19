@@ -1,7 +1,7 @@
 """The rules every collector's request goes through. No collector opens its own HTTP client.
 
 1. robots.txt, when OBEY_ROBOTS is on (it is off: the project owner's decision, see below). It is then
-   obeyed for our crawler's name first (a "User-agent: MedGuidesBot" group, else
+   obeyed for our crawler's name first (a "User-agent: AveroHealthBot" group, else
    "*"), on every host a request or a redirect reaches. An unreadable robots.txt (5xx, network error)
    or one that answers 401/403 means "no"; a missing one (404) means "yes", as the standard says.
    The hosts of DOCUMENTED_APIS are the exception: their robots.txt is not applied (rules 2 and 3 are).
@@ -27,7 +27,7 @@ from urllib.parse import urlsplit
 
 import httpx
 
-ROBOT_NAME = "MedGuidesBot"  # the product token robots.txt groups are matched against
+ROBOT_NAME = "AveroHealthBot"  # the product token robots.txt groups are matched against
 # Off (decided by the project owner, 2026-10-02): the collectors fetch a page even when the site's
 # robots.txt closes it to crawlers. Rules 2 and 3 still apply. True brings rule 1 back.
 OBEY_ROBOTS = False

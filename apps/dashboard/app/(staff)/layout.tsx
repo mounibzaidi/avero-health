@@ -46,7 +46,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
         <div className="flex h-12 items-center gap-3 px-4 sm:gap-6 sm:px-5">
           <Link href="/protocoles" className="flex shrink-0 items-center gap-2 font-semibold tracking-tight">
             <LogoMark />
-            MedGuides
+            Avero Health
           </Link>
           <nav className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto whitespace-nowrap text-sm">
             {NAV.map((n) => {

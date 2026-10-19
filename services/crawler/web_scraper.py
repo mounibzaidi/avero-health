@@ -31,7 +31,7 @@ import polite
 
 from doc_kinds import supporting_reason
 
-USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) MedGuidesBot/0.2 (+guideline collection)"
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AveroHealthBot/0.2 (+guideline collection)"
 DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
 MAX_PDF_BYTES = 60 * 1024 * 1024
 MAX_DOCS = 25  # a page linking more PDFs than this is an index, not one guideline

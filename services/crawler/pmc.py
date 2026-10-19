@@ -44,8 +44,8 @@ import polite
 EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 BUCKET = "https://pmc-oa-opendata.s3.amazonaws.com"
 HOST = "pmc.ncbi.nlm.nih.gov"
-TOOL = "medguides-bot"
-USER_AGENT = "MedGuidesBot/0.1 (+guideline provenance)"
+TOOL = "averohealth-bot"
+USER_AGENT = "AveroHealthBot/0.1 (+guideline provenance)"
 DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
 QUERY = "practice guideline[pt] AND pubmed pmc open access[filter] AND (english[la] OR french[la] OR arabic[la])"
 LANGUAGES = {"eng": ("en", "English"), "fre": ("fr", "Français"), "ara": ("ar", "العربية")}

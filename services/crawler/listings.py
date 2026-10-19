@@ -27,7 +27,7 @@ DOWNLOADS = HERE / "downloads"
 CACHE = DOWNLOADS / "listings"
 FRESH = timedelta(days=1)
 HAS_FRESH = timedelta(days=7)
-UA = "Mozilla/5.0 (X11; Linux x86_64) MedGuidesBot/0.3 (+guideline collection)"
+UA = "Mozilla/5.0 (X11; Linux x86_64) AveroHealthBot/0.3 (+guideline collection)"
 # sources.yaml id -> guideline_bodies.yaml id
 BODY = {"has": "has", "splf": "splf", "spilf": "spilf", "sfc": "sfc", "ansm": "ansm", "cnge": "cnge", "dz-ministry": "dz-ministere", "dz-insp": "dz-ministere",
         "sfmu": "sfmu", "sfar": "sfar"}

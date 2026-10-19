@@ -29,7 +29,7 @@ HERE = Path(__file__).resolve().parent
 SHARED = HERE.parents[1] / "shared"
 EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 EPMC = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
-TOOL = "medguides-bot"
+TOOL = "averohealth-bot"
 SINCE = 2010  # older guidelines are history, not practice
 
 # ─── Settings and polite access ────────────────────────────────────────────────────────────────
@@ -62,7 +62,7 @@ class Throttle:
 
 _NCBI = Throttle(10 if setting("NCBI_API_KEY") else 3)
 _EBI = Throttle(5)
-_client = httpx.Client(timeout=30, headers={"User-Agent": "MedGuidesBot/0.3 (+guideline provenance)"})
+_client = httpx.Client(timeout=30, headers={"User-Agent": "AveroHealthBot/0.3 (+guideline provenance)"})
 
 
 def _ncbi(path: str, params: dict, post: bool = False) -> dict:

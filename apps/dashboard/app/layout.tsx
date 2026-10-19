@@ -5,8 +5,9 @@ import { AuthProvider } from "@/lib/auth";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MedGuides · Fiches",
-  description: "Clinical fiche production workshop",
+  title: { default: "Avero Health", template: "%s · Avero Health" },
+  description: "Clinical protocols for Algerian GPs, sourced line by line from official guidelines: the editorial workshop.",
+  applicationName: "Avero Health",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

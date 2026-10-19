@@ -23,7 +23,7 @@ import polite
 
 from doc_kinds import supporting_reason
 
-USER_AGENT = "MedGuidesBot/0.1 (+guideline provenance)"
+USER_AGENT = "AveroHealthBot/0.1 (+guideline provenance)"
 DATASET = "https://www.data.gouv.fr/api/1/datasets/metadonnees-des-publications-de-la-has-1/"
 DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
 

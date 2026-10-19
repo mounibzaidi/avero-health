@@ -1,4 +1,4 @@
-"""Run one SQL file on the MedGuides Supabase database, in a single transaction (all or nothing).
+"""Run one SQL file on the Avero Health Supabase database, in a single transaction (all or nothing).
 
     npm run db:sql -- <file.sql> [extra query ...]     (services/api/.venv has psycopg2)
 
@@ -20,7 +20,7 @@ POOLER = "aws-0-eu-west-1.pooler.supabase.com"
 
 def main() -> None:
     url = next(l.split("=", 1)[1].strip().strip('"') for l in (ROOT / ".env.local").read_text(encoding="utf-8").splitlines() if l.startswith("SUPABASE_DB_URL="))
-    assert REF in url, "SUPABASE_DB_URL is not the MedGuides project"
+    assert REF in url, "SUPABASE_DB_URL is not the Avero Health project"
     con = psycopg2.connect(host=POOLER, port=5432, dbname="postgres", user=f"postgres.{REF}", password=urlsplit(url).password, connect_timeout=20)
     sql = Path(sys.argv[1]).read_text(encoding="utf-8")
     with con, con.cursor() as cur:

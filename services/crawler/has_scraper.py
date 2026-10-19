@@ -38,7 +38,7 @@ from crawl4ai import AsyncWebCrawler, BrowserConfig, CacheMode, CrawlerRunConfig
 from doc_kinds import supporting_reason
 
 HAS_HOST = "www.has-sante.fr"
-USER_AGENT = "MedGuidesBot/0.1 (+guideline provenance; contact via has-sante.fr)"
+USER_AGENT = "AveroHealthBot/0.1 (+guideline provenance; contact via has-sante.fr)"
 DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
 MAX_PDF_BYTES = 60 * 1024 * 1024
 

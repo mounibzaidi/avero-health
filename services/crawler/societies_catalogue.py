@@ -26,7 +26,7 @@ import polite
 from doc_kinds import fold, supporting_reason
 
 DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
-USER_AGENT = "MedGuidesBot/0.2 (+guideline catalogue)"
+USER_AGENT = "AveroHealthBot/0.2 (+guideline catalogue)"
 PAUSE_S = 1.5
 GUIDELINE = "Recommandation de bonne pratique"
 EDITORIAL = "Éditorial / commentaire"

@@ -16,10 +16,10 @@ export function LogoMark({ size = 28 }: { size?: number }) {
 
 export function Logo({ size = 28, textSize = 16 }: { size?: number; textSize?: number }) {
   return (
-    <View className="flex-row items-center gap-[9px]" accessibilityRole="header" accessibilityLabel="MedGuides">
+    <View className="flex-row items-center gap-[9px]" accessibilityRole="header" accessibilityLabel="Avero Health">
       <LogoMark size={size} />
       <Text className="font-semibold text-ink" style={{ fontSize: textSize, letterSpacing: -textSize * 0.01 }}>
-        MedGuides
+        Avero Health
       </Text>
     </View>
   );
