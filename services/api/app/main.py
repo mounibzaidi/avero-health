@@ -9,7 +9,9 @@ from . import checks, crawl, registry
 from .settings import env
 
 app = FastAPI(title="Avero API")
-app.add_middleware(CORSMiddleware, allow_origins=env().get("CORS_ORIGINS", "http://localhost:3000").split(","), allow_methods=["*"], allow_headers=["*"])
+# CORS_ORIGINS: the dashboard's addresses, comma-separated; spaces, quotes and a trailing slash are tolerated.
+ORIGINS = [o.strip().strip("\"'").rstrip("/") for o in env().get("CORS_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
+app.add_middleware(CORSMiddleware, allow_origins=ORIGINS, allow_methods=["*"], allow_headers=["*"])
 
 
 @app.exception_handler(httpx.TransportError)
