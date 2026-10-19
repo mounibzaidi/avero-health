@@ -58,8 +58,10 @@ def require_viewer(authorization: str = Header(default="")) -> Caller:
     return Caller(uid="", token=setting("SUPABASE_ANON_KEY"))
 
 
-def upload(caller: Caller, path: str, body: bytes, content_type: str) -> None:
-    r = httpx.post(f"{_base()}/storage/v1/object/{BUCKET}/{path}", content=body, headers={**_as(caller), "Content-Type": content_type}, timeout=120)
+def upload(caller: Caller, path: str, body: bytes, content_type: str, replace: bool = False) -> None:
+    """replace: overwrite a file already there (a topic's last search), instead of keeping the first one."""
+    headers = {**_as(caller), "Content-Type": content_type, **({"x-upsert": "true"} if replace else {})}
+    r = httpx.post(f"{_base()}/storage/v1/object/{BUCKET}/{path}", content=body, headers=headers, timeout=120)
     # 409: the same file (same hash in its name) is already kept for this topic.
     if r.status_code not in (200, 201, 409) and "Duplicate" not in r.text:
         raise HTTPException(status_code=502, detail=f"Storage: {r.text[:200]}")

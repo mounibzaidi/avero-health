@@ -27,6 +27,7 @@ import asyncio
 import gzip
 import html
 import json
+import os
 import re
 import sys
 import threading
@@ -50,7 +51,7 @@ from web_scraper import USER_AGENT
 
 HERE = Path(__file__).resolve().parent
 SOURCES = HERE.parents[1] / "shared" / "sources.yaml"
-DOWNLOADS = HERE / "downloads"
+DOWNLOADS = Path(os.environ.get("AVERO_DOWNLOADS") or HERE / "downloads")  # AVERO_DOWNLOADS: a writable folder (/tmp on Vercel)
 INDEX = DOWNLOADS / "source_index"
 RESULTS = DOWNLOADS / "search"
 UNREACHABLE = RESULTS / "unreachable.json"

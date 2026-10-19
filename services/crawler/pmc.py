@@ -46,7 +46,7 @@ BUCKET = "https://pmc-oa-opendata.s3.amazonaws.com"
 HOST = "pmc.ncbi.nlm.nih.gov"
 TOOL = "avero-bot"
 USER_AGENT = "AveroBot/0.1 (+guideline provenance)"
-DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
+DEFAULT_OUT = Path(os.environ.get("AVERO_DOWNLOADS") or Path(__file__).resolve().parent / "downloads")  # AVERO_DOWNLOADS: a writable folder (/tmp on Vercel)
 QUERY = "practice guideline[pt] AND pubmed pmc open access[filter] AND (english[la] OR french[la] OR arabic[la])"
 LANGUAGES = {"eng": ("en", "English"), "fre": ("fr", "Français"), "ara": ("ar", "العربية")}
 # PMC licence filter -> licence code as written in the bucket's JSON.

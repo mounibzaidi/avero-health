@@ -8,6 +8,7 @@ Nothing is downloaded beyond those two responses.
 """
 
 import json
+import os
 import sys
 import time
 import urllib.robotparser
@@ -24,7 +25,7 @@ from web_scraper import USER_AGENT
 
 HERE = Path(__file__).resolve().parent
 SOURCES = HERE.parents[1] / "shared" / "sources.yaml"
-OUT = HERE / "downloads" / "sources_check.json"
+OUT = Path(os.environ.get("AVERO_DOWNLOADS") or HERE / "downloads") / "sources_check.json"
 DELAY_S = 2.0
 AI_BOTS = ("GPTBot", "ClaudeBot", "anthropic-ai", "CCBot", "Google-Extended")
 

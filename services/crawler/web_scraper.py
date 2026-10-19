@@ -14,6 +14,7 @@ manifest record like the other collectors' (the licence is recorded when the pag
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 import time
@@ -32,7 +33,7 @@ import polite
 from doc_kinds import supporting_reason
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AveroBot/0.2 (+guideline collection)"
-DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
+DEFAULT_OUT = Path(os.environ.get("AVERO_DOWNLOADS") or Path(__file__).resolve().parent / "downloads")  # AVERO_DOWNLOADS: a writable folder (/tmp on Vercel)
 MAX_PDF_BYTES = 60 * 1024 * 1024
 MAX_DOCS = 25  # a page linking more PDFs than this is an index, not one guideline
 DELAY_S = 1.5

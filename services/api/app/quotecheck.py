@@ -8,6 +8,7 @@ the publication gate (packages/schema), not here.
 """
 
 import re
+import shutil
 import subprocess
 import tempfile
 import unicodedata
@@ -54,6 +55,19 @@ def _contains(hay: str, needle: str) -> bool:
     return f" {needle} " in f" {hay} "
 
 
+def pdfium_pages(pdf: Path) -> list[str]:
+    """The text of every page with PDFium (pypdfium2), where pdftotext is not installed (Vercel): one reading only."""
+    import pypdfium2
+
+    doc = pypdfium2.PdfDocument(str(pdf))
+    try:
+        # PDFium joins a line cut by a hyphen and marks the cut with \x02: put the hyphen and the line end back, so
+        # page_forms reads it both ways, as with pdftotext.
+        return [page.get_textpage().get_text_bounded().replace("\x02", "-\n") for page in doc]
+    finally:
+        doc.close()
+
+
 def pdftotext_pages(pdf: Path, mode: tuple[str, ...]) -> list[str]:
     """The text of every page of the PDF (index 0 = PDF page 1), read in one pdftotext mode."""
     out = subprocess.run(["pdftotext", "-enc", "UTF-8", *mode, str(pdf), "-"], capture_output=True, check=True, timeout=300)
@@ -65,7 +79,8 @@ class PdfText:
     """A PDF's pages in every mode, normalised once."""
 
     def __init__(self, pdf: Path):
-        self.modes = [[page_forms(p) for p in pdftotext_pages(pdf, m)] for m in MODES]
+        readings = [pdftotext_pages(pdf, m) for m in MODES] if shutil.which("pdftotext") else [pdfium_pages(pdf)]
+        self.modes = [[page_forms(p) for p in pages] for pages in readings]
         self.page_count = max(len(m) for m in self.modes)
 
     def on_page(self, needles: list[str], index: int) -> bool:

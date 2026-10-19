@@ -10,6 +10,7 @@ answer stays unclassified, and literature.py falls back on its own rules for it.
 """
 
 import json
+import os
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -19,7 +20,7 @@ import httpx
 import literature as L
 
 HERE = Path(__file__).resolve().parent
-CACHE = HERE / "downloads" / "classifier"
+CACHE = Path(os.environ.get("AVERO_DOWNLOADS") or HERE / "downloads") / "classifier"
 OPENROUTER = "https://openrouter.ai/api/v1/chat/completions"
 BATCH = 20
 PARALLEL = 6

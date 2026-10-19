@@ -22,6 +22,7 @@ import asyncio
 import hashlib
 import html
 import json
+import os
 import re
 import sys
 import uuid
@@ -39,7 +40,7 @@ from doc_kinds import supporting_reason
 
 HAS_HOST = "www.has-sante.fr"
 USER_AGENT = "AveroBot/0.1 (+guideline provenance; contact via has-sante.fr)"
-DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
+DEFAULT_OUT = Path(os.environ.get("AVERO_DOWNLOADS") or Path(__file__).resolve().parent / "downloads")  # AVERO_DOWNLOADS: a writable folder (/tmp on Vercel)
 MAX_PDF_BYTES = 60 * 1024 * 1024
 
 # <a ... href="jcms/c_2679492/fr/..." ... title="..." ... data-jalios-id='c_2679492'>text</a>

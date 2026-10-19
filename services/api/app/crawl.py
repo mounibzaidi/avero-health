@@ -21,14 +21,13 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from pydantic import BaseModel, Field
 
 from . import supabase as sb
-from .settings import CRAWLER, DOWNLOADS
+from .settings import CRAWLER, CRAWLER_ENV, CRAWLER_PYTHON, DOWNLOADS, ON_VERCEL
 
 sys.path.insert(0, str(CRAWLER))
 import topics as crawler_topics  # noqa: E402
 
 router = APIRouter(prefix="/crawl", tags=["crawl"])
 
-PYTHON = CRAWLER / ".venv" / "bin" / "python"
 _KEEP_JOBS = 20
 _KEEP_LOG = 200
 _jobs: dict[str, dict] = {}
@@ -64,11 +63,6 @@ def _is_private(host: str) -> bool:
     except OSError:
         return False  # unresolvable: the crawler reports the error
     return any(ipaddress.ip_address(i[4][0]).is_private or ipaddress.ip_address(i[4][0]).is_loopback or ipaddress.ip_address(i[4][0]).is_link_local for i in infos)
-
-
-def _require_crawler() -> None:
-    if not PYTHON.exists():
-        raise HTTPException(status_code=503, detail="Crawler not installed (services/crawler/.venv missing, see services/crawler/README.md)")
 
 
 def _stored_name(topic: str, filename: str, sha256: str) -> str:
@@ -196,7 +190,6 @@ def collect(body: CollectIn, caller: sb.Caller = Depends(sb.require_admin)):
     if parsed.scheme not in ("http", "https") or not parsed.hostname or _is_private(parsed.hostname):
         raise HTTPException(status_code=422, detail="A public web address is expected (http or https)")
     _topic(body.topic)
-    _require_crawler()
     with _lock:
         if any(j["status"] == "running" for j in _jobs.values()):
             raise HTTPException(status_code=409, detail="A download is already running")
@@ -210,9 +203,14 @@ def collect(body: CollectIn, caller: sb.Caller = Depends(sb.require_admin)):
     DOWNLOADS.mkdir(parents=True, exist_ok=True)
     script = ["web_scraper.py", "--single"] if body.single else ["collect.py"]
     proc = subprocess.Popen(
-        [str(PYTHON), str(CRAWLER / script[0]), url, "--job", job_id, "--out", str(DOWNLOADS), *script[1:], *(["--all"] if body.include_supporting else [])],
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, cwd=CRAWLER,
+        [CRAWLER_PYTHON, str(CRAWLER / script[0]), url, "--job", job_id, "--out", str(DOWNLOADS), *script[1:], *(["--all"] if body.include_supporting else [])],
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, cwd=CRAWLER, env=CRAWLER_ENV,
     )
+    if ON_VERCEL:
+        # Serverless: no work after the response, and the next poll may reach another instance. Run it to the end here.
+        _watch(job_id, proc, caller)
+        with _lock:
+            return _jobs[job_id]
     threading.Thread(target=_watch, args=(job_id, proc, caller), daemon=True, name=f"collect-{job_id}").start()
     return job
 
@@ -255,7 +253,7 @@ def _files(caller: sb.Caller, topic: str) -> list[dict]:
 @router.get("/topics/{topic}")
 def get_topic(topic: str, caller: sb.Caller = Depends(sb.require_viewer)):
     t = _topic(topic)
-    return {"id": topic, "fr": t["fr"], "group": t["group_label"], "files": _files(caller, topic), "search": _saved(topic)}
+    return {"id": topic, "fr": t["fr"], "group": t["group_label"], "files": _files(caller, topic), "search": _saved(caller, topic)}
 
 
 @router.post("/topics/{topic}/upload", status_code=201)
@@ -330,8 +328,7 @@ def file_delete(path: str, caller: sb.Caller = Depends(sb.require_admin)):
 
 def _run_search(args: list[str]) -> dict:
     """literature.py in the crawler's venv: PubMed + Europe PMC, the bodies' catalogues, the librarian (~2 min the first time per topic, cached a week); ~10 s otherwise."""
-    _require_crawler()
-    done = subprocess.run([str(PYTHON), str(CRAWLER / "literature.py"), *args], capture_output=True, text=True, timeout=900, cwd=CRAWLER)  # a topic's first search waits for the librarian, the body crawls and the classifier
+    done = subprocess.run([CRAWLER_PYTHON, str(CRAWLER / "literature.py"), *args], capture_output=True, text=True, timeout=900, cwd=CRAWLER, env=CRAWLER_ENV)  # a topic's first search waits for the librarian, the body crawls and the classifier
     if done.returncode != 0:
         raise HTTPException(status_code=502, detail=f"Search failed: {(done.stderr or done.stdout).strip().splitlines()[-1:] or ['error']}")
     result = json.loads(done.stdout)
@@ -339,10 +336,15 @@ def _run_search(args: list[str]) -> dict:
     return result
 
 
-def _saved(topic: str) -> dict | None:
-    """The topic's last search; one saved by the old whole-site crawl (no "families") is ignored: search again."""
-    path = DOWNLOADS / "search" / f"{topic}.json"
-    saved = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+SEARCHES = "_search"  # the bucket folder of the topics' last searches
+
+
+def _saved(caller: sb.Caller, topic: str) -> dict | None:
+    """The topic's last search: kept in the bucket (any instance sees it), else the one saved with the crawler's
+    files; one from the old whole-site crawl (no "families") is ignored: search again."""
+    raw = sb.download(caller, f"{SEARCHES}/{topic}.json")
+    path = CRAWLER / "downloads" / "search" / f"{topic}.json"
+    saved = json.loads(raw) if raw else json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
     return saved if isinstance(saved, dict) and "families" in saved else None
 
 
@@ -352,8 +354,7 @@ def search_topic(topic: str, ai: bool = False, caller: sb.Caller = Depends(sb.re
     saved answers are reused and the search costs nothing."""
     _topic(topic)
     result = _run_search(["--topic", topic, *(["--ai"] if ai else [])])
-    (DOWNLOADS / "search").mkdir(parents=True, exist_ok=True)
-    (DOWNLOADS / "search" / f"{topic}.json").write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
+    sb.upload(caller, f"{SEARCHES}/{topic}.json", json.dumps(result, ensure_ascii=False).encode(), "application/json", replace=True)
     return result
 
 

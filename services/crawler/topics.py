@@ -13,6 +13,7 @@ The output is a shortlist for a person to confirm, not a download list: nothing 
 
 import argparse
 import json
+import os
 import re
 import unicodedata
 from datetime import date, datetime, timezone
@@ -24,7 +25,7 @@ from doc_kinds import group_versions, rank as rank_result, rank_key, result_kind
 
 ROOT = Path(__file__).resolve().parent
 TOPICS = ROOT.parents[1] / "shared" / "topics.yaml"
-DOWNLOADS = ROOT / "downloads"
+DOWNLOADS = Path(os.environ.get("AVERO_DOWNLOADS") or ROOT / "downloads")  # AVERO_DOWNLOADS: a writable folder (/tmp on Vercel)
 CATALOGUES = {"catalogue.json": "HAS", "who.json": "OMS", "pmc.json": "PubMed Central", "societies.json": None}
 
 # where a catalogue's documents come from (doc_kinds.origin_of): PubMed Central has no region, each title says; the societies are French

@@ -12,6 +12,7 @@ guidance types, and writes <out>/catalogue.json with where and when the list cam
 import argparse
 import io
 import json
+import os
 import re
 import zipfile
 from datetime import datetime, timezone
@@ -25,7 +26,7 @@ from doc_kinds import supporting_reason
 
 USER_AGENT = "AveroBot/0.1 (+guideline provenance)"
 DATASET = "https://www.data.gouv.fr/api/1/datasets/metadonnees-des-publications-de-la-has-1/"
-DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
+DEFAULT_OUT = Path(os.environ.get("AVERO_DOWNLOADS") or Path(__file__).resolve().parent / "downloads")  # AVERO_DOWNLOADS: a writable folder (/tmp on Vercel)
 
 # Publication class -> label shown in the dashboard. The other classes (drug and device opinions,
 # technology assessments, studies, methodology) are not care protocols.

@@ -12,6 +12,7 @@ Writes <out>/societies.json in the same item shape as catalogue.json (has_catalo
 
 import argparse
 import json
+import os
 import re
 import time
 from datetime import datetime, timezone
@@ -25,7 +26,7 @@ import polite
 
 from doc_kinds import fold, supporting_reason
 
-DEFAULT_OUT = Path(__file__).resolve().parent / "downloads"
+DEFAULT_OUT = Path(os.environ.get("AVERO_DOWNLOADS") or Path(__file__).resolve().parent / "downloads")  # AVERO_DOWNLOADS: a writable folder (/tmp on Vercel)
 USER_AGENT = "AveroBot/0.2 (+guideline catalogue)"
 PAUSE_S = 1.5
 GUIDELINE = "Recommandation de bonne pratique"

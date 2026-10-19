@@ -8,6 +8,7 @@ All requests go through polite.py.
 """
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -23,7 +24,7 @@ import polite
 
 HERE = Path(__file__).resolve().parent
 SHARED = HERE.parents[1] / "shared"
-DOWNLOADS = HERE / "downloads"
+DOWNLOADS = Path(os.environ.get("AVERO_DOWNLOADS") or HERE / "downloads")  # AVERO_DOWNLOADS: a writable folder (/tmp on Vercel)
 CACHE = DOWNLOADS / "listings"
 FRESH = timedelta(days=1)
 HAS_FRESH = timedelta(days=7)

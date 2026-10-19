@@ -15,6 +15,7 @@ Inputs come from shared/librarian.yaml. The answer is cached a week per topic in
 
 import argparse
 import json
+import os
 import re
 import sys
 from datetime import datetime, timedelta, timezone
@@ -27,7 +28,7 @@ import literature as L
 
 HERE = Path(__file__).resolve().parent
 CONFIG = L.SHARED / "librarian.yaml"
-CACHE = HERE / "downloads" / "librarian"
+CACHE = Path(os.environ.get("AVERO_DOWNLOADS") or HERE / "downloads") / "librarian"
 FRESH = timedelta(days=7)
 OPENROUTER = "https://openrouter.ai/api/v1/chat/completions"
 TIMEOUT_S = 170  # the v2 answer is long; the API gives the whole first search 420 s

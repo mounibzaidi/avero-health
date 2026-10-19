@@ -10,10 +10,9 @@ import yaml
 from fastapi import APIRouter, Depends, HTTPException
 
 from . import supabase as sb
-from .settings import CRAWLER, SHARED
+from .settings import CRAWLER, CRAWLER_ENV, CRAWLER_PYTHON, SHARED
 
 router = APIRouter(prefix="/registry", tags=["registry"])
-PYTHON = CRAWLER / ".venv" / "bin" / "python"
 
 
 def _now() -> str:
@@ -27,9 +26,7 @@ def bodies(caller: sb.Caller = Depends(sb.require_viewer)):
 
 
 def _run(script: str, args: list[str], stdin: str | None = None, timeout: int = 600) -> object:
-    if not PYTHON.exists():
-        raise HTTPException(status_code=503, detail="Crawler not installed (services/crawler/.venv)")
-    done = subprocess.run([str(PYTHON), str(CRAWLER / script), *args], input=stdin, capture_output=True, text=True, timeout=timeout, cwd=CRAWLER)
+    done = subprocess.run([CRAWLER_PYTHON, str(CRAWLER / script), *args], input=stdin, capture_output=True, text=True, timeout=timeout, cwd=CRAWLER, env=CRAWLER_ENV)
     if done.returncode != 0:
         raise HTTPException(status_code=502, detail=f"Check failed: {(done.stderr or done.stdout).strip().splitlines()[-1:]}")
     return json.loads(done.stdout)
