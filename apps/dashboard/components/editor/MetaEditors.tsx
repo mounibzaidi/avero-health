@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 
 import { inputCls } from "@/components/ui";
 import { api, apiForm } from "@/lib/api";
-import { deleteStored } from "@/lib/delete";
+import { EditableName } from "@/components/EditableName";
+import { deleteStored, renameStored } from "@/lib/delete";
+import { createClient } from "@/lib/supabase/client";
 import { TEMPLATE_LABEL } from "@/lib/labels";
 
 import { Ids, Label, LineIssues, Lines, List, Text } from "./fields";
@@ -115,7 +117,10 @@ export function SourcesEditor({ sources, onChange, topic, pdfs, onPdf }: {
               const users = usedBy(x.path);
               return (
                 <li key={x.path} className="flex items-center gap-3 border-t border-line py-1.5 text-sm first:border-t-0">
-                  <span className="min-w-0 flex-1 truncate text-ink" title={title(x.title)}>{title(x.title)}</span>
+                  <div className="flex min-w-0 flex-1">
+                    <EditableName name={title(x.title)} className="text-ink"
+                      onSave={(n) => renameStored(createClient(), x.path, n).then(() => void loadOwn(), (e) => setError((e as Error).message))} />
+                  </div>
                   <span className={`shrink-0 text-xs ${users.length ? "text-soft" : "text-caution"}`}>{users.length ? `used by ${users.join(", ")}` : "not linked to a source"}</span>
                   <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => remove(x.path, title(x.title))}>Delete</button>
                 </li>

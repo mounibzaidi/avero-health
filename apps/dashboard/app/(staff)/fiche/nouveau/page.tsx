@@ -8,7 +8,8 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Button, Card, ErrorNote, inputCls, Spinner } from "@/components/ui";
 import { api, apiForm } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
-import { deleteStored } from "@/lib/delete";
+import { EditableName } from "@/components/EditableName";
+import { deleteStored, renameStored } from "@/lib/delete";
 import { matchSources, pdfText } from "@/lib/pdfMatch";
 import { createClient } from "@/lib/supabase/client";
 
@@ -119,6 +120,19 @@ function NewFiche() {
     setChanging(null);
   };
   const add = (files: File[]) => setUploads([...uploads, ...files.map((file) => ({ key: `upload-${nextKey.current++}`, name: file.name, file }))]);
+  /** A PDF renamed: a file chosen here before it is uploaded (it is stored under that name), a stored one in its record. */
+  const rename = async (e: Entry, name: string) => {
+    if (e.file) {
+      const file = new File([e.file], /\.pdf$/i.test(name) ? name : `${name}.pdf`, { type: e.file.type });
+      return setUploads(uploads.map((u) => (u.key === e.key ? { ...u, name: file.name, file } : u)));
+    }
+    try {
+      await renameStored(supabase, e.path!, name);
+      setStored((cur) => cur.map((x) => (x.path === e.path ? { ...x, title: name } : x)));
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
   /** Out of the list: a file chosen here is dropped; a stored one is deleted from storage (asked first). */
   const remove = (e: Entry) => {
     if (e.file) return setUploads(uploads.filter((u) => u.key !== e.key));
@@ -222,7 +236,7 @@ function NewFiche() {
             {entries.map((e) => (
               <li key={e.key} className="flex flex-col gap-1 border-t border-line py-2 first:border-t-0">
                 <div className="flex items-center gap-3">
-                  <span className="min-w-0 flex-1 truncate text-sm font-medium text-ink" title={e.name}>{e.name}</span>
+                  <div className="flex min-w-0 flex-1"><EditableName name={e.name} onSave={(n) => rename(e, n)} className="text-sm font-medium text-ink" /></div>
                   <button type="button" className="shrink-0 text-xs font-medium text-accentink hover:underline" onClick={() => setChanging(changing === e.key ? null : e.key)}>change</button>
                   <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => remove(e)}>{e.file ? "Remove" : "Delete"}</button>
                 </div>

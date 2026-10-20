@@ -32,3 +32,12 @@ export async function deleteStored(path: string, title: string): Promise<boolean
   await api(`/crawl/file?path=${encodeURIComponent(path)}`, { method: "DELETE" });
   return true;
 }
+
+/** A stored PDF renamed: the name kept in its record (<path>.json) beside it; the file itself is not touched. */
+export async function renameStored(supabase: SupabaseClient, path: string, name: string): Promise<void> {
+  const bucket = supabase.storage.from("sources");
+  const rec = await bucket.download(`${path}.json`);
+  const record = rec.data ? (JSON.parse(await rec.data.text()) as Record<string, unknown>) : {};
+  const up = await bucket.upload(`${path}.json`, new Blob([JSON.stringify({ ...record, title: name })], { type: "application/json" }), { upsert: true });
+  if (up.error) throw new Error(`Not renamed: ${up.error.message}`);
+}
