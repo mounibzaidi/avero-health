@@ -7,12 +7,13 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { Button, Card, ErrorNote, inputCls, Spinner } from "@/components/ui";
 import { api, apiForm } from "@/lib/api";
+import { deleteStored } from "@/lib/delete";
 import { useAuth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
 
 type Pdf = { path: string; title: string };
-/** A source's PDF: a file to upload, or a stored one (already linked, or kept in the Collecte topic). */
-type Choice = { file: File } | { path: string };
+/** A source's PDF: a file to upload, a stored one (already linked, or kept in the Collecte topic), or none (removed). */
+type Choice = { file: File } | { path: string } | { none: true };
 
 const title = (t: string) => { try { return decodeURIComponent(t); } catch { return t; } };
 
@@ -65,8 +66,20 @@ function NewFiche() {
       .then(({ data }) => setLinked(Object.fromEntries((data ?? []).map((r: { source_id: string; pdf_path: string }) => [r.source_id, r.pdf_path]))));
   }, [supabase, sourceIds]);
 
-  const pdfOf = (sid: string): Choice | null => choice[sid] ?? (linked[sid] ? { path: linked[sid] } : stored.length === 1 && sourceIds.length === 1 ? { path: stored[0].path } : null);
-  const ready = !!protocol && sourceIds.every((sid) => pdfOf(sid));
+  const pdfOf = (sid: string): { file: File } | { path: string } | null => {
+    const c = choice[sid] ?? (linked[sid] ? { path: linked[sid] } : stored.length === 1 && sourceIds.length === 1 ? { path: stored[0].path } : null);
+    return c && !("none" in c) ? c : null;
+  };
+  // a PDF is not required: one can be given later, in the editor's Sources
+  const ready = !!protocol;
+  const remove = (sid: string) => setChoice({ ...choice, [sid]: { none: true } });
+  /** A PDF stored with this fiche deleted from storage, and dropped from what the sources picked. */
+  const deleteFile = (path: string) => void deleteStored(path, title(path.split("/").pop() ?? "")).then((done) => {
+    if (!done) return;
+    setStored((cur) => cur.filter((x) => x.path !== path));
+    setLinked((cur) => Object.fromEntries(Object.entries(cur).filter(([, p]) => p !== path)));
+    setChoice((cur) => Object.fromEntries(Object.entries(cur).map(([k, c]) => [k, "path" in c && c.path === path ? { none: true as const } : c])));
+  }, (e) => setError((e as Error).message));
 
   const open = async () => {
     if (!protocol || !session) return;
@@ -76,7 +89,14 @@ function NewFiche() {
       const id = protocol.meta.id;
       for (const sid of sourceIds) {
         const c = pdfOf(sid);
-        if (!c) continue;
+        if (!c) {
+          // removed here: an earlier link of this source is undone
+          if (linked[sid]) {
+            const r = await supabase.from("source_pdfs").delete().eq("source_id", sid);
+            if (r.error) throw new Error(r.error.message);
+          }
+          continue;
+        }
         let path = "path" in c ? c.path : null;
         if ("file" in c) {
           const form = new FormData();
@@ -149,7 +169,14 @@ function NewFiche() {
                   {c && "file" in c ? c.file.name : "Upload a PDF"}
                   <input type="file" accept="application/pdf,.pdf" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; if (f) setChoice({ ...choice, [s.id]: { file: f } }); }} />
                 </label>
+                {c && (
+                  <button type="button" className="h-9 rounded-lg px-2 text-sm font-medium text-flag hover:bg-flagbg" onClick={() => remove(s.id)}>Remove</button>
+                )}
               </div>
+              {!c && <p className="text-xs text-muted">No PDF for this source: you can add it later in the editor (Sources).</p>}
+              {c && "path" in c && c.path.startsWith(`fiches/${fid}/`) && (
+                <button type="button" className="self-start text-xs text-flag hover:underline" onClick={() => deleteFile(c.path)}>Delete this PDF from storage</button>
+              )}
             </div>
           );
         })}
