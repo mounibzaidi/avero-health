@@ -1,12 +1,12 @@
 import { breakpoint } from "@avero/ui-tokens";
 import { useRouter } from "expo-router";
-import type { ComponentType } from "react";
 import { Pressable, RefreshControl, ScrollView, Text, useWindowDimensions, View } from "react-native";
 
 import { entries, specialites, useLibrary, type Entry } from "@/lib/library";
 import { useFavorites, useRecent } from "@/lib/stored";
 import { t } from "@/strings/fr";
-import { ArrowRightIcon, BabyIcon, BrainIcon, CaretRightIcon, FirstAidIcon, GenderFemaleIcon, HeartbeatIcon, MagnifyingGlassIcon, StethoscopeIcon, ThermometerIcon, UserIcon, VirusIcon } from "@/ui/Icons";
+import { ArrowRightIcon, CaretRightIcon, MagnifyingGlassIcon, UserIcon } from "@/ui/Icons";
+import { SpecialtyIcon } from "@/ui/MedIcons";
 import { useColors } from "@/ui/theme";
 import { Heading, Skeleton } from "@/ui/ui";
 
@@ -16,19 +16,6 @@ import { subtitle } from "./ProtocolRow";
  * on a green card, the specialties as a grid, and quick access. A block with nothing to show is left out.
  * Wide screens: two columns under the top bar. */
 
-type Glyph = ComponentType<{ size?: number; color?: string }>;
-/** A specialty's icon, by the first word that tells it; the stethoscope otherwise. */
-const GLYPHS: [RegExp, Glyph][] = [
-  [/cardio/i, HeartbeatIcon],
-  [/neuro/i, BrainIcon],
-  [/infect|choc/i, VirusIcon],
-  [/toxico|trauma|urgence/i, FirstAidIcon],
-  [/p[ée]diatr/i, BabyIcon],
-  [/obst[ée]tr|gyn[ée]co/i, GenderFemaleIcon],
-  [/m[ée]tabol|endocr/i, ThermometerIcon],
-  [/psych/i, UserIcon],
-];
-const glyph = (s: string): Glyph => GLYPHS.find(([re]) => re.test(s))?.[1] ?? StethoscopeIcon;
 
 function SectionHead({ title, link, onPress }: { title: string; link?: string; onPress?: () => void }) {
   return (
@@ -84,14 +71,13 @@ export function HomeScreen() {
       <SectionHead title={t("h_specialties")} link={t("h_see_all")} onPress={() => router.navigate("/recherche?all=1")} />
       <View className={`flex-row flex-wrap ${wide ? "gap-[12px]" : "gap-[10px]"}`}>
         {specialties.map((s) => {
-          const Icon = glyph(s);
           const n = all.filter((e) => e.fiche.meta.specialite === s).length;
           return (
             <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
               className={`flex-1 gap-[12px] rounded-[16px] border border-line bg-panel hover:border-accent/40 active:opacity-70 ${wide ? "min-w-[30%] px-[16px] py-[14px]" : "min-w-[46%] px-[14px] py-[12px]"}`}>
               <View className="flex-row items-center justify-between">
                 <View className="h-[30px] w-[30px] items-center justify-center rounded-full bg-tint">
-                  <Icon size={16} color={c.accent} />
+                  <SpecialtyIcon name={s} size={16} color={c.accent} />
                 </View>
                 <CaretRightIcon size={14} color={c.muted} weight="bold" />
               </View>
@@ -111,12 +97,11 @@ export function HomeScreen() {
       <SectionHead title={t("h_quick")} link={t("h_library")} onPress={() => router.navigate("/recherche?all=1")} />
       <View className={wide ? "overflow-hidden rounded-[16px] border border-line bg-panel" : ""}>
         {quick.map((e, i) => {
-          const Icon = glyph(e.fiche.meta.specialite);
           return (
             <Pressable key={e.id} accessibilityRole="link" onPress={() => open(e)}
               className={`min-h-[56px] flex-row items-center gap-3 py-[10px] active:opacity-70 ${wide ? `px-[16px] hover:bg-bg/70 ${i ? "border-t border-line" : ""}` : "border-b border-line"}`}>
               <View className="h-[30px] w-[30px] items-center justify-center rounded-full bg-tint">
-                <Icon size={16} color={c.accent} />
+                <SpecialtyIcon name={e.fiche.meta.specialite} size={16} color={c.accent} />
               </View>
               <View className="min-w-0 flex-1">
                 <Text className="text-[14px] font-semibold leading-[19px] text-ink" numberOfLines={2}>{e.fiche.meta.title}</Text>

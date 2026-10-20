@@ -7,9 +7,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { t } from "@/strings/fr";
 import {
-  BookOpenIcon, CaretDownIcon, CaretLeftIcon, CaretUpIcon, CheckIcon, ClipboardTextIcon, HospitalIcon, type Icon, PillIcon, QuotesIcon, StethoscopeIcon, UsersThreeIcon, WarningIcon,
+  BookOpenIcon, CaretDownIcon, CaretLeftIcon, CaretUpIcon, CheckIcon, ClipboardTextIcon, QuotesIcon, UsersThreeIcon, WarningIcon,
 } from "@/ui/Icons";
 import { Logo } from "@/ui/Logo";
+import { HospitalMedIcon, type MedIcon, MedicinesIcon, SpecialtyIcon, StethoscopeMedIcon } from "@/ui/MedIcons";
 import { SearchField } from "@/ui/SearchField";
 import { useColors } from "@/ui/theme";
 import { Body, CONTROL_STYLE, Heading } from "@/ui/ui";
@@ -22,8 +23,9 @@ import { StarButton } from "./StarButton";
 
 type SectionId = "red_box" | "assess" | "treat" | "advise" | "refer_follow" | "sources";
 
-const ICON: Record<SectionId, Icon> = {
-  red_box: WarningIcon, assess: StethoscopeIcon, treat: PillIcon, advise: UsersThreeIcon, refer_follow: HospitalIcon, sources: BookOpenIcon,
+// medical sections in Health Icons; the alert, advice and sources keep their interface icons
+const ICON: Record<SectionId, MedIcon> = {
+  red_box: WarningIcon, assess: StethoscopeMedIcon, treat: MedicinesIcon, advise: UsersThreeIcon, refer_follow: HospitalMedIcon, sources: BookOpenIcon,
 };
 
 /** Screen order of the doc: red box first; "pathologie" puts Conseiller before Traiter. */
@@ -231,7 +233,7 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
       <Heading className="text-[24px] font-bold leading-[29px]" style={{ letterSpacing: -0.5 }}>{f.meta.title}</Heading>
       <View className="flex-row flex-wrap items-center gap-x-4 gap-y-[6px]">
         <View className="flex-row items-center gap-[6px]">
-          <StethoscopeIcon size={15} color={urgent ? c.warn : c.soft} />
+          <SpecialtyIcon name={urgent ? "urgence" : f.meta.specialite} size={15} color={urgent ? c.warn : c.soft} />
           <Text className={`text-[13px] ${urgent ? "font-semibold text-flag" : "text-soft"}`}>{urgent ? t("p_urgence") : f.meta.specialite}</Text>
         </View>
         {f.scope.population ? (
