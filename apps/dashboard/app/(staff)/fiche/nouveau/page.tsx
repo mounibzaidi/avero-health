@@ -3,17 +3,17 @@
 import { evidenceLines, forStorage, fromLegacy, isLegacy, validateStructure, type Protocol } from "@avero/schema";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 import { Button, Card, ErrorNote, inputCls, Spinner } from "@/components/ui";
 import { api, apiForm } from "@/lib/api";
-import { deleteStored } from "@/lib/delete";
 import { useAuth } from "@/lib/auth";
+import { deleteStored } from "@/lib/delete";
 import { createClient } from "@/lib/supabase/client";
 
 type Pdf = { path: string; title: string };
-/** A source's PDF: a file to upload, a stored one (already linked, or kept in the Collecte topic), or none (removed). */
-type Choice = { file: File } | { path: string } | { none: true };
+/** One PDF in the list: a file chosen here (uploaded on opening) or one already stored. */
+type Entry = { key: string; name: string; file?: File; path?: string };
 
 const title = (t: string) => { try { return decodeURIComponent(t); } catch { return t; } };
 
@@ -31,8 +31,9 @@ function parse(text: string): { protocol: Protocol | null; error: string | null 
 }
 
 /**
- * New fiche: paste its JSON, give each source its PDF, and it opens beside the PDF to be checked block by block. Saved
- * as a draft version at once (a fiche already there gets a new version).
+ * New fiche: paste its JSON, add its PDFs (one list: each PDF says which source it is), and it opens beside the PDF
+ * to be checked block by block. Saved as a draft version at once (a fiche already there gets a new version). The
+ * fiche's own stored PDFs that no source uses are deleted on opening: nothing is left behind.
  */
 export default function NewFichePage() {
   return <Suspense><NewFiche /></Suspense>;
@@ -46,18 +47,21 @@ function NewFiche() {
   const topic = useSearchParams().get("topic");
   const [stored, setStored] = useState<Pdf[]>([]);
   const [linked, setLinked] = useState<Record<string, string>>({});
-  const [choice, setChoice] = useState<Record<string, Choice>>({});
+  const [uploads, setUploads] = useState<Entry[]>([]);
+  const nextKey = useRef(0);
+  const [assign, setAssign] = useState<Record<string, string | null>>({}); // entry key → source id, set by hand
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { protocol, error: parseError } = useMemo(() => parse(text), [text]);
   const fid = protocol?.meta.id ?? null;
-  const sourceIds = useMemo(() => protocol?.sources.map((s) => s.id) ?? [], [protocol]);
+  const sources = useMemo(() => protocol?.sources ?? [], [protocol]);
+  const sourceIds = useMemo(() => sources.map((s) => s.id), [sources]);
 
-  // the PDFs on offer: those kept in the Collecte topic and with the fiche, and the ones its sources already have
+  // the PDFs already stored: the fiche's own (an earlier import), and a Collecte topic's when the page was opened from it
   useEffect(() => {
     if (!fid) return;
     const files = (p: string) => api<{ files: { path: string | null; title: string }[] }>(p).then((r) => r.files.filter((x): x is Pdf => !!x.path), () => []);
-    void Promise.all([files(`/crawl/topics/${encodeURIComponent(topic ?? fid)}`), files(`/crawl/fiches/${encodeURIComponent(fid)}/files`)])
+    void Promise.all([topic ? files(`/crawl/topics/${encodeURIComponent(topic)}`) : Promise.resolve([]), files(`/crawl/fiches/${encodeURIComponent(fid)}/files`)])
       .then(([a, b]) => setStored([...b, ...a.filter((x) => !b.some((y) => y.path === x.path))]));
   }, [fid, topic]);
   // the PDFs this fiche's sources already have (a fiche imported again): links are per fiche, never another fiche's
@@ -67,20 +71,32 @@ function NewFiche() {
       .then(({ data }) => setLinked(Object.fromEntries((data ?? []).map((r: { source_id: string; pdf_path: string }) => [r.source_id, r.pdf_path]))));
   }, [supabase, fid, sourceIds]);
 
-  const pdfOf = (sid: string): { file: File } | { path: string } | null => {
-    const c = choice[sid] ?? (linked[sid] ? { path: linked[sid] } : stored.length === 1 && sourceIds.length === 1 ? { path: stored[0].path } : null);
-    return c && !("none" in c) ? c : null;
+  const entries: Entry[] = [...uploads, ...stored.map((x) => ({ key: x.path, name: title(x.title), path: x.path }))];
+  /** The source an entry is for: set by hand, else the source already linked to it, else none. */
+  const sourceOf = (e: Entry): string | null =>
+    e.key in assign ? assign[e.key] : (sourceIds.find((sid) => e.path && linked[sid] === e.path) ?? null);
+  const used = new Set(entries.map(sourceOf).filter(Boolean));
+  /** One PDF per source: giving a source to an entry takes it from any other. */
+  const setSource = (key: string, sid: string | null) =>
+    setAssign(Object.fromEntries([...entries.map((e) => [e.key, sid && sourceOf(e) === sid ? null : sourceOf(e)]), [key, sid]]));
+  /** Files chosen here, each given to the next source without a PDF. */
+  const add = (files: File[]) => {
+    const free = sourceIds.filter((sid) => !used.has(sid));
+    const added = files.map((file) => ({ key: `upload-${nextKey.current++}`, name: file.name, file }));
+    setUploads([...uploads, ...added]);
+    setAssign({ ...Object.fromEntries(entries.map((e) => [e.key, sourceOf(e)])), ...Object.fromEntries(added.map((e) => [e.key, free.shift() ?? null])) });
   };
-  // a PDF is not required: one can be given later, in the editor's Sources
-  const ready = !!protocol;
-  const remove = (sid: string) => setChoice({ ...choice, [sid]: { none: true } });
-  /** A PDF stored with this fiche deleted from storage, and dropped from what the sources picked. */
-  const deleteFile = (path: string) => void deleteStored(path, title(path.split("/").pop() ?? "")).then((done) => {
-    if (!done) return;
-    setStored((cur) => cur.filter((x) => x.path !== path));
-    setLinked((cur) => Object.fromEntries(Object.entries(cur).filter(([, p]) => p !== path)));
-    setChoice((cur) => Object.fromEntries(Object.entries(cur).map(([k, c]) => [k, "path" in c && c.path === path ? { none: true as const } : c])));
-  }, (e) => setError((e as Error).message));
+  /** Out of the list: a file chosen here is dropped; a stored one is deleted from storage (asked first). */
+  const remove = (e: Entry) => {
+    if (e.file) return setUploads(uploads.filter((u) => u.key !== e.key));
+    void deleteStored(e.path!, e.name).then((done) => {
+      if (!done) return;
+      setStored((cur) => cur.filter((x) => x.path !== e.path));
+      setLinked((cur) => Object.fromEntries(Object.entries(cur).filter(([, p]) => p !== e.path)));
+    }, (err) => setError((err as Error).message));
+  };
+  const missing = sources.filter((s) => !used.has(s.id));
+  const ownUnused = entries.filter((e) => e.path?.startsWith(`fiches/${fid}/`) && !sourceOf(e));
 
   const open = async () => {
     if (!protocol || !session) return;
@@ -95,24 +111,24 @@ function NewFiche() {
       const version = (last.data?.[0]?.version ?? 0) + 1;
       const s = version === 1 ? await supabase.from("subjects").upsert({ id, ...subject }) : await supabase.from("subjects").update({ ...subject, updated_at: new Date().toISOString() }).eq("id", id);
       if (s.error) throw new Error(s.error.message);
-      const used = new Set<string>();
+      const kept = new Set<string>();
       for (const sid of sourceIds) {
-        const c = pdfOf(sid);
-        if (!c) {
-          // removed here: an earlier link of this source is undone
+        const e = entries.find((x) => sourceOf(x) === sid);
+        if (!e) {
+          // no PDF for this source: an earlier link is undone
           if (linked[sid]) {
             const r = await supabase.from("source_pdfs").delete().eq("subject_id", id).eq("source_id", sid);
             if (r.error) throw new Error(r.error.message);
           }
           continue;
         }
-        let path = "path" in c ? c.path : null;
-        if ("file" in c) {
+        let path = e.path ?? null;
+        if (e.file) {
           const form = new FormData();
-          form.append("file", c.file);
+          form.append("file", e.file);
           path = (await apiForm<{ path: string }>(`/crawl/fiches/${encodeURIComponent(id)}/upload`, form)).path;
         }
-        if (path) used.add(path);
+        if (path) kept.add(path);
         if (path !== linked[sid]) {
           const r = await supabase.from("source_pdfs").upsert({ subject_id: id, source_id: sid, pdf_path: path, updated_at: new Date().toISOString(), updated_by: session.user.id });
           if (r.error) throw new Error(r.error.message);
@@ -120,8 +136,8 @@ function NewFiche() {
       }
       const v = await supabase.from("fiche_versions").insert({ subject_id: id, version, content: forStorage(content), created_by: session.user.id });
       if (v.error) throw new Error(v.error.message);
-      // the fiche's own PDFs no source picked (left from an earlier import, or replaced here) are deleted, not kept
-      const unused = stored.filter((x) => x.path.startsWith(`fiches/${id}/`) && !used.has(x.path)).flatMap((x) => [x.path, `${x.path}.json`]);
+      // the fiche's own PDFs no source uses (left from an earlier import, or replaced here) are deleted, not kept
+      const unused = stored.filter((x) => x.path.startsWith(`fiches/${id}/`) && !kept.has(x.path)).flatMap((x) => [x.path, `${x.path}.json`]);
       if (unused.length) {
         const gone = await supabase.storage.from("sources").remove(unused);
         if (gone.error) throw new Error(`The fiche is saved; its unused PDFs were not deleted: ${gone.error.message}`);
@@ -157,54 +173,39 @@ function NewFiche() {
         )}
       </Card>
 
-      <Card className={`flex flex-col gap-3 p-5 ${protocol ? "" : "opacity-50"}`}>
-        <h2 className="text-sm font-semibold text-ink"><span className="me-2 text-muted">2</span>The PDF {sourceIds.length > 1 ? "of each source" : "of the guideline"}</h2>
-        {fid && stored.some((x) => x.path.startsWith(`fiches/${fid}/`)) && (
-          <div className="flex flex-col gap-1 rounded-lg border border-line p-3">
-            <p className="text-xs font-medium text-soft">Already stored for “{fid}” (from an earlier import): pick one below, or it is deleted when you open the fiche</p>
-            {stored.filter((x) => x.path.startsWith(`fiches/${fid}/`)).map((x) => (
-              <div key={x.path} className="flex items-center gap-3 text-sm">
-                <span className="min-w-0 flex-1 truncate text-ink" title={title(x.title)}>{title(x.title)}</span>
-                <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => deleteFile(x.path)}>Delete</button>
-              </div>
+      <Card className={`flex flex-col gap-3 p-5 ${protocol ? "" : "pointer-events-none opacity-50"}`}>
+        <div className="flex items-center gap-2">
+          <h2 className="flex-1 text-sm font-semibold text-ink"><span className="me-2 text-muted">2</span>The PDFs</h2>
+          <label className="cursor-pointer">
+            <span className="inline-flex h-9 items-center rounded-lg border border-line bg-surface px-3 text-sm font-medium text-ink hover:bg-panel">Upload PDFs</span>
+            <input type="file" multiple accept="application/pdf,.pdf" className="hidden" disabled={!protocol}
+              onChange={(e) => { const list = [...(e.target.files ?? [])]; e.target.value = ""; if (list.length) add(list); }} />
+          </label>
+        </div>
+        {!protocol ? <p className="text-xs text-muted">Paste the JSON first.</p> : !entries.length ? (
+          <p className="text-xs text-muted">No PDF yet. Upload the guideline PDF{sources.length > 1 ? "s (one or several at once)" : ""}, or add {sources.length > 1 ? "them" : "it"} later in the editor.</p>
+        ) : (
+          <ul className="flex flex-col">
+            {entries.map((e) => (
+              <li key={e.key} className="flex items-center gap-3 border-t border-line py-2 first:border-t-0">
+                <span className="min-w-0 flex-1 truncate text-sm text-ink" title={e.name}>{e.name}</span>
+                <select className={`${inputCls} h-8 w-60 shrink-0 text-xs`} value={sourceOf(e) ?? ""} onChange={(ev) => setSource(e.key, ev.target.value || null)}>
+                  <option value="">Not used{e.path?.startsWith(`fiches/${fid}/`) ? " (deleted on opening)" : ""}</option>
+                  {sources.map((s) => <option key={s.id} value={s.id}>{s.organisation || s.id}</option>)}
+                </select>
+                <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => remove(e)}>{e.file ? "Remove" : "Delete"}</button>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
-        {!protocol ? <p className="text-xs text-muted">Paste the JSON first.</p> : !sourceIds.length ? (
-          <p className="text-xs text-caution">This fiche has no source: add one in the JSON (“sources”).</p>
-        ) : protocol.sources.map((s) => {
-          const c = pdfOf(s.id);
-          return (
-            <div key={s.id} className="flex flex-col gap-1.5 rounded-lg bg-panel/60 p-3">
-              <p className="text-sm text-ink"><b className="font-semibold">{s.organisation || s.id}</b> <span className="text-soft">{s.title}</span></p>
-              <div className="flex flex-wrap items-center gap-2">
-                {(stored.length > 0 || linked[s.id]) && (
-                  <select className={`${inputCls} h-9 min-w-0 flex-1 text-sm`} value={c && "path" in c ? c.path : ""}
-                    onChange={(e) => setChoice({ ...choice, [s.id]: { path: e.target.value } })}>
-                    <option value="" disabled>{c && "file" in c ? "File chosen alongside" : "Pick a stored PDF"}</option>
-                    {linked[s.id] && !stored.some((x) => x.path === linked[s.id]) && <option value={linked[s.id]}>{title(linked[s.id].split("/").pop() ?? "")} (already linked)</option>}
-                    {stored.map((x) => <option key={x.path} value={x.path}>{title(x.title)}</option>)}
-                  </select>
-                )}
-                <label className="inline-flex h-9 cursor-pointer items-center rounded-lg border border-line bg-surface px-3 text-sm font-medium text-ink hover:bg-panel">
-                  {c && "file" in c ? c.file.name : "Upload a PDF"}
-                  <input type="file" accept="application/pdf,.pdf" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; if (f) setChoice({ ...choice, [s.id]: { file: f } }); }} />
-                </label>
-                {c && (
-                  <button type="button" className="h-9 rounded-lg px-2 text-sm font-medium text-flag hover:bg-flagbg" onClick={() => remove(s.id)}>Remove</button>
-                )}
-              </div>
-              {!c && <p className="text-xs text-muted">No PDF for this source: you can add it later in the editor (Sources).</p>}
-              {c && "path" in c && c.path.startsWith(`fiches/${fid}/`) && (
-                <button type="button" className="self-start text-xs text-flag hover:underline" onClick={() => deleteFile(c.path)}>Delete this PDF from storage</button>
-              )}
-            </div>
-          );
-        })}
+        {protocol && entries.length > 0 && missing.length > 0 && (
+          <p className="text-xs text-muted">No PDF yet for: {missing.map((s) => s.organisation || s.id).join(", ")}. You can add {missing.length > 1 ? "them" : "it"} later in the editor.</p>
+        )}
+        {ownUnused.length > 0 && <p className="text-xs text-caution">{ownUnused.length} stored PDF{ownUnused.length > 1 ? "s" : ""} not used: deleted when you open the fiche.</p>}
       </Card>
 
       {error && <ErrorNote>{error}</ErrorNote>}
-      <Button variant="primary" className="h-10 self-end px-5" disabled={!ready || busy} onClick={() => void open()}>
+      <Button variant="primary" className="h-10 self-end px-5" disabled={!protocol || busy} onClick={() => void open()}>
         {busy ? <Spinner /> : "Open for checking ›"}
       </Button>
     </div>
