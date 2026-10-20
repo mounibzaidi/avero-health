@@ -58,12 +58,13 @@ export function asPaths(p: PathwayData): { start: PathwayNode; paths: { id: stri
 function PathTabs({ start, paths }: NonNullable<ReturnType<typeof asPaths>>) {
   const { width } = useWindowDimensions();
   const wide = width >= breakpoint.ficheWide;
-  const [sel, setSel] = useState(0);
-  const path = paths[Math.min(sel, paths.length - 1)];
-  const tabs = paths.map((x, i) => {
-    const on = x === path;
+  // the answer chosen, by its id: the first one to start with, kept while the screen scrolls and re-renders
+  const [sel, setSel] = useState<string | null>(null);
+  const path = paths.find((x) => x.id === sel) ?? paths[0];
+  const tabs = paths.map((x) => {
+    const on = x.id === path.id;
     return (
-      <Pressable key={x.id} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => setSel(i)}
+      <Pressable key={x.id} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => setSel(x.id)}
         className={`min-h-10 justify-center rounded-full px-3 active:opacity-70 ${on ? "bg-tint" : "border border-line bg-surface"}`}>
         <Text className={`text-[13px] ${on ? "font-semibold text-accentink" : "font-medium text-soft"}`}>{x.label}</Text>
       </Pressable>

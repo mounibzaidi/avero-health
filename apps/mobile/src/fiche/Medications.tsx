@@ -1,4 +1,4 @@
-import { AVAILABILITY_LABEL, doseLine, PHASE_LABEL, PRESCRIBER_LABEL, TO_COMPLETE, type Medication } from "@avero/schema";
+import { AVAILABILITY_LABEL, PHASE_LABEL, PRESCRIBER_LABEL, type Medication } from "@avero/schema";
 import { useMemo, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
@@ -10,16 +10,15 @@ import { CARD, Cites } from "./parts";
 
 /**
  * The fiche names the INN only; the products are the register's, on request (from the copy on the device), whatever
- * brands the fiche picked. The picked ones are listed only when the register has nothing under that INN. The status
- * for Algeria shows when it is not "registered": as it is (withdrawn, not renewed, no presentation), or "[à compléter]"
- * when it was never set.
+ * brands the fiche picked. The picked ones are listed only when the register has nothing under that INN. A status set
+ * for Algeria other than registered (withdrawn, not renewed, no presentation) is shown as it is; none set, no line.
  */
 function Brands({ m }: { m: Medication }) {
   const [open, setOpen] = useState(false);
   const { data } = useMedicaments();
   const { brands, status } = m.local_availability;
   const products = useMemo(() => (data ? productsForInn(data.products, m.inn) : []), [data, m.inn]);
-  const warn = status !== "enregistre" ? <Text className="text-[12.5px] leading-[18px] text-caution">{t("f_dz", { s: status ? AVAILABILITY_LABEL[status] : TO_COMPLETE })}</Text> : null;
+  const warn = status && status !== "enregistre" ? <Text className="text-[12.5px] leading-[18px] text-caution">{t("f_dz", { s: AVAILABILITY_LABEL[status] })}</Text> : null;
   const n = products.length || brands.length;
   if (!n) return warn;
   return (
@@ -38,25 +37,42 @@ function Brands({ m }: { m: Medication }) {
   );
 }
 
+/** Doses in French: 1.2 = "1,2", no trailing zeros. */
+const NUM = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 4 });
+const blank = (s: string | null) => !s || !s.trim();
+
+/** "10 mg/kg orale, 2 fois par jour, 7 jours" from the fields that are given; null when none is. The app shows no
+ * gap: what the sources do not give is left out (the editor marks it to complete). */
+function doseText(m: Medication): string | null {
+  const dose = m.dose != null ? `${NUM.format(m.dose)}${blank(m.dose_unit) ? "" : ` ${m.dose_unit!.trim()}`}${m.dose_basis === "par_kg" ? "/kg" : ""}` : null;
+  const first = [dose, blank(m.route) ? null : m.route!.trim()].filter(Boolean).join(" ");
+  const parts = [first, m.frequency, m.duration].filter((x): x is string => !blank(x)).map((x) => x.trim());
+  return parts.length ? parts.join(", ") : null;
+}
+
 function MedicationRow({ m, first }: { m: Medication; first: boolean }) {
+  const dose = doseText(m);
   const hosp = m.prescriber === "hopital";
   return (
     <View className={`gap-[5px] py-3 ${first ? "" : "border-t border-line"}`}>
       <View className="flex-row flex-wrap items-center gap-2">
         <Text className="text-[15px] font-bold capitalize text-ink">{m.inn}</Text>
         {m.phase ? <Text className="text-[12.5px] text-soft">{PHASE_LABEL[m.phase]}</Text> : null}
-        <View className={`rounded-full px-2 py-[2px] ${hosp || !m.prescriber ? "bg-cautionbg" : "bg-tint"}`}>
-          <Text className={`text-[11px] font-semibold ${hosp || !m.prescriber ? "text-caution" : "text-accentink"}`}>{m.prescriber ? PRESCRIBER_LABEL[m.prescriber] : TO_COMPLETE}</Text>
-        </View>
+        {m.prescriber ? (
+          <View className={`rounded-full px-2 py-[2px] ${hosp ? "bg-cautionbg" : "bg-tint"}`}>
+            <Text className={`text-[11px] font-semibold ${hosp ? "text-caution" : "text-accentink"}`}>{PRESCRIBER_LABEL[m.prescriber]}</Text>
+          </View>
+        ) : null}
       </View>
       {m.condition ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_if", { c: m.condition })}</Body> : null}
-      <Body className="text-[14.5px] font-medium leading-[21px]">{doseLine(m)}<Cites evidence={m.evidence} strength={m.strength} /></Body>
-      {m.max_dose || m.missing.includes("max_dose") ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_max_dose", { d: m.max_dose || TO_COMPLETE })}</Body> : null}
-      {m.adjustments.map((a, i) => <Body key={`a${i}`} className="text-[13px] leading-[18px] text-soft">{a}</Body>)}
-      {m.contraindications.length || m.missing.includes("contraindications") ? (
-        <Body className="text-[13px] leading-[18px] text-flag">{t("f_contra", { c: m.contraindications.join(" ; ") || TO_COMPLETE })}</Body>
+      {dose ? <Body className="text-[14.5px] font-medium leading-[21px]">{dose}<Cites evidence={m.evidence} strength={m.strength} /></Body> : null}
+      {!blank(m.max_dose) ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_max_dose", { d: m.max_dose!.trim() })}</Body> : null}
+      {m.adjustments.filter((a) => !blank(a)).map((a, i) => <Body key={`a${i}`} className="text-[13px] leading-[18px] text-soft">{a}</Body>)}
+      {m.contraindications.some((c) => !blank(c)) ? (
+        <Body className="text-[13px] leading-[18px] text-flag">{t("f_contra", { c: m.contraindications.filter((c) => !blank(c)).join(" ; ") })}</Body>
       ) : null}
       <Brands m={m} />
+      {dose ? null : <Body className="text-[11.5px] leading-[16px]"><Cites evidence={m.evidence} strength={m.strength} /></Body>}
     </View>
   );
 }

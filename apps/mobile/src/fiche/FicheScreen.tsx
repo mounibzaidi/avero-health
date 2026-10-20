@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { t } from "@/strings/fr";
 import {
-  BookOpenIcon, CaretLeftIcon, CheckIcon, ClipboardTextIcon, HospitalIcon, type Icon, PillIcon, QuotesIcon, StethoscopeIcon, UsersThreeIcon, WarningIcon,
+  BookOpenIcon, CaretDownIcon, CaretLeftIcon, CaretUpIcon, CheckIcon, ClipboardTextIcon, HospitalIcon, type Icon, PillIcon, QuotesIcon, StethoscopeIcon, UsersThreeIcon, WarningIcon,
 } from "@/ui/Icons";
 import { Logo } from "@/ui/Logo";
 import { SearchField } from "@/ui/SearchField";
@@ -49,15 +49,30 @@ function visible(f: Protocol): SectionId[] {
   return ORDER[f.meta.template].filter((s) => has[s]);
 }
 
-/** The red box: when to call the SAMU or send to urgences, and what to do meanwhile. Red border, never folded. */
+/** The red box: when to call the SAMU or send to urgences, and what to do meanwhile. Red border. Open on an
+ * emergency fiche; on a chronic one ("pathologie") a single "Urgences" row that opens on tap. */
 function RedBox({ f }: { f: Protocol }) {
   const c = useColors();
+  const foldable = f.meta.template === "pathologie";
+  const [open, setOpen] = useState(!foldable);
+  if (!open) {
+    return (
+      <Pressable accessibilityRole="button" accessibilityState={{ expanded: false }} onPress={() => setOpen(true)}
+        className="min-h-12 flex-row items-center gap-2 rounded-card border-2 border-flag bg-surface px-[18px] py-3 active:opacity-70">
+        <WarningIcon size={19} color={c.warn} weight="fill" />
+        <Text className="min-w-0 flex-1 text-[15.5px] font-bold leading-[21px] text-flag">{t("urgences")}</Text>
+        <CaretDownIcon size={16} color={c.warn} weight="bold" />
+      </Pressable>
+    );
+  }
   return (
     <View className="rounded-card border-2 border-flag bg-surface px-[18px] pb-[6px] pt-4">
-      <View className="flex-row items-center gap-2 pb-[2px]">
+      <Pressable accessibilityRole={foldable ? "button" : undefined} accessibilityState={foldable ? { expanded: true } : undefined} disabled={!foldable}
+        onPress={() => setOpen(false)} className="flex-row items-center gap-2 pb-[2px]">
         <WarningIcon size={19} color={c.warn} weight="fill" />
         <Text className="min-w-0 flex-1 text-[15.5px] font-bold leading-[21px] text-flag">{t("f_red_signs")}</Text>
-      </View>
+        {foldable ? <CaretUpIcon size={16} color={c.warn} weight="bold" /> : null}
+      </Pressable>
       <ItemRows items={f.red_box.signs} rule="border-flag/15" />
       {f.red_box.actions.length ? (
         <>
