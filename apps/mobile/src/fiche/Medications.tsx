@@ -1,4 +1,4 @@
-import { AVAILABILITY_LABEL, doseLine, PHASE_LABEL, PRESCRIBER_LABEL, type Medication } from "@avero/schema";
+import { AVAILABILITY_LABEL, doseLine, PHASE_LABEL, PRESCRIBER_LABEL, TO_COMPLETE, type Medication } from "@avero/schema";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
@@ -46,9 +46,11 @@ function MedicationRow({ m, first }: { m: Medication; first: boolean }) {
       </View>
       {m.condition ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_if", { c: m.condition })}</Body> : null}
       <Body className="text-[14.5px] font-medium leading-[21px]">{doseLine(m)}</Body>
-      {m.max_dose ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_max_dose", { d: m.max_dose })}</Body> : null}
+      {m.max_dose || m.missing.includes("max_dose") ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_max_dose", { d: m.max_dose || TO_COMPLETE })}</Body> : null}
       {m.adjustments.map((a, i) => <Body key={`a${i}`} className="text-[13px] leading-[18px] text-soft">{a}</Body>)}
-      {m.contraindications.length ? <Body className="text-[13px] leading-[18px] text-flag">{t("f_contra", { c: m.contraindications.join(" ; ") })}</Body> : null}
+      {m.contraindications.length || m.missing.includes("contraindications") ? (
+        <Body className="text-[13px] leading-[18px] text-flag">{t("f_contra", { c: m.contraindications.join(" ; ") || TO_COMPLETE })}</Body>
+      ) : null}
       <Brands m={m} />
       <Tag evidence={m.evidence} strength={m.strength} />
     </View>

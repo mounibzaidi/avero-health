@@ -61,6 +61,10 @@ describe("publication gate", () => {
     expect(gate((p) => (p.treat.medications[0].duration = "8 jours"))).toEqual([expect.objectContaining({ item_id: "m-1", rule: "numbers" })]);
   });
 
+  it("publishes a medication whose optional fields the sources do not give", () => {
+    expect(gate((p) => (p.treat.medications[0].missing = ["duration", "max_dose", "contraindications"]))).toEqual([]);
+  });
+
   it("fails a medication with missing fields, and one with an empty prescribing field not listed as missing", () => {
     const missing = gate((p) => (p.treat.medications[0].missing = ["route"]));
     expect(missing).toEqual([expect.objectContaining({ item_id: "m-1", rule: "missing", message: "Missing fields: route" })]);

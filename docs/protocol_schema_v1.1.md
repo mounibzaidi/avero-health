@@ -215,7 +215,7 @@ Same JSON for both. Empty means not applicable; never fill to fill.
 
 - Every item has evidence or an approved local adaptation.
 - All quote checks pass.
-- No medication needed for safe prescribing has `missing` fields.
+- No medication has a prescribing field (phase, dose, dose_unit, dose_basis, route, frequency) in `missing`; duration, max_dose, adjustments, contraindications and strength may be published as "[à compléter]".
 - Every pathway branch leads somewhere; no dead ends.
 - Every `refs` ID exists and is published.
 - A named doctor has approved it (`review.clinical_approval = true`).

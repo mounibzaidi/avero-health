@@ -15,7 +15,11 @@ export type GateContext = {
 
 export const quoteKey = (lineId: string, index: number) => `${lineId}#${index}`;
 
-/** Medication fields a prescription cannot do without; each must be filled or listed in `missing`. */
+/**
+ * Medication fields a prescription cannot do without: each must be filled, and one listed in `missing` blocks
+ * publication. The other fields (duration, max dose, adjustments, contraindications, strength) may be published as
+ * "[à compléter]" when the sources do not give them.
+ */
 const PRESCRIBING_FIELDS: MedicationField[] = ["phase", "dose", "dose_unit", "dose_basis", "route", "frequency"];
 
 const blank = (s: string | null | undefined) => !s || !s.trim();
@@ -91,7 +95,8 @@ export function publicationGate(p: Protocol, ctx: GateContext): Issue[] {
 
   for (const m of p.treat.medications) {
     if (blank(m.inn)) add(m.id, "required", "INN missing");
-    if (m.missing.length) add(m.id, "missing", `Missing fields: ${m.missing.map((f) => MEDICATION_FIELD_LABELS[f]).join(", ")}`);
+    const blocking = m.missing.filter((f) => PRESCRIBING_FIELDS.includes(f));
+    if (blocking.length) add(m.id, "missing", `Missing fields: ${blocking.map((f) => MEDICATION_FIELD_LABELS[f]).join(", ")}`);
     for (const f of PRESCRIBING_FIELDS) {
       const v = m[f as keyof Medication];
       if ((v == null || (typeof v === "string" && blank(v))) && !m.missing.includes(f)) add(m.id, "required", `${MEDICATION_FIELD_LABELS[f]} missing`);
