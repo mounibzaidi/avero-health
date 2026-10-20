@@ -1,24 +1,25 @@
 import { createElement, type ComponentType } from "react";
 import type { SvgProps } from "react-native-svg";
 
-// Health Icons (healthicons.org, CC0), outline on the 24 px grid like the Phosphor icons. Imported one file at a time:
+// Health Icons (healthicons.org, CC0), the outline set drawn on 48 px: shrunk to 15 to 30 px its lines are as fine as
+// the Phosphor icons' (the 24 px set is twice as thick). Imported one file at a time:
 // the package's index would bring all 270 of them.
-import AmbulanceSvg from "healthicons-react-native/dist/outline-24px/Ambulance";
-import BabySvg from "healthicons-react-native/dist/outline-24px/Baby0203m";
-import BloodPressureSvg from "healthicons-react-native/dist/outline-24px/BloodPressureMonitor";
-import GlucoseMeterSvg from "healthicons-react-native/dist/outline-24px/DiabetesMeasure";
-import HeartCardiogramSvg from "healthicons-react-native/dist/outline-24px/HeartCardiogram";
-import HospitalSvg from "healthicons-react-native/dist/outline-24px/Hospital";
-import KidneysSvg from "healthicons-react-native/dist/outline-24px/Kidneys";
-import LiverSvg from "healthicons-react-native/dist/outline-24px/Liver";
-import LungsSvg from "healthicons-react-native/dist/outline-24px/Lungs";
-import MedicinesSvg from "healthicons-react-native/dist/outline-24px/Medicines";
-import MentalHealthSvg from "healthicons-react-native/dist/outline-24px/MentalHealth";
-import NeurologySvg from "healthicons-react-native/dist/outline-24px/Neurology";
-import PregnantSvg from "healthicons-react-native/dist/outline-24px/Pregnant";
-import StethoscopeSvg from "healthicons-react-native/dist/outline-24px/Stethoscope";
-import StomachSvg from "healthicons-react-native/dist/outline-24px/Stomach";
-import VirusSvg from "healthicons-react-native/dist/outline-24px/VirusAlt";
+import AmbulanceSvg from "healthicons-react-native/dist/outline/Ambulance";
+import BabySvg from "healthicons-react-native/dist/outline/Baby0203m";
+import BloodPressureSvg from "healthicons-react-native/dist/outline/BloodPressureMonitor";
+import GlucoseMeterSvg from "healthicons-react-native/dist/outline/DiabetesMeasure";
+import HeartCardiogramSvg from "healthicons-react-native/dist/outline/HeartCardiogram";
+import HospitalSvg from "healthicons-react-native/dist/outline/Hospital";
+import KidneysSvg from "healthicons-react-native/dist/outline/Kidneys";
+import LiverSvg from "healthicons-react-native/dist/outline/Liver";
+import LungsSvg from "healthicons-react-native/dist/outline/Lungs";
+import MedicinesSvg from "healthicons-react-native/dist/outline/Medicines";
+import MentalHealthSvg from "healthicons-react-native/dist/outline/MentalHealth";
+import NeurologySvg from "healthicons-react-native/dist/outline/Neurology";
+import PregnantSvg from "healthicons-react-native/dist/outline/Pregnant";
+import StethoscopeSvg from "healthicons-react-native/dist/outline/Stethoscope";
+import StomachSvg from "healthicons-react-native/dist/outline/Stomach";
+import VirusSvg from "healthicons-react-native/dist/outline/VirusAlt";
 
 /** A medical icon, sized and coloured like a Phosphor one (`size`, `color`). */
 export type MedIcon = ComponentType<{ size?: number; color?: string }>;

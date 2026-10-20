@@ -25,7 +25,7 @@ export default function IconsScreen() {
     <ScrollView className="flex-1 bg-bg" contentContainerClassName="mx-auto w-full max-w-[720px] gap-6 px-5 py-8">
       <View className="gap-1">
         <Heading className="text-[24px]">Icônes médicales</Heading>
-        <Muted className="text-[13px]">Health Icons (CC0), contour 24 px. Tuile d&apos;accueil 20 px, grande 30 px, en-tête de fiche 15 px.</Muted>
+        <Muted className="text-[13px]">Health Icons (CC0), contour fin (48 px). Tuile d&apos;accueil 20 px, grande 30 px, en-tête de fiche 15 px.</Muted>
       </View>
       <View>
         <Text className="pb-2 text-[13px] font-bold uppercase text-muted">Spécialités</Text>
