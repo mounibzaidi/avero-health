@@ -28,11 +28,8 @@ body {
   padding: 1px 0;
   box-shadow: 0 0 0 2px color-mix(in srgb, #ffe58a 70%, transparent);
 }
-/* Everything else the fiche takes from the page: only a green underline, so the quote being read is the one band. */
+/* "All quotes" on: everything else the draft takes from the page, a quieter green than the quote being read. */
 .pdf-page .textLayer mark.used {
-  background: transparent;
-  box-shadow: none;
-  padding: 0;
-  border-radius: 0;
-  border-bottom: 2px solid rgb(var(--c-accent) / 0.45);
+  background: rgb(var(--c-accent) / 0.22);
+  box-shadow: 0 0 0 2px rgb(var(--c-accent) / 0.22);
 }

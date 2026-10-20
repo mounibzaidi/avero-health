@@ -80,6 +80,8 @@ function Section({ id, title, count, done, issues, closed, children }: { id: str
   );
 }
 
+const noneUsed = () => [];
+
 export default function FicheEditor() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -104,6 +106,7 @@ export default function FicheEditor() {
   const [pdfUrl, setPdfUrl] = useState<{ path: string; url: string } | null>(null);
   const [focus, setFocus] = useState<{ pdfPage: number; quote: string; nonce: number } | null>(null);
   const [pdfPage, setPdfPage] = useState(1);
+  const [showUsed, setShowUsed] = useState(false); // every passage the draft quotes, highlighted in the PDF
 
   useEffect(() => {
     void (async () => {
@@ -298,10 +301,14 @@ export default function FicheEditor() {
             <button key={s.id} type="button" disabled={!pdfs[s.id]} onClick={() => setActive(s.id)}
               className={`rounded-lg px-2.5 py-1 text-xs ${s.id === source?.id ? "bg-tint font-medium text-accentink" : "text-soft hover:bg-panel disabled:opacity-40"}`}>{s.organisation || s.id}</button>
           )) : <span className="font-medium text-ink">{source?.organisation || "Guide"}</span>}
-          <span className="ms-auto text-xs text-muted">page <b className="tabular-nums text-ink">{pdfPage - offset}</b></span>
+          <label className="ms-auto flex cursor-pointer select-none items-center gap-1.5 text-xs text-soft" title="Highlight every passage this draft quotes">
+            <input type="checkbox" checked={showUsed} onChange={(e) => setShowUsed(e.target.checked)} className="size-3.5 accent-[rgb(var(--c-accent))]" />
+            All quotes
+          </label>
+          <span className="text-xs text-muted">page <b className="tabular-nums text-ink">{pdfPage - offset}</b></span>
         </div>
         <div className="min-h-0 flex-1">
-          {path && pdfUrl?.path === path ? <ContinuousPdf key={path} url={pdfUrl.url} focus={focus} usedOn={usedOn} onPage={setPdfPage} />
+          {path && pdfUrl?.path === path ? <ContinuousPdf key={path} url={pdfUrl.url} focus={focus} usedOn={showUsed ? usedOn : noneUsed} onPage={setPdfPage} />
             : <p className="p-6 text-sm text-muted">{path ? "Loading the PDF…" : viewOnly ? "The PDF of this source is not stored yet: its quotes are shown under each line." : "No PDF for this source: add it in Sources, at the bottom of the fiche."}</p>}
         </div>
       </section>
