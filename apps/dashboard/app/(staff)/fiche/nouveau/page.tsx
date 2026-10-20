@@ -95,6 +95,7 @@ function NewFiche() {
       const version = (last.data?.[0]?.version ?? 0) + 1;
       const s = version === 1 ? await supabase.from("subjects").upsert({ id, ...subject }) : await supabase.from("subjects").update({ ...subject, updated_at: new Date().toISOString() }).eq("id", id);
       if (s.error) throw new Error(s.error.message);
+      const used = new Set<string>();
       for (const sid of sourceIds) {
         const c = pdfOf(sid);
         if (!c) {
@@ -111,6 +112,7 @@ function NewFiche() {
           form.append("file", c.file);
           path = (await apiForm<{ path: string }>(`/crawl/fiches/${encodeURIComponent(id)}/upload`, form)).path;
         }
+        if (path) used.add(path);
         if (path !== linked[sid]) {
           const r = await supabase.from("source_pdfs").upsert({ subject_id: id, source_id: sid, pdf_path: path, updated_at: new Date().toISOString(), updated_by: session.user.id });
           if (r.error) throw new Error(r.error.message);
@@ -118,6 +120,12 @@ function NewFiche() {
       }
       const v = await supabase.from("fiche_versions").insert({ subject_id: id, version, content: forStorage(content), created_by: session.user.id });
       if (v.error) throw new Error(v.error.message);
+      // the fiche's own PDFs no source picked (left from an earlier import, or replaced here) are deleted, not kept
+      const unused = stored.filter((x) => x.path.startsWith(`fiches/${id}/`) && !used.has(x.path)).flatMap((x) => [x.path, `${x.path}.json`]);
+      if (unused.length) {
+        const gone = await supabase.storage.from("sources").remove(unused);
+        if (gone.error) throw new Error(`The fiche is saved; its unused PDFs were not deleted: ${gone.error.message}`);
+      }
       router.push(`/fiche/${id}`);
     } catch (e) {
       setError((e as Error).message);
@@ -153,7 +161,7 @@ function NewFiche() {
         <h2 className="text-sm font-semibold text-ink"><span className="me-2 text-muted">2</span>The PDF {sourceIds.length > 1 ? "of each source" : "of the guideline"}</h2>
         {fid && stored.some((x) => x.path.startsWith(`fiches/${fid}/`)) && (
           <div className="flex flex-col gap-1 rounded-lg border border-line p-3">
-            <p className="text-xs font-medium text-soft">Already stored for “{fid}” (kept from an earlier import): pick one below, or delete it</p>
+            <p className="text-xs font-medium text-soft">Already stored for “{fid}” (from an earlier import): pick one below, or it is deleted when you open the fiche</p>
             {stored.filter((x) => x.path.startsWith(`fiches/${fid}/`)).map((x) => (
               <div key={x.path} className="flex items-center gap-3 text-sm">
                 <span className="min-w-0 flex-1 truncate text-ink" title={title(x.title)}>{title(x.title)}</span>
