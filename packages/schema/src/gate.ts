@@ -101,8 +101,8 @@ export function publicationGate(p: Protocol, ctx: GateContext): Issue[] {
       const v = m[f as keyof Medication];
       if ((v == null || (typeof v === "string" && blank(v))) && !m.missing.includes(f)) add(m.id, "required", `${MEDICATION_FIELD_LABELS[f]} missing`);
     }
-    if (!m.local_availability.status) add(m.id, "availability", "Availability in Algeria not set: pick the brands from the nomenclature");
-    else if (m.local_availability.status !== "aucune_presentation" && !m.prescriber) add(m.id, "availability", "Prescriber (pharmacy or hospital) not set");
+    // brands are optional: with none picked, the app lists the nomenclature's products of the INN
+    if (m.local_availability.status && m.local_availability.status !== "aucune_presentation" && !m.prescriber) add(m.id, "availability", "Prescriber (pharmacy or hospital) not set");
     if (!m.evidence.length) add(m.id, "evidence", "No evidence");
     checkEvidence(m.id, m.evidence, statedText(m));
   }

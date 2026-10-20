@@ -27,6 +27,7 @@ const fr = {
   f_contra: "Contre-indications : {c}",
   f_dz_brands: "DZ :",
   f_dz: "DZ : {s}",
+  f_dz_list: "Marques en Algérie ({n})",
   f_see_all: "voir tout ({n})",
   f_see_less: "réduire",
   f_open_source: "Ouvrir la source",

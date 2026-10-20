@@ -83,6 +83,20 @@ function component(raw: string): string {
 /** The substance a product belongs to: its components joined by " / " (a combination is its own substance). */
 export const substanceKey = (dci: string) => dci.split("/").map((x) => x.trim()).filter(Boolean).map(component).join(" / ");
 
+/** Salt and hydrate words the register writes after a substance ("METFORMINE CHLORHYDRATE", "ENOXAPARINE SODIQUE"). */
+const SALT = /^(CHLORHYDRATE|HYDROCHLORIDE|DICHLORHYDRATE|SODIQUE|CALCIQUE|POTASSIQUE|MAGNESIQUE|SULFATE|EMBONATE|BESILATE|BESYLATE|MALEATE|TARTRATE|FUMARATE|MESILATE|MESYLATE|ACETATE|CITRATE|PHOSPHATE|SUCCINATE|BROMHYDRATE|(MONO|DI|TRI|SESQUI|HEPTA)?HYDRATEE?)( |$)/;
+
+/**
+ * The registered products of a fiche's INN: the same substance, alone (not in a combination), written as is or with a
+ * salt ("metformine" = METFORMINE CHLORHYDRATE). A word in brackets is tried as the name too ("trinitrine
+ * (nitroglycérine)"). Nothing looser: "insuline humaine" must not bring the rapid and isophane insulins.
+ */
+export function productsForInn(products: Product[], inn: string): Product[] {
+  const names = [inn.replace(/\([^()]*\)/g, " "), ...[...inn.matchAll(/\(([^()]+)\)/g)].map((m) => m[1])].map(fold).filter(Boolean);
+  const same = (key: string) => names.some((n) => key === n || (key.startsWith(`${n} `) && SALT.test(key.slice(n.length + 1))));
+  return products.filter((p) => !p.dci.includes("/") && same(substanceKey(p.dci)));
+}
+
 export type Substance = { key: string; products: Product[]; liste: Liste | null; hospitalOnly: boolean };
 
 const LISTE_RANK: Record<Liste, number> = { STUPEFIANT: 3, "LISTE I": 2, "LISTE II": 1 };

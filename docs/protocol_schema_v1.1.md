@@ -209,7 +209,7 @@ Same JSON for both. Empty means not applicable; never fill to fill.
 2. Numbers (doses, thresholds, durations) must appear verbatim in the quote; checked automatically against the page.
 3. Text is a short French synthesis; the quote keeps the original wording for the reviewer.
 4. Conflicting sources go in `review.unresolved_issues`, never silently merged.
-5. Brands only from the Algerian nomenclature.
+5. Brands only from the Algerian nomenclature. Optional: with none picked (`status` null, `brands` empty), the app lists the nomenclature's registered products of the INN (as is, or with a salt).
 
 ## Publication gate
 

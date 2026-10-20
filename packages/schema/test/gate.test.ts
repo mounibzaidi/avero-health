@@ -72,8 +72,9 @@ describe("publication gate", () => {
     expect(empty).toEqual([expect.objectContaining({ item_id: "m-1", rule: "required", message: "route missing" })]);
   });
 
-  it("fails a medication whose availability was not taken from the nomenclature", () => {
-    expect(rules(gate((p) => (p.treat.medications[0].local_availability.status = null)))).toEqual(["availability"]);
+  it("publishes a medication with no brand picked (the app lists the nomenclature), not one picked without prescriber", () => {
+    expect(gate((p) => (p.treat.medications[0].local_availability = { country: "DZ", status: null, brands: [] }))).toEqual([]);
+    expect(rules(gate((p) => (p.treat.medications[0].prescriber = null)))).toEqual(["availability"]);
     expect(gate((p) => {
       const m = p.treat.medications[0];
       m.local_availability = { country: "DZ", status: "aucune_presentation", brands: [] };

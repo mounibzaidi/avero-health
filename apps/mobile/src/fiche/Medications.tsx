@@ -1,7 +1,8 @@
 import { AVAILABILITY_LABEL, doseLine, PHASE_LABEL, PRESCRIBER_LABEL, TO_COMPLETE, type Medication } from "@avero/schema";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
+import { productsForInn, useMedicaments } from "@/lib/medicaments";
 import { t } from "@/strings/fr";
 import { Body, SURFACE_STYLE } from "@/ui/ui";
 
@@ -9,11 +10,31 @@ import { CARD, Tag } from "./parts";
 
 const BRANDS_SHOWN = 5;
 
+/** No brand picked for the fiche: the register's products of the INN, on request (from the copy on the device). */
+function RegisterBrands({ inn }: { inn: string }) {
+  const [open, setOpen] = useState(false);
+  const { data } = useMedicaments();
+  const products = useMemo(() => (data ? productsForInn(data.products, inn) : []), [data, inn]);
+  if (!products.length) return null;
+  return (
+    <View className="gap-1">
+      <Pressable accessibilityRole="button" onPress={() => setOpen(!open)} className="min-h-8 justify-center self-start active:opacity-60">
+        <Text className="text-[12.5px] font-semibold text-accent">{open ? t("f_see_less") : t("f_dz_list", { n: products.length })}</Text>
+      </Pressable>
+      {open ? products.map((p, i) => (
+        <Text key={`${p.brand}-${p.code ?? i}`} className="text-[12.5px] leading-[18px] text-soft">
+          <Text className="font-semibold text-ink">{p.brand}</Text> {[p.form, p.dosage].filter(Boolean).join(" ").toLowerCase()} · {PRESCRIBER_LABEL[p.hospital ? "hopital" : "officine"]}
+        </Text>
+      )) : null}
+    </View>
+  );
+}
+
 function Brands({ m }: { m: Medication }) {
   const [all, setAll] = useState(false);
   const { brands, status } = m.local_availability;
   if (!brands.length) {
-    return status ? <Text className="text-[12.5px] leading-[18px] text-caution">{t("f_dz", { s: AVAILABILITY_LABEL[status] })}</Text> : null;
+    return status ? <Text className="text-[12.5px] leading-[18px] text-caution">{t("f_dz", { s: AVAILABILITY_LABEL[status] })}</Text> : <RegisterBrands inn={m.inn} />;
   }
   const shown = all ? brands : brands.slice(0, BRANDS_SHOWN);
   return (

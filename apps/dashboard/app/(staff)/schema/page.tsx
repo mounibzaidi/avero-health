@@ -177,7 +177,7 @@ const SOURCING = [
   "Numbers (doses, thresholds, durations) must appear verbatim in the quote; checked automatically against the page.",
   "The text is a short French synthesis; the quote keeps the original wording for the reviewer.",
   "Conflicting sources go in review.unresolved_issues, never silently merged.",
-  "Brands only from the Algerian national register (nomenclature).",
+  "Brands only from the Algerian national register (nomenclature). Optional: with none picked, the app lists the register's products of the INN.",
 ];
 const GATE = [
   "Every line has evidence or an approved local adaptation.",
