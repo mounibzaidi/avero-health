@@ -207,6 +207,14 @@ export default function FicheEditor() {
     },
   }), [verified, supabase, id, session, blocks, quoteResults]);
   const todo = blocks.filter((b) => !verified(b));
+  // every block still to check ticked in one go (after a confirmation), as one write
+  const tickAll = () => {
+    if (!session || !todo.length || !window.confirm(`Tick all ${todo.length} remaining block${todo.length === 1 ? "" : "s"} as checked against the PDF?`)) return;
+    const at = new Date().toISOString();
+    const rows = todo.map((b) => ({ subject_id: id, line_id: b.id, sig: sigOf(b), reviewed_by: session.user.id, reviewed_at: at }));
+    setReviews((m) => { const n = new Map(m); for (const r of rows) n.set(r.line_id, r.sig); return n; });
+    void supabase.from("line_reviews").upsert(rows).then(({ error }) => error && setError(`Ticks not saved: ${error.message}`));
+  };
 
   // ─── Both validator levels, on the fiche as it would be published (approval signed by the publisher) ─────
   const candidate = useMemo(() => (f ? {
@@ -353,6 +361,7 @@ export default function FicheEditor() {
             <div className="h-1.5 w-24 overflow-hidden rounded-full bg-panel"><div className="h-full rounded-full bg-accent transition-[width]" style={{ width: `${pct}%` }} /></div>
             <span className="tabular-nums text-soft">{blocks.length - todo.length}/{blocks.length} blocks checked</span>
             {todo.length > 0 && !viewOnly && <button type="button" className="font-medium text-accentink hover:underline" onClick={() => { goTo(todo[0].id); const e = todo[0].evidence[0]; if (e) show({ evidence: e, label: "" }); }}>Next to check ›</button>}
+            {todo.length > 1 && !viewOnly && <button type="button" className="font-medium text-soft hover:underline" onClick={tickAll}>Tick all</button>}
             {(problems > 0 || markedFixed.length > 0) && <button type="button" className={`font-medium hover:underline ${problems ? "text-flag" : "text-soft"}`} onClick={() => setShowIssues((x) => !x)}>{problems ? `${problems} problem${problems > 1 ? "s" : ""} to fix` : `${markedFixed.length} marked as fixed`} {showIssues ? "▴" : "▾"}</button>}
             {!todo.length && !problems && !isLive && !viewOnly && <span className="font-medium text-accent">Ready to publish</span>}
             {note && <span className="text-accent">{note}</span>}
