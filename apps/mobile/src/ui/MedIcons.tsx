@@ -6,8 +6,8 @@ import type { SvgProps } from "react-native-svg";
 import AmbulanceSvg from "healthicons-react-native/dist/outline-24px/Ambulance";
 import BabySvg from "healthicons-react-native/dist/outline-24px/Baby0203m";
 import BloodPressureSvg from "healthicons-react-native/dist/outline-24px/BloodPressureMonitor";
-import DiabetesSvg from "healthicons-react-native/dist/outline-24px/Diabetes";
-import HeartOrganSvg from "healthicons-react-native/dist/outline-24px/HeartOrgan";
+import GlucoseMeterSvg from "healthicons-react-native/dist/outline-24px/DiabetesMeasure";
+import HeartCardiogramSvg from "healthicons-react-native/dist/outline-24px/HeartCardiogram";
 import HospitalSvg from "healthicons-react-native/dist/outline-24px/Hospital";
 import KidneysSvg from "healthicons-react-native/dist/outline-24px/Kidneys";
 import LiverSvg from "healthicons-react-native/dist/outline-24px/Liver";
@@ -18,7 +18,7 @@ import NeurologySvg from "healthicons-react-native/dist/outline-24px/Neurology";
 import PregnantSvg from "healthicons-react-native/dist/outline-24px/Pregnant";
 import StethoscopeSvg from "healthicons-react-native/dist/outline-24px/Stethoscope";
 import StomachSvg from "healthicons-react-native/dist/outline-24px/Stomach";
-import VirusSvg from "healthicons-react-native/dist/outline-24px/Virus";
+import VirusSvg from "healthicons-react-native/dist/outline-24px/VirusAlt";
 
 /** A medical icon, sized and coloured like a Phosphor one (`size`, `color`). */
 export type MedIcon = ComponentType<{ size?: number; color?: string }>;
@@ -37,11 +37,11 @@ export const StethoscopeMedIcon = med(StethoscopeSvg);
 /** A specialty's icon, from its name as fiches write it ("cardiologie", "Cardiovasculaire", "endocrinologie"…). */
 const SPECIALTY: [RegExp, MedIcon][] = [
   [/urgence|trauma|toxico/i, AmbulanceIcon],
-  [/cardio|vascul/i, med(HeartOrganSvg)],
+  [/cardio|vascul/i, med(HeartCardiogramSvg)],
   [/neuro/i, med(NeurologySvg)],
   [/pneumo|respir|poumon/i, med(LungsSvg)],
   [/n[ée]phro|r[ée]nal|rein/i, med(KidneysSvg)],
-  [/endocr|diab|m[ée]tabol/i, med(DiabetesSvg)],
+  [/endocr|diab|m[ée]tabol/i, med(GlucoseMeterSvg)],
   [/obst[ée]tr|gyn[ée]co|grossesse|femme/i, med(PregnantSvg)],
   [/p[ée]diatr|enfant|nouveau/i, med(BabySvg)],
   [/infect|choc|virus/i, med(VirusSvg)],

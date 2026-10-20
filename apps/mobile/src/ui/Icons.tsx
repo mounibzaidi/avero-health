@@ -47,7 +47,7 @@ export function IconTile({ category, size = 32 }: { category: string; size?: num
   const c = useColors();
   return (
     <View style={{ width: size, height: size, borderRadius: size * 0.28 }} className="items-center justify-center bg-tint">
-      <SpecialtyIcon name={category} size={Math.round(size * 0.53)} color={c.accent} />
+      <SpecialtyIcon name={category} size={Math.round(size * 0.62)} color={c.accent} />
     </View>
   );
 }

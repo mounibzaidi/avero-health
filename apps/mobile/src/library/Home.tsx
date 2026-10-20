@@ -77,7 +77,7 @@ export function HomeScreen() {
               className={`flex-1 gap-[12px] rounded-[16px] border border-line bg-panel hover:border-accent/40 active:opacity-70 ${wide ? "min-w-[30%] px-[16px] py-[14px]" : "min-w-[46%] px-[14px] py-[12px]"}`}>
               <View className="flex-row items-center justify-between">
                 <View className="h-[30px] w-[30px] items-center justify-center rounded-full bg-tint">
-                  <SpecialtyIcon name={s} size={16} color={c.accent} />
+                  <SpecialtyIcon name={s} size={20} color={c.accent} />
                 </View>
                 <CaretRightIcon size={14} color={c.muted} weight="bold" />
               </View>
@@ -101,7 +101,7 @@ export function HomeScreen() {
             <Pressable key={e.id} accessibilityRole="link" onPress={() => open(e)}
               className={`min-h-[56px] flex-row items-center gap-3 py-[10px] active:opacity-70 ${wide ? `px-[16px] hover:bg-bg/70 ${i ? "border-t border-line" : ""}` : "border-b border-line"}`}>
               <View className="h-[30px] w-[30px] items-center justify-center rounded-full bg-tint">
-                <SpecialtyIcon name={e.fiche.meta.specialite} size={16} color={c.accent} />
+                <SpecialtyIcon name={e.fiche.meta.specialite} size={20} color={c.accent} />
               </View>
               <View className="min-w-0 flex-1">
                 <Text className="text-[14px] font-semibold leading-[19px] text-ink" numberOfLines={2}>{e.fiche.meta.title}</Text>
