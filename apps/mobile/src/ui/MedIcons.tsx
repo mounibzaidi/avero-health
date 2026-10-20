@@ -35,22 +35,24 @@ export const MedicinesIcon = med(MedicinesSvg);
 export const StethoscopeMedIcon = med(StethoscopeSvg);
 
 /** A specialty's icon, from its name as fiches write it ("cardiologie", "Cardiovasculaire", "endocrinologie"…). */
-const SPECIALTY: [RegExp, MedIcon][] = [
-  [/urgence|trauma|toxico/i, AmbulanceIcon],
-  [/cardio|vascul/i, med(HeartCardiogramSvg)],
-  [/neuro/i, med(NeurologySvg)],
-  [/pneumo|respir|poumon/i, med(LungsSvg)],
-  [/n[ée]phro|r[ée]nal|rein/i, med(KidneysSvg)],
-  [/endocr|diab|m[ée]tabol/i, med(GlucoseMeterSvg)],
-  [/obst[ée]tr|gyn[ée]co|grossesse|femme/i, med(PregnantSvg)],
-  [/p[ée]diatr|enfant|nouveau/i, med(BabySvg)],
-  [/infect|choc|virus/i, med(VirusSvg)],
-  [/gastro|digest/i, med(StomachSvg)],
-  [/h[ée]pato|foie/i, med(LiverSvg)],
-  [/psych|mental/i, med(MentalHealthSvg)],
-  [/hta|hypertension|tension/i, BloodPressureIcon],
+const SPECIALTY: [RegExp, MedIcon, string][] = [
+  [/urgence|trauma|toxico/i, AmbulanceIcon, "Urgences"],
+  [/cardio|vascul/i, med(HeartCardiogramSvg), "Cardiologie"],
+  [/neuro/i, med(NeurologySvg), "Neurologie"],
+  [/pneumo|respir|poumon/i, med(LungsSvg), "Pneumologie"],
+  [/n[ée]phro|r[ée]nal|rein/i, med(KidneysSvg), "Néphrologie"],
+  [/endocr|diab|m[ée]tabol/i, med(GlucoseMeterSvg), "Endocrinologie"],
+  [/obst[ée]tr|gyn[ée]co|grossesse|femme/i, med(PregnantSvg), "Obstétrique, gynécologie"],
+  [/p[ée]diatr|enfant|nouveau/i, med(BabySvg), "Pédiatrie"],
+  [/infect|choc|virus/i, med(VirusSvg), "Infectiologie"],
+  [/gastro|digest/i, med(StomachSvg), "Gastro-entérologie"],
+  [/h[ée]pato|foie/i, med(LiverSvg), "Hépatologie"],
+  [/psych|mental/i, med(MentalHealthSvg), "Psychiatrie"],
+  [/hta|hypertension|tension/i, BloodPressureIcon, "Hypertension"],
 ];
 export const specialtyIcon = (name: string): MedIcon => SPECIALTY.find(([re]) => re.test(name))?.[1] ?? StethoscopeMedIcon;
+/** Every specialty icon with a sample name, and the default (for the icons page). */
+export const SPECIALTY_ICONS: [string, MedIcon][] = [...SPECIALTY.map(([, icon, label]): [string, MedIcon] => [label, icon]), ["Autre (par défaut)", StethoscopeMedIcon]];
 
 /** A specialty's icon as a component, by name ("cardiologie", "Urgences"…). */
 export function SpecialtyIcon({ name, size, color }: { name: string; size?: number; color?: string }) {
