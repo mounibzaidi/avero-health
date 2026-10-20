@@ -13,22 +13,30 @@ export function normaliseChars(text: string): string {
 }
 
 /**
- * Indices of the text items (pdf.js text layer) that contain the quote, or [] if it is not on
- * this page. Matching runs over the items' concatenated normalised text.
+ * Where the quote sits in the text items (pdf.js text layer): for each item it touches, the character range
+ * [start, end) of the item's own string, so only the quote is marked, not the whole run around it. Matching runs over
+ * the items' concatenated normalised text, one character at a time to keep each one's place. {} if not on this page.
  */
-export function itemsCoveringQuote(items: string[], quote: string): number[] {
+export function quoteRanges(items: string[], quote: string): Record<number, [number, number]> {
   const needle = normaliseChars(quote);
-  if (!needle) return [];
+  if (!needle) return {};
   let hay = "";
-  const owner: number[] = []; // owner[i] = item index of hay[i]
+  const owner: [number, number, number][] = []; // owner[i] = [item, start, end] of the original character behind hay[i]
   items.forEach((str, idx) => {
-    const n = normaliseChars(str);
-    hay += n;
-    for (let k = 0; k < n.length; k++) owner.push(idx);
+    for (let k = 0; k < str.length; ) {
+      const ch = String.fromCodePoint(str.codePointAt(k)!);
+      const n = normaliseChars(ch);
+      hay += n;
+      for (let j = 0; j < n.length; j++) owner.push([idx, k, k + ch.length]);
+      k += ch.length;
+    }
   });
   const at = hay.indexOf(needle);
-  if (at < 0) return [];
-  const out = new Set<number>();
-  for (let i = at; i < at + needle.length; i++) out.add(owner[i]);
-  return [...out];
+  if (at < 0) return {};
+  const out: Record<number, [number, number]> = {};
+  for (let i = at; i < at + needle.length; i++) {
+    const [idx, s, e] = owner[i];
+    out[idx] = out[idx] ? [Math.min(out[idx][0], s), Math.max(out[idx][1], e)] : [s, e];
+  }
+  return out;
 }

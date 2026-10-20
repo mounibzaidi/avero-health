@@ -5,7 +5,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 
-import { itemsCoveringQuote } from "@/lib/normalise";
+import { quoteRanges } from "@/lib/normalise";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
@@ -26,17 +26,33 @@ const PdfPage = memo(function PdfPage({ n, width, ratio, near, quote, usedKey, o
   const marks = useMemo(() => {
     if (!strs) return null;
     const used = usedKey ? usedKey.split("\u0001") : [];
-    return { idx: new Set(quote ? itemsCoveringQuote(strs, quote) : []), used: new Set(used.flatMap((q) => itemsCoveringQuote(strs, q))) };
+    return { focus: quote ? quoteRanges(strs, quote) : {}, used: used.map((q) => quoteRanges(strs, q)) };
   }, [strs, quote, usedKey]);
-  const render = useCallback(({ str, itemIndex }: { str: string; itemIndex: number }) =>
-    marks?.idx.has(itemIndex) ? `<mark>${escapeHtml(str)}</mark>` : marks?.used.has(itemIndex) ? `<mark class="used">${escapeHtml(str)}</mark>` : escapeHtml(str),
-  [marks]);
+  // per character: 2 = the quote being read, 1 = another quote of the fiche; each run of one kind is one mark
+  const render = useCallback(({ str, itemIndex }: { str: string; itemIndex: number }) => {
+    if (!marks) return escapeHtml(str);
+    const kind = new Array<number>(str.length).fill(0);
+    const paint = (r: [number, number] | undefined, k: number) => { if (r) for (let i = r[0]; i < r[1]; i++) kind[i] = Math.max(kind[i], k); };
+    marks.used.forEach((u) => paint(u[itemIndex], 1));
+    paint(marks.focus[itemIndex], 2);
+    let html = "";
+    for (let i = 0; i < str.length; ) {
+      let j = i;
+      while (j < str.length && kind[j] === kind[i]) j++;
+      const text = escapeHtml(str.slice(i, j));
+      html += kind[i] === 2 ? `<mark>${text}</mark>` : kind[i] === 1 ? `<mark class="used">${text}</mark>` : text;
+      i = j;
+    }
+    return html;
+  }, [marks]);
   const onRendered = useCallback(() => { if (quote) onMarked(n); }, [quote, onMarked, n]);
   return (
     <div data-page={n} className="pdf-page relative mx-auto mb-4 overflow-hidden rounded-md bg-white shadow-[0_1px_3px_rgba(0,0,0,.10),0_10px_30px_rgba(0,0,0,.06)]"
       style={{ width, height: Math.round(width * ratio) }}>
       {near ? (
-        <Page pageNumber={n} width={width} renderAnnotationLayer={false} onGetTextSuccess={onText} customTextRenderer={render}
+        // suspense off: a page still loading must not suspend the whole document, which hides it all for a moment and
+        // throws the scroll back (a click on a far page then landed pages away from its quote)
+        <Page pageNumber={n} width={width} suspense={false} renderAnnotationLayer={false} onGetTextSuccess={onText} customTextRenderer={render}
           onRenderTextLayerSuccess={onRendered} loading={<div className="h-full w-full bg-white" />} />
       ) : null}
       <span className="pointer-events-none absolute right-2 top-2 rounded bg-black/50 px-1.5 py-0.5 text-[10px] font-medium text-white">{n}</span>
