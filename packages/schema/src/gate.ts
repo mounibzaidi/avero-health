@@ -17,10 +17,10 @@ export const quoteKey = (lineId: string, index: number) => `${lineId}#${index}`;
 
 /**
  * Medication fields a prescription cannot do without: each must be filled, and one listed in `missing` blocks
- * publication. The other fields (duration, max dose, adjustments, contraindications, strength) may be published as
- * "[à compléter]" when the sources do not give them.
+ * publication. The other fields (phase, duration, max dose, adjustments, contraindications, strength) may be published
+ * as "[à compléter]" when the sources do not give them.
  */
-const PRESCRIBING_FIELDS: MedicationField[] = ["phase", "dose", "dose_unit", "dose_basis", "route", "frequency"];
+const PRESCRIBING_FIELDS: MedicationField[] = ["dose", "dose_unit", "dose_basis", "route", "frequency"];
 
 const blank = (s: string | null | undefined) => !s || !s.trim();
 

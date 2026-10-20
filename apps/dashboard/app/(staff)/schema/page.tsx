@@ -182,7 +182,7 @@ const SOURCING = [
 const GATE = [
   "Every line has evidence or an approved local adaptation.",
   "Every quote is found on its page of the stored PDF.",
-  "No medication has a prescribing field (phase, dose, unit, dose basis, route, frequency) missing; duration, max dose, adjustments, contraindications and strength may be published as [à compléter].",
+  "No medication has a prescribing field (dose, unit, dose basis, route, frequency) missing; phase, duration, max dose, adjustments, contraindications and strength may be published as [à compléter].",
   "Every branch of the decision tree leads somewhere: no dead ends.",
   "Every referenced score or fiche exists and is published.",
   "A named doctor has approved it (review.clinical_approval = true).",
