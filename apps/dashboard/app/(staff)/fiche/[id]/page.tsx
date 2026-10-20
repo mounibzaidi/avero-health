@@ -82,6 +82,9 @@ function Section({ id, title, count, done, issues, closed, children }: { id: str
 
 const noneUsed = () => [];
 
+/** A short, stable hash of a text (djb2, base 36), to key a problem by its message. */
+const hash = (s: string) => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+
 export default function FicheEditor() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -228,23 +231,27 @@ export default function FicheEditor() {
   const allGate = useMemo(() => (candidate && !structure.length ? publicationGate(candidate, { published, quotes: quoteResults }) : []), [candidate, structure, published, quoteResults]);
   // an admin may mark a gate problem as fixed (kept with the ticks, in line_reviews); it holds while the message is
   // the same, and the publication's change log names it
-  const fixedKey = (i: Issue) => `fixed:${i.item_id ?? "fiche"}:${i.rule}`;
-  const isFixed = useCallback((i: Issue) => reviews.get(fixedKey(i)) === i.message, [reviews]);
+  // one key per problem: a line can have several of one rule (one per quote), told apart by their message
+  const fixedKey = (i: Issue) => `fixed:${i.item_id ?? "fiche"}:${i.rule}:${hash(i.message)}`;
+  const isFixed = useCallback((i: Issue) => reviews.get(fixedKey(i)) === i.message
+    || reviews.get(`fixed:${i.item_id ?? "fiche"}:${i.rule}`) === i.message, [reviews]); // marks saved before the message was in the key
   const gate = useMemo(() => allGate.filter((i) => !isFixed(i)), [allGate, isFixed]);
   const markedFixed = useMemo(() => allGate.filter(isFixed), [allGate, isFixed]);
   const markFixed = (i: Issue, on: boolean) => {
     if (!isAdmin || !session) return;
-    setReviews((m) => { const n = new Map(m); if (on) n.set(fixedKey(i), i.message); else n.delete(fixedKey(i)); return n; });
+    const keys = [fixedKey(i), `fixed:${i.item_id ?? "fiche"}:${i.rule}`]; // undo also drops a mark saved the earlier way
+    setReviews((m) => { const n = new Map(m); if (on) n.set(keys[0], i.message); else keys.forEach((k) => n.delete(k)); return n; });
     const q = on
-      ? supabase.from("line_reviews").upsert({ subject_id: id, line_id: fixedKey(i), sig: i.message, reviewed_by: session.user.id, reviewed_at: new Date().toISOString() })
-      : supabase.from("line_reviews").delete().eq("subject_id", id).eq("line_id", fixedKey(i));
+      ? supabase.from("line_reviews").upsert({ subject_id: id, line_id: keys[0], sig: i.message, reviewed_by: session.user.id, reviewed_at: new Date().toISOString() })
+      : supabase.from("line_reviews").delete().eq("subject_id", id).in("line_id", keys);
     void q.then(({ error }) => error && setError(`Not saved: ${error.message}`));
   };
   /** Every problem of the gate marked as fixed at once, after a confirmation, as one write. */
   const markAllFixed = () => {
     if (!isAdmin || !session || !gate.length || !window.confirm(`Mark all ${gate.length} problem${gate.length === 1 ? "" : "s"} as fixed? They are noted in the change log when you publish.`)) return;
     const at = new Date().toISOString();
-    const rows = gate.map((i) => ({ subject_id: id, line_id: fixedKey(i), sig: i.message, reviewed_by: session.user.id, reviewed_at: at }));
+    // one row per key: the same problem reported twice must not be written twice in one upsert
+    const rows = [...new Map(gate.map((i) => [fixedKey(i), { subject_id: id, line_id: fixedKey(i), sig: i.message, reviewed_by: session.user.id, reviewed_at: at }])).values()];
     setReviews((m) => { const n = new Map(m); for (const r of rows) n.set(r.line_id, r.sig); return n; });
     void supabase.from("line_reviews").upsert(rows).then(({ error }) => error && setError(`Not saved: ${error.message}`));
   };
