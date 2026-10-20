@@ -20,7 +20,16 @@ const EMPTY: Library = { fiches: {}, syncedAt: null, offline: false };
 async function readCache(): Promise<Library> {
   try {
     const raw = await AsyncStorage.getItem(CACHE_KEY);
-    return raw ? { ...EMPTY, ...(JSON.parse(raw) as Partial<Library>) } : EMPTY;
+    if (!raw) return EMPTY;
+    const lib = { ...EMPTY, ...(JSON.parse(raw) as Partial<Library>) };
+    // read again through the schema: a copy saved by an older build lacks the fields added since (their defaults
+    // fill them), and one that no longer reads is dropped and downloaded again
+    const fiches: Library["fiches"] = {};
+    for (const [id, f] of Object.entries(lib.fiches ?? {})) {
+      const { protocol } = validateStructure(f.content);
+      if (protocol) fiches[id] = { version: f.version, content: protocol };
+    }
+    return { ...lib, fiches };
   } catch {
     return EMPTY;
   }
