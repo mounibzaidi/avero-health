@@ -6,19 +6,20 @@ import { productsForInn, useMedicaments } from "@/lib/medicaments";
 import { t } from "@/strings/fr";
 import { Body, SURFACE_STYLE } from "@/ui/ui";
 
-import { CARD, Tag } from "./parts";
+import { CARD, Cites } from "./parts";
 
 /**
  * The fiche names the INN only; the products are the register's, on request (from the copy on the device), whatever
- * brands the fiche picked. The picked ones are listed only when the register has nothing under that INN. A status set
- * for Algeria other than registered (withdrawn, not renewed, no presentation) is shown as it is.
+ * brands the fiche picked. The picked ones are listed only when the register has nothing under that INN. The status
+ * for Algeria shows when it is not "registered": as it is (withdrawn, not renewed, no presentation), or "[à compléter]"
+ * when it was never set.
  */
 function Brands({ m }: { m: Medication }) {
   const [open, setOpen] = useState(false);
   const { data } = useMedicaments();
   const { brands, status } = m.local_availability;
   const products = useMemo(() => (data ? productsForInn(data.products, m.inn) : []), [data, m.inn]);
-  const warn = status && status !== "enregistre" ? <Text className="text-[12.5px] leading-[18px] text-caution">{t("f_dz", { s: AVAILABILITY_LABEL[status] })}</Text> : null;
+  const warn = status !== "enregistre" ? <Text className="text-[12.5px] leading-[18px] text-caution">{t("f_dz", { s: status ? AVAILABILITY_LABEL[status] : TO_COMPLETE })}</Text> : null;
   const n = products.length || brands.length;
   if (!n) return warn;
   return (
@@ -44,21 +45,18 @@ function MedicationRow({ m, first }: { m: Medication; first: boolean }) {
       <View className="flex-row flex-wrap items-center gap-2">
         <Text className="text-[15px] font-bold capitalize text-ink">{m.inn}</Text>
         {m.phase ? <Text className="text-[12.5px] text-soft">{PHASE_LABEL[m.phase]}</Text> : null}
-        {m.prescriber ? (
-          <View className={`rounded-full px-2 py-[2px] ${hosp ? "bg-cautionbg" : "bg-tint"}`}>
-            <Text className={`text-[11px] font-semibold ${hosp ? "text-caution" : "text-accentink"}`}>{PRESCRIBER_LABEL[m.prescriber]}</Text>
-          </View>
-        ) : null}
+        <View className={`rounded-full px-2 py-[2px] ${hosp || !m.prescriber ? "bg-cautionbg" : "bg-tint"}`}>
+          <Text className={`text-[11px] font-semibold ${hosp || !m.prescriber ? "text-caution" : "text-accentink"}`}>{m.prescriber ? PRESCRIBER_LABEL[m.prescriber] : TO_COMPLETE}</Text>
+        </View>
       </View>
       {m.condition ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_if", { c: m.condition })}</Body> : null}
-      <Body className="text-[14.5px] font-medium leading-[21px]">{doseLine(m)}</Body>
+      <Body className="text-[14.5px] font-medium leading-[21px]">{doseLine(m)}<Cites evidence={m.evidence} strength={m.strength} /></Body>
       {m.max_dose || m.missing.includes("max_dose") ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_max_dose", { d: m.max_dose || TO_COMPLETE })}</Body> : null}
       {m.adjustments.map((a, i) => <Body key={`a${i}`} className="text-[13px] leading-[18px] text-soft">{a}</Body>)}
       {m.contraindications.length || m.missing.includes("contraindications") ? (
         <Body className="text-[13px] leading-[18px] text-flag">{t("f_contra", { c: m.contraindications.join(" ; ") || TO_COMPLETE })}</Body>
       ) : null}
       <Brands m={m} />
-      <Tag evidence={m.evidence} strength={m.strength} />
     </View>
   );
 }

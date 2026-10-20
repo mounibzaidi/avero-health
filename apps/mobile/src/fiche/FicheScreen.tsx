@@ -15,7 +15,7 @@ import { useColors } from "@/ui/theme";
 import { Body, CONTROL_STYLE, Heading } from "@/ui/ui";
 
 import { Medications } from "./Medications";
-import { Card, ItemCard, ItemRows, RoseCard, SourcesCtx, Tag } from "./parts";
+import { Card, Cites, CiteProvider, ItemCard, ItemRows, RoseCard, SourcesCtx } from "./parts";
 import { Pathway } from "./Pathway";
 import { StarButton } from "./StarButton";
 
@@ -81,8 +81,8 @@ function ReferFollow({ f }: { f: Protocol }) {
               <Body className="text-[14.5px] leading-[21px]">
                 <Text className="font-bold">{t("f_refer_line", { u: r.urgency ? URGENCY_LABEL[r.urgency] : "" })}</Text>
                 {r.destination ? ` : ${r.destination}` : ""}
+                <Cites evidence={r.evidence} strength={r.strength} />
               </Body>
-              <Tag evidence={r.evidence} strength={r.strength} />
             </View>
           ))}
         </Card>
@@ -97,8 +97,7 @@ function ReferFollow({ f }: { f: Protocol }) {
             <View key={x.id} className={`flex-row py-3 ${i ? "border-t border-line" : ""}`}>
               <Body className="w-[30%] pe-3 text-[14px] font-semibold leading-[20px]">{x.when}</Body>
               <View className="min-w-0 flex-1 gap-[3px]">
-                <Body className="text-[14px] leading-[20px]">{x.what}</Body>
-                <Tag evidence={x.evidence} strength={null} />
+                <Body className="text-[14px] leading-[20px]">{x.what}<Cites evidence={x.evidence} strength={null} /></Body>
               </View>
             </View>
           ))}
@@ -306,6 +305,7 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
 
   return (
     <SourcesCtx.Provider value={f.sources}>
+      <CiteProvider>
       {wide ? (
         <View className="flex-1 flex-row bg-bg">
           <View className="w-[264px] border-e border-edge/[0.06] bg-panel px-5 py-[22px]">
@@ -334,6 +334,7 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
       ) : (
         <View className="flex-1 bg-bg">{scroller}</View>
       )}
+      </CiteProvider>
     </SourcesCtx.Provider>
   );
 }
