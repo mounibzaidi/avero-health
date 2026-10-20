@@ -67,11 +67,11 @@ export default function ProtocolesPage() {
         <Link href={`/fiche/${r.id}`} className="flex items-center gap-4 p-4 pe-14">
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="truncate text-[15px] font-semibold text-ink group-hover:text-accentink">{m.title || TO_COMPLETE}</h3>
+              <h3 className="break-words text-[15px] font-semibold sm:truncate text-ink group-hover:text-accentink">{m.title || TO_COMPLETE}</h3>
               <Tag tone={m.template === "urgence" ? "urgent" : "neutral"}>{TEMPLATE_LABEL[m.template]}</Tag>
               {r.live ? <Tag tone="accent">live in the app</Tag> : r.published ? <Tag tone="caution">new draft (v{r.published} live)</Tag> : null}
             </div>
-            <p className="mt-1 truncate text-xs text-muted">{[m.specialite, sources, `${lines} clinical line${lines === 1 ? "" : "s"}`, `v${r.version}`].filter(Boolean).join(" · ")}</p>
+            <p className="mt-1 break-words text-xs text-muted sm:truncate">{[m.specialite, sources, `${lines} clinical line${lines === 1 ? "" : "s"}`, `v${r.version}`].filter(Boolean).join(" · ")}</p>
             <p className={`mt-2 flex items-center gap-1.5 text-xs font-medium ${r.open ? "text-caution" : "text-accent"}`}>
               <span className={`size-1.5 rounded-full ${r.open ? "bg-caution" : "bg-accent"}`} />
               {r.open ? `${r.open} issue${r.open > 1 ? "s" : ""} to resolve before publishing` : r.live ? "Passed the publication gate" : "Passes the publication gate, quotes to check"}

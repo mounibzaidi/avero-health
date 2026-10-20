@@ -44,12 +44,12 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-20 border-b border-line bg-surface/95 backdrop-blur">
-        <div className="flex h-12 items-center gap-3 px-4 sm:gap-6 sm:px-5">
-          <Link href="/protocoles" className="flex shrink-0 items-center gap-[5px] font-semibold tracking-tight">
+        <div className="flex flex-wrap items-center gap-x-3 px-4 sm:h-12 sm:flex-nowrap sm:gap-6 sm:px-5">
+          <Link href="/protocoles" className="flex h-12 shrink-0 items-center gap-[5px] font-semibold tracking-tight">
             <LogoMark />
             Avero
           </Link>
-          <nav className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto whitespace-nowrap text-sm">
+          <nav className="order-last -mx-2.5 flex w-[calc(100%+1.25rem)] items-center gap-1 overflow-x-auto whitespace-nowrap pb-2 text-sm sm:order-none sm:mx-0 sm:w-auto sm:min-w-0 sm:flex-1 sm:pb-0">
             {NAV.map((n) => {
               const active = [n.href, ...n.also].some((h) => pathname === h || pathname.startsWith(`${h}/`));
               return (
@@ -60,7 +60,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
               );
             })}
           </nav>
-          <div className="flex shrink-0 items-center gap-3 text-sm text-soft">
+          <div className="ms-auto flex shrink-0 items-center gap-3 text-sm text-soft sm:ms-0">
             {session && staff ? (
               <>
                 <span className="hidden md:inline">{staff.name || session.user.email}</span>

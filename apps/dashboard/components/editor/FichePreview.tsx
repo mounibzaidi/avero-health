@@ -309,11 +309,11 @@ function PathwayCard({ p, onChange }: { p: Pathway; onChange: (p: Pathway) => vo
                   const setB = (patch: Partial<typeof b>) => setNode({ ...n, branches: n.branches.map((x, j) => (j === k ? { ...x, ...patch } : x)) });
                   const broken = !b.next_node_id || !step.has(b.next_node_id);
                   return (
-                    <div key={b.id} className="group/branch flex items-center gap-2 rounded-branch bg-panel px-3 py-[6px]">
-                      <div className="min-w-0 flex-1"><Inline value={b.label} placeholder="Réponse…" onChange={(label) => setB({ label })} className="text-[13.5px] font-medium leading-[19px] text-ink" /></div>
+                    <div key={b.id} className="group/branch flex flex-wrap items-center gap-x-2 gap-y-0.5 rounded-branch bg-panel px-3 py-[6px]">
+                      <div className="min-w-0 flex-[1_1_9rem]"><Inline value={b.label} placeholder="Réponse…" onChange={(label) => setB({ label })} className="text-[13.5px] font-medium leading-[19px] text-ink" /></div>
                       <span className="text-[13px] font-bold text-accent">→</span>
                       <select value={b.next_node_id && step.has(b.next_node_id) ? b.next_node_id : ""} disabled={ro}
-                        className={`max-w-48 disabled:appearance-none rounded-md bg-transparent py-0.5 text-[13px] font-semibold hover:bg-surface ${broken ? "text-caution" : "text-accentink"}`}
+                        className={`min-w-0 max-w-[calc(100%-1.5rem)] truncate sm:max-w-48 disabled:appearance-none rounded-md bg-transparent py-0.5 text-[13px] font-semibold hover:bg-surface ${broken ? "text-caution" : "text-accentink"}`}
                         onChange={(e) => {
                           if (e.target.value !== "__new") return setB({ next_node_id: e.target.value || null });
                           const m = blank();
