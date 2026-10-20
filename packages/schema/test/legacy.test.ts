@@ -28,6 +28,13 @@ describe("fromLegacy", () => {
     expect(p.assess.pathway.nodes.map((n) => n.id)).toEqual(["n0", "n1"]);
   });
 
+  it("keeps a pathologie fiche's typical signs and essentials out of the SAMU box", () => {
+    const p = fromLegacy({ ...legacy, meta: { ...legacy.meta, template: "pathologie" } });
+    expect(p.red_box).toEqual({ signs: [], actions: [] });
+    expect(p.assess.examine.map((i) => i.id)).toEqual(["t-2"]);
+    expect(p.treat.actions.map((i) => i.id)).toEqual(["t-1"]);
+  });
+
   it("reads a dose range as dose + maximum, and sends brands to the open points", () => {
     const m = fromLegacy(legacy).treat.medications[0];
     expect([m.dose, m.dose_unit, m.max_dose]).toEqual([150, "mg", "300 mg"]);

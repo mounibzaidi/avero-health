@@ -94,12 +94,14 @@ export function fromLegacy(raw: unknown, today = new Date().toISOString().slice(
   const s4 = obj(secs["4_gravite"]);
   const s7 = obj(secs["7_traitement"]);
   const s11 = obj(secs["11_suivi"]);
-  p.red_box.actions = items(secs["1_essentiel"], s4.gestes_immediats);
-  p.red_box.signs = items(s2.signes_typiques, s2.formes_trompeuses, s4.signes_de_gravite);
-  p.assess.examine = items(s2.examen_clinique, s2.criteres_diagnostiques, s2.diagnostics_differentiels);
+  // in an emergency the typical signs are reasons to call the SAMU; in a pathologie fiche only 4_gravite is
+  const urgent = template === "urgence";
+  p.red_box.actions = items(urgent && secs["1_essentiel"], s4.gestes_immediats);
+  p.red_box.signs = items(urgent && s2.signes_typiques, urgent && s2.formes_trompeuses, s4.signes_de_gravite);
+  p.assess.examine = items(!urgent && s2.signes_typiques, !urgent && s2.formes_trompeuses, s2.examen_clinique, s2.criteres_diagnostiques, s2.diagnostics_differentiels);
   p.assess.ask = items(s4.decision_initiale);
   p.assess.tests = items(secs["6_examens"]);
-  p.treat.actions = items(s7.elements, secs["10_surveillance"]);
+  p.treat.actions = items(!urgent && secs["1_essentiel"], s7.elements, secs["10_surveillance"]);
   p.treat.do_not = items(secs["8_ne_pas_faire"], s7.contre_indications);
   p.advise = items(s11.conseils_patient);
   const scope = els(secs["3_champ"]).map((e) => e.text).filter(Boolean);

@@ -177,6 +177,12 @@ const Card = ({ title, children }: { title?: string; children: ReactNode }) => (
 );
 
 function RedBox({ f, edit }: { f: Protocol; edit: Edit }) {
+  const ro = useContext(ReadOnlyCtx);
+  const [open, setOpen] = useState(false);
+  // an empty box is not shown (as in the app); a pathologie fiche often has none, so editors add it on demand
+  if (!f.red_box.signs.length && !f.red_box.actions.length && (ro || (f.meta.template === "pathologie" && !open))) {
+    return ro ? null : <AddButton onClick={() => setOpen(true)}>Appelez le SAMU si… (signes d'alerte)</AddButton>;
+  }
   return (
     <div className="rounded-card border-2 border-flag bg-surface px-[18px] pb-[6px] pt-4">
       <p className="flex items-center gap-2 pb-[2px] text-[15.5px] font-bold leading-[21px] text-flag"><span aria-hidden>⚠</span>Appelez le SAMU ou adressez aux urgences si :</p>
