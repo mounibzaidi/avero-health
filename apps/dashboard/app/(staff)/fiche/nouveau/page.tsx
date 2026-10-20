@@ -16,6 +16,12 @@ type Pdf = { path: string; title: string };
 type Entry = { key: string; name: string; file?: File; path?: string };
 
 const title = (t: string) => { try { return decodeURIComponent(t); } catch { return t; } };
+/** A source as the PDF list names it: the guideline's title after its body's short name ("HAS: Prise en charge…"). */
+function sourceLabel(s: Protocol["sources"][number]): string {
+  const org = s.organisation.trim();
+  const short = /\(([\p{Lu}][\p{L}0-9&/-]{1,9})\)/u.exec(org)?.[1] ?? (org.length <= 14 ? org : "");
+  return [short, s.title.trim() || s.id].filter(Boolean).join(": ");
+}
 
 /** The JSON as a v1.1 fiche (the older fiche-protocole format converted), or why not. */
 function parse(text: string): { protocol: Protocol | null; error: string | null } {
@@ -189,9 +195,9 @@ function NewFiche() {
             {entries.map((e) => (
               <li key={e.key} className="flex items-center gap-3 border-t border-line py-2 first:border-t-0">
                 <span className="min-w-0 flex-1 truncate text-sm text-ink" title={e.name}>{e.name}</span>
-                <select className={`${inputCls} h-8 w-60 shrink-0 text-xs`} value={sourceOf(e) ?? ""} onChange={(ev) => setSource(e.key, ev.target.value || null)}>
+                <select className={`${inputCls} h-8 w-80 max-w-[55%] shrink-0 text-xs`} value={sourceOf(e) ?? ""} onChange={(ev) => setSource(e.key, ev.target.value || null)} title="The guideline this PDF is">
                   <option value="">Not used{e.path?.startsWith(`fiches/${fid}/`) ? " (deleted on opening)" : ""}</option>
-                  {sources.map((s) => <option key={s.id} value={s.id}>{s.organisation || s.id}</option>)}
+                  {sources.map((s) => <option key={s.id} value={s.id}>{sourceLabel(s)}</option>)}
                 </select>
                 <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => remove(e)}>{e.file ? "Remove" : "Delete"}</button>
               </li>
@@ -199,7 +205,7 @@ function NewFiche() {
           </ul>
         )}
         {protocol && entries.length > 0 && missing.length > 0 && (
-          <p className="text-xs text-muted">No PDF yet for: {missing.map((s) => s.organisation || s.id).join(", ")}. You can add {missing.length > 1 ? "them" : "it"} later in the editor.</p>
+          <p className="text-xs text-muted">No PDF yet for: {missing.map(sourceLabel).join(" ; ")}. You can add {missing.length > 1 ? "them" : "it"} later in the editor.</p>
         )}
         {ownUnused.length > 0 && <p className="text-xs text-caution">{ownUnused.length} stored PDF{ownUnused.length > 1 ? "s" : ""} not used: deleted when you open the fiche.</p>}
       </Card>
