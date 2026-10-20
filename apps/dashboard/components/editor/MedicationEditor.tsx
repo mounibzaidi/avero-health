@@ -16,7 +16,14 @@ export const blankMedication = (id: string): Medication => ({
 
 /** A medication's fields, under its row when "⋯" is open (the INN is edited in the row). */
 export function MedicationDetails({ med, onChange }: { med: Medication; onChange: (v: Medication) => void }) {
-  const set = (patch: Partial<Medication>) => onChange({ ...med, ...patch });
+  // a field given a value is no longer "not given by the sources"
+  const set = (patch: Partial<Medication>) => {
+    const filled = (Object.keys(patch) as (keyof Medication)[]).filter((k) => {
+      const v = patch[k];
+      return (MedicationField.options as readonly string[]).includes(k) && v != null && v !== "" && !(Array.isArray(v) && !v.length);
+    });
+    onChange({ ...med, ...patch, ...(filled.length && !("missing" in patch) ? { missing: med.missing.filter((f) => !filled.includes(f)) } : {}) });
+  };
   const opt = (s: string) => s.trim() || null;
   return (
     <>

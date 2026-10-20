@@ -66,7 +66,8 @@ describe("publication gate", () => {
   });
 
   it("fails a medication with missing fields, and one with an empty prescribing field not listed as missing", () => {
-    const missing = gate((p) => (p.treat.medications[0].missing = ["route"]));
+    const missing = gate((p) => { p.treat.medications[0].missing = ["route"]; p.treat.medications[0].route = null; });
+    expect(gate((p) => (p.treat.medications[0].missing = ["route"]))).toEqual([]); // filled since: counts as given
     expect(missing).toEqual([expect.objectContaining({ item_id: "m-1", rule: "missing", message: "Missing fields: route" })]);
     const empty = gate((p) => (p.treat.medications[0].route = null));
     expect(empty).toEqual([expect.objectContaining({ item_id: "m-1", rule: "required", message: "route missing" })]);

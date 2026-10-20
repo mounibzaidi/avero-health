@@ -95,7 +95,9 @@ export function publicationGate(p: Protocol, ctx: GateContext): Issue[] {
 
   for (const m of p.treat.medications) {
     if (blank(m.inn)) add(m.id, "required", "INN missing");
-    const blocking = m.missing.filter((f) => PRESCRIBING_FIELDS.includes(f));
+    // a field filled since it was listed as missing counts as given
+    const empty = (f: MedicationField) => { const v = m[f as keyof Medication]; return v == null || (typeof v === "string" && blank(v)); };
+    const blocking = m.missing.filter((f) => PRESCRIBING_FIELDS.includes(f) && empty(f));
     if (blocking.length) add(m.id, "missing", `Missing fields: ${blocking.map((f) => MEDICATION_FIELD_LABELS[f]).join(", ")}`);
     for (const f of PRESCRIBING_FIELDS) {
       const v = m[f as keyof Medication];
