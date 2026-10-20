@@ -60,11 +60,12 @@ function NewFiche() {
     void Promise.all([files(`/crawl/topics/${encodeURIComponent(topic ?? fid)}`), files(`/crawl/fiches/${encodeURIComponent(fid)}/files`)])
       .then(([a, b]) => setStored([...b, ...a.filter((x) => !b.some((y) => y.path === x.path))]));
   }, [fid, topic]);
+  // the PDFs this fiche's sources already have (a fiche imported again): links are per fiche, never another fiche's
   useEffect(() => {
-    if (!sourceIds.length) return;
-    void supabase.from("source_pdfs").select("source_id,pdf_path").in("source_id", sourceIds)
+    if (!fid || !sourceIds.length) return;
+    void supabase.from("source_pdfs").select("source_id,pdf_path").eq("subject_id", fid).in("source_id", sourceIds)
       .then(({ data }) => setLinked(Object.fromEntries((data ?? []).map((r: { source_id: string; pdf_path: string }) => [r.source_id, r.pdf_path]))));
-  }, [supabase, sourceIds]);
+  }, [supabase, fid, sourceIds]);
 
   const pdfOf = (sid: string): { file: File } | { path: string } | null => {
     const c = choice[sid] ?? (linked[sid] ? { path: linked[sid] } : stored.length === 1 && sourceIds.length === 1 ? { path: stored[0].path } : null);
@@ -87,12 +88,19 @@ function NewFiche() {
     setError(null);
     try {
       const id = protocol.meta.id;
+      // the fiche first: a source's PDF is linked to it
+      const content: Protocol = { ...protocol, meta: { ...protocol.meta, status: "draft" } };
+      const subject = { title: content.meta.title, template: content.meta.template, specialite: content.meta.specialite || "" };
+      const last = await supabase.from("fiche_versions").select("version").eq("subject_id", id).order("version", { ascending: false }).limit(1);
+      const version = (last.data?.[0]?.version ?? 0) + 1;
+      const s = version === 1 ? await supabase.from("subjects").upsert({ id, ...subject }) : await supabase.from("subjects").update({ ...subject, updated_at: new Date().toISOString() }).eq("id", id);
+      if (s.error) throw new Error(s.error.message);
       for (const sid of sourceIds) {
         const c = pdfOf(sid);
         if (!c) {
           // removed here: an earlier link of this source is undone
           if (linked[sid]) {
-            const r = await supabase.from("source_pdfs").delete().eq("source_id", sid);
+            const r = await supabase.from("source_pdfs").delete().eq("subject_id", id).eq("source_id", sid);
             if (r.error) throw new Error(r.error.message);
           }
           continue;
@@ -104,16 +112,10 @@ function NewFiche() {
           path = (await apiForm<{ path: string }>(`/crawl/fiches/${encodeURIComponent(id)}/upload`, form)).path;
         }
         if (path !== linked[sid]) {
-          const r = await supabase.from("source_pdfs").upsert({ source_id: sid, pdf_path: path, updated_at: new Date().toISOString(), updated_by: session.user.id });
+          const r = await supabase.from("source_pdfs").upsert({ subject_id: id, source_id: sid, pdf_path: path, updated_at: new Date().toISOString(), updated_by: session.user.id });
           if (r.error) throw new Error(r.error.message);
         }
       }
-      const content: Protocol = { ...protocol, meta: { ...protocol.meta, status: "draft" } };
-      const subject = { title: content.meta.title, template: content.meta.template, specialite: content.meta.specialite || "" };
-      const last = await supabase.from("fiche_versions").select("version").eq("subject_id", id).order("version", { ascending: false }).limit(1);
-      const version = (last.data?.[0]?.version ?? 0) + 1;
-      const s = version === 1 ? await supabase.from("subjects").upsert({ id, ...subject }) : await supabase.from("subjects").update({ ...subject, updated_at: new Date().toISOString() }).eq("id", id);
-      if (s.error) throw new Error(s.error.message);
       const v = await supabase.from("fiche_versions").insert({ subject_id: id, version, content: forStorage(content), created_by: session.user.id });
       if (v.error) throw new Error(v.error.message);
       router.push(`/fiche/${id}`);

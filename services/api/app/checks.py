@@ -26,6 +26,7 @@ class EvidenceIn(BaseModel):
 
 
 class QuotesIn(BaseModel):
+    subject_id: str  # the fiche: a source's PDF is the one linked for this fiche
     sources: list[SourceIn]
     evidence: list[EvidenceIn]
 
@@ -43,7 +44,7 @@ def _pdf(caller: sb.Caller, path: str) -> quotecheck.PdfText | None:
 def quotes(body: QuotesIn, caller: sb.Caller = Depends(sb.require_admin)):
     offsets = {s.id: s.page_offset for s in body.sources}
     ids = sorted({e.source_id for e in body.evidence if e.source_id})
-    rows = sb.rest(caller, "GET", "source_pdfs", {"select": "source_id,pdf_path", "source_id": f"in.({','.join(ids)})"}) if ids else []
+    rows = sb.rest(caller, "GET", "source_pdfs", {"select": "source_id,pdf_path", "subject_id": f"eq.{body.subject_id}", "source_id": f"in.({','.join(ids)})"}) if ids else []
     paths = {r["source_id"]: r["pdf_path"] for r in rows or []}
 
     results = []

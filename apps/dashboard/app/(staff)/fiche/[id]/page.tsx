@@ -116,7 +116,7 @@ export default function FicheEditor() {
     void (async () => {
       const [pub, sp, lr, fv] = await Promise.all([
         supabase.from("published_fiches").select("subject_id"),
-        supabase.from("source_pdfs").select("source_id,pdf_path"),
+        supabase.from("source_pdfs").select("source_id,pdf_path").eq("subject_id", id),
         supabase.from("line_reviews").select("line_id,sig").eq("subject_id", id),
         supabase.from("fiche_versions").select("version,content,published_at").eq("subject_id", id).order("version", { ascending: false }),
       ]);
@@ -177,13 +177,13 @@ export default function FicheEditor() {
     if (!f || !evidence.length) return;
     try {
       const r = await api<{ results: { key: string; found: boolean; message: string | null }[] }>("/checks/quotes", {
-        method: "POST", body: JSON.stringify({ sources: f.sources.map((s) => ({ id: s.id, page_offset: s.page_offset })), evidence }),
+        method: "POST", body: JSON.stringify({ subject_id: id, sources: f.sources.map((s) => ({ id: s.id, page_offset: s.page_offset })), evidence }),
       });
       setQuotes({ sig, results: Object.fromEntries(r.results.map((x) => [x.key, { found: x.found, message: x.message }])) });
     } catch (e) {
       setError(`Quote check failed: ${(e as Error).message}`);
     }
-  }, [f, evidence, sig]);
+  }, [f, evidence, sig, id]);
   useEffect(() => {
     if (!isAdmin || !evidence.length || quotes.sig === sig) return;
     const t = setTimeout(() => void checkQuotes(), 1500);
@@ -314,8 +314,8 @@ export default function FicheEditor() {
 
   const setPdf = async (sourceId: string, p: string | null) => {
     const { error } = p
-      ? await supabase.from("source_pdfs").upsert({ source_id: sourceId, pdf_path: p, updated_at: new Date().toISOString(), updated_by: session?.user.id })
-      : await supabase.from("source_pdfs").delete().eq("source_id", sourceId);
+      ? await supabase.from("source_pdfs").upsert({ subject_id: id, source_id: sourceId, pdf_path: p, updated_at: new Date().toISOString(), updated_by: session?.user.id })
+      : await supabase.from("source_pdfs").delete().eq("subject_id", id).eq("source_id", sourceId);
     if (error) return setError(error.message);
     setPdfs((cur) => { const next = { ...cur }; if (p) next[sourceId] = p; else delete next[sourceId]; return next; });
   };

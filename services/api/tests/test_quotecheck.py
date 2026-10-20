@@ -98,6 +98,7 @@ def test_endpoint_returns_found_or_not_per_evidence(monkeypatch):
     app.dependency_overrides[sb.require_admin] = lambda: sb.Caller(uid="u", token="t")
     try:
         r = TestClient(app).post("/checks/quotes", json={
+            "subject_id": "fiche-test",
             "sources": [{"id": "src-test", "page_offset": OFFSET}, {"id": "src-sans-pdf", "page_offset": 0}],
             "evidence": [
                 {"key": "t-1#0", "source_id": "src-test", "page": 11, "quote": "seven days in the test population"},
