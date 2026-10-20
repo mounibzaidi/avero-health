@@ -214,7 +214,21 @@ export default function FicheEditor() {
     review: { ...f.review, clinical_approval: true, reviewer: f.review.reviewer || me || null, reviewed_at: today() },
   } : null), [f, me]);
   const structure = useMemo(() => (candidate ? validateStructure(candidate).issues : []), [candidate]);
-  const gate = useMemo(() => (candidate && !structure.length ? publicationGate(candidate, { published, quotes: quoteResults }) : []), [candidate, structure, published, quoteResults]);
+  const allGate = useMemo(() => (candidate && !structure.length ? publicationGate(candidate, { published, quotes: quoteResults }) : []), [candidate, structure, published, quoteResults]);
+  // an admin may mark a gate problem as fixed (kept with the ticks, in line_reviews); it holds while the message is
+  // the same, and the publication's change log names it
+  const fixedKey = (i: Issue) => `fixed:${i.item_id ?? "fiche"}:${i.rule}`;
+  const isFixed = useCallback((i: Issue) => reviews.get(fixedKey(i)) === i.message, [reviews]);
+  const gate = useMemo(() => allGate.filter((i) => !isFixed(i)), [allGate, isFixed]);
+  const markedFixed = useMemo(() => allGate.filter(isFixed), [allGate, isFixed]);
+  const markFixed = (i: Issue, on: boolean) => {
+    if (!isAdmin || !session) return;
+    setReviews((m) => { const n = new Map(m); if (on) n.set(fixedKey(i), i.message); else n.delete(fixedKey(i)); return n; });
+    const q = on
+      ? supabase.from("line_reviews").upsert({ subject_id: id, line_id: fixedKey(i), sig: i.message, reviewed_by: session.user.id, reviewed_at: new Date().toISOString() })
+      : supabase.from("line_reviews").delete().eq("subject_id", id).eq("line_id", fixedKey(i));
+    void q.then(({ error }) => error && setError(`Not saved: ${error.message}`));
+  };
   const issuesById = useMemo(() => {
     const m = new Map<string | null, Issue[]>();
     for (const i of [...structure, ...gate]) m.set(i.item_id, [...(m.get(i.item_id) ?? []), i]);
@@ -252,7 +266,10 @@ export default function FicheEditor() {
         setNote(`Saved (version ${version + 1})`);
       } else {
         if (!canPublish || !candidate) throw new Error("Publishing blocked: some blocks are still to check or fix.");
-        await saveVersion(candidate, true);
+        const fixedLog = markedFixed.length
+          ? [{ date: today(), by: me || "admin", summary: `Marqué corrigé sans correction : ${markedFixed.map((i) => `${i.item_id ?? "fiche"} (${i.message})`).join(" ; ")}` }]
+          : [];
+        await saveVersion({ ...candidate, review: { ...candidate.review, change_log: [...candidate.review.change_log, ...fixedLog] } }, true);
         setNote(`Published (version ${version + 1})`);
       }
     } catch (e) {
@@ -336,11 +353,11 @@ export default function FicheEditor() {
             <div className="h-1.5 w-24 overflow-hidden rounded-full bg-panel"><div className="h-full rounded-full bg-accent transition-[width]" style={{ width: `${pct}%` }} /></div>
             <span className="tabular-nums text-soft">{blocks.length - todo.length}/{blocks.length} blocks checked</span>
             {todo.length > 0 && !viewOnly && <button type="button" className="font-medium text-accentink hover:underline" onClick={() => { goTo(todo[0].id); const e = todo[0].evidence[0]; if (e) show({ evidence: e, label: "" }); }}>Next to check ›</button>}
-            {problems > 0 && <button type="button" className="font-medium text-flag hover:underline" onClick={() => setShowIssues((x) => !x)}>{problems} problem{problems > 1 ? "s" : ""} to fix {showIssues ? "▴" : "▾"}</button>}
+            {(problems > 0 || markedFixed.length > 0) && <button type="button" className={`font-medium hover:underline ${problems ? "text-flag" : "text-soft"}`} onClick={() => setShowIssues((x) => !x)}>{problems ? `${problems} problem${problems > 1 ? "s" : ""} to fix` : `${markedFixed.length} marked as fixed`} {showIssues ? "▴" : "▾"}</button>}
             {!todo.length && !problems && !isLive && !viewOnly && <span className="font-medium text-accent">Ready to publish</span>}
             {note && <span className="text-accent">{note}</span>}
           </div>}
-          {showIssues && problems > 0 && <div className="max-h-64 overflow-auto rounded-xl border border-line bg-surface p-3"><Issues structure={structure} gate={gate} /></div>}
+          {showIssues && (problems > 0 || markedFixed.length > 0) && <div className="max-h-64 overflow-auto rounded-xl border border-line bg-surface p-3"><Issues structure={structure} gate={gate} fixed={markedFixed} onFix={isAdmin ? markFixed : undefined} /></div>}
           {error && <ErrorNote>{error}</ErrorNote>}
         </div>
 

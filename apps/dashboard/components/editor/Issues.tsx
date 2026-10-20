@@ -13,30 +13,43 @@ export const goTo = (id: string | null) => {
   el?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-/** Issues of both validator levels, grouped by rule; a click goes to the line. */
-export function Issues({ structure, gate }: { structure: Issue[]; gate: Issue[] }) {
+/**
+ * Issues of both validator levels, grouped by rule; a click goes to the line. With `onFix` (admins), a gate problem
+ * can be marked as fixed and the mark undone; a format problem cannot (the app could not read the fiche).
+ */
+export function Issues({ structure, gate, fixed = [], onFix }: { structure: Issue[]; gate: Issue[]; fixed?: Issue[]; onFix?: (i: Issue, on: boolean) => void }) {
   const all = [...structure, ...gate];
-  if (!all.length) return <p className="rounded-lg bg-tint px-3 py-2 text-sm font-medium text-accentink">No problems: the fiche can be published.</p>;
   const groups = new Map<Rule, Issue[]>();
   for (const i of all) groups.set(i.rule, [...(groups.get(i.rule) ?? []), i]);
+  const row = (i: Issue, k: number, done: boolean) => (
+    <li key={k} className="flex items-start gap-1">
+      <button type="button" className="min-w-0 flex-1 rounded px-1.5 py-1 text-left text-sm hover:bg-panel" onClick={() => goTo(i.item_id)}>
+        <span className="me-1.5 font-mono text-xs text-muted">{i.item_id ?? "fiche"}</span>
+        <span className={done ? "text-soft line-through" : "text-flag"}>{i.message}</span>
+      </button>
+      {onFix && i.rule !== "structure" && (
+        <button type="button" className="shrink-0 rounded px-1.5 py-1 text-xs font-medium text-accentink hover:bg-panel" onClick={() => onFix(i, !done)}>
+          {done ? "Undo" : "Mark as fixed"}
+        </button>
+      )}
+    </li>
+  );
   return (
     <div className="flex flex-col gap-3">
+      {!all.length && <p className="rounded-lg bg-tint px-3 py-2 text-sm font-medium text-accentink">No problems: the fiche can be published.</p>}
       {structure.length > 0 && <p className="text-xs font-medium text-flag">Invalid format: fix it first (publishing depends on it).</p>}
       {[...groups].map(([rule, list]) => (
         <div key={rule}>
           <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-soft">{RULE_LABEL[rule]} ({list.length})</h4>
-          <ul className="flex flex-col gap-0.5">
-            {list.map((i, k) => (
-              <li key={k}>
-                <button type="button" className="w-full rounded px-1.5 py-1 text-left text-sm hover:bg-panel" onClick={() => goTo(i.item_id)}>
-                  <span className="me-1.5 font-mono text-xs text-muted">{i.item_id ?? "fiche"}</span>
-                  <span className="text-flag">{i.message}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+          <ul className="flex flex-col gap-0.5">{list.map((i, k) => row(i, k, false))}</ul>
         </div>
       ))}
+      {fixed.length > 0 && (
+        <div>
+          <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-soft">Marked as fixed ({fixed.length}), noted in the change log on publishing</h4>
+          <ul className="flex flex-col gap-0.5">{fixed.map((i, k) => row(i, k, true))}</ul>
+        </div>
+      )}
     </div>
   );
 }
