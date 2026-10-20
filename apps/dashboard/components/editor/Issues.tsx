@@ -15,9 +15,12 @@ export const goTo = (id: string | null) => {
 
 /**
  * Issues of both validator levels, grouped by rule; a click goes to the line. With `onFix` (admins), a gate problem
- * can be marked as fixed and the mark undone; a format problem cannot (the app could not read the fiche).
+ * can be marked as fixed and the mark undone, and with `onFixAll` all of them at once; a format problem cannot (the
+ * app could not read the fiche).
  */
-export function Issues({ structure, gate, fixed = [], onFix }: { structure: Issue[]; gate: Issue[]; fixed?: Issue[]; onFix?: (i: Issue, on: boolean) => void }) {
+export function Issues({ structure, gate, fixed = [], onFix, onFixAll }: {
+  structure: Issue[]; gate: Issue[]; fixed?: Issue[]; onFix?: (i: Issue, on: boolean) => void; onFixAll?: () => void;
+}) {
   const all = [...structure, ...gate];
   const groups = new Map<Rule, Issue[]>();
   for (const i of all) groups.set(i.rule, [...(groups.get(i.rule) ?? []), i]);
@@ -38,6 +41,9 @@ export function Issues({ structure, gate, fixed = [], onFix }: { structure: Issu
     <div className="flex flex-col gap-3">
       {!all.length && <p className="rounded-lg bg-tint px-3 py-2 text-sm font-medium text-accentink">No problems: the fiche can be published.</p>}
       {structure.length > 0 && <p className="text-xs font-medium text-flag">Invalid format: fix it first (publishing depends on it).</p>}
+      {onFixAll && gate.length > 1 && (
+        <button type="button" className="self-end rounded px-1.5 py-1 text-xs font-medium text-accentink hover:bg-panel" onClick={onFixAll}>Mark all as fixed ({gate.length})</button>
+      )}
       {[...groups].map(([rule, list]) => (
         <div key={rule}>
           <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-soft">{RULE_LABEL[rule]} ({list.length})</h4>

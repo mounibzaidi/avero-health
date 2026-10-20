@@ -240,6 +240,14 @@ export default function FicheEditor() {
       : supabase.from("line_reviews").delete().eq("subject_id", id).eq("line_id", fixedKey(i));
     void q.then(({ error }) => error && setError(`Not saved: ${error.message}`));
   };
+  /** Every problem of the gate marked as fixed at once, after a confirmation, as one write. */
+  const markAllFixed = () => {
+    if (!isAdmin || !session || !gate.length || !window.confirm(`Mark all ${gate.length} problem${gate.length === 1 ? "" : "s"} as fixed? They are noted in the change log when you publish.`)) return;
+    const at = new Date().toISOString();
+    const rows = gate.map((i) => ({ subject_id: id, line_id: fixedKey(i), sig: i.message, reviewed_by: session.user.id, reviewed_at: at }));
+    setReviews((m) => { const n = new Map(m); for (const r of rows) n.set(r.line_id, r.sig); return n; });
+    void supabase.from("line_reviews").upsert(rows).then(({ error }) => error && setError(`Not saved: ${error.message}`));
+  };
   const issuesById = useMemo(() => {
     const m = new Map<string | null, Issue[]>();
     for (const i of [...structure, ...gate]) m.set(i.item_id, [...(m.get(i.item_id) ?? []), i]);
@@ -369,7 +377,7 @@ export default function FicheEditor() {
             {!todo.length && !problems && !isLive && !viewOnly && <span className="font-medium text-accent">Ready to publish</span>}
             {note && <span className="text-accent">{note}</span>}
           </div>}
-          {showIssues && (problems > 0 || markedFixed.length > 0) && <div className="max-h-64 overflow-auto rounded-xl border border-line bg-surface p-3"><Issues structure={structure} gate={gate} fixed={markedFixed} onFix={isAdmin ? markFixed : undefined} /></div>}
+          {showIssues && (problems > 0 || markedFixed.length > 0) && <div className="max-h-64 overflow-auto rounded-xl border border-line bg-surface p-3"><Issues structure={structure} gate={gate} fixed={markedFixed} onFix={isAdmin ? markFixed : undefined} onFixAll={isAdmin ? markAllFixed : undefined} /></div>}
           {error && <ErrorNote>{error}</ErrorNote>}
         </div>
 
