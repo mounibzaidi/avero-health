@@ -40,7 +40,7 @@ const AIR_WIDE = 16;
 function visible(f: Protocol): SectionId[] {
   const has: Record<SectionId, boolean> = {
     red_box: f.red_box.signs.length + f.red_box.actions.length > 0,
-    assess: f.assess.ask.length + f.assess.examine.length + f.assess.tests.length + f.assess.pathway.nodes.length > 0,
+    assess: f.assess.symptoms.length + f.assess.ask.length + f.assess.examine.length + f.assess.tests.length + f.assess.pathway.nodes.length > 0,
     treat: f.treat.medications.length + f.treat.actions.length + f.treat.do_not.length > 0,
     advise: f.advise.length > 0,
     refer_follow: f.refer_follow.refer.length + f.refer_follow.follow_up.length > 0,
@@ -134,6 +134,7 @@ function SectionBody({ id, f }: { id: SectionId; f: Protocol }) {
     case "assess":
       return (
         <>
+          <ItemCard title={t("f_symptoms")} items={f.assess.symptoms} />
           <ItemCard title={t("f_ask")} items={f.assess.ask} />
           <ItemCard title={t("f_examine")} items={f.assess.examine} />
           <ItemCard title={t("f_tests")} items={f.assess.tests} />

@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  evidenceLines, publicationGate, quoteKey, validateStructure, type Issue, type Protocol, type QuoteResult,
+  evidenceLines, forStorage, publicationGate, quoteKey, validateStructure, type Issue, type Protocol, type QuoteResult,
 } from "@avero/schema";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -43,7 +43,7 @@ function lineSections(p: Protocol): Map<string, string> {
   const m = new Map<string, string>();
   const put = (sec: string, ids: { id: string }[]) => ids.forEach((x) => m.set(x.id, sec));
   put("red_box", [...p.red_box.signs, ...p.red_box.actions]);
-  put("assess", [...p.assess.ask, ...p.assess.examine, ...p.assess.tests, ...p.assess.pathway.nodes, ...p.assess.pathway.nodes.flatMap((n) => n.items)]);
+  put("assess", [...p.assess.symptoms, ...p.assess.ask, ...p.assess.examine, ...p.assess.tests, ...p.assess.pathway.nodes, ...p.assess.pathway.nodes.flatMap((n) => n.items)]);
   put("treat", [...p.treat.medications, ...p.treat.actions, ...p.treat.do_not]);
   put("advise", p.advise);
   put("refer_follow", [...p.refer_follow.refer, ...p.refer_follow.follow_up]);
@@ -228,7 +228,7 @@ export default function FicheEditor() {
     await supabase.from("subjects").update({ title: content.meta.title, template: content.meta.template, specialite: content.meta.specialite, updated_at: new Date().toISOString() }).eq("id", id);
     const now = new Date().toISOString();
     const v = await supabase.from("fiche_versions").insert({
-      subject_id: id, version: next, content, created_by: session.user.id, ...(publish ? { published_at: now, published_by: session.user.id } : {}),
+      subject_id: id, version: next, content: forStorage(content), created_by: session.user.id, ...(publish ? { published_at: now, published_by: session.user.id } : {}),
     });
     if (v.error) throw new Error(v.error.message);
     setF(content);

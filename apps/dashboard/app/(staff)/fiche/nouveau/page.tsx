@@ -1,6 +1,6 @@
 "use client";
 
-import { evidenceLines, fromLegacy, isLegacy, validateStructure, type Protocol } from "@avero/schema";
+import { evidenceLines, forStorage, fromLegacy, isLegacy, validateStructure, type Protocol } from "@avero/schema";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
@@ -94,7 +94,7 @@ function NewFiche() {
       const version = (last.data?.[0]?.version ?? 0) + 1;
       const s = version === 1 ? await supabase.from("subjects").upsert({ id, ...subject }) : await supabase.from("subjects").update({ ...subject, updated_at: new Date().toISOString() }).eq("id", id);
       if (s.error) throw new Error(s.error.message);
-      const v = await supabase.from("fiche_versions").insert({ subject_id: id, version, content, created_by: session.user.id });
+      const v = await supabase.from("fiche_versions").insert({ subject_id: id, version, content: forStorage(content), created_by: session.user.id });
       if (v.error) throw new Error(v.error.message);
       router.push(`/fiche/${id}`);
     } catch (e) {

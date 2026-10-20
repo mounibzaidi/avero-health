@@ -40,6 +40,13 @@
         "assess": {
           "type": "object",
           "properties": {
+            "symptoms": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            },
             "ask": {
               "type": "array",
               "items": {

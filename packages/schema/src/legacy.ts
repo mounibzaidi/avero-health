@@ -98,7 +98,8 @@ export function fromLegacy(raw: unknown, today = new Date().toISOString().slice(
   const urgent = template === "urgence";
   p.red_box.actions = items(urgent && secs["1_essentiel"], s4.gestes_immediats);
   p.red_box.signs = items(urgent && s2.signes_typiques, urgent && s2.formes_trompeuses, s4.signes_de_gravite);
-  p.assess.examine = items(!urgent && s2.signes_typiques, !urgent && s2.formes_trompeuses, s2.examen_clinique, s2.criteres_diagnostiques, s2.diagnostics_differentiels);
+  p.assess.symptoms = items(!urgent && s2.signes_typiques, !urgent && s2.formes_trompeuses);
+  p.assess.examine = items(s2.examen_clinique, s2.criteres_diagnostiques, s2.diagnostics_differentiels);
   p.assess.ask = items(s4.decision_initiale);
   p.assess.tests = items(secs["6_examens"]);
   p.treat.actions = items(!urgent && secs["1_essentiel"], s7.elements, secs["10_surveillance"]);

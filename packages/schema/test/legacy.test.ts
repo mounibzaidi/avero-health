@@ -1,7 +1,7 @@
 // Made-up text only: the older fiche-protocole format converted to a v1.1 draft.
 import { describe, expect, it } from "vitest";
 
-import { fromLegacy, isLegacy, validateStructure } from "../src/index.ts";
+import { forStorage, fromLegacy, isLegacy, validateStructure } from "../src/index.ts";
 
 const legacy = {
   meta: { title: "Fiche de test", topic_id: "fiche-test", template: "urgence", audience: ["MG"], sources: [{ source_id: "src", title: "Source", citation: "ORG, 2026" }] },
@@ -31,7 +31,7 @@ describe("fromLegacy", () => {
   it("keeps a pathologie fiche's typical signs and essentials out of the SAMU box", () => {
     const p = fromLegacy({ ...legacy, meta: { ...legacy.meta, template: "pathologie" } });
     expect(p.red_box).toEqual({ signs: [], actions: [] });
-    expect(p.assess.examine.map((i) => i.id)).toEqual(["t-2"]);
+    expect(p.assess.symptoms.map((i) => i.id)).toEqual(["t-2"]);
     expect(p.treat.actions.map((i) => i.id)).toEqual(["t-1"]);
   });
 
@@ -53,5 +53,15 @@ describe("fromLegacy", () => {
     expect(line.strength).toBe("à_éviter");
     expect(line.evidence.map((e) => e.quote)).toEqual(["First part of the sentence", "second part of it"]);
     expect(p.review.unresolved_issues.join(" ")).toContain("unité à vérifier");
+  });
+});
+
+describe("assess.symptoms", () => {
+  it("reads a fiche stored before the field, and is left out of storage when empty", () => {
+    const p = fromLegacy({ ...legacy, meta: { ...legacy.meta, template: "pathologie" } });
+    const stored = forStorage({ ...p, assess: { ...p.assess, symptoms: [] } });
+    expect("symptoms" in stored.assess).toBe(false);
+    expect(validateStructure(stored).protocol?.assess.symptoms).toEqual([]);
+    expect(forStorage(p).assess.symptoms).toHaveLength(1);
   });
 });

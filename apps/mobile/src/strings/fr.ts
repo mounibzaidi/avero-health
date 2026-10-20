@@ -3,6 +3,7 @@ const fr = {
   f_red_chip: "Alerte",
   f_red_signs: "Appelez le SAMU ou adressez aux urgences si :",
   f_meanwhile: "En attendant",
+  f_symptoms: "Signes et symptômes",
   f_ask: "Demander",
   f_examine: "Examiner",
   f_tests: "Examens complémentaires",
