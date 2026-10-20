@@ -5,6 +5,7 @@ const fr = {
   f_meanwhile: "En attendant",
   f_symptoms: "Signes et symptômes",
   f_ask: "Demander",
+  f_diagnosis: "Confirmation diagnostique",
   f_examine: "Examiner",
   f_tests: "Examens complémentaires",
   f_pathway: "Arbre de décision",

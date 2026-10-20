@@ -5,7 +5,7 @@ One condition = one JSON file = 1 to 5 phone screens. Layout from PACK (red box,
 ## Screen order
 
 1. **Red box**: when to call the SAMU / send to urgences, and what to do meanwhile
-2. **Évaluer**: signs and symptoms, ask, examine, tests, decision pathway
+2. **Évaluer**: signs and symptoms (how the patient presents), ask, examine, tests, diagnostic confirmation, decision pathway
 3. **Traiter**: drugs (dose inline, officine/hôpital tag, Algerian brands), other actions, do-not list
 4. **Conseiller**: what to tell the patient
 5. **Orienter et suivre**: referral (3 levels) + "when / what" follow-up table
@@ -47,6 +47,7 @@ One condition = one JSON file = 1 to 5 phone screens. Layout from PACK (red box,
     "ask": [],
     "examine": [],
     "tests": [],
+    "diagnosis": [],
     "pathway": {
       "start_node_id": null,
       "nodes": []
@@ -80,7 +81,7 @@ One condition = one JSON file = 1 to 5 phone screens. Layout from PACK (red box,
 
 ## Building blocks
 
-**Item**: every clinical line (signs, symptoms, ask, examine, tests, actions, do_not, advise) uses this shape.
+**Item**: every clinical line (signs, symptoms, ask, examine, tests, diagnosis, actions, do_not, advise) uses this shape.
 
 ```json
 {

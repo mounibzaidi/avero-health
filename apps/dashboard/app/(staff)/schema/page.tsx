@@ -24,7 +24,7 @@ const FLOW = [
 
 const SCREENS = [
   { key: "red_box", title: "Red box", body: "When to call the SAMU or send to the emergency department, and what to do meanwhile.", tone: "urgent" as const },
-  { key: "assess", title: "Évaluer (assess)", body: "Signs and symptoms, questions to ask, signs to examine, tests, and a decision tree with numbered steps." },
+  { key: "assess", title: "Évaluer (assess)", body: "Signs and symptoms, questions to ask, signs to examine, tests, diagnostic confirmation, and a decision tree with numbered steps." },
   { key: "treat", title: "Traiter (treat)", body: "Drugs with the dose inline, a pharmacy/hospital tag and the Algerian brands; other measures; what not to do." },
   { key: "advise", title: "Conseiller (advise)", body: "What to tell the patient." },
   { key: "refer_follow", title: "Orienter et suivre", body: "Referral in one of 3 fixed phrases (urgently / within the week / at the next visit), and a when/what follow-up table." },

@@ -162,8 +162,10 @@ export const Protocol = z.strictObject({
   meta: Meta,
   scope: Scope,
   red_box: z.strictObject({ signs: z.array(Item), actions: z.array(Item) }),
-  // symptoms came after 1.1.0 shipped: optional so the fiches stored without it still read
-  assess: z.strictObject({ symptoms: z.array(Item).default([]), ask: z.array(Item), examine: z.array(Item), tests: z.array(Item), pathway: Pathway }),
+  // symptoms and diagnosis came after 1.1.0 shipped: optional so the fiches stored without them still read
+  assess: z.strictObject({
+    symptoms: z.array(Item).default([]), ask: z.array(Item), examine: z.array(Item), tests: z.array(Item), diagnosis: z.array(Item).default([]), pathway: Pathway,
+  }),
   treat: z.strictObject({ medications: z.array(Medication), actions: z.array(Item), do_not: z.array(Item) }),
   advise: z.array(Item),
   refer_follow: z.strictObject({ refer: z.array(Referral), follow_up: z.array(FollowUp) }),
@@ -207,6 +209,7 @@ export const ITEM_LISTS = [
   { key: "assess.ask", label: "Demander", get: (p: Protocol) => p.assess.ask },
   { key: "assess.examine", label: "Examiner", get: (p: Protocol) => p.assess.examine },
   { key: "assess.tests", label: "Examens", get: (p: Protocol) => p.assess.tests },
+  { key: "assess.diagnosis", label: "Confirmation diagnostique", get: (p: Protocol) => p.assess.diagnosis },
   { key: "treat.actions", label: "Autres mesures", get: (p: Protocol) => p.treat.actions },
   { key: "treat.do_not", label: "À ne pas faire", get: (p: Protocol) => p.treat.do_not },
   { key: "advise", label: "Conseiller", get: (p: Protocol) => p.advise },
@@ -232,7 +235,7 @@ export function emptyProtocol(id: string, title: string, template: Template): Pr
     },
     scope: { population: null, exclusions: [] },
     red_box: { signs: [], actions: [] },
-    assess: { symptoms: [], ask: [], examine: [], tests: [], pathway: { start_node_id: null, nodes: [] } },
+    assess: { symptoms: [], ask: [], examine: [], tests: [], diagnosis: [], pathway: { start_node_id: null, nodes: [] } },
     treat: { medications: [], actions: [], do_not: [] },
     advise: [],
     refer_follow: { refer: [], follow_up: [] },
@@ -242,11 +245,10 @@ export function emptyProtocol(id: string, title: string, template: Template): Pr
 }
 
 /**
- * The fiche as written to the database. An empty symptoms list is left out: app builds from before the field read
- * fiches strictly and would drop a fiche that has it.
+ * The fiche as written to the database. Empty symptoms and diagnosis lists are left out: app builds from before those
+ * fields read fiches strictly and would drop a fiche that has them.
  */
 export function forStorage(p: Protocol): z.input<typeof Protocol> {
-  if (p.assess.symptoms.length) return p;
-  const { symptoms: _, ...assess } = p.assess;
-  return { ...p, assess };
+  const { symptoms, diagnosis, ...rest } = p.assess;
+  return { ...p, assess: { ...rest, ...(symptoms.length ? { symptoms } : {}), ...(diagnosis.length ? { diagnosis } : {}) } };
 }

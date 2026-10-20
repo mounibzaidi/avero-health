@@ -65,6 +65,13 @@
                 "$ref": "#/$defs/Item"
               }
             },
+            "diagnosis": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Item"
+              }
+            },
             "pathway": {
               "$ref": "#/$defs/Pathway"
             }

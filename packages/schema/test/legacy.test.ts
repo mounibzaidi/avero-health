@@ -65,3 +65,17 @@ describe("assess.symptoms", () => {
     expect(forStorage(p).assess.symptoms).toHaveLength(1);
   });
 });
+
+describe("assess.diagnosis", () => {
+  it("takes the diagnostic criteria and the tests written as \"Diagnostic : ...\"", () => {
+    const fiche = structuredClone(legacy) as typeof legacy & { sections: Record<string, unknown> };
+    fiche.sections["6_examens"] = { state: "filled", elements: [
+      { id: "t-d", text: "Diagnostic : valeur de test.", source: { source_id: "src", page: 5, quote: "Valeur de test." } },
+      { id: "t-b", text: "Bilan annuel de test.", source: { source_id: "src", page: 6, quote: "Bilan de test." } },
+    ] };
+    const p = fromLegacy(fiche);
+    expect(p.assess.diagnosis.map((i) => i.id)).toEqual(["t-d"]);
+    expect(p.assess.tests.map((i) => i.id)).toEqual(["t-b"]);
+    expect("diagnosis" in forStorage({ ...p, assess: { ...p.assess, diagnosis: [] } }).assess).toBe(false);
+  });
+});

@@ -43,7 +43,7 @@ function lineSections(p: Protocol): Map<string, string> {
   const m = new Map<string, string>();
   const put = (sec: string, ids: { id: string }[]) => ids.forEach((x) => m.set(x.id, sec));
   put("red_box", [...p.red_box.signs, ...p.red_box.actions]);
-  put("assess", [...p.assess.symptoms, ...p.assess.ask, ...p.assess.examine, ...p.assess.tests, ...p.assess.pathway.nodes, ...p.assess.pathway.nodes.flatMap((n) => n.items)]);
+  put("assess", [...p.assess.symptoms, ...p.assess.ask, ...p.assess.examine, ...p.assess.tests, ...p.assess.diagnosis, ...p.assess.pathway.nodes, ...p.assess.pathway.nodes.flatMap((n) => n.items)]);
   put("treat", [...p.treat.medications, ...p.treat.actions, ...p.treat.do_not]);
   put("advise", p.advise);
   put("refer_follow", [...p.refer_follow.refer, ...p.refer_follow.follow_up]);
