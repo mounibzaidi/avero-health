@@ -17,6 +17,7 @@ import { Body, CONTROL_STYLE, Heading } from "@/ui/ui";
 import { Medications } from "./Medications";
 import { Card, Cites, CiteProvider, ItemCard, ItemRows, RoseCard, SourcesCtx } from "./parts";
 import { Pathway } from "./Pathway";
+import { PdfCtx, usePdfPaths } from "./pdfs";
 import { StarButton } from "./StarButton";
 
 type SectionId = "red_box" | "assess" | "treat" | "advise" | "refer_follow" | "sources";
@@ -189,6 +190,7 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
   const sectionY = useRef<Partial<Record<SectionId, number>>>({});
   const chips = useRef<ScrollView>(null);
   const chipX = useRef<Partial<Record<SectionId, number>>>({});
+  const pdfPaths = usePdfPaths(id);
 
   const urgent = f.meta.template === "urgence";
   const ok = f.meta.status === "published" && f.review.clinical_approval && !!f.review.reviewer;
@@ -320,6 +322,7 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
 
   return (
     <SourcesCtx.Provider value={f.sources}>
+      <PdfCtx.Provider value={{ fiche: id, paths: pdfPaths }}>
       <CiteProvider>
       {wide ? (
         <View className="flex-1 flex-row bg-bg">
@@ -350,6 +353,7 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
         <View className="flex-1 bg-bg">{scroller}</View>
       )}
       </CiteProvider>
+      </PdfCtx.Provider>
     </SourcesCtx.Provider>
   );
 }

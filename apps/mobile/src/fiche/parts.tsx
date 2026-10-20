@@ -1,5 +1,6 @@
 import { STRENGTH_LABEL, type Evidence, type Item, type Source, type Strength } from "@avero/schema";
 import { cssVars, fixed, shadow, size } from "@avero/ui-tokens";
+import { useRouter } from "expo-router";
 import { vars } from "nativewind";
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { Linking, Modal, Pressable, ScrollView, Text, View } from "react-native";
@@ -9,6 +10,8 @@ import { t } from "@/strings/fr";
 import { WarningIcon } from "@/ui/Icons";
 import { useColors, useTheme } from "@/ui/theme";
 import { Body, SURFACE_STYLE } from "@/ui/ui";
+
+import { PdfCtx } from "./pdfs";
 
 /** Card anatomy, from ProtocolV4.tsx (radius 18, 6% hairline, surface shadow). */
 export const CARD = "rounded-card border border-edge/[0.06] bg-surface";
@@ -70,6 +73,8 @@ export function Cites({ evidence, strength, local, basis }: Cited) {
 /** The sheet of a line's citation: per source, its full name, title, pages, the line's strength, every quote. */
 function CiteSheet({ cited, onClose }: { cited: Cited | null; onClose: () => void }) {
   const sources = useContext(SourcesCtx);
+  const pdfs = useContext(PdfCtx);
+  const router = useRouter();
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   return (
@@ -106,6 +111,16 @@ function CiteSheet({ cited, onClose }: { cited: Cited | null; onClose: () => voi
                         {e.page != null && list.length > 1 ? <Text className="pt-[2px] text-[11.5px] text-muted">{t("f_page", { p: e.page })}</Text> : null}
                       </View>
                     ))}
+                    {pdfs.paths[id] ? (
+                      <Pressable accessibilityRole="link" className="min-h-10 justify-center self-start rounded-button bg-tint px-3 active:opacity-70"
+                        onPress={() => {
+                          const first = list.find((e) => e.page != null);
+                          onClose();
+                          router.push({ pathname: "/fiche/[id]/pdf", params: { id: pdfs.fiche, source: id, page: String(first?.page ?? 1), q: first?.quote ?? "" } });
+                        }}>
+                        <Text className="text-[13px] font-semibold text-accentink">{pages.length ? t("f_open_pdf_page", { p: pages[0] }) : t("f_open_pdf")}</Text>
+                      </Pressable>
+                    ) : null}
                     {s?.url ? (
                       <Pressable accessibilityRole="link" onPress={() => void Linking.openURL(s.url!)} className="min-h-9 justify-center self-start active:opacity-60">
                         <Text className="text-[13px] font-semibold text-accent">{t("f_open_source")}</Text>
