@@ -137,8 +137,8 @@ function SectionBody({ id, f }: { id: SectionId; f: Protocol }) {
           <ItemCard title={t("f_symptoms")} items={f.assess.symptoms} />
           <ItemCard title={t("f_ask")} items={f.assess.ask} />
           <ItemCard title={t("f_examine")} items={f.assess.examine} />
-          <ItemCard title={t("f_tests")} items={f.assess.tests} />
           <ItemCard title={t("f_diagnosis")} items={f.assess.diagnosis} />
+          <ItemCard title={t("f_tests")} items={f.assess.tests} />
           <Pathway pathway={f.assess.pathway} />
         </>
       );

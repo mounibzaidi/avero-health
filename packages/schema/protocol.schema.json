@@ -59,14 +59,14 @@
                 "$ref": "#/$defs/Item"
               }
             },
-            "tests": {
+            "diagnosis": {
+              "default": [],
               "type": "array",
               "items": {
                 "$ref": "#/$defs/Item"
               }
             },
-            "diagnosis": {
-              "default": [],
+            "tests": {
               "type": "array",
               "items": {
                 "$ref": "#/$defs/Item"

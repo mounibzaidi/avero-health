@@ -427,8 +427,8 @@ export function FichePreview({ f, edit, stat, readOnly = false }: { f: Protocol;
             <Card title="Signes et symptômes"><ItemList items={f.assess.symptoms} add="symptom" onChange={(v) => edit((d) => void (d.assess.symptoms = v))} /></Card>
             <Card title="Demander"><ItemList items={f.assess.ask} add="question to ask" onChange={(v) => edit((d) => void (d.assess.ask = v))} /></Card>
             <Card title="Examiner"><ItemList items={f.assess.examine} add="sign to examine" onChange={(v) => edit((d) => void (d.assess.examine = v))} /></Card>
-            <Card title="Examens complémentaires"><ItemList items={f.assess.tests} add="test" onChange={(v) => edit((d) => void (d.assess.tests = v))} /></Card>
             <Card title="Confirmation diagnostique"><ItemList items={f.assess.diagnosis} add="diagnostic criterion" onChange={(v) => edit((d) => void (d.assess.diagnosis = v))} /></Card>
+            <Card title="Examens complémentaires"><ItemList items={f.assess.tests} add="test" onChange={(v) => edit((d) => void (d.assess.tests = v))} /></Card>
             <PathwayCard p={f.assess.pathway} onChange={(p) => edit((d) => void (d.assess.pathway = p))} />
           </>
         );

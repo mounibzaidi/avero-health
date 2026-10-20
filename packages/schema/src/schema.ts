@@ -164,7 +164,7 @@ export const Protocol = z.strictObject({
   red_box: z.strictObject({ signs: z.array(Item), actions: z.array(Item) }),
   // symptoms and diagnosis came after 1.1.0 shipped: optional so the fiches stored without them still read
   assess: z.strictObject({
-    symptoms: z.array(Item).default([]), ask: z.array(Item), examine: z.array(Item), tests: z.array(Item), diagnosis: z.array(Item).default([]), pathway: Pathway,
+    symptoms: z.array(Item).default([]), ask: z.array(Item), examine: z.array(Item), diagnosis: z.array(Item).default([]), tests: z.array(Item), pathway: Pathway,
   }),
   treat: z.strictObject({ medications: z.array(Medication), actions: z.array(Item), do_not: z.array(Item) }),
   advise: z.array(Item),
@@ -208,8 +208,8 @@ export const ITEM_LISTS = [
   { key: "assess.symptoms", label: "Signes et symptômes", get: (p: Protocol) => p.assess.symptoms },
   { key: "assess.ask", label: "Demander", get: (p: Protocol) => p.assess.ask },
   { key: "assess.examine", label: "Examiner", get: (p: Protocol) => p.assess.examine },
-  { key: "assess.tests", label: "Examens", get: (p: Protocol) => p.assess.tests },
   { key: "assess.diagnosis", label: "Confirmation diagnostique", get: (p: Protocol) => p.assess.diagnosis },
+  { key: "assess.tests", label: "Examens", get: (p: Protocol) => p.assess.tests },
   { key: "treat.actions", label: "Autres mesures", get: (p: Protocol) => p.treat.actions },
   { key: "treat.do_not", label: "À ne pas faire", get: (p: Protocol) => p.treat.do_not },
   { key: "advise", label: "Conseiller", get: (p: Protocol) => p.advise },
@@ -235,7 +235,7 @@ export function emptyProtocol(id: string, title: string, template: Template): Pr
     },
     scope: { population: null, exclusions: [] },
     red_box: { signs: [], actions: [] },
-    assess: { symptoms: [], ask: [], examine: [], tests: [], diagnosis: [], pathway: { start_node_id: null, nodes: [] } },
+    assess: { symptoms: [], ask: [], examine: [], diagnosis: [], tests: [], pathway: { start_node_id: null, nodes: [] } },
     treat: { medications: [], actions: [], do_not: [] },
     advise: [],
     refer_follow: { refer: [], follow_up: [] },
