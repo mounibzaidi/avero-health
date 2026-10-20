@@ -151,6 +151,17 @@ function NewFiche() {
 
       <Card className={`flex flex-col gap-3 p-5 ${protocol ? "" : "opacity-50"}`}>
         <h2 className="text-sm font-semibold text-ink"><span className="me-2 text-muted">2</span>The PDF {sourceIds.length > 1 ? "of each source" : "of the guideline"}</h2>
+        {fid && stored.some((x) => x.path.startsWith(`fiches/${fid}/`)) && (
+          <div className="flex flex-col gap-1 rounded-lg border border-line p-3">
+            <p className="text-xs font-medium text-soft">Already stored for “{fid}” (kept from an earlier import): pick one below, or delete it</p>
+            {stored.filter((x) => x.path.startsWith(`fiches/${fid}/`)).map((x) => (
+              <div key={x.path} className="flex items-center gap-3 text-sm">
+                <span className="min-w-0 flex-1 truncate text-ink" title={title(x.title)}>{title(x.title)}</span>
+                <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => deleteFile(x.path)}>Delete</button>
+              </div>
+            ))}
+          </div>
+        )}
         {!protocol ? <p className="text-xs text-muted">Paste the JSON first.</p> : !sourceIds.length ? (
           <p className="text-xs text-caution">This fiche has no source: add one in the JSON (“sources”).</p>
         ) : protocol.sources.map((s) => {
