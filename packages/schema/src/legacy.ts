@@ -4,8 +4,7 @@ import { emptyProtocol } from "./schema.ts";
 /**
  * The older "fiche-protocole" format (meta.topic_id, numbered sections 1_essentiel ... 13_definitions) converted to a
  * v1.1 draft. Every line keeps its text, condition and verbatim quote with its page; nothing is invented: a dose that
- * does not read as one number goes to `missing`, brands (which must come from the nomenclature) go to the review's
- * open points. The result is a draft for the editor: the publication gate shows what is left to complete.
+ * does not read as one number goes to `missing`. Brands are not taken over: the app lists the nomenclature's. The result is a draft for the editor: the publication gate shows what is left to complete.
  */
 
 type Legacy = { meta?: Record<string, unknown>; sections?: Record<string, unknown> };
@@ -143,9 +142,6 @@ export function fromLegacy(raw: unknown, today = new Date().toISOString().slice(
     if (!perKg && dose !== null && !/\bfixe\b/.test(doseText)) missing.add("dose_basis");
     if (!String(d.route ?? "").trim()) missing.add("route");
     if (!String(d.frequency_or_duration ?? "").trim()) missing.add("frequency");
-    const algerie = obj(d.algerie);
-    const brands = arr<Record<string, unknown> | string>(algerie.brands).map((b) => (typeof b === "string" ? b : String(b.brand ?? ""))).filter(Boolean);
-    if (brands.length) open.push(`${d.drug_dci} : marques de la fiche d'origine (${brands.join(", ")}) à choisir dans la nomenclature`);
     // a note kept unless it only says the nomenclature was not checked (the editor's brand picker does that)
     const note = String(d.note ?? "").replace(/\s*Nomenclature algérienne non consultée[^.]*\.?/gi, "").trim();
     if (note) open.push(`${d.drug_dci} : ${note}`);
@@ -162,7 +158,7 @@ export function fromLegacy(raw: unknown, today = new Date().toISOString().slice(
 
   p.review = {
     reviewer: null, reviewed_at: null, clinical_approval: false, unresolved_issues: open,
-    change_log: [{ date: today, by: "import", summary: "Converti depuis l'ancien format (fiche-protocole) : à relire, marques à choisir, doses à vérifier." }],
+    change_log: [{ date: today, by: "import", summary: "Converti depuis l'ancien format (fiche-protocole) : à relire, doses à vérifier." }],
   };
   return p;
 }

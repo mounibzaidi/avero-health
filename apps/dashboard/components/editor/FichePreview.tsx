@@ -223,7 +223,7 @@ function MedicationList({ items, onChange }: { items: Medication[]; onChange: (v
                   {m.contraindications.length > 0 && <p className="text-[13px] leading-[18px] text-flag">Contre-indications : {m.contraindications.join(" ; ")}</p>}
                   <button type="button" onClick={openDetails} className="self-start text-left text-[12.5px] leading-[18px] hover:underline">
                     {brands.length ? <span className="text-soft">DZ : {brands.join(", ")}{status && status !== "enregistre" ? ` (${AVAILABILITY_LABEL[status]})` : ""}</span>
-                      : status ? <span className="text-caution">DZ : {AVAILABILITY_LABEL[status]}</span> : <span className="text-caution">DZ : choose the brands</span>}
+                      : status ? <span className="text-caution">DZ : {AVAILABILITY_LABEL[status]}</span> : <span className="text-muted">DZ : the app lists the registered products of this INN</span>}
                   </button>
                   <TagLine id={m.id} evidence={m.evidence} strength={m.strength} />
                 </>

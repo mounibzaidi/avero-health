@@ -50,7 +50,7 @@ export function MedicationDetails({ med, onChange }: { med: Medication; onChange
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <Label>Algerian brands (national nomenclature): optional, with none picked the app lists the INN's registered products</Label>
+        <Label>Algerian brands (national nomenclature): optional, not shown in the app, which lists the INN's registered products</Label>
         <BrandPicker med={med} onChange={set} />
       </div>
       <EvidenceList lineId={med.id} label={`${med.inn} : ${doseLine(med)}`} value={med.evidence} onChange={(evidence) => set({ evidence })} />

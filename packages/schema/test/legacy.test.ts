@@ -35,11 +35,11 @@ describe("fromLegacy", () => {
     expect(p.treat.actions.map((i) => i.id)).toEqual(["t-1"]);
   });
 
-  it("reads a dose range as dose + maximum, and sends brands to the open points", () => {
+  it("reads a dose range as dose + maximum, and does not take over the brands", () => {
     const m = fromLegacy(legacy).treat.medications[0];
     expect([m.dose, m.dose_unit, m.max_dose]).toEqual([150, "mg", "300 mg"]);
     expect(m.local_availability.brands).toEqual([]);
-    expect(fromLegacy(legacy).review.unresolved_issues.join(" ")).toContain("MARQUE");
+    expect(fromLegacy(legacy).review.unresolved_issues.join(" ")).not.toContain("MARQUE");
   });
 
   it("reads ACC/AHA classes, splits quotes cut with [...], keeps element notes", () => {

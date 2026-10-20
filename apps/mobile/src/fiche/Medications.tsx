@@ -8,46 +8,31 @@ import { Body, SURFACE_STYLE } from "@/ui/ui";
 
 import { CARD, Tag } from "./parts";
 
-const BRANDS_SHOWN = 5;
-
-/** No brand picked for the fiche: the register's products of the INN, on request (from the copy on the device). */
-function RegisterBrands({ inn }: { inn: string }) {
+/**
+ * The fiche names the INN only; the products are the register's, on request (from the copy on the device), whatever
+ * brands the fiche picked. The picked ones are listed only when the register has nothing under that INN. A status set
+ * for Algeria other than registered (withdrawn, not renewed, no presentation) is shown as it is.
+ */
+function Brands({ m }: { m: Medication }) {
   const [open, setOpen] = useState(false);
   const { data } = useMedicaments();
-  const products = useMemo(() => (data ? productsForInn(data.products, inn) : []), [data, inn]);
-  if (!products.length) return null;
+  const { brands, status } = m.local_availability;
+  const products = useMemo(() => (data ? productsForInn(data.products, m.inn) : []), [data, m.inn]);
+  const warn = status && status !== "enregistre" ? <Text className="text-[12.5px] leading-[18px] text-caution">{t("f_dz", { s: AVAILABILITY_LABEL[status] })}</Text> : null;
+  const n = products.length || brands.length;
+  if (!n) return warn;
   return (
     <View className="gap-1">
+      {warn}
       <Pressable accessibilityRole="button" onPress={() => setOpen(!open)} className="min-h-8 justify-center self-start active:opacity-60">
-        <Text className="text-[12.5px] font-semibold text-accent">{open ? t("f_see_less") : t("f_dz_list", { n: products.length })}</Text>
+        <Text className="text-[12.5px] font-semibold text-accent">{open ? t("f_see_less") : t("f_dz_list", { n })}</Text>
       </Pressable>
-      {open ? products.map((p, i) => (
+      {open && products.length ? products.map((p, i) => (
         <Text key={`${p.brand}-${p.code ?? i}`} className="text-[12.5px] leading-[18px] text-soft">
           <Text className="font-semibold text-ink">{p.brand}</Text> {[p.form, p.dosage].filter(Boolean).join(" ").toLowerCase()} · {PRESCRIBER_LABEL[p.hospital ? "hopital" : "officine"]}
         </Text>
       )) : null}
-    </View>
-  );
-}
-
-function Brands({ m }: { m: Medication }) {
-  const [all, setAll] = useState(false);
-  const { brands, status } = m.local_availability;
-  if (!brands.length) {
-    return status ? <Text className="text-[12.5px] leading-[18px] text-caution">{t("f_dz", { s: AVAILABILITY_LABEL[status] })}</Text> : <RegisterBrands inn={m.inn} />;
-  }
-  const shown = all ? brands : brands.slice(0, BRANDS_SHOWN);
-  return (
-    <View className="flex-row flex-wrap items-baseline gap-x-1">
-      <Text className="text-[12.5px] leading-[18px] text-soft">
-        {t("f_dz_brands")} {shown.join(", ")}
-        {status && status !== "enregistre" ? ` (${AVAILABILITY_LABEL[status]})` : ""}
-      </Text>
-      {brands.length > BRANDS_SHOWN ? (
-        <Pressable accessibilityRole="button" onPress={() => setAll(!all)} className="min-h-8 justify-center active:opacity-60">
-          <Text className="text-[12.5px] font-semibold text-accent">{all ? t("f_see_less") : t("f_see_all", { n: brands.length })}</Text>
-        </Pressable>
-      ) : null}
+      {open && !products.length ? brands.map((b) => <Text key={b} className="text-[12.5px] font-semibold leading-[18px] text-ink">{b}</Text>) : null}
     </View>
   );
 }
