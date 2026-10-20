@@ -27,42 +27,69 @@ export function orderNodes(p: PathwayData): PathwayNode[] {
   return out;
 }
 
-/** Longest chain behind an answer that still reads as one path (the end node included). */
-const CHAIN_MAX = 3;
+/** A tree whose start is a question with several answers: those answers are the tabs. */
+const tabbed = (start: PathwayNode | undefined): start is PathwayNode => !!start && start.type === "decision" && start.branches.length > 1;
 
-/**
- * One question whose answers each lead to an end, straight or through a short chain of single-way steps: the paths,
- * one per answer, or null for a real multi-step tree.
- */
-export function asPaths(p: PathwayData): { start: PathwayNode; paths: { id: string; label: string; nodes: PathwayNode[] }[] } | null {
-  const byId = new Map(p.nodes.map((n) => [n.id, n]));
-  const start = p.start_node_id ? byId.get(p.start_node_id) : undefined;
-  if (!start || start.type !== "decision" || start.branches.length < 2) return null;
-  const paths = [];
-  for (const b of start.branches) {
-    const nodes: PathwayNode[] = [];
-    let n = b.next_node_id ? byId.get(b.next_node_id) : undefined;
-    while (n && nodes.length < CHAIN_MAX && !nodes.includes(n) && n !== start) {
-      nodes.push(n);
-      if (n.type === "end") break;
-      if (n.branches.length !== 1) return null;
-      n = n.branches[0].next_node_id ? byId.get(n.branches[0].next_node_id) : undefined;
-    }
-    if (nodes.at(-1)?.type !== "end") return null;
-    paths.push({ id: b.id, label: b.label, nodes });
-  }
-  return { start, paths };
+/** One node as a card: an action is a step (title, its lines), a question its question, an end the final card. Its
+ * answers follow as buttons, the one chosen highlighted. */
+function StepCard({ node, chosen, onChoose }: { node: PathwayNode; chosen: string | undefined; onChoose: (branch: string) => void }) {
+  const c = useColors();
+  const end = node.type === "end";
+  const title = node.question || (end ? t("f_end") : null);
+  return (
+    <View className={`gap-2 rounded-inner border px-3 py-3 ${end ? "border-accent/20 bg-tint/40" : "border-line bg-surface"}`}>
+      {title ? <Body className={`text-[14.5px] leading-[21px] ${node.type === "decision" ? "font-semibold" : "font-bold"}`}>{title}</Body> : null}
+      {node.items.length ? <View className={title ? "-mt-2" : "-my-2"}><ItemRows items={node.items} /></View> : null}
+      {!end && node.branches.length ? (
+        <View className="gap-[6px]">
+          {node.branches.map((b) => {
+            const on = b.id === chosen;
+            return (
+              <Pressable key={b.id} accessibilityRole="button" accessibilityState={{ selected: on }} disabled={!b.next_node_id} onPress={() => onChoose(b.id)}
+                className={`min-h-11 flex-row items-center gap-2 rounded-branch border px-3 py-[9px] active:opacity-70 ${on ? "border-accent/40 bg-tint" : "border-transparent bg-panel"}`}>
+                <Text className={`min-w-0 flex-1 text-[13.5px] leading-[19px] ${on ? "font-semibold text-accentink" : "font-medium text-ink"}`}>{b.label}</Text>
+                <ArrowRightIcon size={13} color={c.accent} weight="bold" />
+              </Pressable>
+            );
+          })}
+        </View>
+      ) : null}
+    </View>
+  );
 }
 
-/** One question, its answers as tabs (scrolling on a phone, wrapping on a wide screen), the chosen path's lines. */
-function PathTabs({ start, paths }: NonNullable<ReturnType<typeof asPaths>>) {
+/**
+ * The start question's answers as tabs (scrolling on a phone, wrapping on a wide screen). In a tab, its node's card,
+ * then, answer by answer, the node each chosen answer leads to, even a node of another tab (shown here, the tab stays).
+ * Each tab keeps its own path; "Recommencer" folds it back to its first card.
+ */
+function PathTabs({ pathway, start }: { pathway: PathwayData; start: PathwayNode }) {
   const { width } = useWindowDimensions();
   const wide = width >= breakpoint.ficheWide;
-  // the answer chosen, by its id: the first one to start with, kept while the screen scrolls and re-renders
+  const byId = new Map(pathway.nodes.map((n) => [n.id, n]));
+  const tabs = start.branches.filter((b) => b.next_node_id && byId.has(b.next_node_id));
   const [sel, setSel] = useState<string | null>(null);
-  const path = paths.find((x) => x.id === sel) ?? paths[0];
-  const tabs = paths.map((x) => {
-    const on = x.id === path.id;
+  const tab = tabs.find((x) => x.id === sel) ?? tabs[0];
+  // per tab: node id → the answer chosen there
+  const [choices, setChoices] = useState<Record<string, Record<string, string>>>({});
+  if (!tab) return null;
+  const chosen = choices[tab.id] ?? {};
+
+  // the cards shown: from the tab's node, following the chosen answers (a node already shown ends the walk)
+  const steps: PathwayNode[] = [];
+  for (let n = byId.get(tab.next_node_id!); n && !steps.includes(n); ) {
+    steps.push(n);
+    const b = n.branches.find((x) => x.id === chosen[n!.id]);
+    n = b?.next_node_id ? byId.get(b.next_node_id) : undefined;
+  }
+  /** An answer chosen at one card: the choices of the cards below it are dropped. */
+  const choose = (at: number, branch: string) => {
+    const kept = Object.fromEntries(steps.slice(0, at).map((n) => [n.id, chosen[n.id]]));
+    setChoices({ ...choices, [tab.id]: { ...kept, [steps[at].id]: branch } });
+  };
+
+  const tabButtons = tabs.map((x) => {
+    const on = x.id === tab.id;
     return (
       <Pressable key={x.id} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => setSel(x.id)}
         className={`min-h-10 justify-center rounded-full px-3 active:opacity-70 ${on ? "bg-tint" : "border border-line bg-surface"}`}>
@@ -70,36 +97,37 @@ function PathTabs({ start, paths }: NonNullable<ReturnType<typeof asPaths>>) {
       </Pressable>
     );
   });
-  const lines = path.nodes.filter((n) => n.items.length || (n.question && n.question !== path.label));
   return (
     <Card title={t("f_pathway")}>
       {start.question ? <Body className="pt-1 text-[14.5px] font-semibold leading-[21px]">{start.question}</Body> : null}
       {start.items.length ? <ItemRows items={start.items} /> : null}
       {wide ? (
-        <View accessibilityRole="tablist" className="flex-row flex-wrap gap-2 py-3">{tabs}</View>
+        <View accessibilityRole="tablist" className="flex-row flex-wrap gap-2 py-3">{tabButtons}</View>
       ) : (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} accessibilityRole="tablist" className="-mx-[18px] grow-0" contentContainerClassName="gap-2 px-[18px] py-3">
-          {tabs}
+          {tabButtons}
         </ScrollView>
       )}
-      {lines.length ? lines.map((n) => (
-        <View key={n.id} className="border-t border-line pt-2">
-          {n.question && n.question !== path.label ? <Text className="pt-1 text-[13px] font-semibold text-soft">{n.question}</Text> : null}
-          <ItemRows items={n.items} />
-        </View>
-      )) : <Text className="border-t border-line py-3 text-[13px] text-muted">{t("f_end")}</Text>}
+      <View className="gap-2 pb-3">
+        {steps.map((n, i) => <StepCard key={n.id} node={n} chosen={chosen[n.id]} onChoose={(b) => choose(i, b)} />)}
+        {steps.length > 1 ? (
+          <Pressable accessibilityRole="button" onPress={() => setChoices({ ...choices, [tab.id]: {} })} className="min-h-10 justify-center self-start px-1 active:opacity-60">
+            <Text className="text-[13px] font-semibold text-accent">{t("f_restart")}</Text>
+          </Pressable>
+        ) : null}
+      </View>
     </Card>
   );
 }
 
-/** The decision pathway: tabs when it is one question with a path per answer, else numbered steps with each step's
- * question, its items, and where each answer leads. */
+/** The decision pathway: tabs walked answer by answer when it starts with a question, else numbered steps with each
+ * step's question, its items, and where each answer leads. */
 export function Pathway({ pathway }: { pathway: PathwayData }) {
   const c = useColors();
-  const tabs = asPaths(pathway);
   const nodes = orderNodes(pathway);
   if (!nodes.length) return null;
-  if (tabs) return <PathTabs {...tabs} />;
+  const start = nodes[0];
+  if (tabbed(start)) return <PathTabs pathway={pathway} start={start} />;
   const step = new Map(nodes.map((n, i) => [n.id, i + 1]));
   return (
     <Card title={t("f_pathway")}>
