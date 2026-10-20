@@ -30,5 +30,8 @@ async function call<T>(path: string, init: RequestInit = {}): Promise<T> {
 export const api = <T,>(path: string, init: RequestInit = {}) =>
   call<T>(path, { ...init, headers: { "Content-Type": "application/json", ...(init.headers ?? {}) } });
 
+/** Wakes the API (a free host puts it to sleep when idle) before the page needs it; the answer is not read. */
+export const wakeApi = () => { if (HAS_API) void fetch(`${BASE}/docs`, { mode: "no-cors" }).catch(() => {}); };
+
 /** A multipart upload (the browser sets the boundary). */
 export const apiForm = <T,>(path: string, form: FormData) => call<T>(path, { method: "POST", body: form });

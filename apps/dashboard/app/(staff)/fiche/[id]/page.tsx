@@ -14,7 +14,7 @@ import { goTo, Issues } from "@/components/editor/Issues";
 import { EnvCtx, type EditorEnv } from "@/components/editor/ItemEditor";
 import { MetaEditor, ReviewEditor, SourcesEditor } from "@/components/editor/MetaEditors";
 import { Button, ErrorNote, Spinner, Tag } from "@/components/ui";
-import { api } from "@/lib/api";
+import { api, wakeApi } from "@/lib/api";
 import { deleteFiche } from "@/lib/delete";
 import { SECTION_TITLE, TO_COMPLETE } from "@/lib/labels";
 import { useAuth } from "@/lib/auth";
@@ -109,6 +109,7 @@ export default function FicheEditor() {
   const [showUsed, setShowUsed] = useState(false); // every passage the draft quotes, highlighted in the PDF
 
   useEffect(() => {
+    wakeApi(); // the quote check and the Sources lists use it
     void (async () => {
       const [pub, sp, lr, fv] = await Promise.all([
         supabase.from("published_fiches").select("subject_id"),
@@ -151,8 +152,10 @@ export default function FicheEditor() {
   const path = source ? pdfs[source.id] : undefined;
   useEffect(() => {
     if (!path || pdfUrl?.path === path) return;
-    api<{ url: string }>(`/crawl/file?path=${encodeURIComponent(path)}`).then((r) => setPdfUrl({ path, url: r.url }), (e) => setError((e as Error).message));
-  }, [path, pdfUrl]);
+    // straight from storage (reading is open), so the PDF does not wait for the API to wake
+    void supabase.storage.from("sources").createSignedUrl(path, 3600).then(({ data, error }) =>
+      data ? setPdfUrl({ path, url: data.signedUrl }) : setError(`PDF not available: ${error?.message ?? path}`));
+  }, [path, pdfUrl, supabase]);
   const offset = source?.page_offset ?? 0;
   const show = useCallback((s: Shown) => {
     const e = s.evidence;

@@ -41,8 +41,9 @@ export function MetaEditor({ meta, scope, onMeta, onScope }: { meta: Meta; scope
 
 /**
  * The fiche's sources, and the stored PDF of each, used by the quote check: a PDF uploaded here (kept with the fiche,
- * fiches/<id>/) or one kept in a Collecte topic. The PDF link is kept in the table source_pdfs, not in the fiche: it
- * is saved at once.
+ * fiches/<id>/) or one kept in a Collecte topic. The fiche's PDFs are listed once, at the top: several are uploaded in
+ * one go (each linked to the next source without a PDF) and each is deleted there. Each source picks its PDF. The PDF
+ * link is kept in the table source_pdfs, not in the fiche: it is saved at once.
  */
 export function SourcesEditor({ sources, onChange, topic, pdfs, onPdf }: {
   sources: Source[]; onChange: (v: Source[]) => void; topic: string; pdfs: Record<string, string>; onPdf: (sourceId: string, path: string | null) => void;
@@ -50,7 +51,7 @@ export function SourcesEditor({ sources, onChange, topic, pdfs, onPdf }: {
   const [folder, setFolder] = useState("");
   const [files, setFiles] = useState<{ path: string; title: string }[]>([]);
   const [own, setOwn] = useState<{ path: string; title: string }[]>([]);
-  const [uploading, setUploading] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const pdfsOnly = (t: { files: { path: string | null; title: string }[] }) => t.files.filter((x): x is { path: string; title: string } => !!x.path);
   const loadOwn = () => api<{ files: { path: string | null; title: string }[] }>(`/crawl/fiches/${encodeURIComponent(topic)}/files`)
@@ -65,27 +66,66 @@ export function SourcesEditor({ sources, onChange, topic, pdfs, onPdf }: {
   }, [folder]);
   const topicFiles = folder.trim() ? files : [];
   const choices = [...own, ...topicFiles.filter((x) => !own.some((o) => o.path === x.path))];
-  /** Store the chosen PDF with the fiche, then link it to the source. */
-  const upload = async (sourceId: string, file: File | undefined) => {
-    if (!file) return;
-    setUploading(sourceId);
+  /** Store the chosen PDFs with the fiche, each linked to the next source that has none. */
+  const upload = async (list: File[]) => {
+    if (!list.length) return;
+    setUploading(true);
     setError(null);
+    const free = sources.filter((s) => s.id && !pdfs[s.id]).map((s) => s.id);
     try {
-      const form = new FormData();
-      form.append("file", file);
-      const { path } = await apiForm<{ path: string }>(`/crawl/fiches/${encodeURIComponent(topic)}/upload`, form);
-      await loadOwn();
-      onPdf(sourceId, path);
+      for (const file of list) {
+        const form = new FormData();
+        form.append("file", file);
+        const { path } = await apiForm<{ path: string }>(`/crawl/fiches/${encodeURIComponent(topic)}/upload`, form);
+        const sid = free.shift();
+        if (sid) onPdf(sid, path);
+      }
     } catch (e) {
       setError(`Upload failed: ${(e as Error).message}`);
     } finally {
-      setUploading(null);
+      setUploading(false);
+      void loadOwn();
     }
   };
   const title = (t: string) => { try { return decodeURIComponent(t); } catch { return t; } };
+  const usedBy = (path: string) => sources.filter((s) => s.id && pdfs[s.id] === path).map((s) => s.organisation || s.id);
+  /** A PDF of the fiche deleted from storage, and unlinked from every source using it. */
+  const remove = (path: string, name: string) => void deleteStored(path, name).then((done) => {
+    if (!done) return;
+    for (const s of sources) if (s.id && pdfs[s.id] === path) onPdf(s.id, null);
+    void loadOwn();
+  }, (e) => setError((e as Error).message));
 
   return (
     <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1.5 rounded-lg border border-line p-3">
+        <div className="flex items-center gap-3">
+          <Label>PDFs of this fiche ({own.length})</Label>
+          <label className={`ms-auto ${uploading ? "pointer-events-none opacity-60" : "cursor-pointer"}`}>
+            <span className="inline-flex h-8 items-center rounded-lg border border-line bg-surface px-3 text-sm font-medium text-ink hover:bg-panel">
+              {uploading ? "Uploading…" : "Upload PDFs"}
+            </span>
+            <input type="file" multiple accept="application/pdf,.pdf" className="hidden" disabled={uploading}
+              onChange={(e) => { const list = [...(e.target.files ?? [])]; e.target.value = ""; void upload(list); }} />
+          </label>
+        </div>
+        {own.length ? (
+          <ul className="flex flex-col">
+            {own.map((x) => {
+              const users = usedBy(x.path);
+              return (
+                <li key={x.path} className="flex items-center gap-3 border-t border-line py-1.5 text-sm first:border-t-0">
+                  <span className="min-w-0 flex-1 truncate text-ink" title={title(x.title)}>{title(x.title)}</span>
+                  <span className={`shrink-0 text-xs ${users.length ? "text-soft" : "text-caution"}`}>{users.length ? `used by ${users.join(", ")}` : "not linked to a source"}</span>
+                  <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => remove(x.path, title(x.title))}>Delete</button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className="text-xs text-muted">No PDF yet. Upload one or several: each goes to the next source without a PDF; change it in the source below.</p>
+        )}
+      </div>
       <Text label="Sources topic (optional): also offer its PDFs" className="w-80" value={folder} onChange={setFolder} />
       {error && <p className="text-xs text-flag">{error}</p>}
       <List items={sources} add="a source" onChange={onChange}
@@ -100,26 +140,14 @@ export function SourcesEditor({ sources, onChange, topic, pdfs, onPdf }: {
             <Text label="Publication date" type="date" value={s.publication_date} onChange={(v) => set({ ...s, publication_date: v || null })} />
             <Text label="Accessed on" type="date" value={s.accessed_at} onChange={(v) => set({ ...s, accessed_at: v || null })} />
             <Text label="Page offset (PDF minus printed)" type="number" value={s.page_offset} onChange={(v) => set({ ...s, page_offset: Math.trunc(Number(v) || 0) })} />
-            <label className="flex flex-col gap-1 md:col-span-3">
-              <Label>Stored PDF (saved at once)</Label>
+            <label className="flex flex-col gap-1 md:col-span-4">
+              <Label>PDF of this source (saved at once)</Label>
               <select className={inputCls} value={pdfs[s.id] ?? ""} disabled={!s.id} onChange={(e) => onPdf(s.id, e.target.value || null)}>
-                <option value="">{choices.length ? "None" : "No PDF: upload it on the right"}</option>
+                <option value="">{choices.length ? "None" : "No PDF: upload it above"}</option>
                 {choices.map((x) => <option key={x.path} value={x.path}>{title(x.title)}</option>)}
                 {pdfs[s.id] && !choices.some((x) => x.path === pdfs[s.id]) && <option value={pdfs[s.id]}>{pdfs[s.id]}</option>}
               </select>
             </label>
-            <label className={`flex items-end ${!s.id ? "pointer-events-none opacity-50" : "cursor-pointer"}`} title={s.id ? undefined : "Give the source an id first"}>
-              <span className="inline-flex h-9 items-center rounded-lg border border-line bg-surface px-3 text-sm font-medium text-ink hover:bg-panel">
-                {uploading === s.id ? "Uploading…" : "Upload a PDF"}
-              </span>
-              <input type="file" accept="application/pdf,.pdf" className="hidden" disabled={!s.id || !!uploading}
-                onChange={(e) => { void upload(s.id, e.target.files?.[0]); e.target.value = ""; }} />
-            </label>
-            {pdfs[s.id] && (
-              <button type="button" className="self-start text-xs text-flag hover:underline md:col-span-4"
-                onClick={() => void deleteStored(pdfs[s.id], title(pdfs[s.id].split("/").pop() ?? "")).then((done) => { if (done) { onPdf(s.id, null); void loadOwn(); } }, (e) => setError((e as Error).message))}>
-                Delete this PDF from storage</button>
-            )}
             <div className="md:col-span-4"><LineIssues id={s.id} /></div>
           </div>
         )} />
