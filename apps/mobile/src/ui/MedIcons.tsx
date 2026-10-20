@@ -7,7 +7,7 @@ import type { SvgProps } from "react-native-svg";
 import AmbulanceSvg from "healthicons-react-native/dist/outline/Ambulance";
 import BabySvg from "healthicons-react-native/dist/outline/Baby0203m";
 import BloodPressureSvg from "healthicons-react-native/dist/outline/BloodPressureMonitor";
-import GlucoseMeterSvg from "healthicons-react-native/dist/outline/DiabetesMeasure";
+import ThyroidSvg from "healthicons-react-native/dist/outline/Thyroid";
 import HeartCardiogramSvg from "healthicons-react-native/dist/outline/HeartCardiogram";
 import HospitalSvg from "healthicons-react-native/dist/outline/Hospital";
 import KidneysSvg from "healthicons-react-native/dist/outline/Kidneys";
@@ -42,7 +42,7 @@ const SPECIALTY: [RegExp, MedIcon, string][] = [
   [/neuro/i, med(NeurologySvg), "Neurologie"],
   [/pneumo|respir|poumon/i, med(LungsSvg), "Pneumologie"],
   [/n[ée]phro|r[ée]nal|rein/i, med(KidneysSvg), "Néphrologie"],
-  [/endocr|diab|m[ée]tabol/i, med(GlucoseMeterSvg), "Endocrinologie"],
+  [/endocr|diab|m[ée]tabol|thyro/i, med(ThyroidSvg), "Endocrinologie"],
   [/obst[ée]tr|gyn[ée]co|grossesse|femme/i, med(PregnantSvg), "Obstétrique, gynécologie"],
   [/p[ée]diatr|enfant|nouveau/i, med(BabySvg), "Pédiatrie"],
   [/infect|choc|virus/i, med(VirusSvg), "Infectiologie"],
