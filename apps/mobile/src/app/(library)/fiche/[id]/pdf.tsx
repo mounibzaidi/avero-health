@@ -24,14 +24,14 @@ export default function PdfRoute() {
   const paths = usePdfPaths(id ?? "");
   const path = source ? paths[source] : undefined;
   const [url, setUrl] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState<string | null>(null); // why the PDF's link could not be had, shown small
   const [printed, setPrinted] = useState(Number(page) || 1);
   const [count, setCount] = useState(0);
   const onPages = useCallback((n: number) => setCount(n), []);
 
   useEffect(() => {
     if (!path) return;
-    void pdfUrl(path).then(setUrl, () => setFailed(true));
+    void pdfUrl(path).then(setUrl, (e: unknown) => setFailed(`${(e as Error)?.name ?? "Error"}: ${(e as Error)?.message ?? String(e)}`));
   }, [path]);
 
   const pdfPage = printed + offset;
@@ -60,8 +60,11 @@ export default function PdfRoute() {
         </Pressable>
       </View>
       <ScrollView contentContainerStyle={{ padding: 12, paddingBottom: 24 + insets.bottom }}>
-        {failed || (paths && source && !path && Object.keys(paths).length > 0) ? (
-          <Text className="p-5 text-[14px] text-soft">{t("r_error")}</Text>
+        {failed !== null || (paths && source && !path && Object.keys(paths).length > 0) ? (
+          <View className="gap-2 p-5">
+            <Text className="text-[14px] text-soft">{t("r_error")}</Text>
+            <Text className="text-[11.5px] leading-[16px] text-muted">{failed ?? `${source}: no PDF`}</Text>
+          </View>
         ) : url ? (
           <PdfReader url={url} page={pdfPage} width={Math.min(width - 24, 900)} quote={showQuote} onPages={onPages} />
         ) : (
