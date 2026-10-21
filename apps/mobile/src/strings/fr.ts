@@ -11,7 +11,7 @@ const fr = {
   f_pathway: "Arbre de décision",
   f_step_n: "étape {n}",
   f_end: "Fin",
-  f_success: "{l} : poursuivre le traitement et le suivi",
+  f_success: " : poursuivre le traitement et le suivi",
   f_from_step: "Depuis l'étape {n} : {l}",
   f_medications: "Médicaments",
   f_or: "ou",

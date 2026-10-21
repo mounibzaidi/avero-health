@@ -31,12 +31,14 @@ export function orderNodes(p: PathwayData): PathwayNode[] {
 /** A tree whose start is a question with several answers: those answers are the tabs. */
 const tabbed = (start: PathwayNode | undefined): start is PathwayNode => !!start && start.type === "decision" && start.branches.length > 1;
 
-/** A choice as a pill: the profile tabs, and the answers of a question inside a tab. */
+/** An answer longer than this does not fit a pill on a phone: the question's answers stack instead. */
+const LONG = 24;
+
+/** A choice as a pill: the profile tabs, and the short answers of a question inside a tab. */
 function Pill({ label, on, role, onPress, onLayout }: { label: string; on: boolean; role: "tab" | "radio"; onPress: () => void; onLayout?: (x: number) => void }) {
   return (
     <Pressable accessibilityRole={role} accessibilityState={{ selected: on }} onPress={onPress} onLayout={onLayout && ((e) => onLayout(e.nativeEvent.layout.x))}
-      className={`min-h-10 justify-center rounded-full px-3 active:opacity-70 ${on ? "bg-tint" : "border border-line bg-surface"} ${role === "radio" ? "max-w-full py-[6px]" : ""}`}>
-      {/* a long answer in a tab wraps inside its pill; the tab bar scrolls instead */}
+      className={`min-h-10 justify-center rounded-full px-3 active:opacity-70 ${on ? "bg-tint" : "border border-line bg-surface"}`}>
       <Text className={`text-[13px] ${on ? "font-semibold text-accentink" : "font-medium text-soft"}`}>{label}</Text>
     </Pressable>
   );
@@ -49,9 +51,11 @@ function NoteRow({ note, onTab }: { note: Note; onTab: (tab: string) => void }) 
   switch (note.kind) {
     case "success":
       return (
-        <View className="flex-row items-center gap-[6px] self-start rounded-full bg-tint px-3 py-[6px]">
-          <CheckIcon size={13} color={c.accent} weight="bold" />
-          <Text className="shrink text-[12.5px] font-semibold leading-[17px] text-accentink">{t("f_success", { l: branch.label })}</Text>
+        <View className="flex-row items-start gap-[6px] self-start rounded-[10px] bg-tint px-[10px] py-[6px]">
+          <View className="pt-[2px]"><CheckIcon size={13} color={c.accent} weight="bold" /></View>
+          <Text className="shrink text-[12.5px] leading-[17px] text-accentink">
+            <Text className="font-semibold">{branch.label}</Text>{t("f_success")}
+          </Text>
         </View>
       );
     case "jump":
@@ -69,7 +73,7 @@ function NoteRow({ note, onTab }: { note: Note; onTab: (tab: string) => void }) 
         <View className="gap-1">
           <Text className="text-[12.5px] leading-[17px] text-soft">{branch.label}</Text>
           <Pressable accessibilityRole="link" onPress={() => onTab(note.tab.id)}
-            className="min-h-9 flex-row items-center gap-[6px] self-start rounded-full border border-accent/30 px-3 active:opacity-70">
+            className="min-h-9 flex-row items-center gap-[6px] self-start rounded-[10px] border border-accent/30 px-[10px] py-[6px] active:opacity-70">
             <ArrowRightIcon size={12} color={c.accent} weight="bold" />
             <Text className="shrink text-[12.5px] font-semibold leading-[17px] text-accentink">{where}</Text>
           </Pressable>
@@ -107,9 +111,24 @@ function StepRow({ step, last, onChoose, onTab }: { step: Step; last: boolean; o
           {title ? <Body className="pt-[2px] text-[14.5px] font-bold leading-[21px]">{title}</Body> : null}
           {node.items.length ? <View className={title ? "-mt-2" : "-mt-3"}><ItemRows items={node.items} /></View> : null}
           {decision ? (
-            <View accessibilityRole="radiogroup" className="flex-row flex-wrap gap-2">
-              {decision.choices.map((b) => <Pill key={b.id} label={b.label} on={b.id === decision.chosen} role="radio" onPress={() => onChoose(b.id)} />)}
-            </View>
+            // short answers (Oui / Non) as pills; one long answer and they stack, each the full width
+            decision.choices.some((b) => b.label.length > LONG) ? (
+              <View accessibilityRole="radiogroup" className="gap-[6px]">
+                {decision.choices.map((b) => {
+                  const on = b.id === decision.chosen;
+                  return (
+                    <Pressable key={b.id} accessibilityRole="radio" accessibilityState={{ selected: on }} onPress={() => onChoose(b.id)}
+                      className={`min-h-10 justify-center rounded-[10px] px-3 py-2 active:opacity-70 ${on ? "bg-tint" : "border border-line bg-surface"}`}>
+                      <Text className={`text-[13px] leading-[18px] ${on ? "font-semibold text-accentink" : "font-medium text-soft"}`}>{b.label}</Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            ) : (
+              <View accessibilityRole="radiogroup" className="flex-row flex-wrap gap-2">
+                {decision.choices.map((b) => <Pill key={b.id} label={b.label} on={b.id === decision.chosen} role="radio" onPress={() => onChoose(b.id)} />)}
+              </View>
+            )
           ) : null}
           {notes.length ? <View className="gap-2">{notes.map((x) => <NoteRow key={x.branch.id} note={x} onTab={onTab} />)}</View> : null}
         </View>
