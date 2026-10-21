@@ -23,6 +23,7 @@ const fr = {
   f_when: "Quand",
   f_what: "Quoi",
   f_if: "Si {c}",
+  f_place: "Place : {c}",
   f_page: "p. {p}",
   f_page_short: "p.{p}",
   f_strength: "Recommandation {s}",

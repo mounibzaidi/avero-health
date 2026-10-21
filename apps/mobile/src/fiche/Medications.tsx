@@ -40,6 +40,8 @@ function Brands({ m }: { m: Medication }) {
 /** Doses in French: 1.2 = "1,2", no trailing zeros. */
 const NUM = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 4 });
 const blank = (s: string | null) => !s || !s.trim();
+/** First letter up, the rest as stored ("acide tranexamique" -> "Acide tranexamique"). */
+const sentence = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 /** "10 mg/kg orale, 2 fois par jour, 7 jours" from the fields that are given; null when none is. The app shows no
  * gap: what the sources do not give is left out (the editor marks it to complete). */
@@ -56,7 +58,7 @@ function MedicationRow({ m, first }: { m: Medication; first: boolean }) {
   return (
     <View className={`gap-[5px] py-3 ${first ? "" : "border-t border-line"}`}>
       <View className="flex-row flex-wrap items-center gap-2">
-        <Text className="text-[15px] font-bold capitalize text-ink">{m.inn}</Text>
+        <Text className="text-[15px] font-bold text-ink">{sentence(m.inn)}</Text>
         {m.phase ? <Text className="text-[12.5px] text-soft">{PHASE_LABEL[m.phase]}</Text> : null}
         {m.prescriber ? (
           <View className={`rounded-full px-2 py-[2px] ${hosp ? "bg-cautionbg" : "bg-tint"}`}>
@@ -64,7 +66,7 @@ function MedicationRow({ m, first }: { m: Medication; first: boolean }) {
           </View>
         ) : null}
       </View>
-      {m.condition ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_if", { c: m.condition })}</Body> : null}
+      {m.condition ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_place", { c: m.condition })}</Body> : null}
       {dose ? <Body className="text-[14.5px] font-medium leading-[21px]">{dose}<Cites evidence={m.evidence} strength={m.strength} /></Body> : null}
       {!blank(m.max_dose) ? <Body className="text-[13px] leading-[18px] text-soft">{t("f_max_dose", { d: m.max_dose!.trim() })}</Body> : null}
       {m.adjustments.filter((a) => !blank(a)).map((a, i) => <Body key={`a${i}`} className="text-[13px] leading-[18px] text-soft">{a}</Body>)}
