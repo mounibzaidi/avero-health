@@ -7,6 +7,7 @@ import { useFavorites, useRecent } from "@/lib/stored";
 import { t } from "@/strings/fr";
 import { ArrowRightIcon, CaretRightIcon, MagnifyingGlassIcon, UserIcon } from "@/ui/Icons";
 import { SpecialtyIcon } from "@/ui/MedIcons";
+import { LogoMark } from "@/ui/Logo";
 import { useColors } from "@/ui/theme";
 import { Heading, Skeleton } from "@/ui/ui";
 
@@ -120,7 +121,10 @@ export function HomeScreen() {
       <View className={`mx-auto w-full ${wide ? "max-w-[1080px] gap-[32px] px-8 pb-14 pt-6" : "max-w-[560px] gap-[20px] px-4 pb-8 pt-3"}`}>
         {!wide && (
           <View className="flex-row items-center justify-between">
-            <Text accessibilityRole="header" className="text-[16px] font-extrabold uppercase text-accent" style={{ letterSpacing: 2.2 }}>Avero</Text>
+            <View accessibilityRole="header" accessibilityLabel="Avero" className="flex-row items-center gap-[7px]">
+              <LogoMark size={15} />
+              <Text className="text-[16px] font-extrabold uppercase text-accent" style={{ letterSpacing: 2.2 }}>Avero</Text>
+            </View>
             <Pressable accessibilityRole="link" accessibilityLabel={t("account")} onPress={() => router.navigate("/profil")} className="h-10 w-10 items-center justify-center rounded-full bg-tint active:opacity-70">
               <UserIcon size={17} color={c.accentink} />
             </Pressable>
