@@ -1,18 +1,26 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { allItems, validateStructure, type Protocol } from "@avero/schema";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { AppState } from "react-native";
 
 import SYNONYMS from "../../../../shared/search-synonyms.json";
 import { supabase } from "./supabase";
 
 /**
  * The published fiches, available offline. The library is small (tens of fiches, tens of KB each), so
- * it is kept in AsyncStorage: the copy on the device shows at once, then this launch compares the
- * published versions with it and downloads only the new or changed fiches. Without a network it keeps
- * showing what it has. A fiche that is not a Protocol v1.1 is left out, never shown half.
+ * it is kept in AsyncStorage: the copy on the device shows at once, then each launch and each return to
+ * the app compares the published list with it, downloads the new or changed fiches and drops the ones
+ * no longer published. Without a network it keeps showing what it has. A fiche that is not a Protocol
+ * v1.1 is left out, never shown half.
+ *
+ * A fiche is matched on its publication (`rev`: version number and publication time), not on the number
+ * alone: a fiche deleted and created again starts its numbers over, and its new version 2 is not the old.
  */
 
-export type Library = { fiches: Record<string, { version: number; content: Protocol }>; syncedAt: string | null; offline: boolean };
+export type Library = { fiches: Record<string, { rev: string; content: Protocol }>; syncedAt: string | null; offline: boolean };
+type Published = { subject_id: string; version: number; published_at: string };
+const rev = (r: Published) => `${r.version}@${r.published_at}`;
 
 const CACHE_KEY = "avero.library.v1.1"; // v1.1: fiches of Protocol Schema v1.1 only
 const EMPTY: Library = { fiches: {}, syncedAt: null, offline: false };
@@ -27,7 +35,8 @@ async function readCache(): Promise<Library> {
     const fiches: Library["fiches"] = {};
     for (const [id, f] of Object.entries(lib.fiches ?? {})) {
       const { protocol } = validateStructure(f.content);
-      if (protocol) fiches[id] = { version: f.version, content: protocol };
+      // a copy saved before `rev` has none: it matches nothing and is downloaded again
+      if (protocol) fiches[id] = { rev: f.rev ?? "", content: protocol };
     }
     return { ...lib, fiches };
   } catch {
@@ -37,18 +46,19 @@ async function readCache(): Promise<Library> {
 
 async function load(): Promise<Library> {
   const cached = await readCache();
-  const index = await supabase.from("published_fiches").select("subject_id,version");
+  const index = await supabase.from("published_fiches").select("subject_id,version,published_at");
   if (index.error) return { ...cached, offline: true };
 
-  const live = new Map((index.data as { subject_id: string; version: number }[]).map((r) => [r.subject_id, r.version]));
-  const fiches = Object.fromEntries(Object.entries(cached.fiches).filter(([id]) => live.has(id)));
-  const stale = [...live].filter(([id, v]) => cached.fiches[id]?.version !== v).map(([id]) => id);
+  const live = new Map((index.data as Published[]).map((r) => [r.subject_id, rev(r)]));
+  // kept: the fiches still published at the same publication; the others are dropped or downloaded again
+  const fiches = Object.fromEntries(Object.entries(cached.fiches).filter(([id, f]) => live.get(id) === f.rev));
+  const stale = [...live.keys()].filter((id) => !fiches[id]);
   if (stale.length) {
-    const fresh = await supabase.from("published_fiches").select("subject_id,version,content").in("subject_id", stale);
+    const fresh = await supabase.from("published_fiches").select("subject_id,version,published_at,content").in("subject_id", stale);
     if (fresh.error) return { ...cached, offline: true };
-    for (const r of fresh.data as { subject_id: string; version: number; content: unknown }[]) {
+    for (const r of fresh.data as (Published & { content: unknown })[]) {
       const { protocol } = validateStructure(r.content);
-      if (protocol) fiches[r.subject_id] = { version: r.version, content: protocol };
+      if (protocol) fiches[r.subject_id] = { rev: rev(r), content: protocol };
     }
   }
   const lib = { fiches, syncedAt: new Date().toISOString(), offline: false };
@@ -59,6 +69,12 @@ async function load(): Promise<Library> {
 export function useLibrary() {
   const cache = useQuery({ queryKey: ["library-cache"], queryFn: readCache, staleTime: Infinity });
   const live = useQuery({ queryKey: ["library"], queryFn: () => load().catch(async () => ({ ...(await readCache()), offline: true })), staleTime: Infinity, networkMode: "always" });
+  const { refetch } = live;
+  // a phone keeps the app open for days: compare again each time it comes back to the front (on the web, the tab)
+  useEffect(() => {
+    const sub = AppState.addEventListener("change", (s) => s === "active" && refetch({ cancelRefetch: false }));
+    return () => sub.remove();
+  }, [refetch]);
   return { data: live.data ?? cache.data, loading: !live.data && !cache.data, syncing: live.isFetching, refetch: live.refetch };
 }
 
