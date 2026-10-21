@@ -12,10 +12,12 @@ import { EditableName } from "@/components/EditableName";
 import { deleteStored, renameStored } from "@/lib/delete";
 import { matchSources, pdfText } from "@/lib/pdfMatch";
 import { createClient } from "@/lib/supabase/client";
+import { mayBe, unlinkedPdfs } from "@/lib/unlinked";
 
 type Pdf = { path: string; title: string };
-/** One PDF in the list: a file chosen here (uploaded on opening) or one already stored. */
-type Entry = { key: string; name: string; file?: File; path?: string };
+/** One PDF in the list: a file chosen here (uploaded on opening) or one already stored; `found`: stored, used by no
+ * fiche, and recognised as a source still without a PDF. */
+type Entry = { key: string; name: string; file?: File; path?: string; found?: true };
 
 const title = (t: string) => { try { return decodeURIComponent(t); } catch { return t; } };
 /** A source as the PDF list names it: the guideline's title after its body's short name ("HAS: Prise en charge…"). */
@@ -41,7 +43,9 @@ function parse(text: string): { protocol: Protocol | null; error: string | null 
 /**
  * New fiche: paste its JSON, add its PDFs (each recognised as one of the JSON's sources from what its first pages
  * say), and it opens beside the PDF to be checked block by block. Saved as a draft version at once (a fiche already there gets a new version). The
- * fiche's own stored PDFs that no source uses are deleted on opening: nothing is left behind.
+ * fiche's own stored PDFs that no source uses are deleted on opening: nothing is left behind. A source still without a
+ * PDF gets one already in storage that no fiche uses (left under a former fiche id, or from Collecte) when it surely
+ * is that source: it is linked, not uploaded again.
  */
 export default function NewFichePage() {
   return <Suspense><NewFiche /></Suspense>;
@@ -54,6 +58,8 @@ function NewFiche() {
   const [text, setText] = useState("");
   const topic = useSearchParams().get("topic");
   const [stored, setStored] = useState<Pdf[]>([]);
+  const [spare, setSpare] = useState<Pdf[]>([]); // stored, used by no fiche
+  const [skipped, setSkipped] = useState<string[]>([]); // found PDFs set aside by hand
   const [linked, setLinked] = useState<Record<string, string>>({});
   const [uploads, setUploads] = useState<Entry[]>([]);
   const nextKey = useRef(0);
@@ -82,22 +88,35 @@ function NewFiche() {
       .then(({ data }) => setLinked(Object.fromEntries((data ?? []).map((r: { source_id: string; pdf_path: string }) => [r.source_id, r.pdf_path]))));
   }, [supabase, fid, sourceIds]);
 
-  const entries: Entry[] = useMemo(() => [...uploads, ...stored.map((x) => ({ key: x.path, name: title(x.title), path: x.path }))], [uploads, stored]);
+  useEffect(() => {
+    if (!fid) return;
+    void unlinkedPdfs(supabase).then(setSpare, () => setSpare([]));
+  }, [supabase, fid]);
+
+  const own: Entry[] = useMemo(() => [...uploads, ...stored.map((x) => ({ key: x.path, name: title(x.title), path: x.path }))], [uploads, stored]);
+  // the unused stored PDFs worth reading: named like one of the sources (a 15 MB guideline of another topic is not read)
+  const candidates: Entry[] = useMemo(
+    () => spare.filter((x) => !stored.some((y) => y.path === x.path) && !skipped.includes(x.path) && sources.some((s) => mayBe(x.title, s)))
+      .map((x) => ({ key: x.path, name: title(x.title), path: x.path, found: true as const })),
+    [spare, stored, skipped, sources],
+  );
   // each PDF read once (its first pages), to recognise which source it is
   useEffect(() => {
-    for (const e of entries) {
+    for (const e of [...own, ...candidates]) {
       if (reading.current.has(e.key)) continue;
       reading.current.add(e.key);
       const src = e.file ? Promise.resolve(e.file) : supabase.storage.from("sources").createSignedUrl(e.path!, 600).then(({ data }) => data?.signedUrl ?? "");
       void src.then((x) => (x ? pdfText(x) : "")).catch(() => "").then((t) => setTexts((cur) => ({ ...cur, [e.key]: t })));
     }
-  }, [entries, supabase]);
-  const matches = useMemo(() => matchSources(Object.fromEntries(Object.entries(texts).filter(([, t]) => t)), sources), [texts, sources]);
+  }, [own, candidates, supabase]);
+  const ownKeys = useMemo(() => new Set(own.map((e) => e.key)), [own]);
+  const matches = useMemo(() => matchSources(Object.fromEntries(Object.entries(texts).filter(([k, t]) => t && ownKeys.has(k))), sources), [texts, sources, ownKeys]);
 
   /** Each PDF's source, one PDF per source: set by hand, else recognised from its content, else linked before. */
   const { assigned, why } = useMemo(() => {
+    const entries = own;
     const assigned: Record<string, string | null> = {};
-    const why: Record<string, "manual" | "sure" | "guess" | "linked" | "only"> = {};
+    const why: Record<string, "manual" | "sure" | "guess" | "linked" | "only" | "found"> = {};
     const claimed = new Set<string>();
     const give = (key: string, sid: string | null | undefined, reason: (typeof why)[string]) => {
       if (key in assigned || sid === undefined || (sid && claimed.has(sid))) return;
@@ -110,8 +129,13 @@ function NewFiche() {
     // an old link only for a PDF not recognised as something else (a copy of a source already given stays unused)
     for (const e of entries) if (!matches[e.key]?.sure) give(e.key, sourceIds.find((sid) => e.path && linked[sid] === e.path), "linked");
     if (sourceIds.length === 1 && entries.length === 1) give(entries[0].key, sourceIds[0], "only");
+    // then the sources still without a PDF: a stored one no fiche uses, only when it surely is that source
+    const free = sources.filter((s) => !claimed.has(s.id));
+    const found = matchSources(Object.fromEntries(candidates.filter((e) => texts[e.key]).map((e) => [e.key, texts[e.key]])), free);
+    for (const [key, m] of Object.entries(found)) if (m.sure) give(key, m.source, "found");
     return { assigned, why };
-  }, [entries, manual, matches, sourceIds, linked]);
+  }, [own, candidates, texts, sources, manual, matches, sourceIds, linked]);
+  const entries: Entry[] = useMemo(() => [...own, ...candidates.filter((e) => assigned[e.key])], [own, candidates, assigned]);
   const sourceOf = (e: Entry): string | null => assigned[e.key] ?? null;
   const used = new Set(entries.map(sourceOf).filter(Boolean));
   /** A source given by hand: taken from any other PDF set to it by hand. */
@@ -237,8 +261,14 @@ function NewFiche() {
               <li key={e.key} className="flex flex-col gap-1 border-t border-line py-2 first:border-t-0">
                 <div className="flex items-center gap-3">
                   <div className="flex min-w-0 flex-1"><EditableName name={e.name} onSave={(n) => rename(e, n)} className="text-sm font-medium text-ink" /></div>
-                  <button type="button" className="shrink-0 text-xs font-medium text-accentink hover:underline" onClick={() => setChanging(changing === e.key ? null : e.key)}>change</button>
-                  <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => remove(e)}>{e.file ? "Remove" : "Delete"}</button>
+                  {e.found ? (
+                    <button type="button" className="shrink-0 text-xs font-medium text-accentink hover:underline" onClick={() => setSkipped([...skipped, e.path!])}>Not this one</button>
+                  ) : (
+                    <>
+                      <button type="button" className="shrink-0 text-xs font-medium text-accentink hover:underline" onClick={() => setChanging(changing === e.key ? null : e.key)}>change</button>
+                      <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => remove(e)}>{e.file ? "Remove" : "Delete"}</button>
+                    </>
+                  )}
                 </div>
                 {changing === e.key ? (
                   <select autoFocus className={`${inputCls} h-8 text-xs`} value={sourceOf(e) ?? ""} onChange={(ev) => setSource(e.key, ev.target.value || null)}>
@@ -253,7 +283,7 @@ function NewFiche() {
                   return (
                     <p className={`text-xs ${reason === "guess" ? "text-caution" : "text-soft"}`}>
                       {reason === "guess" ? "Probably " : "→ "}<b className="font-semibold">{sourceLabel(s)}</b>
-                      {reason === "guess" ? ": check it" : reason === "manual" ? " (set by you)" : reason === "linked" ? " (linked before)" : ""}
+                      {reason === "guess" ? ": check it" : reason === "manual" ? " (set by you)" : reason === "linked" ? " (linked before)" : reason === "found" ? ` (already stored, used by no fiche: ${e.path})` : ""}
                     </p>
                   );
                 })()}
