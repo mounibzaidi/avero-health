@@ -41,6 +41,7 @@ const fr = {
   r_next: "Page suivante",
   r_loading: "Chargement du PDF…",
   r_error: "Le PDF n'est pas disponible (connexion requise).",
+  r_fallback: "Le PDF ne s'affiche pas ici sur ce navigateur : ouvrez-le dans le lecteur PDF.",
   r_native: "Le PDF s'ouvre dans le lecteur du téléphone.",
   r_open: "Ouvrir le PDF",
   p_back: "Protocoles",

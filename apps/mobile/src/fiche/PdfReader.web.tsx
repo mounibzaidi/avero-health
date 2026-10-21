@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Text, View } from "react-native";
+import { Linking, Pressable, Text, View } from "react-native";
 
 import { t } from "@/strings/fr";
 
 /**
  * A page of the guideline's PDF drawn with pdf.js, the quote marked on it. pdf.js (6.3.289, legacy build, the
- * dashboard's version) is served from public/pdfjs and loaded at run time: the bundler cannot take it in.
+ * dashboard's version) is served from public/pdfjs and loaded at run time: the bundler cannot take it in. Where it
+ * cannot draw the PDF (pdf.js 6 needs Safari 16.4 or later), the browser's own viewer opens it instead.
  */
 
 type Item = { str?: string; transform: number[]; width: number };
@@ -68,7 +69,7 @@ export function PdfReader({ url, page, width, quote, onPages }: { url: string; p
   const [lib, setLib] = useState<PdfJs | null>(null);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
   const [marks, setMarks] = useState<Rect[]>([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null); // why pdf.js could not draw it, shown small
 
   useEffect(() => {
     let live = true;
@@ -78,7 +79,7 @@ export function PdfReader({ url, page, width, quote, onPages }: { url: string; p
       setLib(m);
       setDoc(d);
       onPages(d.numPages);
-    }).catch(() => live && setError(true));
+    }).catch((e: unknown) => live && setError(String((e as Error)?.message ?? e)));
     return () => { live = false; };
   }, [url, onPages]);
 
@@ -108,11 +109,21 @@ export function PdfReader({ url, page, width, quote, onPages }: { url: string; p
       if (!live) return;
       setSize({ w: viewport.width, h: viewport.height });
       setMarks(rects);
-    })().catch(() => live && setError(true));
+    })().catch((e: unknown) => live && setError(String((e as Error)?.message ?? e)));
     return () => { live = false; };
   }, [doc, lib, page, width, quote]);
 
-  if (error) return <Text className="p-5 text-[14px] text-soft">{t("r_error")}</Text>;
+  if (error !== null) {
+    return (
+      <View className="items-start gap-3 p-5">
+        <Text className="text-[14px] leading-[20px] text-soft">{t("r_fallback")}</Text>
+        <Pressable accessibilityRole="link" onPress={() => void Linking.openURL(url)} className="min-h-11 justify-center rounded-button bg-btn px-4 active:opacity-80">
+          <Text className="text-[14px] font-semibold text-btnink">{t("r_open")}</Text>
+        </Pressable>
+        <Text className="text-[11.5px] leading-[16px] text-muted">{error}</Text>
+      </View>
+    );
+  }
   return (
     <View style={{ width, alignSelf: "center" }}>
       {!size ? <Text className="p-5 text-[14px] text-muted">{t("r_loading")}</Text> : null}
