@@ -144,7 +144,7 @@ function Sources({ f }: { f: Protocol }) {
   );
 }
 
-function SectionBody({ id, f }: { id: SectionId; f: Protocol }) {
+function SectionBody({ id, f, onTop }: { id: SectionId; f: Protocol; onTop: (y: number) => void }) {
   switch (id) {
     case "red_box":
       return <RedBox f={f} />;
@@ -156,7 +156,7 @@ function SectionBody({ id, f }: { id: SectionId; f: Protocol }) {
           <ItemCard title={t("f_examine")} items={f.assess.examine} />
           <ItemCard title={t("f_diagnosis")} items={f.assess.diagnosis} />
           <ItemCard title={t("f_tests")} items={f.assess.tests} />
-          <Pathway pathway={f.assess.pathway} />
+          <Pathway pathway={f.assess.pathway} onTop={onTop} />
         </>
       );
     case "treat":
@@ -200,9 +200,10 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
   const label = (s: SectionId) => (s === "red_box" ? t("f_red_chip") : SECTION_TITLE[s]);
 
   const offset = wide ? AIR_WIDE : BAR;
-  const jump = (s: SectionId) => {
+  /** Scroll to section `s`, or `dy` further into it (the decision tree, from one of its links). */
+  const jump = (s: SectionId, dy = 0) => {
     setActive(s);
-    setTimeout(() => scroll.current?.scrollTo({ y: Math.max(0, bodyY.current + (sectionY.current[s] ?? 0) - offset), animated: true }), 0);
+    setTimeout(() => scroll.current?.scrollTo({ y: Math.max(0, bodyY.current + (sectionY.current[s] ?? 0) + dy - offset), animated: true }), 0);
   };
   const track = (y: number) => {
     let cur = ids[0];
@@ -283,7 +284,7 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
 
   const page = (
     <View className={`gap-7 pt-4 ${column}`} onLayout={(e) => (bodyY.current = e.nativeEvent.layout.y)}>
-      {ids.map((s) => section(s, <SectionBody id={s} f={f} />))}
+      {ids.map((s) => section(s, <SectionBody id={s} f={f} onTop={(dy) => jump(s, dy)} />))}
       <View className="gap-[6px]">
         {ok ? (
           <View className="flex-row items-start gap-2">
