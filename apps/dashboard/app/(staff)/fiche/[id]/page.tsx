@@ -13,8 +13,8 @@ import { FichePreview } from "@/components/editor/FichePreview";
 import { goTo, Issues } from "@/components/editor/Issues";
 import { EnvCtx, type EditorEnv } from "@/components/editor/ItemEditor";
 import { MetaEditor, ReviewEditor, SourcesEditor } from "@/components/editor/MetaEditors";
-import { Button, ErrorNote, Spinner, Tag } from "@/components/ui";
-import { api, wakeApi } from "@/lib/api";
+import { Button, ErrorNote, inputCls, Spinner, Tag } from "@/components/ui";
+import { api, apiForm, wakeApi } from "@/lib/api";
 import { deleteFiche } from "@/lib/delete";
 import { SECTION_TITLE, TO_COMPLETE } from "@/lib/labels";
 import { useAuth } from "@/lib/auth";
@@ -110,6 +110,10 @@ export default function FicheEditor() {
   const [focus, setFocus] = useState<{ pdfPage: number; quote: string; nonce: number } | null>(null);
   const [pdfPage, setPdfPage] = useState(1);
   const [showUsed, setShowUsed] = useState(false); // every passage the draft quotes, highlighted in the PDF
+  const [adding, setAdding] = useState(false); // a PDF uploaded from the viewer
+  const [pdfList, setPdfList] = useState(0); // bumped on an upload there: the Sources list reads the fiche's PDFs again
+  const [pasting, setPasting] = useState<string | null>(null); // a new JSON pasted to replace the fiche, not yet applied
+  const [pasteError, setPasteError] = useState<string | null>(null);
 
   useEffect(() => {
     wakeApi(); // the quote check and the Sources lists use it
@@ -289,7 +293,7 @@ export default function FicheEditor() {
         const bad = validateStructure(content).issues;
         if (bad.length) throw new Error(`Format : ${bad.slice(0, 3).map((i) => i.message).join(" ; ")}`);
         await saveVersion(content, false);
-        setNote(`Saved (version ${version + 1})`);
+        setNote(`Saved as draft v${version + 1}: ${publishedVersion ? `the app still shows v${publishedVersion}` : "not in the app yet"} until you publish.`);
       } else {
         if (!canPublish || !candidate) throw new Error("Publishing blocked: some blocks are still to check or fix.");
         const fixedLog = markedFixed.length
@@ -305,6 +309,21 @@ export default function FicheEditor() {
     }
   };
 
+  /** The fiche replaced by a pasted JSON (kept under this fiche's id): a draft to save, check and publish like any edit;
+   * blocks left unchanged stay ticked. */
+  const replaceWith = (text: string) => {
+    let raw: unknown;
+    try { raw = JSON.parse(text); } catch (e) { return setPasteError(`Not JSON: ${(e as Error).message}`); }
+    const { protocol, issues } = validateStructure(raw);
+    if (!protocol) return setPasteError(`Not in the v1.1 format: ${issues.slice(0, 3).map((i) => i.message).join(" ; ")}`);
+    setF({ ...protocol, meta: { ...protocol.meta, id } });
+    setDirty(true);
+    setPasting(null);
+    setPasteError(null);
+    const noPdf = protocol.sources.filter((s) => !pdfs[s.id]).map((s) => s.organisation || s.id);
+    setNote(`Replaced by the pasted JSON: Save to keep it.${noPdf.length ? ` No PDF yet for ${noPdf.join(", ")}: set it in Sources below.` : ""}`);
+  };
+
   const remove = (what: "fiche" | "drafts") => f && deleteFiche(supabase, id, f.meta.title || id, what, publishedVersion !== null).then((done) => {
     if (!done) return;
     if (what === "fiche") return router.push("/protocoles");
@@ -318,6 +337,30 @@ export default function FicheEditor() {
       : await supabase.from("source_pdfs").delete().eq("subject_id", id).eq("source_id", sourceId);
     if (error) return setError(error.message);
     setPdfs((cur) => { const next = { ...cur }; if (p) next[sourceId] = p; else delete next[sourceId]; return next; });
+  };
+
+  /** A PDF added from the viewer: stored with the fiche and linked to the source shown (asked first when it has one),
+   * else to the first source without a PDF. */
+  const addPdf = async (file: File) => {
+    if (!f) return;
+    const target = source && !pdfs[source.id] ? source : f.sources.find((s) => !pdfs[s.id]) ?? source;
+    if (target && pdfs[target.id] && !window.confirm(`Replace the PDF of ${target.organisation || target.id} with "${file.name}"?`)) return;
+    setAdding(true);
+    setError(null);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const { path: stored } = await apiForm<{ path: string }>(`/crawl/fiches/${encodeURIComponent(id)}/upload`, form);
+      if (target) {
+        await setPdf(target.id, stored);
+        setActive(target.id);
+      }
+      setPdfList((n) => n + 1);
+    } catch (e) {
+      setError(`Upload failed: ${(e as Error).message}`);
+    } finally {
+      setAdding(false);
+    }
   };
 
   if (!f) return <div className="p-6">{error ? <ErrorNote>{error}</ErrorNote> : <Spinner />}</div>;
@@ -341,10 +384,17 @@ export default function FicheEditor() {
       <section className="hidden min-h-0 flex-col border-r border-line lg:flex">
         <div className="flex items-center gap-2 border-b border-line bg-surface px-4 py-2 text-sm">
           {f.sources.length > 1 ? f.sources.map((s) => (
-            <button key={s.id} type="button" disabled={!pdfs[s.id]} onClick={() => setActive(s.id)}
-              className={`rounded-lg px-2.5 py-1 text-xs ${s.id === source?.id ? "bg-tint font-medium text-accentink" : "text-soft hover:bg-panel disabled:opacity-40"}`}>{s.organisation || s.id}</button>
+            <button key={s.id} type="button" disabled={!pdfs[s.id] && !isAdmin} onClick={() => setActive(s.id)}
+              className={`rounded-lg px-2.5 py-1 text-xs ${s.id === source?.id ? "bg-tint font-medium text-accentink" : `${pdfs[s.id] ? "text-soft" : "text-muted"} hover:bg-panel disabled:opacity-40`}`}>{s.organisation || s.id}</button>
           )) : <span className="font-medium text-ink">{source?.organisation || "Guide"}</span>}
-          <label className="ms-auto flex cursor-pointer select-none items-center gap-1.5 text-xs text-soft" title="Highlight every passage this draft quotes">
+          {isAdmin && (
+            <label className={`ms-auto shrink-0 ${adding ? "pointer-events-none opacity-60" : "cursor-pointer"}`} title="Upload a PDF for the source shown (or the first without one)">
+              <span className="inline-flex h-7 items-center rounded-lg border border-line bg-surface px-2.5 text-xs font-medium text-ink hover:bg-panel">{adding ? "Uploading…" : "+ PDF"}</span>
+              <input type="file" accept="application/pdf,.pdf" className="hidden" disabled={adding}
+                onChange={(e) => { const file = e.target.files?.[0]; e.target.value = ""; if (file) void addPdf(file); }} />
+            </label>
+          )}
+          <label className={`${isAdmin ? "" : "ms-auto "}flex cursor-pointer select-none items-center gap-1.5 text-xs text-soft`} title="Highlight every passage this draft quotes">
             <input type="checkbox" checked={showUsed} onChange={(e) => setShowUsed(e.target.checked)} className="size-3.5 accent-[rgb(var(--c-accent))]" />
             All quotes
           </label>
@@ -352,7 +402,7 @@ export default function FicheEditor() {
         </div>
         <div className="min-h-0 flex-1">
           {path && pdfUrl?.path === path ? <ContinuousPdf key={path} url={pdfUrl.url} focus={focus} usedOn={showUsed ? usedOn : noneUsed} onPage={setPdfPage} />
-            : <p className="p-6 text-sm text-muted">{path ? "Loading the PDF…" : viewOnly ? "The PDF of this source is not stored yet: its quotes are shown under each line." : "No PDF for this source: add it in Sources, at the bottom of the fiche."}</p>}
+            : <p className="p-6 text-sm text-muted">{path ? "Loading the PDF…" : viewOnly ? "The PDF of this source is not stored yet: its quotes are shown under each line." : "No PDF for this source: add it with “+ PDF” above."}</p>}
         </div>
       </section>
 
@@ -362,13 +412,16 @@ export default function FicheEditor() {
           <div className="flex items-center gap-3">
             <Link href="/protocoles" className="text-sm text-muted hover:text-accentink">‹</Link>
             <h1 className="min-w-0 flex-1 truncate text-base font-semibold tracking-tight">{f.meta.title || TO_COMPLETE}</h1>
-            <Tag tone={isLive ? "accent" : "neutral"}>{isLive ? "published" : publishedVersion ? `draft (v${publishedVersion} published)` : "draft"}</Tag>
+            <Tag tone={isLive ? "accent" : "neutral"}>{isLive ? "published" : publishedVersion ? `draft · the app shows v${publishedVersion}` : "draft · not in the app"}</Tag>
             {dirty && isAdmin && <Button className="h-8" disabled={!!busy} onClick={() => run("save")}>{busy === "save" ? <Spinner /> : "Save"}</Button>}
-            {isAdmin && <Button className="h-8" variant="primary" disabled={!!busy || !canPublish || isLive} onClick={() => run("publish")}>{busy === "publish" ? <Spinner /> : "Publish"}</Button>}
+            {isAdmin && <Button className="h-8" variant="primary" disabled={!!busy || !canPublish || isLive} onClick={() => run("publish")}
+              title={isLive ? "This version is the one in the app" : todo.length ? `${todo.length} block${todo.length > 1 ? "s" : ""} still to check` : problems ? `${problems} problem${problems > 1 ? "s" : ""} to fix` : undefined}>{busy === "publish" ? <Spinner /> : "Publish"}</Button>}
             {isAdmin && (
               <details className="relative">
                 <summary className="grid h-8 w-8 cursor-pointer list-none place-items-center rounded-lg text-muted hover:bg-panel hover:text-ink" title="More">⋯</summary>
                 <div className="absolute right-0 z-30 mt-1 flex w-56 flex-col rounded-xl border border-edge/15 bg-surface p-1 text-sm shadow-[0_12px_40px_-12px_rgba(0,0,0,0.35)]">
+                  <button type="button" className="rounded-lg px-3 py-2 text-left text-ink hover:bg-panel"
+                    onClick={(e) => { e.currentTarget.closest("details")?.removeAttribute("open"); setPasting(""); setPasteError(null); }}>Paste a new JSON</button>
                   {publishedVersion !== null && !isLive && <button type="button" className="rounded-lg px-3 py-2 text-left text-flag hover:bg-flagbg" onClick={() => void remove("drafts")}>Delete draft</button>}
                   <button type="button" className="rounded-lg px-3 py-2 text-left text-flag hover:bg-flagbg" onClick={() => void remove("fiche")}>Delete fiche</button>
                 </div>
@@ -386,6 +439,18 @@ export default function FicheEditor() {
           </div>}
           {showIssues && (problems > 0 || markedFixed.length > 0) && <div className="max-h-64 overflow-auto rounded-xl border border-line bg-surface p-3"><Issues structure={structure} gate={gate} fixed={markedFixed} onFix={isAdmin ? markFixed : undefined} onFixAll={isAdmin ? markAllFixed : undefined} /></div>}
           {error && <ErrorNote>{error}</ErrorNote>}
+          {pasting !== null && (
+            <div className="flex flex-col gap-2 rounded-xl border border-line bg-surface p-3">
+              <p className="text-xs text-soft">Paste the new JSON: it replaces the fiche below. Nothing is saved until you click Save; the app keeps the published version until you publish.</p>
+              <textarea autoFocus rows={8} spellCheck={false} className={`${inputCls} h-auto py-2 font-mono text-xs`} placeholder='{ "schema_version": "1.1.0", "meta": { … } }'
+                value={pasting} onChange={(e) => { setPasting(e.target.value); setPasteError(null); }} />
+              {pasteError && <p className="text-xs text-flag">{pasteError}</p>}
+              <div className="flex justify-end gap-2">
+                <Button className="h-8" onClick={() => { setPasting(null); setPasteError(null); }}>Cancel</Button>
+                <Button className="h-8" variant="primary" disabled={!pasting.trim()} onClick={() => replaceWith(pasting)}>Replace the fiche</Button>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="mt-6 flex flex-col gap-5 pb-10">
@@ -398,7 +463,7 @@ export default function FicheEditor() {
           </Section>
 
           <Section id="sources" title={SECTION_TITLE.sources} closed issues={sectionIssues("sources")}>
-            <SourcesEditor sources={f.sources} topic={f.meta.id} pdfs={pdfs} onPdf={setPdf} onChange={(v) => edit((d) => void (d.sources = v))} />
+            <SourcesEditor key={pdfList} sources={f.sources} topic={f.meta.id} pdfs={pdfs} onPdf={setPdf} onChange={(v) => edit((d) => void (d.sources = v))} />
           </Section>
 
           <Section id="review" title={SECTION_TITLE.review} closed issues={sectionIssues("review")}>

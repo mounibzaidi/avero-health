@@ -2,9 +2,15 @@
 
 import { useState } from "react";
 
-/** A name shown as text; a click turns it into a field, Enter or leaving it saves, Escape cancels. */
-export function EditableName({ name, onSave, className = "" }: { name: string; onSave: (name: string) => void | Promise<void>; className?: string }) {
-  const [draft, setDraft] = useState<string | null>(null);
+/** A name shown as text; a click turns it into a field, Enter or leaving it saves, Escape cancels. `editing`/`onEditing`:
+ * the field opened from outside (a Rename button). */
+export function EditableName({ name, onSave, className = "", editing, onEditing }: {
+  name: string; onSave: (name: string) => void | Promise<void>; className?: string; editing?: boolean; onEditing?: (on: boolean) => void;
+}) {
+  const [typed, setTyped] = useState<string | null>(null);
+  // opened from outside, nothing typed yet: the field starts from the name
+  const draft = typed ?? (editing ? name : null);
+  const setDraft = (v: string | null) => { setTyped(v); onEditing?.(v !== null); };
   if (draft === null) {
     return (
       <button type="button" title="Click to rename" onClick={() => setDraft(name)}

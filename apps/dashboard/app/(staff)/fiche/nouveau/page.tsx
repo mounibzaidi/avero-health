@@ -62,17 +62,29 @@ function NewFiche() {
   const [skipped, setSkipped] = useState<string[]>([]); // found PDFs set aside by hand
   const [linked, setLinked] = useState<Record<string, string>>({});
   const [uploads, setUploads] = useState<Entry[]>([]);
+  const [names, setNames] = useState<Record<string, string>>({}); // stored PDF path → new name, saved on opening
   const nextKey = useRef(0);
   const [manual, setManual] = useState<Record<string, string | null>>({}); // entry key → source id, set by hand
   const [texts, setTexts] = useState<Record<string, string>>({}); // entry key → its first pages ("" if unreadable)
   const reading = useRef(new Set<string>());
   const [changing, setChanging] = useState<string | null>(null);
+  const [renaming, setRenaming] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { protocol, error: parseError } = useMemo(() => parse(text), [text]);
   const fid = protocol?.meta.id ?? null;
   const sources = useMemo(() => protocol?.sources ?? [], [protocol]);
   const sourceIds = useMemo(() => sources.map((s) => s.id), [sources]);
+  // the fiche this JSON's id already names: the JSON becomes its new draft version
+  const [existing, setExisting] = useState<{ id: string; title: string; live: boolean } | null>(null);
+  useEffect(() => {
+    if (!fid) return;
+    void Promise.all([
+      supabase.from("subjects").select("title").eq("id", fid).maybeSingle(),
+      supabase.from("fiche_versions").select("version").eq("subject_id", fid).not("published_at", "is", null).limit(1),
+    ]).then(([s, v]) => setExisting(s.data ? { id: fid, title: (s.data as { title: string }).title, live: !!v.data?.length } : null));
+  }, [supabase, fid]);
+  const replacing = existing && existing.id === fid ? existing : null;
 
   // the PDFs already stored: the fiche's own (an earlier import), and a Collecte topic's when the page was opened from it
   useEffect(() => {
@@ -144,23 +156,20 @@ function NewFiche() {
     setChanging(null);
   };
   const add = (files: File[]) => setUploads([...uploads, ...files.map((file) => ({ key: `upload-${nextKey.current++}`, name: file.name, file }))]);
-  /** A PDF renamed: a file chosen here before it is uploaded (it is stored under that name), a stored one in its record. */
-  const rename = async (e: Entry, name: string) => {
+  /** A PDF renamed: a file chosen here before it is uploaded (it is stored under that name), a stored one in its
+   * record when the fiche is opened (a found PDF is listed from elsewhere: renaming it at once would not show). */
+  const rename = (e: Entry, name: string) => {
     if (e.file) {
       const file = new File([e.file], /\.pdf$/i.test(name) ? name : `${name}.pdf`, { type: e.file.type });
       return setUploads(uploads.map((u) => (u.key === e.key ? { ...u, name: file.name, file } : u)));
     }
-    try {
-      await renameStored(supabase, e.path!, name);
-      setStored((cur) => cur.map((x) => (x.path === e.path ? { ...x, title: name } : x)));
-    } catch (err) {
-      setError((err as Error).message);
-    }
+    setNames({ ...names, [e.path!]: name });
   };
+  const nameOf = (e: Entry) => (e.path && names[e.path]) || e.name;
   /** Out of the list: a file chosen here is dropped; a stored one is deleted from storage (asked first). */
   const remove = (e: Entry) => {
     if (e.file) return setUploads(uploads.filter((u) => u.key !== e.key));
-    void deleteStored(e.path!, e.name).then((done) => {
+    void deleteStored(e.path!, nameOf(e)).then((done) => {
       if (!done) return;
       setStored((cur) => cur.filter((x) => x.path !== e.path));
       setLinked((cur) => Object.fromEntries(Object.entries(cur).filter(([, p]) => p !== e.path)));
@@ -200,6 +209,7 @@ function NewFiche() {
           path = (await apiForm<{ path: string }>(`/crawl/fiches/${encodeURIComponent(id)}/upload`, form)).path;
         }
         if (path) kept.add(path);
+        if (e.path && names[e.path]) await renameStored(supabase, e.path, names[e.path]);
         if (path !== linked[sid]) {
           const r = await supabase.from("source_pdfs").upsert({ subject_id: id, source_id: sid, pdf_path: path, updated_at: new Date().toISOString(), updated_by: session.user.id });
           if (r.error) throw new Error(r.error.message);
@@ -242,6 +252,9 @@ function NewFiche() {
         {protocol && (
           <p className="text-sm text-accentink">✓ {protocol.meta.title || protocol.meta.id} · {evidenceLines(protocol).length} blocks · {protocol.sources.length} source(s)</p>
         )}
+        {protocol && replacing && (
+          <p className="text-xs text-soft">Replaces the fiche “{replacing.title}”: saved as its new draft version.{replacing.live ? " The published version stays in the app until you publish this one." : ""}</p>
+        )}
       </Card>
 
       <Card className={`flex flex-col gap-3 p-5 ${protocol ? "" : "pointer-events-none opacity-50"}`}>
@@ -260,12 +273,14 @@ function NewFiche() {
             {entries.map((e) => (
               <li key={e.key} className="flex flex-col gap-1 border-t border-line py-2 first:border-t-0">
                 <div className="flex items-center gap-3">
-                  <div className="flex min-w-0 flex-1"><EditableName name={e.name} onSave={(n) => rename(e, n)} className="text-sm font-medium text-ink" /></div>
+                  <div className="flex min-w-0 flex-1"><EditableName name={nameOf(e)} onSave={(n) => rename(e, n)} className="text-sm font-medium text-ink"
+                    editing={renaming === e.key} onEditing={(on) => setRenaming(on ? e.key : null)} /></div>
+                  <button type="button" className="shrink-0 text-xs font-medium text-accentink hover:underline" onClick={() => setRenaming(e.key)}>Rename</button>
                   {e.found ? (
                     <button type="button" className="shrink-0 text-xs font-medium text-accentink hover:underline" onClick={() => setSkipped([...skipped, e.path!])}>Not this one</button>
                   ) : (
                     <>
-                      <button type="button" className="shrink-0 text-xs font-medium text-accentink hover:underline" onClick={() => setChanging(changing === e.key ? null : e.key)}>change</button>
+                      <button type="button" className="shrink-0 text-xs font-medium text-accentink hover:underline" onClick={() => setChanging(changing === e.key ? null : e.key)}>Change source</button>
                       <button type="button" className="shrink-0 text-xs font-medium text-flag hover:underline" onClick={() => remove(e)}>{e.file ? "Remove" : "Delete"}</button>
                     </>
                   )}
@@ -279,7 +294,7 @@ function NewFiche() {
                   const s = sources.find((x) => x.id === sourceOf(e));
                   const reason = why[e.key];
                   if (!(e.key in texts) && !s) return <p className="text-xs text-muted">Reading the PDF…</p>;
-                  if (!s) return <p className="text-xs text-caution">Not recognised as one of the JSON&apos;s sources: use “change” to say which{e.path?.startsWith(`fiches/${fid}/`) ? ", or it is deleted on opening" : ""}.</p>;
+                  if (!s) return <p className="text-xs text-caution">Not recognised as one of the JSON&apos;s sources: use “Change source” to say which{e.path?.startsWith(`fiches/${fid}/`) ? ", or it is deleted on opening" : ""}.</p>;
                   return (
                     <p className={`text-xs ${reason === "guess" ? "text-caution" : "text-soft"}`}>
                       {reason === "guess" ? "Probably " : "→ "}<b className="font-semibold">{sourceLabel(s)}</b>
@@ -299,7 +314,7 @@ function NewFiche() {
 
       {error && <ErrorNote>{error}</ErrorNote>}
       <Button variant="primary" className="h-10 self-end px-5" disabled={!protocol || busy} onClick={() => void open()}>
-        {busy ? <Spinner /> : "Open for checking ›"}
+        {busy ? <Spinner /> : replacing ? "Open the new version ›" : "Open for checking ›"}
       </Button>
     </div>
   );
