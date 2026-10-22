@@ -16,7 +16,7 @@ import { useColors } from "@/ui/theme";
 import { Body, CONTROL_STYLE, Heading } from "@/ui/ui";
 
 import { Medications } from "./Medications";
-import { Card, Cites, CiteProvider, ItemCard, ItemRows, RoseCard, SourcesCtx } from "./parts";
+import { Card, Cites, CiteProvider, ItemCard, ItemRows, RoseCard, shortName, SourcesCtx } from "./parts";
 import { Pathway } from "./Pathway";
 import { PdfCtx, usePdfPaths } from "./pdfs";
 import { StarButton } from "./StarButton";
@@ -238,10 +238,18 @@ export function FicheScreen({ id, fiche: f }: { id: string; fiche: Protocol }) {
           <Text className={`text-[13px] ${urgent ? "font-semibold text-flag" : "text-soft"}`}>{urgent ? t("p_urgence") : f.meta.specialite}</Text>
         </View>
         {f.scope.population ? (
-          <View className="flex-row items-center gap-[6px]">
-            <ClipboardTextIcon size={15} color={c.soft} />
-            <Text className="text-[13px] text-soft">{f.scope.population}</Text>
+          <View className="max-w-full flex-row items-start gap-[6px]">
+            <View className="shrink-0 pt-[2px]"><ClipboardTextIcon size={15} color={c.soft} /></View>
+            <Text className="min-w-0 shrink text-[13px] text-soft">{f.scope.population}</Text>
           </View>
+        ) : null}
+        {f.sources.length ? (
+          <Pressable accessibilityRole="link" onPress={() => jump("sources")} className="max-w-full flex-row items-start gap-[6px] active:opacity-60">
+            <View className="shrink-0 pt-[2px]"><BookOpenIcon size={15} color={c.soft} /></View>
+            <Text className="min-w-0 shrink text-[13px] text-soft">
+              {f.sources.map((s) => [shortName(s, s.id), s.publication_date?.slice(0, 4)].filter(Boolean).join(" ")).join(" · ")}
+            </Text>
+          </Pressable>
         ) : null}
       </View>
     </View>

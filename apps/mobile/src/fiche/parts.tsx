@@ -25,7 +25,7 @@ const CiteCtx = createContext<(c: Cited) => void>(() => {});
 
 /** A source's name on a chip: the acronym in brackets ("Haute Autorité de santé (HAS)"), a short name as it is, or
  * the initials of a long one ("Revue Médicale Suisse" = RMS). */
-function shortName(s: Source | undefined, id: string): string {
+export function shortName(s: Source | undefined, id: string): string {
   const org = s?.organisation?.trim() ?? "";
   const acronym = /\(([\p{Lu}][\p{L}0-9&/-]{1,9})\)/u.exec(org);
   if (acronym) return acronym[1];
