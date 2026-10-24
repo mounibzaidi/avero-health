@@ -29,6 +29,12 @@ it is hard to know where a recommendation comes from or whether it is still curr
 
 Avero is a reference tool, not a diagnosis tool.
 
+## The Algerian drug register
+
+Avero includes the national nomenclature of pharmaceutical products of the Ministry of Pharmaceutical Industry
+(version of 31 August 2026): 5,425 registered medicines with their DCI, brand, form and dose. A protocol can only name
+brands from this register.
+
 ## Screenshots
 
 | The app: home | The app: a protocol | Dashboard: protocols | Dashboard: the protocol format |
