@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { Analytics } from "@/ui/Analytics";
 import { ThemeProvider, useTheme } from "@/ui/theme";
 
 function Shell() {
@@ -14,6 +15,7 @@ function Shell() {
     <>
       <StatusBar style={theme === "dark" ? "light" : "dark"} />
       <Stack screenOptions={{ headerShown: false }} />
+      <Analytics />
     </>
   );
 }
