@@ -1,0 +1,2447 @@
+{
+  "meta": {
+    "id": "diabete-type-2",
+    "title": "Diabète de type 2 de l'adulte",
+    "motifs": [
+      "diabète de type 2",
+      "hyperglycémie",
+      "Ramadan",
+      "hypoglycémie"
+    ],
+    "status": "published",
+    "country": "DZ",
+    "version": "1.2.3",
+    "audience": [
+      "MG"
+    ],
+    "language": "fr",
+    "template": "pathologie",
+    "specialite": "endocrinologie",
+    "next_review_at": null,
+    "last_reviewed_at": "2026-10-22"
+  },
+  "scope": {
+    "exclusions": [
+      "Diabète gestationnel"
+    ],
+    "population": "Adulte vivant avec un diabète de type 2, prise en charge en 1re, 2e et 3e ligne"
+  },
+  "treat": {
+    "do_not": [
+      {
+        "id": "dt2-036",
+        "refs": [],
+        "text": "Ne pas associer deux médicaments de même mécanisme d'action.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 19,
+            "quote": "Il est recommandé de ne pas associer deux médicaments de même mécanisme d’action",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 38,
+            "quote": "il ne faut jamais associer entre eux les médicaments d’une même classe.",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-037",
+        "refs": [],
+        "text": "Ne pas associer aGLP1 et iDPP4.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 23,
+            "quote": "Il n’y a pas lieu d’associer GLP1 et iDPP4",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-035",
+        "refs": [],
+        "text": "aGLP1 à éviter en cas d'insuffisance cardiaque instable ou d'hospitalisation pour insuffisance cardiaque.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 32,
+            "quote": "En cas d’intolérance ou de contre-indication, les aGLP-1 sont une alternative aux iSGLT2 en association avec la metformine, mais doivent être évités en cas d’insuffisance cardiaque instable ou d’hospitalisation pour insuffisance cardiaque",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": "forte",
+        "condition": "insuffisance cardiaque instable"
+      },
+      {
+        "id": "dt2-038",
+        "refs": [],
+        "text": "Les sulfamides en bithérapie avec la metformine ne sont plus la stratégie préférentielle (hypoglycémies sévères).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 21,
+            "quote": "La prescription des sulfamides hypoglycémiants en bithérapie en association avec MET n’est plus la stratégie préférentielle recommandée",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-039",
+        "refs": [],
+        "text": "Chez les plus âgés, ne pas instaurer de sulfamides (surtout à longue durée d'action) s'il existe une alternative.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 29,
+            "quote": "l’instauration des sulfamides, en particulier ceux à longue durée d’action, chez les personnes les plus âgées n’est pas recommandée",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 34,
+            "quote": "Eviter les sulfonylurées à action prolongée (voir Tableau) chez les patients âgés et les remplacer par des sulfonylurées à action courte.",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": "personne âgée, alternative disponible"
+      },
+      {
+        "id": "dt2-040",
+        "refs": [],
+        "text": "Chez la personne âgée fragile, pas de régime restrictif (risque de dénutrition et de sarcopénie).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 15,
+            "quote": "Les régimes de restriction quantitative ou qualitative sont fortement déconseillés chez les personnes à risque de dénutrition et de sarcopénie, en particulier chez les personnes âgées en situation de fragilité.",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": "personne âgée fragile"
+      }
+    ],
+    "actions": [
+      {
+        "id": "dt2-001",
+        "refs": [],
+        "text": "Les modifications thérapeutiques du mode de vie (MTMV) sont indispensables à toutes les étapes.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 9,
+            "quote": "La mise en place de mesures efficaces de modification thérapeutique du mode de vie (MTMV) est indispensable à la prise en charge du patient vivant avec un DT2",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 32,
+            "quote": "Il est indispensable et doit toujours être mis en place en première approche dans le diabète de type 2.",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": "modérée",
+        "condition": null
+      },
+      {
+        "id": "dt2-030",
+        "refs": [],
+        "text": "Démarrer aux doses minimales puis augmenter progressivement jusqu'à la dose maximale tolérée ou l'objectif.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 19,
+            "quote": "les traitements seront démarrés aux doses minimales recommandées qui seront augmentées progressivement jusqu’aux doses maximales tolérées ou jusqu’à l’atteinte de l’objectif",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-031",
+        "refs": [],
+        "text": "Dépistage et prise en charge de tous les facteurs de risque cardiovasculaire : tabac, HTA, sédentarité, obésité, dyslipidémie.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 9,
+            "quote": "La prise en charge globale devrait inclure le dépistage et la prise en charge de tous les facteurs de risque cardiovasculaire, notamment : tabac, hypertension artérielle, sédentarité, obésité, dyslipidémie, etc.",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": "forte",
+        "condition": null
+      },
+      {
+        "id": "dt2-032",
+        "refs": [],
+        "text": "Activité physique adaptée : programme d'endurance et de renforcement de 3 mois renouvelable, 2 à 3 séances par semaine.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 13,
+            "quote": "Prescrire un programme d’AP adaptée d’endurance et de renforcement musculaire, d’une durée de 3 mois, renouvelable, à raison de 2 à 3 séances par semaine",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-033",
+        "refs": [],
+        "text": "Patient en surpoids ou obèse : une perte de 5 % du poids améliore significativement l'équilibre métabolique.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 14,
+            "quote": "Une perte de 5 % du poids ou plus au diagnostic permet une amélioration métabolique significative (glycémique, lipidique, tensionnelle)",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": "surpoids ou obésité"
+      },
+      {
+        "id": "dt2-034",
+        "refs": [],
+        "text": "Avant un iSGLT2 : évaluer le risque d'acidocétose (épisodes antérieurs, maladie intercurrente, régime très pauvre en glucides ou cétogène).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 21,
+            "quote": "À l’initiation du traitement avec un iSGLT2, il est recommandé d’évaluer le risque d’acidocétoses diabétiques (ex. : récurrence d’épisode, maladie intercurrente, régime très faible en glucides ou cétogène)",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": "faible",
+        "condition": "initiation d'un iSGLT2"
+      },
+      {
+        "id": "dz-007",
+        "refs": [],
+        "text": "Hypoglycémie légère : 15 g de sucre, contrôler 15 min après, resucrer si besoin, puis sucres complexes (pain, biscuits).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 46,
+            "quote": "Si l’hypoglycémie est légère, donner 15 grammes de sucre, contrôler 15mn après, si l’hypoglycémie persiste, resucrer encore avec 15 g de sucre, si la glycémie est jugulée, passer au sucres complexes, comme le pain ou les biscuits.",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": "hypoglycémie légère"
+      }
+    ],
+    "medications": [
+      {
+        "id": "med-metformine",
+        "inn": "metformine",
+        "dose": 500,
+        "phase": "initiation",
+        "route": "orale",
+        "missing": [
+          "duration"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 35,
+            "quote": "chlorhydrate de metformine 1 à 3 comp / j (2 g/j)",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 35,
+            "quote": "chlorhydrate de metformine 500 mg, 850 mg, 1000 mg",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 35,
+            "quote": "Commencer par la dose la plus faible pour minimiser les effets secondaires digestifs et favoriser l’observance.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 35,
+            "quote": "Utiliser avec prudence chez les sujets âgés à cause de l’insuffisance rénale",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 35,
+            "quote": "Suspendre le traitement pendant 48-72h le jour où le patient subit des examens radiologiques avec produits de contraste et avant toute anesthésie générale et ne le reprendre qu’après reprise d’une diurèse normale.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 35,
+            "quote": "principalement due à une administration inappropriée chez des patients présentant une dysfonction hépatique/ rénale/myocardique",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "IV.3.3.1 Les antidiabétiques oraux",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 20,
+            "quote": "La metformine reste à ce jour le traitement recommandé en 1re intention en raison de son ancienneté, de son faible coût, de son profil de tolérance ainsi que de ses effets sur l’HbA1c",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": "2 g/j",
+        "strength": null,
+        "condition": "en 1re intention, sauf contre-indication ou intolérance",
+        "dose_unit": "mg",
+        "frequency": "1 à 3 comprimés par jour",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Commencer par la dose la plus faible (troubles digestifs)",
+          "Prudence chez le sujet âgé (fonction rénale)",
+          "Suspendre 48 à 72 h lors d'un examen avec produit de contraste ou avant anesthésie générale ; reprendre après reprise d'une diurèse normale"
+        ],
+        "alternative_group": null,
+        "contraindications": [
+          "Dysfonction hépatique, rénale ou myocardique (risque d'acidose lactique)"
+        ],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-liraglutide",
+        "inn": "liraglutide",
+        "dose": 1.2,
+        "phase": null,
+        "route": "sous-cutanée",
+        "missing": [
+          "contraindications",
+          "duration",
+          "phase"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 37,
+            "quote": "Le Liraglutide est le premier analogue du GLP-1 humain (homologie de 97%) en une injection S/C par jour (aux posologies de 1.2 ou 1.8 mg).",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 37,
+            "quote": "liraglutide 12-15 h 1.2-1.8 mg",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 21,
+            "quote": "La présence d’un antécédent de maladie cardiovasculaire doit faire envisager et idéalement proposer un traitement par iSGLT2 ou aGLP1, indépendamment de l’HbA1c et d’un traitement par metformine",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 22,
+            "quote": "l’ajout d’un iSGLT2 ou d’un aGLP1 est recommandé chez les patients en prévention primaire à haut niveau de risque cardiovasculaire",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 22,
+            "quote": "il est recommandé l’ajout de aGLP1 à dose antidiabétique, si présence obésité (IMC > ou égale à 30 kg/m2)",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": "1,8 mg/j",
+        "strength": null,
+        "condition": "antécédent de maladie cardiovasculaire, haut risque cardiovasculaire, ou obésité (IMC ≥ 30 kg/m²), en ajout à la metformine",
+        "dose_unit": "mg",
+        "frequency": "1 injection par jour",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [],
+        "alternative_group": null,
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-sitagliptine",
+        "inn": "sitagliptine",
+        "dose": 100,
+        "phase": null,
+        "route": "orale",
+        "missing": [
+          "contraindications",
+          "duration",
+          "max_dose",
+          "phase"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 36,
+            "quote": "sitagliptine 100 mg 12.4 h 100 mg 1x/jour",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "IV.3.3.1 Les antidiabétiques oraux",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 22,
+            "quote": "un iDPP4, option la plus simple pour la pratique clinique",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 20,
+            "quote": "iDPP4, option la plus simple pour la pratique clinique en l’absence d’insuffisance cardiaque, de maladie cardiovasculaire artérioscléreuse établie, de néphropathie diabétique ou d’un haut risque cardiovasculaire",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 29,
+            "quote": "En cas de contre-indication ou de mauvaise tolérance à la MET, les iDPP4 peuvent être l’alternative à privilégier compte tenu de leur profil de tolérance et de leur simplicité de mise en œuvre",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": null,
+        "strength": null,
+        "condition": "en ajout à la metformine sans maladie cardiovasculaire, IC, MRC ni haut risque cardiovasculaire ; alternative si metformine impossible ; option simple chez le sujet âgé",
+        "dose_unit": "mg",
+        "frequency": "1 fois par jour",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [],
+        "alternative_group": "iDPP4",
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-vildagliptine",
+        "inn": "vildagliptine",
+        "dose": 50,
+        "phase": null,
+        "route": "orale",
+        "missing": [
+          "contraindications",
+          "duration",
+          "max_dose",
+          "phase"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 36,
+            "quote": "vildagliptine 50 mg 2-3 h 50 mg 1 à 2x/jour",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "IV.3.3.1 Les antidiabétiques oraux",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 22,
+            "quote": "un iDPP4, option la plus simple pour la pratique clinique",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 20,
+            "quote": "iDPP4, option la plus simple pour la pratique clinique en l’absence d’insuffisance cardiaque, de maladie cardiovasculaire artérioscléreuse établie, de néphropathie diabétique ou d’un haut risque cardiovasculaire",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 29,
+            "quote": "En cas de contre-indication ou de mauvaise tolérance à la MET, les iDPP4 peuvent être l’alternative à privilégier compte tenu de leur profil de tolérance et de leur simplicité de mise en œuvre",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": null,
+        "strength": null,
+        "condition": "en ajout à la metformine sans maladie cardiovasculaire, IC, MRC ni haut risque cardiovasculaire ; alternative si metformine impossible ; option simple chez le sujet âgé",
+        "dose_unit": "mg",
+        "frequency": "1 à 2 fois par jour",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [],
+        "alternative_group": "iDPP4",
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-gliclazide",
+        "inn": "gliclazide",
+        "dose": 80,
+        "phase": "initiation",
+        "route": "orale",
+        "missing": [
+          "duration",
+          "frequency"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 34,
+            "quote": "gliclazide 80 8 6-12 80 80-240",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "Commencer par la dose la plus faible.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "Ne pas utiliser chez les diabétiques de Type 1, pendant la grossesse et l’allaitement.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "IV.3.3.1 Les antidiabétiques oraux",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 22,
+            "quote": "voire un sulfamide hypoglycémiant",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 29,
+            "quote": "l’instauration des sulfamides, en particulier ceux à longue durée d’action, chez les personnes les plus âgées n’est pas recommandée",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": "240 mg/j",
+        "strength": null,
+        "condition": "en ajout à la metformine si risque cardiovasculaire modéré, après iSGLT2, aGLP1 et iDPP4 ; à éviter chez le sujet âgé s'il existe une alternative",
+        "dose_unit": "mg/j",
+        "frequency": null,
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Commencer par la dose la plus faible"
+        ],
+        "alternative_group": "sulfamides",
+        "contraindications": [
+          "Diabète de type 1, grossesse et allaitement"
+        ],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-glimepiride",
+        "inn": "glimépiride",
+        "dose": 2,
+        "phase": "initiation",
+        "route": "orale",
+        "missing": [
+          "duration"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 34,
+            "quote": "glimépiride 7 12-24 1,2,3 et 4 2-6",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "Commencer par la dose la plus faible.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "Ne pas utiliser chez les diabétiques de Type 1, pendant la grossesse et l’allaitement.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "Eviter les sulfonylurées à action prolongée (voir Tableau) chez les patients âgés et les remplacer par des sulfonylurées à action courte.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "IV.3.3.1 Les antidiabétiques oraux",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 93,
+            "quote": "glimepiride et gliclazide 30 (monoprise)",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 22,
+            "quote": "voire un sulfamide hypoglycémiant",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 29,
+            "quote": "l’instauration des sulfamides, en particulier ceux à longue durée d’action, chez les personnes les plus âgées n’est pas recommandée",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": "6 mg/j",
+        "strength": null,
+        "condition": "en ajout à la metformine si risque cardiovasculaire modéré, après iSGLT2, aGLP1 et iDPP4 ; à éviter chez le sujet âgé s'il existe une alternative",
+        "dose_unit": "mg/j",
+        "frequency": "1 prise par jour",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Commencer par la dose la plus faible",
+          "Éviter les sulfamides à action prolongée chez le sujet âgé"
+        ],
+        "alternative_group": "sulfamides",
+        "contraindications": [
+          "Diabète de type 1, grossesse et allaitement"
+        ],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-acarbose",
+        "inn": "acarbose",
+        "dose": 50,
+        "phase": "initiation",
+        "route": "orale",
+        "missing": [
+          "duration"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 35,
+            "quote": "minimum (50 mg une fois, puis deux fois par jour), à prendre au début des repas. Augmenter la dose toutes les semaines, jusqu’à un maximum de 100 mg trois fois par jour.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 35,
+            "quote": "Ne pas utiliser en cas de grossesse ou d’allaitement, de maladie intestinale chronique, de malabsorption, de maladie cœliaque ou d’exérèse gastrique.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 34,
+            "quote": "IV.3.3.1 Les antidiabétiques oraux",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 22,
+            "quote": "un inhibiteur des alpha 1 glucosidases intestinales.",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": "100 mg 3 fois par jour",
+        "strength": null,
+        "condition": "dernière option en ajout à la metformine, risque cardiovasculaire modéré",
+        "dose_unit": "mg",
+        "frequency": "1 fois par jour, puis 2 fois par jour, au début des repas",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Augmenter la dose toutes les semaines"
+        ],
+        "alternative_group": null,
+        "contraindications": [
+          "Grossesse, allaitement",
+          "Maladie intestinale chronique, malabsorption, maladie cœliaque, exérèse gastrique"
+        ],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-insuline-glargine",
+        "inn": "insuline glargine",
+        "dose": 0.1,
+        "phase": "initiation",
+        "route": "sous-cutanée",
+        "missing": [
+          "duration",
+          "max_dose",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 25,
+            "quote": "prescription d’une dose initiale faible (à titre indicatif, en général de 0,1 unité/kg par 24 heures",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 25,
+            "quote": "adaptation des doses d’insuline tous les 3 jours en fonction des glycémies au réveil et de l’objectif fixé (à titre indicatif, la dose peut être augmentée ou réduite de 1 ou 2 UI, sauf cas particulier)",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 22,
+            "quote": "Insuline glargine (Lantus®)",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 41,
+            "quote": "Après échec des ADO :",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 20,
+            "quote": "une bithérapie, voire une insulinothérapie peuvent être instaurées d’emblée",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": null,
+        "strength": null,
+        "condition": "après échec des antidiabétiques oraux, ou d'emblée si diabète très déséquilibré ; en ajout à une mono- ou bithérapie",
+        "dose_unit": "UI",
+        "frequency": "1 injection par jour",
+        "dose_basis": "par_kg",
+        "prescriber": null,
+        "adjustments": [
+          "Adapter tous les 3 jours selon la glycémie au réveil : ± 1 ou 2 UI"
+        ],
+        "alternative_group": "insuline-basale",
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-insuline-detemir",
+        "inn": "insuline détémir",
+        "dose": 0.1,
+        "phase": "initiation",
+        "route": "sous-cutanée",
+        "missing": [
+          "duration",
+          "max_dose",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 25,
+            "quote": "prescription d’une dose initiale faible (à titre indicatif, en général de 0,1 unité/kg par 24 heures",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 25,
+            "quote": "adaptation des doses d’insuline tous les 3 jours en fonction des glycémies au réveil et de l’objectif fixé (à titre indicatif, la dose peut être augmentée ou réduite de 1 ou 2 UI, sauf cas particulier)",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 22,
+            "quote": "Insuline detemir (Levemir®)",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 41,
+            "quote": "Après échec des ADO :",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 20,
+            "quote": "une bithérapie, voire une insulinothérapie peuvent être instaurées d’emblée",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": null,
+        "strength": null,
+        "condition": "après échec des antidiabétiques oraux, ou d'emblée si diabète très déséquilibré ; en ajout à une mono- ou bithérapie",
+        "dose_unit": "UI",
+        "frequency": "1 injection par jour",
+        "dose_basis": "par_kg",
+        "prescriber": null,
+        "adjustments": [
+          "Adapter tous les 3 jours selon la glycémie au réveil : ± 1 ou 2 UI"
+        ],
+        "alternative_group": "insuline-basale",
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-insuline-nph",
+        "inn": "insuline humaine isophane (NPH)",
+        "dose": 0.1,
+        "phase": "initiation",
+        "route": "sous-cutanée",
+        "missing": [
+          "duration",
+          "max_dose",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 25,
+            "quote": "prescription d’une dose initiale faible (à titre indicatif, en général de 0,1 unité/kg par 24 heures",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 25,
+            "quote": "adaptation des doses d’insuline tous les 3 jours en fonction des glycémies au réveil et de l’objectif fixé (à titre indicatif, la dose peut être augmentée ou réduite de 1 ou 2 UI, sauf cas particulier)",
+            "source_id": "has-dt2-2024"
+          },
+          {
+            "page": 22,
+            "quote": "Insulatard®",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 41,
+            "quote": "Après échec des ADO :",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 20,
+            "quote": "une bithérapie, voire une insulinothérapie peuvent être instaurées d’emblée",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "max_dose": null,
+        "strength": null,
+        "condition": "après échec des antidiabétiques oraux, ou d'emblée si diabète très déséquilibré ; en ajout à une mono- ou bithérapie",
+        "dose_unit": "UI",
+        "frequency": "1 injection par jour",
+        "dose_basis": "par_kg",
+        "prescriber": null,
+        "adjustments": [
+          "Adapter tous les 3 jours selon la glycémie au réveil : ± 1 ou 2 UI"
+        ],
+        "alternative_group": "insuline-basale",
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      }
+    ]
+  },
+  "advise": [
+    {
+      "id": "dt2-043",
+      "refs": [],
+      "text": "Médicament hypoglycémiant : apprendre au patient à prévenir, reconnaître et traiter une hypoglycémie.",
+      "basis": null,
+      "origin": "source",
+      "timing": null,
+      "evidence": [
+        {
+          "page": 19,
+          "quote": "Lors de l’introduction d’un médicament susceptible d’induire des hypoglycémies, il est important d’apprendre au patient à prévenir, identifier ses symptômes et prendre en charge une hypoglycémie.",
+          "source_id": "has-dt2-2024"
+        }
+      ],
+      "strength": null,
+      "condition": "introduction d'un médicament à risque d'hypoglycémie"
+    },
+    {
+      "id": "dz-008",
+      "refs": [],
+      "text": "Prendre des collations entre les repas et manger davantage avant une activité physique.",
+      "basis": null,
+      "origin": "source",
+      "timing": null,
+      "evidence": [
+        {
+          "page": 46,
+          "quote": "Prendre des collations entre les repas.",
+          "source_id": "dz-guide-diabeto-2015"
+        },
+        {
+          "page": 46,
+          "quote": "Manger davantage lorsqu'une activité physique est prévue.",
+          "source_id": "dz-guide-diabeto-2015"
+        }
+      ],
+      "strength": null,
+      "condition": "traitement par insuline ou insulinosécréteur"
+    },
+    {
+      "id": "dz-009",
+      "refs": [],
+      "text": "Ne pas boire d'alcool à jeun.",
+      "basis": null,
+      "origin": "source",
+      "timing": null,
+      "evidence": [
+        {
+          "page": 46,
+          "quote": "Boire des boissons alcoolisées à jeun.",
+          "source_id": "dz-guide-diabeto-2015"
+        }
+      ],
+      "strength": null,
+      "condition": null
+    },
+    {
+      "id": "dz-010",
+      "refs": [],
+      "text": "Ne pas sauter les contrôles d'autosurveillance glycémique.",
+      "basis": null,
+      "origin": "source",
+      "timing": null,
+      "evidence": [
+        {
+          "page": 46,
+          "quote": "Sauter une vérification de l’auto surveillance glycémique",
+          "source_id": "dz-guide-diabeto-2015"
+        }
+      ],
+      "strength": null,
+      "condition": null
+    },
+    {
+      "id": "dt2-062",
+      "refs": [],
+      "text": "Éducation thérapeutique structurée dès le diagnostic, personnalisée.",
+      "basis": null,
+      "origin": "source",
+      "timing": null,
+      "evidence": [
+        {
+          "page": 16,
+          "quote": "Il faut favoriser l’accès à une éducation structurée dès le diagnostic, personnalisée, portée par une équipe multidisciplinaire",
+          "source_id": "has-dt2-2024"
+        }
+      ],
+      "strength": "faible",
+      "condition": null
+    },
+    {
+      "id": "dt2-063",
+      "refs": [],
+      "text": "Projet de grossesse : HbA1c < 6,5 % au moins 2 mois avant, passage à l'insuline.",
+      "basis": null,
+      "origin": "source",
+      "timing": null,
+      "evidence": [
+        {
+          "page": 34,
+          "quote": "L’HbA1c doit être inférieure à 6,5 % en période préconceptionnelle.",
+          "source_id": "has-dt2-2024"
+        },
+        {
+          "page": 34,
+          "quote": "il est conseillé d’obtenir un équilibre glycémique au moins 2 mois avant le début d’une grossesse planifiée.",
+          "source_id": "has-dt2-2024"
+        },
+        {
+          "page": 34,
+          "quote": "d’adapter les thérapeutiques et de recourir à un traitement par insuline",
+          "source_id": "has-dt2-2024"
+        }
+      ],
+      "strength": "forte",
+      "condition": "femme en âge de procréer"
+    }
+  ],
+  "assess": {
+    "ask": [],
+    "tests": [
+      {
+        "id": "dt2-029",
+        "refs": [],
+        "text": "Bilan annuel : risque cardiovasculaire, neuropathie périphérique, rétinopathie, néphropathie, grade de risque podologique.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 12,
+            "quote": "Un bilan médical annuel du diabète est recommandé : évaluation du RCV, recherche de neuropathie périphérique, de rétinopathie et de néphropathie et évaluation du grade de risque podologique",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-047",
+        "refs": [],
+        "text": "Cible d'hémoglobine glyquée, cas général : ≤ 7 %.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 42,
+            "quote": "La plupart des patients avec DT2 ≤ 7 %",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-048",
+        "refs": [],
+        "text": "Cible d'hémoglobine glyquée ≤ 6,5 % si DT2 récent, espérance de vie > 15 ans et sans antécédent cardiovasculaire.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 42,
+            "quote": "DT2 nouvellement diagnostiqué dont l’espérance de vie est > 15 ans et sans antécédent cardiovasculaire ≤ 6,5 %",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "examine": [],
+    "pathway": {
+      "nodes": [
+        {
+          "id": "s0",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "s0-b0",
+              "label": "Sans comorbidité",
+              "next_node_id": "a1"
+            },
+            {
+              "id": "s0-b1",
+              "label": "Maladie cardiovasculaire, IC ou MRC",
+              "next_node_id": "c1"
+            },
+            {
+              "id": "s0-b2",
+              "label": "Obésité",
+              "next_node_id": "o1"
+            },
+            {
+              "id": "s0-b3",
+              "label": "Plus de 75 ans",
+              "next_node_id": "e0"
+            },
+            {
+              "id": "s0-b4",
+              "label": "Metformine impossible",
+              "next_node_id": "m1"
+            },
+            {
+              "id": "s0-b5",
+              "label": "Très déséquilibré",
+              "next_node_id": "x1"
+            },
+            {
+              "id": "s0-b6",
+              "label": "Insuline",
+              "next_node_id": "i1"
+            },
+            {
+              "id": "s0-b7",
+              "label": "Ramadan",
+              "next_node_id": "r1"
+            }
+          ],
+          "question": "Profil du patient"
+        },
+        {
+          "id": "a1",
+          "type": "action",
+          "items": [
+            {
+              "id": "dt2-008",
+              "refs": [],
+              "text": "MTMV seules possibles au début.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 9,
+                  "quote": "Ces MTMV peuvent être envisagées seules en 1re intention, sauf dans certaines situations particulières (par exemple, hyperglycémie majeure au diagnostic ou patients à haut risque CV).",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "modérée",
+              "condition": "pas de haut risque cardiovasculaire"
+            },
+            {
+              "id": "dt2-009",
+              "refs": [],
+              "text": "Traitement médicamenteux, décidé avec le patient.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 18,
+                  "quote": "Si l’objectif défini initialement avec le patient n’est pas atteint malgré la mise en place des mesures MTMV, un traitement médicamenteux sera proposé et défini avec le patient",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": null,
+              "condition": "objectif non atteint sous MTMV"
+            },
+            {
+              "id": "dt2-010",
+              "refs": [],
+              "text": "Monothérapie.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 20,
+                  "quote": "En l’absence de signes cliniques (syndrome polyuro-polydipsique, amaigrissement), d’hyperglycémie sévère ou autres situations particulières, le traitement est débuté par une monothérapie",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "faible",
+              "condition": null
+            },
+            {
+              "id": "dt2-002",
+              "refs": [],
+              "text": "Metformine en première intention.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 20,
+                  "quote": "La metformine reste à ce jour le traitement recommandé en 1re intention en raison de son ancienneté, de son faible coût, de son profil de tolérance ainsi que de ses effets sur l’HbA1c",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 33,
+                  "quote": "La metformine est le traitement de première ligne en dehors de ses contre-indications.",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": "faible",
+              "condition": null
+            },
+            {
+              "id": "dt2-049",
+              "refs": [],
+              "text": "Réévaluer après 3 à 6 mois, plus tôt si symptômes ou effets indésirables.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 19,
+                  "quote": "La réévaluation du traitement est nécessaire après un intervalle de 3 à 6 mois",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "a1-b0",
+              "label": "Objectif atteint",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "a1-b1",
+              "label": "Objectif non atteint à la réévaluation",
+              "next_node_id": "a2"
+            }
+          ],
+          "question": "Mode de vie, puis metformine"
+        },
+        {
+          "id": "a2",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "a2-b0",
+              "label": "Haut risque cardiovasculaire",
+              "next_node_id": "a2h"
+            },
+            {
+              "id": "a2-b1",
+              "label": "Risque cardiovasculaire modéré",
+              "next_node_id": "a2m"
+            }
+          ],
+          "question": "Risque cardiovasculaire ?"
+        },
+        {
+          "id": "a2h",
+          "type": "action",
+          "items": [
+            {
+              "id": "dt2-017",
+              "refs": [],
+              "text": "Ajouter un iSGLT2 ou un aGLP1, recommandé en prévention primaire à haut risque cardiovasculaire.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 22,
+                  "quote": "l’ajout d’un iSGLT2 ou d’un aGLP1 est recommandé chez les patients en prévention primaire à haut niveau de risque cardiovasculaire",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "modérée",
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "a2h-b0",
+              "label": "Objectif atteint",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "a2h-b1",
+              "label": "Objectif non atteint à la réévaluation",
+              "next_node_id": "a3"
+            }
+          ],
+          "question": "Bithérapie"
+        },
+        {
+          "id": "a2m",
+          "type": "action",
+          "items": [
+            {
+              "id": "dt2-019",
+              "refs": [],
+              "text": "Par ordre de préférence : iSGLT2 ou aGLP1, iDPP4, sulfamide, répaglinide, inhibiteur des alpha-glucosidases.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 22,
+                  "quote": "un iSGLT2 ou un aGLP1 pour leurs bénéfices cardio et néphroprotecteurs, ou leur impact sur le poids",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 22,
+                  "quote": "un iDPP4, option la plus simple pour la pratique clinique",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 22,
+                  "quote": "voire un sulfamide hypoglycémiant",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 22,
+                  "quote": "ou du répaglinide si la prise alimentaire est irrégulière, en surveillant les glycémies capillaires",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 22,
+                  "quote": "un inhibiteur des alpha 1 glucosidases intestinales",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "a2m-b0",
+              "label": "Objectif atteint",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "a2m-b1",
+              "label": "Objectif non atteint à la réévaluation",
+              "next_node_id": "a3"
+            }
+          ],
+          "question": "Bithérapie : choisir la deuxième molécule"
+        },
+        {
+          "id": "a3",
+          "type": "action",
+          "items": [
+            {
+              "id": "dt2-020",
+              "refs": [],
+              "text": "Trithérapie.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 23,
+                  "quote": "il est recommandé de proposer une trithérapie",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "faible",
+              "condition": null
+            },
+            {
+              "id": "dt2-021",
+              "refs": [],
+              "text": "Par ordre : iSGLT2 ou aGLP1 si absents, puis iDPP4 (si pas d'aGLP1), sulfamide, répaglinide.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 23,
+                  "quote": "iSGLT2 ou aGLP1 si ces molécules ne sont pas déjà incluses dans la PEC",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 23,
+                  "quote": "iDPP4 en l’absence d’aGLP1 déjà inclus dans la PEC et en l’absence de CI à l’association",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 23,
+                  "quote": "sulfamide hypoglycémiant en surveillant la prise de poids et la survenue d’hypoglycémies",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 23,
+                  "quote": "répaglinide (demi-vie courte) et en raison de sa « non-CI » en cas de maladie rénale",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "faible",
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "a3-b0",
+              "label": "Objectif atteint",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "a3-b1",
+              "label": "Objectif toujours non atteint",
+              "next_node_id": "i1"
+            }
+          ],
+          "question": "Trithérapie"
+        },
+        {
+          "id": "i1",
+          "type": "end",
+          "items": [
+            {
+              "id": "dt2-023",
+              "refs": [],
+              "text": "Débuter par une injection quotidienne d'insuline basale.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 25,
+                  "quote": "par une injection quotidienne basale (analogues lents de l’insuline, insuline intermédiaire) selon la situation du patient (en particulier, risque d’hypoglycémies nocturnes)",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-011",
+              "refs": [],
+              "text": "Variante du guide algérien : débuter à 0,2 U/kg/j (10 à 12 U en moyenne), puis +2 U tous les 2 jours jusqu'à une glycémie à jeun entre 0,80 et 1,20 g/l.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 41,
+                  "quote": "On commence par une dose de (0,2 u/ kg/j) en moyenne 10 à 12 unités d’insuline basale puis on augmente tous les 2 jours de 2 unités jusqu’à l’obtention d’une glycémie à jeun comprise entre 0,80 et 1,20 g/l.",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": "instauration de l'insuline basale"
+            },
+            {
+              "id": "dz-012",
+              "refs": [],
+              "text": "Garder la metformine quel que soit le schéma ; arrêter les insulinosécréteurs dès l'ajout d'une insuline rapide.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 41,
+                  "quote": "Dès qu’on introduit une insuline rapide seule ou associée à une insuline",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 41,
+                  "quote": "on arrête les ADO insulino sécréteurs.",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 41,
+                  "quote": "La metformine sera gardée quel que soit le schéma d’intensification de l’insulinothérapie.",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dt2-022",
+              "refs": [],
+              "text": "Avis EDN encouragé.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 23,
+                  "quote": "Dans le cas d’une stratégie médicamenteuse incluant une insuline, ou une quadrithérapie, la sollicitation de l’avis d’un spécialiste EDN (endocrinologue diabétologue nutritionniste) est encouragée",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": null,
+              "condition": "insuline ou quadrithérapie"
+            }
+          ],
+          "branches": [],
+          "question": "Insuline basale, avis EDN"
+        },
+        {
+          "id": "c1",
+          "type": "action",
+          "items": [
+            {
+              "id": "dt2-014",
+              "refs": [],
+              "text": "iSGLT2 ou aGLP1, quelle que soit l'HbA1c.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 21,
+                  "quote": "La présence d’un antécédent de maladie cardiovasculaire doit faire envisager et idéalement proposer un traitement par iSGLT2 ou aGLP1, indépendamment de l’HbA1c et d’un traitement par metformine",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "antécédent de maladie cardiovasculaire"
+            },
+            {
+              "id": "dt2-015",
+              "refs": [],
+              "text": "iSGLT2 chez tous, quelle que soit l'HbA1c.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 21,
+                  "quote": "La présence d’une insuffisance cardiaque est une indication en soi de prescription d’iSGLT2* en association aux autres classes thérapeutiques recommandées chez tous les patients, quelle que soit la dose de metformine et indépendamment de la valeur d’HbA1c",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "insuffisance cardiaque"
+            },
+            {
+              "id": "dt2-016",
+              "refs": [],
+              "text": "iSGLT2 avec la metformine, quelle que soit l'HbA1c.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 21,
+                  "quote": "La présence d’une maladie rénale chronique malgré un traitement standard optimal de la maladie rénale doit faire envisager et idéalement proposer un iSGLT2, en association avec la MET, dès que la dose optimale tolérée de la MET ajustée à la fonction rénale est acquise et indépendamment de la valeur de l’HbA1c",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "maladie rénale chronique"
+            },
+            {
+              "id": "dt2-060",
+              "refs": [],
+              "text": "Metformine maintenue si insuffisance cardiaque compensée ; sitagliptine utilisable si besoin.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 32,
+                  "quote": "La metformine peut être maintenue chez les patients insuffisants cardiaques compensés en l’absence d’intolérance ou de contre-indication",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 32,
+                  "quote": "La sitagliptine peut être utilisée en cas d’insuffisance cardiaque si nécessaire pour améliorer le contrôle glycémique",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "modérée",
+              "condition": "insuffisance cardiaque"
+            }
+          ],
+          "branches": [
+            {
+              "id": "c1-b0",
+              "label": "Objectif atteint",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "c1-b1",
+              "label": "Objectif non atteint à la réévaluation",
+              "next_node_id": "a3"
+            }
+          ],
+          "question": "Metformine et molécule cardio ou néphroprotectrice d'emblée"
+        },
+        {
+          "id": "o1",
+          "type": "action",
+          "items": [
+            {
+              "id": "dt2-018",
+              "refs": [],
+              "text": "Ajouter un aGLP1 (dose antidiabétique), suivi rétinien.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 22,
+                  "quote": "il est recommandé l’ajout de aGLP1 à dose antidiabétique, si présence obésité (IMC > ou égale à 30 kg/m2)",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "faible",
+              "condition": "IMC ≥ 30 kg/m²"
+            },
+            {
+              "id": "dt2-061",
+              "refs": [],
+              "text": "Stéatose hépatique ou obésité sévère : orienter vers un aGLP1.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 31,
+                  "quote": "La présence d’une stéatose hépatique ou d’une obésité sévère oriente préférentiellement vers un aGLP1",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "faible",
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "o1-b0",
+              "label": "Objectif atteint",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "o1-b1",
+              "label": "Objectif non atteint à la réévaluation",
+              "next_node_id": "a3"
+            }
+          ],
+          "question": "Metformine et aGLP1"
+        },
+        {
+          "id": "e0",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "e0-b0",
+              "label": "Non",
+              "next_node_id": "e2"
+            },
+            {
+              "id": "e0-b1",
+              "label": "Oui",
+              "next_node_id": "e1"
+            }
+          ],
+          "question": "Patient fragile ou malade, proche de l'objectif ?"
+        },
+        {
+          "id": "e1",
+          "type": "end",
+          "items": [
+            {
+              "id": "dt2-025",
+              "refs": [],
+              "text": "Pas de traitement possible, sous surveillance.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 29,
+                  "quote": "Pour les personnes âgées dites « fragiles » ou « malades », et si l’écart à l’objectif est faible (moins de 0,5 % en valeur absolue d’HbA1c), l’absence de traitement médicamenteux peut être envisagée en maintenant une surveillance de l’équilibre glycémique",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": null,
+              "condition": "fragile ou malade, écart à l'objectif < 0,5 % d'HbA1c"
+            }
+          ],
+          "branches": [],
+          "question": "Abstention médicamenteuse possible"
+        },
+        {
+          "id": "e2",
+          "type": "action",
+          "items": [
+            {
+              "id": "dt2-024",
+              "refs": [],
+              "text": "Metformine en 1re intention ; surveiller digestion, poids, vitamine B12.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 28,
+                  "quote": "la metformine est le traitement de 1re intention, en portant une attention particulière aux troubles digestifs et nutritionnels, en particulier amaigrissements et carence en vitamine B12",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "faible",
+              "condition": "fonction rénale normale, prise sécurisée"
+            }
+          ],
+          "branches": [
+            {
+              "id": "e2-b0",
+              "label": "Objectif atteint",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "e2-b1",
+              "label": "Objectif non atteint à la réévaluation",
+              "next_node_id": "a2"
+            }
+          ],
+          "question": "Metformine en première intention"
+        },
+        {
+          "id": "m1",
+          "type": "end",
+          "items": [
+            {
+              "id": "dt2-012",
+              "refs": [],
+              "text": "iSGLT2.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 20,
+                  "quote": "En cas d’intolérance ou de contre-indication à la metformine chez les sujets présentant une insuffisance cardiaque chronique, une maladie cardiovasculaire artérioscléreuse établie, une néphropathie diabétique ou les sujets à haut risque cardiovasculaire, il est recommandé de prescrire un iSGLT2",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": "faible",
+              "condition": "IC, maladie cardiovasculaire, néphropathie ou haut risque cardiovasculaire"
+            },
+            {
+              "id": "dt2-013",
+              "refs": [],
+              "text": "Par ordre : iSGLT2 ou aGLP1, puis iDPP4.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 20,
+                  "quote": "iSGLT2 ou un aGLP1* pour leurs effets cardio et néphroprotecteurs, ou leur impact pondéral",
+                  "source_id": "has-dt2-2024"
+                },
+                {
+                  "page": 20,
+                  "quote": "iDPP4, option la plus simple pour la pratique clinique en l’absence d’insuffisance cardiaque, de maladie cardiovasculaire artérioscléreuse établie, de néphropathie diabétique ou d’un haut risque cardiovasculaire",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": null,
+              "condition": "aucune de ces situations"
+            }
+          ],
+          "branches": [],
+          "question": "Alternative à la metformine"
+        },
+        {
+          "id": "x1",
+          "type": "action",
+          "items": [
+            {
+              "id": "dt2-011",
+              "refs": [],
+              "text": "Bithérapie, voire insuline d'emblée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 20,
+                  "quote": "en cas de symptômes d’hyperglycémie (syndrome polyuro-polydipsique, amaigrissement) ou de diabète très déséquilibré avec des glycémies répétées supérieures à 3 g/l ou un taux d’HbA1c supérieur à 10 %, une bithérapie, voire une insulinothérapie peuvent être instaurées d’emblée",
+                  "source_id": "has-dt2-2024"
+                }
+              ],
+              "strength": null,
+              "condition": "symptômes, glycémies > 3 g/l répétées ou HbA1c > 10 %"
+            }
+          ],
+          "branches": [
+            {
+              "id": "x1-b0",
+              "label": "Objectif atteint",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "x1-b1",
+              "label": "Objectif non atteint à la réévaluation",
+              "next_node_id": "a3"
+            },
+            {
+              "id": "x1-b2",
+              "label": "Insuline nécessaire",
+              "next_node_id": "i1"
+            }
+          ],
+          "question": "Bithérapie, voire insuline d'emblée"
+        },
+        {
+          "id": "r1",
+          "type": "action",
+          "items": [
+            {
+              "id": "dz-015",
+              "refs": [],
+              "text": "Consultation 1 à 2 mois avant : évaluation clinique complète, HbA1c et autocontrôle, bilan lipidique, plan de surveillance et éducation.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 92,
+                  "quote": "Programmation du jeûne (1 à 2 mois avant le ramadan)",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 92,
+                  "quote": "Evaluation du contrôle glycémique (HbA1c et autocontrôle)",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 92,
+                  "quote": "Etablir la surveillance au cours du ramadan",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-013",
+              "refs": [],
+              "text": "Très haut risque : hypoglycémie sévère, acidocétose ou coma hyperosmolaire dans les 3 mois, hypoglycémies non ressenties, très mauvais contrôle, IR terminale ou complications macrovasculaires graves, maladie intercurrente, grossesse.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 92,
+                  "quote": "Hypoglycémies sévères dans les 3 mois",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 92,
+                  "quote": "Céto acidose, coma hyperosmolaire durant les 3 mois précédant le ramadan",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 92,
+                  "quote": "Antécédent d’hypoglycémies non ressenties",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 92,
+                  "quote": "Très mauvais contrôle glycémique",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 92,
+                  "quote": "Insuffisance rénale terminale, complications macro-vasculaires graves ou co morbidités",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 92,
+                  "quote": "Maladie intercurrente",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-014",
+              "refs": [],
+              "text": "Jeûne formellement interdit chez les sujets à haut risque, mais tenir compte de la décision du patient et négocier une stratégie adaptée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 93,
+                  "quote": "Chez le diabétique de type 1, surtout si le contrôle glycémique est mauvais et chez tous les sujets à haut risque, le jeûne est formellement interdit mais il faut tenir compte de la décision personnelle du diabétique et négocier une stratégie adaptée.",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": "sujet à très haut risque"
+            }
+          ],
+          "branches": [
+            {
+              "id": "r1-b0",
+              "label": "Le patient jeûne",
+              "next_node_id": "r2"
+            }
+          ],
+          "question": "Préparer le jeûne, 1 à 2 mois avant"
+        },
+        {
+          "id": "r2",
+          "type": "end",
+          "items": [
+            {
+              "id": "dz-016",
+              "refs": [],
+              "text": "Rompre le jeûne immédiatement si glycémie < 0,60 g/l, < 0,70 g/l peu après le début du jeûne, ou > 3 g/l.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 93,
+                  "quote": "Si hypoglycémie < 0,60 g/l",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 93,
+                  "quote": "Si glycémie < 0,70 g/l, quelques heures après le début du jeûne particulièrement si le patient a pris de l’insuline, sulfonylurées ou glinides juste à l’aube",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 93,
+                  "quote": "Si glycémie > 3 g/l",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-017",
+              "refs": [],
+              "text": "Metformine : 1 g à l'iftar et 500 mg au shour, boire abondamment.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 93,
+                  "quote": "metformine : 1 g iftar et 500 mg shour (apport hydrique +++)",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-018",
+              "refs": [],
+              "text": "Glimépiride ou gliclazide en prise unique : à l'iftar, dose adaptée au contrôle et au risque d'hypoglycémie.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 93,
+                  "quote": "glimepiride et gliclazide 30 (monoprise) : prise du médicament à l’iftar, adapter la dose en fonction du contrôle glycémique et du risque d’hypoglycémie.",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-019",
+              "refs": [],
+              "text": "Répaglinide : avant l'iftar et le shour.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 93,
+                  "quote": "glinides (repaglinide) : avant iftar et shour (adapter la dose en fonction des glycémies).",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-020",
+              "refs": [],
+              "text": "Préférer les ADO à courte durée d'action, dose fractionnée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 93,
+                  "quote": "Il est préférable de remplacer les ADO à longue durée d’action par des ADO à courte durée d’action en fractionnant la dose.",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-021",
+              "refs": [],
+              "text": "Insuline basale, si bon équilibre : réduire la dose de 20 % à la rupture du jeûne.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 93,
+                  "quote": "Insuline basale : si bon équilibre, réduire la dose de 20% au moment de la rupture du jeûne",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "dz-022",
+              "refs": [],
+              "text": "Repas équilibrés et fractionnés, boire la nuit, dernier repas juste avant le début du jeûne.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 93,
+                  "quote": "Le régime diététique doit être équilibré et fractionné",
+                  "source_id": "dz-guide-diabeto-2015"
+                },
+                {
+                  "page": 93,
+                  "quote": "Augmenter les boissons la nuit et prendre le dernier repas juste avant le début jeûne",
+                  "source_id": "dz-guide-diabeto-2015"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [],
+          "question": "Adapter le traitement pendant le Ramadan"
+        },
+        {
+          "id": "ok",
+          "type": "end",
+          "items": [],
+          "branches": [],
+          "question": "Objectif atteint : poursuivre, suivi tous les 3 à 6 mois"
+        }
+      ],
+      "start_node_id": "s0"
+    },
+    "symptoms": [
+      {
+        "id": "dt2-003",
+        "refs": [],
+        "text": "Symptômes de diabète : polyurie, polydipsie, amaigrissement.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "la présence de symptômes de diabète (polyurie, polydipsie, amaigrissement)",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-004",
+        "refs": [],
+        "text": "Présentation atypique : évoquer un autre type de diabète (DT1, secondaire, monogénique).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "En cas de présentation atypique (carence en insuline, perte de poids ou hyperglycémie majeure), il faut évoquer un autre type de diabète (DT1, secondaire, monogénique).",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": "carence en insuline, perte de poids ou hyperglycémie majeure"
+      }
+    ],
+    "diagnosis": [
+      {
+        "id": "dt2-026",
+        "refs": [],
+        "text": "Glycémie à jeun > 1,26 g/l (7,0 mmol/l), vérifiée à deux reprises.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "une glycémie supérieure à 1,26 g/l (7,0 mmol/l) après un jeûne de 8 heures et vérifiée à deux reprises",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-027",
+        "refs": [],
+        "text": "Glycémie veineuse ≥ 2 g/l (11,1 mmol/l) associée à des symptômes.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "associée à une glycémie (sur plasma veineux) supérieure ou égale à 2 g/l (11,1 mmol/l)",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dt2-028",
+        "refs": [],
+        "text": "Glycémie veineuse ≥ 2 g/l à 2 h d'une charge orale de 75 g de glucose.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "une glycémie (sur plasma veineux) supérieure ou égale à 2 g/l (11,1 mmol/l) 2 heures après une charge orale de 75 g de glucose",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ]
+  },
+  "review": {
+    "reviewer": "Mounib Zaidi",
+    "change_log": [
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Conversion depuis l'ancien format fiche vers le schéma 1.1.0"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Critères diagnostiques déplacés de assess.tests vers assess.diagnosis"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Citations complétées pour couvrir chaque nombre ; nœuds terminaux en type end"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Cibles HbA1c : citation d'en-tête trop courte retirée, texte reformulé"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Arbre refait en questions successives ; unité de dose corrigée ; répétitions retirées"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Ajout de 8 fiches médicament (metformine, gliclazide, glimépiride, répaglinide, acarbose, sitagliptine, vildagliptine, liraglutide) depuis le guide algérien 2015"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Fusion du guide algérien 2015 : urgences (hypoglycémie, acidocétose, coma hyperosmolaire), Ramadan, variante insuline, conseils"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Fiche médicament répaglinide retirée : pas de dose initiale dans les sources"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Insuline basale scindée en glargine, détémir, NPH (guide algérien p.22) ; DCI metformine simplifiée pour la recherche nomenclature"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Arbre refait en grille par profil (8 onglets), textes raccourcis"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Onglets réordonnés (cas le plus fréquent en premier), libellés allégés"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Place de chaque médicament dans la stratégie (condition) et ordre des fiches selon HAS 2024"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-21",
+        "summary": "Arbre refait en plan par étapes avec embranchements (objectif atteint / non atteint), skill fiche-protocole-v1-1"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Couverture HAS complétée : insuffisance cardiaque (metformine, sitagliptine), stéatose, éducation thérapeutique, projet de grossesse"
+      },
+      {
+        "by": "Mounib Zaidi",
+        "date": "2026-10-22",
+        "summary": "Marqué corrigé sans correction : med-gliclazide (Missing fields: frequency) ; med-gliclazide (Number not in the quotes: 2, 4) ; med-insuline-nph (Evidence 3: quote not found on the given page (quote too short to check))"
+      }
+    ],
+    "reviewed_at": "2026-10-22",
+    "clinical_approval": true,
+    "unresolved_issues": [
+      "Disponibilité et marques en Algérie non renseignées (nomenclature)",
+      "Urgence des orientations (dt2-041, dt2-042) choisie par l'éditeur, non donnée par la source",
+      "Grades HAS : A→forte, B→modérée, C→faible, AE→non renseigné",
+      "Doses issues du guide algérien 2015 ; stratégie (quelle molécule, quand) issue de HAS 2024",
+      "Aucun iSGLT2 dans le guide 2015 : pas de fiche médicament iSGLT2 alors que HAS 2024 les recommande",
+      "Sulfamides et répaglinide : rythme des prises non précisé dans la source",
+      "Metformine p.35 : la césure de « 48-72h » est perdue à l'extraction de texte, vérifier la citation à l'œil",
+      "Insuline basale : HAS 2024 débute à 0,1 U/kg/24 h et ajuste de 1 à 2 UI tous les 3 jours ; le guide algérien 2015 débute à 0,2 U/kg/j et ajoute 2 U tous les 2 jours (p.41). Les deux sont affichés, à trancher",
+      "Guide algérien 2015 antérieur aux iSGLT2 : la stratégie suit HAS 2024",
+      "dz-018 : la source écrit « gliclazide 30 » (forme LM), à vérifier",
+      "Pas de fiche médicament iSGLT2 (empagliflozine, dapagliflozine) : aucune posologie dans les sources, RCP à ajouter"
+    ]
+  },
+  "red_box": {
+    "signs": [
+      {
+        "id": "dz-001",
+        "refs": [],
+        "text": "Hypoglycémie sévère avec confusion mentale : hospitalisation.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 46,
+            "quote": "Si l’hypoglycémie est sévère, avec confusion mentale concomitante, l’hospitalisation est nécessaire",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dz-002",
+        "refs": [],
+        "text": "Hyperglycémie avec cétonurie intense : penser à l'acidocétose ; coma profond : réanimation.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 47,
+            "quote": "contexte clinique + hyperglycémie + cétonurie ++++ PENSER à l’ ACD",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 48,
+            "quote": "NB : si coma profond orientez vers la réanimation médicale",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "dz-003",
+        "refs": [],
+        "text": "Hyperglycémie majeure > 6 g/l, déshydratation sévère, cétonurie absente ou légère, souvent après 60 ans : coma hyperosmolaire, admettre en milieu spécialisé.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 51,
+            "quote": "La majorité des patients ont > 60 ans.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 51,
+            "quote": "Hyperglycémie majeure > 6 g/l",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 51,
+            "quote": "Cétonurie absente (ou légère)",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 51,
+            "quote": "La présence d'une déshydratation sévère (10-12 litres) est de règle.",
+            "source_id": "dz-guide-diabeto-2015"
+          },
+          {
+            "page": 50,
+            "quote": "Malade à admettre en milieu spécialisé.",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "actions": [
+      {
+        "id": "dz-004",
+        "refs": [],
+        "text": "Donner du sucre dans tous les cas.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 46,
+            "quote": "Donner du sucre dans tous les cas.",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": "hypoglycémie"
+      },
+      {
+        "id": "dz-005",
+        "refs": [],
+        "text": "Glucosé 30 %, 40 cc en IV directe, puis sucres complexes au réveil.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 46,
+            "quote": "Si la prise de sucre est impossible, administrer du soluté glucosé 30% 40 cc en i.v. directe (puis lorsque le malade reprend conscience donner des sucres complexes).",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": "prise de sucre impossible"
+      },
+      {
+        "id": "dz-006",
+        "refs": [],
+        "text": "Glucagon 1 mg IM ou IV, ou glucosé 30 % en IVD.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 46,
+            "quote": "Chez le diabétique traité par insuline, on peut administrer du glucagon 1 mg par voie i.m. ou i.v. ou du glucosé 30% en i.v.d.",
+            "source_id": "dz-guide-diabeto-2015"
+          }
+        ],
+        "strength": null,
+        "condition": "patient traité par insuline"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "has-dt2-2024",
+      "url": "https://has-sante.fr/upload/docs/application/pdf/2024-06/strategie_therapeutique_du_patient_vivant_avec_un_diabete_de_type_2_-_recommandations.pdf",
+      "title": "Stratégie thérapeutique du patient vivant avec un diabète de type 2",
+      "citation": "Haute Autorité de santé (HAS) ; groupe de travail : Cloppet-Fontaine A, Grenet G, Pinto T, Blanchard S. Recommandation de bonne pratique, validée par le Collège le 30 mai 2024",
+      "accessed_at": "2026-10-20",
+      "page_offset": 0,
+      "organisation": "Haute Autorité de santé (HAS)",
+      "publication_date": "2024-05-30"
+    },
+    {
+      "id": "dz-guide-diabeto-2015",
+      "url": "https://extranet.who.int/ncdccs/Data/DZA_D1_guide%20diab%c3%a8te%20de%20bonnes%20pratique%20en%20diab%c3%a8tologie%2021x15%20cm%20151020.pdf",
+      "title": "Guide de bonnes pratiques en diabétologie à l’usage des praticiens",
+      "citation": "Comité d’experts en diabétologie, Direction générale de la prévention et de la promotion de la santé, Ministère de la Santé, Algérie, 2015 (2e édition)",
+      "accessed_at": "2026-10-20",
+      "page_offset": 0,
+      "organisation": "Ministère de la Santé, de la Population et de la Réforme Hospitalière (Algérie)",
+      "publication_date": "2015"
+    }
+  ],
+  "refer_follow": {
+    "refer": [
+      {
+        "id": "dt2-041",
+        "urgency": "next_appointment",
+        "criteria": "insulinothérapie basal-bolus, ou diabète non équilibré après la prise en charge initiale en médecine générale",
+        "evidence": [
+          {
+            "page": 13,
+            "quote": "Une consultation avec un spécialiste endocrinologue diabétologue nutritionniste (EDN) est requise pour les patients vivant avec un DT2 traités par insulinothérapie intensive (basal-bolus) et/ou les patients vivant avec un DT2 qui ne sont pas à l’équilibre glycémique après la prise en charge initiale en médecine générale",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "destination": "Endocrinologue diabétologue nutritionniste (EDN)"
+      },
+      {
+        "id": "dt2-042",
+        "urgency": "same_week",
+        "criteria": "femme vivant avec un DT2 ayant un projet de grossesse",
+        "evidence": [
+          {
+            "page": 34,
+            "quote": "La prise en charge de toute femme vivant avec un DT2 ayant un projet de grossesse doit être individualisée, par le médecin EDN et en lien avec l’équipe d’obstétrique et le médecin traitant",
+            "source_id": "has-dt2-2024"
+          }
+        ],
+        "strength": null,
+        "destination": "EDN, avec l'équipe d'obstétrique et le médecin traitant"
+      }
+    ],
+    "follow_up": [
+      {
+        "id": "dt2-045",
+        "what": "Réévaluer le traitement",
+        "when": "3 à 6 mois après chaque changement, plus tôt si symptômes ou effets indésirables",
+        "evidence": [
+          {
+            "page": 19,
+            "quote": "La réévaluation du traitement est nécessaire après un intervalle de 3 à 6 mois",
+            "source_id": "has-dt2-2024"
+          }
+        ]
+      },
+      {
+        "id": "dt2-046",
+        "what": "Consultation de suivi en soins primaires",
+        "when": "Tous les 3 à 6 mois une fois les objectifs atteints",
+        "evidence": [
+          {
+            "page": 18,
+            "quote": "Après l’atteinte des objectifs, une consultation tous les 3 à 6 mois est généralement suffisante par son équipe de soins primaires",
+            "source_id": "has-dt2-2024"
+          }
+        ]
+      },
+      {
+        "id": "dt2-044",
+        "what": "Poids",
+        "when": "À chaque consultation",
+        "evidence": [
+          {
+            "page": 14,
+            "quote": "Le poids est à surveiller systématiquement à chaque consultation.",
+            "source_id": "has-dt2-2024"
+          }
+        ]
+      }
+    ]
+  },
+  "schema_version": "1.1.0"
+}

@@ -1,0 +1,1337 @@
+{
+  "meta": {
+    "id": "oap-cardiogenique",
+    "title": "Œdème aigu du poumon cardiogénique et IC décompensée",
+    "motifs": [
+      "OAP",
+      "œdème aigu du poumon",
+      "insuffisance cardiaque décompensée",
+      "dyspnée aiguë"
+    ],
+    "status": "published",
+    "country": "DZ",
+    "version": "1.3.0",
+    "audience": [
+      "MG",
+      "urgences"
+    ],
+    "language": "fr",
+    "template": "urgence",
+    "specialite": "cardiologie",
+    "next_review_at": null,
+    "last_reviewed_at": "2026-10-22"
+  },
+  "scope": {
+    "exclusions": [
+      "OAP non cardiogénique"
+    ],
+    "population": "Adulte avec insuffisance cardiaque décompensée (OAP, choc cardiogénique, congestion), de novo ou sur IC connue"
+  },
+  "treat": {
+    "do_not": [
+      {
+        "id": "hf-033",
+        "refs": [],
+        "text": "Pas d'opiacés en routine (risque d'insuffisance respiratoire), sauf anxiété ou détresse sévère réfractaire.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5395,
+            "quote": "Routine use of opiates is not recommended in patients with DHF; Their use should be limited to carefully selected patients with severe anxiety or distress refractory to other treatments and must be approached with caution due to the risk of respira",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "actions": [
+      {
+        "id": "hf-032",
+        "refs": [],
+        "text": "Apports hydriques inférieurs à la diurèse.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5393,
+            "quote": "fluid intake should be less than urine output",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "medications": [
+      {
+        "id": "med-furosemide",
+        "inn": "furosémide",
+        "dose": 40,
+        "phase": "initiation",
+        "route": "intraveineuse",
+        "missing": [
+          "duration",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 5393,
+            "quote": "Patients naïve to diuretics usually respond well to 40 mg of i.v. furosemide or equivalent, whereas i.v. doses of two times the patient’s usual oral diuretic dose",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5394,
+            "quote": "Repeat the diuretic regime every 12 h until complete decongestion",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5394,
+            "quote": "furosemide 600 mg, although up to 1000 mg may be considered in patients with severely impaired kidney function.",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5394,
+            "quote": "Double the dose of loop diuretic",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5394,
+            "quote": "Higher initial i.v. dose in case of CKD.",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "max_dose": "600 mg/j, jusqu'à 1000 mg si insuffisance rénale sévère",
+        "strength": "forte",
+        "condition": "IC décompensée avec surcharge, patient naïf de diurétique ; sinon deux fois la dose orale habituelle en IV",
+        "dose_unit": "mg",
+        "frequency": "toutes les 12 h jusqu'à décongestion complète",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Doubler la dose si réponse insuffisante",
+          "Dose initiale plus élevée si maladie rénale chronique"
+        ],
+        "alternative_group": null,
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-isosorbide-dinitrate",
+        "inn": "isosorbide dinitrate",
+        "dose": 5,
+        "phase": "unique",
+        "route": "sublinguale",
+        "missing": [
+          "duration",
+          "contraindications",
+          "adjustments"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 1,
+            "quote": "Ajouter un dérivé nitré (vasodilatateur) à action rapide à condition que la pression artérielle systolique soit > 100 mmHg.",
+            "source_id": "msf-gct-2021"
+          },
+          {
+            "page": 1,
+            "quote": "5 mg par dose ; jusqu’à 2 doses espacées de 10 minutes si nécessaire",
+            "source_id": "msf-gct-2021"
+          }
+        ],
+        "max_dose": "2 doses",
+        "strength": null,
+        "condition": "OAP au cabinet, si PAS > 100 mmHg",
+        "dose_unit": "mg",
+        "frequency": "répéter après 10 minutes si nécessaire",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [],
+        "alternative_group": "nitre-sl",
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-trinitrine",
+        "inn": "trinitrine",
+        "dose": 0.5,
+        "phase": "unique",
+        "route": "sublinguale",
+        "missing": [
+          "duration",
+          "contraindications",
+          "adjustments"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 1,
+            "quote": "Ajouter un dérivé nitré (vasodilatateur) à action rapide à condition que la pression artérielle systolique soit > 100 mmHg.",
+            "source_id": "msf-gct-2021"
+          },
+          {
+            "page": 1,
+            "quote": "0,5 mg par dose ; jusqu’à 3 doses espacées de 5 minutes si nécessaire",
+            "source_id": "msf-gct-2021"
+          }
+        ],
+        "max_dose": "3 doses",
+        "strength": null,
+        "condition": "OAP au cabinet, si PAS > 100 mmHg",
+        "dose_unit": "mg",
+        "frequency": "répéter toutes les 5 minutes si nécessaire",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [],
+        "alternative_group": "nitre-sl",
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-metolazone",
+        "inn": "métolazone",
+        "dose": 2.5,
+        "phase": null,
+        "route": "orale",
+        "missing": [
+          "phase",
+          "frequency",
+          "duration",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 5393,
+            "quote": "Thiazide-like diuretics—particularly oral metolazone (2.5–5 mg)—can be used in patients with advanced HF who exhibit diuretic resistance",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5393,
+            "quote": "or in those with an eGFR <30 mL/min/1.73 m2",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "max_dose": "5 mg",
+        "strength": null,
+        "condition": "IC avancée résistante aux diurétiques, ou DFG < 30 mL/min/1,73 m², en ajout au diurétique de l'anse",
+        "dose_unit": "mg",
+        "frequency": null,
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Surveiller DFG et électrolytes"
+        ],
+        "alternative_group": null,
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-empagliflozine",
+        "inn": "empagliflozine",
+        "dose": 10,
+        "phase": "initiation",
+        "route": "orale",
+        "missing": [
+          "frequency",
+          "duration",
+          "max_dose",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 5395,
+            "quote": "The EMPULSE trial demonstrated that in-hospital initiation of 10 mg empagliflozin resulted in significantly higher chances of clinical benefit, at 90 days.",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5395,
+            "quote": "early initiation of SGLT2-Is in DHF is recommended both as part of FMT",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "max_dose": null,
+        "strength": null,
+        "condition": "IC décompensée, débuter tôt pendant l'hospitalisation",
+        "dose_unit": "mg",
+        "frequency": null,
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [],
+        "alternative_group": null,
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      }
+    ]
+  },
+  "advise": [],
+  "assess": {
+    "ask": [],
+    "tests": [],
+    "examine": [],
+    "pathway": {
+      "nodes": [
+        {
+          "id": "s0",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "s0-b0",
+              "label": "OAP",
+              "next_node_id": "t0"
+            },
+            {
+              "id": "s0-b1",
+              "label": "Choc cardiogénique",
+              "next_node_id": "t2"
+            },
+            {
+              "id": "s0-b2",
+              "label": "IC décompensée, congestion progressive",
+              "next_node_id": "t3"
+            },
+            {
+              "id": "s0-b3",
+              "label": "Aggravation d'une IC chronique, en ambulatoire",
+              "next_node_id": "t4"
+            }
+          ],
+          "question": "Présentation"
+        },
+        {
+          "id": "t0",
+          "type": "action",
+          "items": [
+            {
+              "id": "hf-010",
+              "refs": [],
+              "text": "Ne pas retarder le transfert vers le service adapté.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5390,
+                  "quote": "Pre-hospital management should not delay the rapid transfer of the patient to the most appropriate medical setting, where further work-up is undertaken.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-040",
+              "refs": [],
+              "text": "Position demi-assise, jambes pendantes.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "Placer le patient en position demi-assise, jambes pendantes.",
+                  "source_id": "msf-gct-2021"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-041",
+              "refs": [],
+              "text": "Oxygène au masque, débit pour maintenir SpO2 ≥ 95 %.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "En cas de SpO2 < 90%, administrer de l’oxygène au masque au débit nécessaire pour maintenir une SpO2 ≥ 95%.",
+                  "source_id": "msf-gct-2021"
+                }
+              ],
+              "strength": null,
+              "condition": "SpO2 < 90 %"
+            },
+            {
+              "id": "hf-042",
+              "refs": [],
+              "text": "Oxygène 6 à 10 L/min.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "En l’absence d’oxymètre de pouls, administrer de l’oxygène au débit de 6 à 10 litres/minute chez les patients présentant des signes cliniques d’hypoxie.",
+                  "source_id": "msf-gct-2021"
+                }
+              ],
+              "strength": null,
+              "condition": "pas d'oxymètre et signes cliniques d'hypoxie"
+            },
+            {
+              "id": "hf-043",
+              "refs": [],
+              "text": "Poser une voie veineuse.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "La pression artérielle systolique est ≥ 90 mmHg",
+                  "source_id": "msf-gct-2021"
+                },
+                {
+                  "page": 1,
+                  "quote": "Poser une voie veineuse.",
+                  "source_id": "msf-gct-2021"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t0-b0",
+              "label": "PA conservée : traiter en attendant le transfert",
+              "next_node_id": "t0b"
+            },
+            {
+              "id": "t0-b1",
+              "label": "Hypotension : choc cardiogénique",
+              "next_node_id": "t2"
+            }
+          ],
+          "question": "Au cabinet : premiers gestes"
+        },
+        {
+          "id": "t0b",
+          "type": "action",
+          "items": [
+            {
+              "id": "hf-044",
+              "refs": [],
+              "text": "Furosémide IV 40 à 80 mg, renouvelable une fois selon diurèse, détresse respiratoire et SpO2. Si déjà sous plus de 40 mg : sa dose habituelle en IV.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "En cas de signes de surcharge volémique (et/ou en cas d’urgence hypertensive) : furosémide IV, 40 à 80 mg, peut être renouvelé une fois en fonction de la diurèse, des signes de détresse respiratoire et de la SpO2.",
+                  "source_id": "msf-gct-2021"
+                },
+                {
+                  "page": 1,
+                  "quote": "Si le patient était déjà sous furosémide à des doses > 40 mg, administrer sa dose habituelle par voie IV.",
+                  "source_id": "msf-gct-2021"
+                }
+              ],
+              "strength": null,
+              "condition": "signes de surcharge ou urgence hypertensive"
+            },
+            {
+              "id": "hf-045",
+              "refs": [],
+              "text": "Dérivé nitré sublingual : dinitrate d'isosorbide 5 mg (2 doses max à 10 min), ou trinitrine 0,5 mg (3 doses max à 5 min).",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "Ajouter un dérivé nitré (vasodilatateur) à action rapide à condition que la pression artérielle systolique soit > 100 mmHg.",
+                  "source_id": "msf-gct-2021"
+                },
+                {
+                  "page": 1,
+                  "quote": "5 mg par dose ; jusqu’à 2 doses espacées de 10 minutes si nécessaire",
+                  "source_id": "msf-gct-2021"
+                },
+                {
+                  "page": 1,
+                  "quote": "0,5 mg par dose ; jusqu’à 3 doses espacées de 5 minutes si nécessaire",
+                  "source_id": "msf-gct-2021"
+                }
+              ],
+              "strength": null,
+              "condition": "PAS > 100 mmHg"
+            },
+            {
+              "id": "hf-046",
+              "refs": [],
+              "text": "Baisser la PA progressivement vers la valeur habituelle du patient ; si inconnue, PAS 120 à 150 et PAD < 110 mmHg.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "L'objectif du traitement est de ramener progressivement la pression systolique à un niveau proche de la valeur habituelle du patient.",
+                  "source_id": "msf-gct-2021"
+                },
+                {
+                  "page": 1,
+                  "quote": "ramener la pression systolique à 120-150 mmHg et la pression diastolique à moins de 110 mmHg.",
+                  "source_id": "msf-gct-2021"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-047",
+              "refs": [],
+              "text": "Surveiller FC, FR, PA, SpO2, conscience, diurèse.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "Surveillance : FC, FR, TA, SpO2, conscience, diurèse.",
+                  "source_id": "msf-gct-2021"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t0b-b0",
+              "label": "Prise en charge par le SAMU ou les urgences",
+              "next_node_id": "t1"
+            }
+          ],
+          "question": "Au cabinet : traitement en attendant le transfert"
+        },
+        {
+          "id": "t1",
+          "type": "action",
+          "items": [
+            {
+              "id": "hf-011",
+              "refs": [],
+              "text": "Oxygène si SpO2 < 90 %, pas chez le patient non hypoxémique.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5395,
+                  "quote": "Oxygen is recommended in patients with SpO2 <90% or PaO2 <60 mmHg to correct hypoxaemia.",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5393,
+                  "quote": "indiscriminate oxygen administration in non-hypoxaemic patients may be harmful.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": "forte",
+              "condition": null
+            },
+            {
+              "id": "hf-014",
+              "refs": [],
+              "text": "Ventilation non invasive le plus tôt possible.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5395,
+                  "quote": "Non-invasive positive pressure ventilation should be considered in patients with respiratory distress (respiratory rate >25 breaths/min, SpO2 <90%) and started as soon as possible in order to decrease respiratory distress and reduce the risk of endotracheal intubation.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": "modérée",
+              "condition": "fréquence respiratoire > 25/min, SpO2 < 90 %"
+            },
+            {
+              "id": "hf-015",
+              "refs": [],
+              "text": "Vasodilatateur IV (nitroglycérine) en traitement initial, PA surveillée de près.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5396,
+                  "quote": "Intravenous vasodilators may be considered as initial therapy in patients with DHF and systolic blood pressure >110 mmHg to improve symptoms and reduce congestion.",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5395,
+                  "quote": "close monitoring of blood pressure is recommended during drug administration, as hypotension related to vasodilatation may be harmful.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": "faible",
+              "condition": "PAS > 110 mmHg"
+            },
+            {
+              "id": "hf-016",
+              "refs": [],
+              "text": "Fortes doses de diurétique rarement nécessaires (redistribution plutôt que surcharge).",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5389,
+                  "quote": "Such patients usually do not need high doses of diuretics, but they may need vasodilators.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t1-b0",
+              "label": "Amélioration",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "t1-b1",
+              "label": "Insuffisance respiratoire persistante malgré oxygène ou VNI",
+              "next_node_id": "t1b"
+            }
+          ],
+          "question": "OAP : prise en charge initiale (SAMU, urgences)"
+        },
+        {
+          "id": "t1b",
+          "type": "end",
+          "items": [
+            {
+              "id": "hf-017",
+              "refs": [],
+              "text": "Intubation.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5395,
+                  "quote": "Intubation is recommended in patients with DHF and persistent and progressive respiratory failure despite oxygen administration or non-invasive ventilation to correct hypoxaemia",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": "forte",
+              "condition": null
+            }
+          ],
+          "branches": [],
+          "question": "Intubation"
+        },
+        {
+          "id": "t2",
+          "type": "end",
+          "items": [
+            {
+              "id": "hf-018",
+              "refs": [],
+              "text": "Avis de l'équipe de choc si une assistance circulatoire peut être indiquée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5390,
+                  "quote": "In patients with suspicion of CS and with a potential indication for temporary MCS, consultation with the Shock Team is recom",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-019",
+              "refs": [],
+              "text": "VNI avec prudence en cas d'hypotension.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5393,
+                  "quote": "should therefore be used with caution in patients with reduced preload reserve and hypotension",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-020",
+              "refs": [],
+              "text": "À l'hôpital : inotropes si PAS < 90 mmHg et hypoperfusion malgré le traitement ; noradrénaline de préférence si vasopresseur.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5396,
+                  "quote": "Inotropic agents may be considered in patients with systolic blood pressure <90 mmHg and evidence of hypoperfusion who do not respond to standard treatment, including fluid challenge, to improve perfusion.",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5396,
+                  "quote": "Vasopressors, preferably norepinephrine, may be considered in patients with cardiogenic shock to increase blood pressure and vital organ perfusion.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": "faible",
+              "condition": null
+            }
+          ],
+          "branches": [],
+          "question": "Choc cardiogénique : transfert en milieu spécialisé"
+        },
+        {
+          "id": "t3",
+          "type": "action",
+          "items": [
+            {
+              "id": "hf-012",
+              "refs": [],
+              "text": "Furosémide IV : 40 mg si naïf de diurétique, sinon deux fois la dose orale habituelle.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5393,
+                  "quote": "Patients naïve to diuretics usually respond well to 40 mg of i.v. furosemide or equivalent, whereas i.v. doses of two times the patient’s usual oral diuretic dose",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5395,
+                  "quote": "Intravenous loop diuretics are recommended for all patients with DHF admitted with fluid overload to improve",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": "forte",
+              "condition": "surcharge hydrosodée"
+            },
+            {
+              "id": "hf-022",
+              "refs": [],
+              "text": "Surveiller souvent hypotension et hypoperfusion ; créatinine et ionogramme au moins toutes les 24 h.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5394,
+                  "quote": "Check frequently for hypotension/hypoperfusion. Check serum creatinine and electrolytes",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5394,
+                  "quote": "at least every 24 h FMT initiation/uptitration",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-023",
+              "refs": [],
+              "text": "Débuter tôt un iSGLT2, aussi pour faciliter la décongestion.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5395,
+                  "quote": "early initiation of SGLT2-Is in DHF is recommended both as part of FMT",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-024",
+              "refs": [],
+              "text": "Réponse satisfaisante : natriurèse ≥ 70 mmol/L à 2 h ou diurèse ≥ 100 mL/h à 6 h.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5394,
+                  "quote": "Spot uNa+ at 2 h ≥70 mmol/L OR Urine output at 6h ≥100 mL/h",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-013",
+              "refs": [],
+              "text": "Ne pas arrêter le traitement de fond de l'IC, sauf hypoperfusion.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5390,
+                  "quote": "Discontinuation of FMT is not recommended unless there are clear signs of hypoperfusion or specific clinical indications.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t3-b0",
+              "label": "Réponse satisfaisante",
+              "next_node_id": "t3b"
+            },
+            {
+              "id": "t3-b1",
+              "label": "Réponse insuffisante",
+              "next_node_id": "t3c"
+            }
+          ],
+          "question": "Décongestion par diurétique de l'anse IV"
+        },
+        {
+          "id": "t3b",
+          "type": "action",
+          "items": [
+            {
+              "id": "hf-025",
+              "refs": [],
+              "text": "Répéter le même schéma toutes les 12 h jusqu'à décongestion complète, puis relais oral si besoin.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5394,
+                  "quote": "Repeat the diuretic regime every 12 h until complete decongestion",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5393,
+                  "quote": "a switch to oral diuretics, if needed to maintain the volume status, is recommended.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t3b-b0",
+              "label": "Décongestion obtenue",
+              "next_node_id": "ok"
+            }
+          ],
+          "question": "Poursuivre jusqu'à décongestion complète"
+        },
+        {
+          "id": "t3c",
+          "type": "action",
+          "items": [
+            {
+              "id": "hf-026",
+              "refs": [],
+              "text": "Doubler la dose de diurétique de l'anse, ou ajouter acétazolamide IV ou hydrochlorothiazide.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5394,
+                  "quote": "Double the dose of loop diuretic OR Consider adding i.v. acetazolamide or eGFR based hydrochlorothiazide",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5395,
+                  "quote": "The addition of short-term intravenous acetazolamide or oral hydrochlorothiazide should be considered in patients with fluid overload previously treated with loop diuretics, to reduce congestion.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": "modérée",
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t3c-b0",
+              "label": "Réponse satisfaisante",
+              "next_node_id": "t3b"
+            },
+            {
+              "id": "t3c-b1",
+              "label": "Toujours insuffisante",
+              "next_node_id": "t3d"
+            }
+          ],
+          "question": "Renforcer la décongestion"
+        },
+        {
+          "id": "t3d",
+          "type": "end",
+          "items": [
+            {
+              "id": "hf-027",
+              "refs": [],
+              "text": "Augmenter progressivement jusqu'à la dose IV maximale (furosémide 600 mg/j, jusqu'à 1000 mg si insuffisance rénale sévère), autres diurétiques, voire ultrafiltration.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5394,
+                  "quote": "Progressive escalation of loop diuretics up to the maximum i.v. dose",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5394,
+                  "quote": "furosemide 600 mg, although up to 1000 mg may be considered in patients with severely impaired kidney function.",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5394,
+                  "quote": "Consider ultrafiltration in case of unsuccessful decongestion despite maximal diuretic therapy",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [],
+          "question": "Escalade à l'hôpital"
+        },
+        {
+          "id": "t4",
+          "type": "action",
+          "items": [
+            {
+              "id": "hf-028",
+              "refs": [],
+              "text": "Diurétique IV en hôpital de jour ou intensification orale possibles.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5393,
+                  "quote": "both i.v. diuretic administration and intensification of oral diuretic therapy can be considered.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-029",
+              "refs": [],
+              "text": "Intensifier : débuter un diurétique de l'anse, augmenter la dose quotidienne, ou ajouter temporairement un diurétique d'autre mécanisme.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5393,
+                  "quote": "(i) initiating a loop diuretic in previously untreated individuals; (ii) increasing the total daily dose of a loop diuretic; or (iii) temporarily adding a diuretic with a different mechanism of action.",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-030",
+              "refs": [],
+              "text": "Surveiller fonction rénale, ionogramme, diurèse et signes de décongestion.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5393,
+                  "quote": "Close monitoring of kidney function, electrolyte levels, and treatment response",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hf-031",
+              "refs": [],
+              "text": "Métolazone orale 2,5 à 5 mg, avec surveillance du DFG et des électrolytes.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5393,
+                  "quote": "Thiazide-like diuretics—particularly oral metolazone (2.5–5 mg)—can be used in patients with advanced HF who exhibit diuretic resistance",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5393,
+                  "quote": "or in those with an eGFR <30 mL/min/1.73 m2",
+                  "source_id": "esc-hf-2026"
+                },
+                {
+                  "page": 5393,
+                  "quote": "This strategy requires care",
+                  "source_id": "esc-hf-2026"
+                }
+              ],
+              "strength": null,
+              "condition": "IC avancée résistante aux diurétiques, ou DFG < 30 mL/min/1,73 m²"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t4-b0",
+              "label": "Amélioration",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "t4-b1",
+              "label": "Pas d'amélioration ou signe de gravité",
+              "next_node_id": "t3"
+            }
+          ],
+          "question": "Intensifier les diurétiques en ambulatoire"
+        },
+        {
+          "id": "ok",
+          "type": "end",
+          "items": [],
+          "branches": [],
+          "question": "Stabilisé : poursuivre et optimiser le traitement de fond"
+        }
+      ],
+      "start_node_id": "s0"
+    },
+    "symptoms": [
+      {
+        "id": "hf-001",
+        "refs": [],
+        "text": "OAP : dyspnée avec orthopnée, polypnée > 25/min, hypoxémie, tirage, installés en peu de temps.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5389,
+            "quote": "Clinical criteria for the diagnosis of APO include signs and symptoms of respiratory distress [dyspnoea with orthopnoea, respiratory failure (hypoxaemia with or without hypercapnia), tachypnoea (>25 breaths/min), and increased work of breath",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hf-002",
+        "refs": [],
+        "text": "Congestion gauche : dyspnée, orthopnée, toux, polypnée, crépitants, B3, épanchement pleural.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5389,
+            "quote": "Dyspnoea Orthopnoea Cough Tachypnoea Rales S3 Pleural effusion",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hf-003",
+        "refs": [],
+        "text": "Congestion droite : œdèmes périphériques, distension abdominale, hépatomégalie, turgescence jugulaire, reflux hépatojugulaire.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5389,
+            "quote": "Peripheral oedema Abdominal distension Hepatomegaly Jugular vein distension Hepatojugular reflux",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "diagnosis": [
+      {
+        "id": "hf-004",
+        "refs": [],
+        "text": "Dès le premier contact : rechercher congestion et hypoperfusion ; PA, fréquence respiratoire, SpO2, température, ECG.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5387,
+            "quote": "If DHF is suspected, assessment of signs and symptoms of congestion and hypoperfusion must be done at the first medical contact.",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5387,
+            "quote": "Non-invasive blood pressure, respiratory rate, pulse oximetry monitoring, body temperature measurement, and ECG should be performed early.",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hf-005",
+        "refs": [],
+        "text": "NT-proBNP < 300 pg/mL ou BNP < 100 : IC décompensée peu probable.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5387,
+            "quote": "The currently recommended, non-age-adjusted, natriuretic peptide ‘rule-out’ thresholds for DHF are: NT-proBNP <300 pg/mL, or BNP <100 ng/mL",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hf-006",
+        "refs": [],
+        "text": "NT-proBNP > 5000 pg/mL : risque très élevé, hospitalisation en général.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5387,
+            "quote": "NT-pro-BNP >5000 pg/mL indicates very high risk, and admission is generally recommended.",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hf-007",
+        "refs": [],
+        "text": "Toujours rechercher et traiter la cause de la décompensation.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5389,
+            "quote": "should be investigated in every patient, and causal treatment, if possible, is imperative.",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ]
+  },
+  "review": {
+    "reviewer": "Mounib Zaidi",
+    "change_log": [
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Création depuis ESC 2026 insuffisance cardiaque, section 7"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Suivi après hospitalisation (6 semaines) ajouté"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Traitement retiré de la boîte d'urgence : oxygène et transfert dans l'onglet OAP, furosémide et traitement de fond dans la décongestion"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Ajout des gestes au cabinet (MSF 2021) : position, oxygène, voie veineuse, furosémide, dérivés nitrés sublinguaux ; fiches dinitrate d'isosorbide et trinitrine"
+      },
+      {
+        "by": "Mounib Zaidi",
+        "date": "2026-10-22",
+        "summary": "Marqué corrigé sans correction : hf-008 (Evidence 1: quote not found on the given page (page 5389 is outside the document (PDF page 44, 10 pages))) ; hf-009 (Evidence 1: quote not found on the given page (page 5389 is outside the document (PDF page 44, 10 pages))) ; hf-009 (Evidence 2: quote not found on the given page (page 5387 is outside the document (PDF page 42, 10 pages))) ; hf-009 (Evidence 3: quote not found on the given page (page 5389 is outside the document (PDF page 44, 10 pages))) ; hf-001 (Evidence 1: quote not found on the given page (page 5389 is outside the document (PDF page 44, 10 pages))) ; hf-002 (Evidence 1: quote not found on the given page (page 5389 is outside the document (PDF page 44, 10 pages))) ; hf-003 (Evidence 1: quote not found on the given page (page 5389 is outside the document (PDF page 44, 10 pages))) ; hf-004 (Evidence 1: quote not found on the given page (page 5387 is outside the document (PDF page 42, 10 pages))) ; hf-004 (Evidence 2: quote not found on the given page (page 5387 is outside the document (PDF page 42, 10 pages))) ; hf-004 (Number not in the quotes: 2) ; hf-005 (Evidence 1: quote not found on the given page (page 5387 is outside the document (PDF page 42, 10 pages))) ; hf-006 (Evidence 1: quote not found on the given page (page 5387 is outside the document (PDF page 42, 10 pages))) ; hf-007 (Evidence 1: quote not found on the given page (page 5389 is outside the document (PDF page 44, 10 pages))) ; hf-032 (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-033 (Evidence 1: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-010 (Evidence 1: quote not found on the given page (page 5390 is outside the document (PDF page 45, 10 pages))) ; hf-040 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hf-041 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hf-042 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hf-043 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hf-043 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hf-044 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hf-044 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hf-045 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hf-045 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hf-045 (Evidence 3: quote not found on the given page (no PDF linked to this source)) ; hf-046 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hf-046 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hf-047 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hf-011 (Evidence 1: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-011 (Evidence 2: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-014 (Evidence 1: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-015 (Evidence 1: quote not found on the given page (page 5396 is outside the document (PDF page 51, 10 pages))) ; hf-015 (Evidence 2: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-016 (Evidence 1: quote not found on the given page (page 5389 is outside the document (PDF page 44, 10 pages))) ; hf-017 (Evidence 1: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-018 (Evidence 1: quote not found on the given page (page 5390 is outside the document (PDF page 45, 10 pages))) ; hf-019 (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-020 (Evidence 1: quote not found on the given page (page 5396 is outside the document (PDF page 51, 10 pages))) ; hf-020 (Evidence 2: quote not found on the given page (page 5396 is outside the document (PDF page 51, 10 pages))) ; hf-012 (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-012 (Evidence 2: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-022 (Evidence 1: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; hf-022 (Evidence 2: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; hf-023 (Evidence 1: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-024 (Evidence 1: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; hf-013 (Evidence 1: quote not found on the given page (page 5390 is outside the document (PDF page 45, 10 pages))) ; hf-025 (Evidence 1: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; hf-025 (Evidence 2: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-026 (Evidence 1: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; hf-026 (Evidence 2: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-027 (Evidence 1: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; hf-027 (Evidence 2: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; hf-027 (Evidence 3: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; hf-028 (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-029 (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-030 (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-031 (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-031 (Evidence 2: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-031 (Evidence 3: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; med-furosemide (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; med-furosemide (Evidence 2: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; med-furosemide (Evidence 3: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; med-furosemide (Evidence 4: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; med-furosemide (Evidence 5: quote not found on the given page (page 5394 is outside the document (PDF page 49, 10 pages))) ; med-isosorbide-dinitrate (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; med-isosorbide-dinitrate (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; med-trinitrine (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; med-trinitrine (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; med-metolazone (Missing fields: frequency) ; med-metolazone (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; med-metolazone (Evidence 2: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; med-empagliflozine (Missing fields: frequency) ; med-empagliflozine (Evidence 1: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; med-empagliflozine (Evidence 2: quote not found on the given page (page 5395 is outside the document (PDF page 50, 10 pages))) ; hf-034 (Choose an urgency) ; hf-034 (Evidence 1: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-034 (Evidence 2: quote not found on the given page (page 5393 is outside the document (PDF page 48, 10 pages))) ; hf-035 (Evidence 1: quote not found on the given page (page 5392 is outside the document (PDF page 47, 10 pages)))"
+      }
+    ],
+    "reviewed_at": "2026-10-22",
+    "clinical_approval": true,
+    "unresolved_issues": [
+      "Seuil des dérivés nitrés : PAS > 100 mmHg (MSF 2021, nitré sublingual au cabinet) contre PAS > 110 mmHg (ESC 2026, vasodilatateur IV). Les deux gardés, chacun à son étape",
+      "Dose de nitroglycérine IV seulement dans les données supplémentaires en ligne de l'ESC (Table S14), non incluse",
+      "ESC : citations en anglais, texte traduit",
+      "page_offset -5345 pour le PDF complet ; -5386 si le fichier stocké est l'extrait des pages 42 à 52",
+      "Plusieurs lignes relèvent de l'hôpital (inotropes, escalade diurétique) : gardées à titre d'information",
+      "Furosémide : 40 à 80 mg IV au cabinet (MSF 2021) contre 40 mg si naïf (ESC 2026). Les deux gardés, chacun à son étape",
+      "Source MSF : page web, à imprimer en PDF (page 1, page_offset 0) ; si l'impression fait 2 pages, ajuster la page des citations"
+    ]
+  },
+  "red_box": {
+    "signs": [
+      {
+        "id": "hf-008",
+        "refs": [],
+        "text": "OAP : urgence vitale, traitement immédiat.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 5389,
+            "quote": "Acute pulmonary oedema is a life-threatening condition that needs prompt, optimally targeted rescue therapy.",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hf-009",
+        "refs": [],
+        "text": "Hypoperfusion (extrémités froides et moites, pâleur, vertiges, confusion, oligurie, pincement de la différentielle), même sans hypotension : choc cardiogénique.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 5389,
+            "quote": "Cold, sweaty extremities Pale skin Dizziness Mental confusion Oliguria Narrow pulse pressure",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5387,
+            "quote": "Hypoperfusion is not a synonym for hypoten",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5389,
+            "quote": "CS may also present as hypoperfusion with normotension",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "actions": []
+  },
+  "sources": [
+    {
+      "id": "esc-hf-2026",
+      "url": "https://doi.org/10.1093/eurheartj/ehag100",
+      "title": "2026 ESC Guidelines for the management of heart failure",
+      "citation": "ESC Task Force for the management of heart failure. Eur Heart J 2026;47(38):5346, section 7, Decompensated heart failure",
+      "accessed_at": "2026-10-20",
+      "page_offset": -5345,
+      "organisation": "European Society of Cardiology (ESC)",
+      "publication_date": "2026-08-28"
+    },
+    {
+      "id": "msf-gct-2021",
+      "url": "https://medicalguidelines.msf.org/fr/viewport/CG/francais/insuffisance-cardiaque-aigue-oap-35654133.html",
+      "title": "Guide clinique et thérapeutique : Insuffisance cardiaque aiguë (OAP)",
+      "citation": "MSF, Guide clinique et thérapeutique, chapitre 12, Insuffisance cardiaque aiguë (OAP), mise à jour avril 2021 (page web imprimée en PDF)",
+      "accessed_at": "2026-10-22",
+      "page_offset": 0,
+      "organisation": "Médecins Sans Frontières (MSF)",
+      "publication_date": "2021-04-01"
+    }
+  ],
+  "refer_follow": {
+    "refer": [
+      {
+        "id": "hf-034",
+        "urgency": null,
+        "criteria": "aggravation devenant une IC avancée, hospitalisations répétées",
+        "evidence": [
+          {
+            "page": 5393,
+            "quote": "Patients with WHF that progresses to advanced HF are a key population",
+            "source_id": "esc-hf-2026"
+          },
+          {
+            "page": 5393,
+            "quote": "Such patients require prompt evaluation for advanced HF treatments",
+            "source_id": "esc-hf-2026"
+          }
+        ],
+        "strength": null,
+        "destination": "Cardiologue, évaluation pour IC avancée"
+      }
+    ],
+    "follow_up": [
+      {
+        "id": "hf-035",
+        "what": "Débuter et augmenter rapidement le traitement de fond de l'insuffisance cardiaque",
+        "when": "Visites rapprochées pendant les 6 semaines après une hospitalisation pour insuffisance cardiaque",
+        "evidence": [
+          {
+            "page": 5392,
+            "quote": "An intensive strategy of rapid initiation and uptitration of FMT before discharge and during frequent follow-up visits in the first 6 weeks following an HFH is recommended to reduce the risk of HF rehospitalization or death.",
+            "source_id": "esc-hf-2026"
+          }
+        ]
+      }
+    ]
+  },
+  "schema_version": "1.1.0"
+}

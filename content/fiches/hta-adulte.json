@@ -1,0 +1,1670 @@
+{
+  "meta": {
+    "id": "hta-adulte",
+    "title": "Hypertension artérielle de l'adulte",
+    "motifs": [
+      "hypertension artérielle",
+      "HTA",
+      "pression artérielle"
+    ],
+    "status": "published",
+    "country": "DZ",
+    "version": "1.3.2",
+    "audience": [
+      "MG"
+    ],
+    "language": "fr",
+    "template": "pathologie",
+    "specialite": "cardiologie",
+    "next_review_at": null,
+    "last_reviewed_at": "2026-10-22"
+  },
+  "scope": {
+    "exclusions": [
+      "Moins de 18 ans",
+      "HTA de la grossesse",
+      "HTA secondaire (exploration spécialisée)"
+    ],
+    "population": "Adulte hypertendu, hors grossesse"
+  },
+  "treat": {
+    "do_not": [
+      {
+        "id": "hta-048",
+        "refs": [],
+        "text": "Éviter l'association AINS avec IEC ou ARA2 et diurétique (insuffisance rénale aiguë).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 7,
+            "quote": "les AINS avec les IEC (ou les ARA2) et les diurétiques qui exposent à un risque d’insuffisance rénale aiguë.",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-050",
+        "refs": [],
+        "text": "Ne pas changer de marque en cours de traitement ; prescrire en DCI.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 6,
+            "quote": "Comme pour tout traitement, la prescription des antihypertenseurs doit être établie en DCI.",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 6,
+            "quote": "Il est souhaitable de ne pas changer de marque en cours de traitement afin de réduire le risque d’erreur de prise par le patient.",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "actions": [
+      {
+        "id": "hta-043",
+        "refs": [],
+        "text": "Activité physique régulière adaptée, par exemple 30 min/j au moins 3 fois par semaine en endurance.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "la pratique d’une activité physique régulière et adaptée aux possibilités du patient (par exemple 30 min/j au moins 3 fois/semaine en endurance)",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-044",
+        "refs": [],
+        "text": "Sel : 6 à 8 g/j au maximum.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "une normalisation de l’apport sodé (6-8 g/j de sel au maximum, soit une natriurèse d’environ 100 à 150 mmol/j)",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-045",
+        "refs": [],
+        "text": "Réduire l'alcool : prise en charge au-delà de 3 verres/j chez l'homme, 2 chez la femme. Arrêt du tabac, perte de poids si surcharge.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "la suppression ou la réduction de la consommation d’alcool : une consommation journalière supérieure à 3 verres chez l’homme et 2 verres chez la femme doit entraîner une prise en charge adaptée",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 5,
+            "quote": "la réduction du poids en cas de surcharge pondérale",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 5,
+            "quote": "l’arrêt d’une intoxication tabagique",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-046",
+        "refs": [],
+        "text": "Traitement à maintenir à vie, même après 85 ans, s'il est bien toléré.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 3963,
+            "quote": "It is recommended to maintain BP-lowering drug treatment lifelong, even beyond the age of 85 years, if well tolerated.",
+            "source_id": "esc-hta-2024"
+          }
+        ],
+        "strength": "forte",
+        "condition": null
+      },
+      {
+        "id": "hta-047",
+        "refs": [],
+        "text": "Arrêter temporairement IEC, ARA2 et diurétiques, puis ionogramme et créatinine.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 7,
+            "quote": "La prise de médicaments antihypertenseurs (notamment IEC, ARA2 et diurétiques) peut être arrêtée (le plus souvent de façon temporaire), devant la constatation d’une hypovolémie marquée ou après un événement intercurrent",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 7,
+            "quote": "Un ionogramme sanguin et une créatininémie avec débit de filtration glomérulaire estimé sont alors à réaliser.",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": "hypovolémie, diarrhée, déshydratation ou infection, surtout chez le sujet âgé"
+      }
+    ],
+    "medications": []
+  },
+  "advise": [
+    {
+      "id": "hta-051",
+      "refs": [],
+      "text": "Prendre le traitement au moment de la journée le plus pratique, pour en faire une habitude.",
+      "basis": null,
+      "origin": "source",
+      "timing": null,
+      "evidence": [
+        {
+          "page": 3962,
+          "quote": "It is recommended to take medications at the most convenient time of day for the patient to establish a habitual pattern of medication taking to improve adherence.",
+          "source_id": "esc-hta-2024"
+        }
+      ],
+      "strength": "forte",
+      "condition": null
+    },
+    {
+      "id": "hta-052",
+      "refs": [],
+      "text": "Former le patient (et son entourage) à l'automesure, appareil validé, de préférence au bras.",
+      "basis": null,
+      "origin": "source",
+      "timing": null,
+      "evidence": [
+        {
+          "page": 3,
+          "quote": "Utiliser un appareil validé et de préférence avec un brassard huméral",
+          "source_id": "has-hta-2016"
+        },
+        {
+          "page": 3,
+          "quote": "Former le patient à la technique de l’automesure tensionnelle (et si besoin son entourage)",
+          "source_id": "has-hta-2016"
+        }
+      ],
+      "strength": null,
+      "condition": null
+    }
+  ],
+  "assess": {
+    "ask": [
+      {
+        "id": "hta-009",
+        "refs": [],
+        "text": "Facteurs de risque cardiovasculaire : antécédents familiaux cardiovasculaires, diabète, dyslipidémie, tabac, âge, sexe.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 3,
+            "quote": "identifier les facteurs de risque cardio-vasculaire associés, notamment antécédents familiaux de maladie cardio-vasculaire, diabète, dyslipidémie, tabagisme, âge, sexe",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-010",
+        "refs": [],
+        "text": "Facteurs aggravants : alcool, réglisse, corticoïdes, antidépresseurs, AINS, vasoconstricteurs nasaux, contraception œstrogénique, cannabis, apnées du sommeil, sel, surpoids.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 3,
+            "quote": "Principaux facteurs pouvant aggraver une HTA : alcool, réglisse, certains médicaments (corticoïdes, antidépresseurs, AINS, anti-VEGF), utilisation prolongée de vasoconstricteurs nasaux, contraception œstrogénique, toxiques (par exemple cannabis), SAHOS",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "tests": [
+      {
+        "id": "hta-011",
+        "refs": [],
+        "text": "Bilan initial : Na et K plasmatiques, créatinine avec DFG, glycémie à jeun, bilan lipidique à jeun, protéinurie, ECG de repos.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 3,
+            "quote": "Le bilan paraclinique initial comporte :",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "sodium et potassium plasmatiques",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "créatinine plasmatique avec estimation du débit de filtration glomérulaire",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "glycémie à jeun ;",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "exploration d’une anomalie lipidique à jeun",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "recherche d’une protéinurie quelle que soit la méthode",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "ECG de repos.",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-012",
+        "refs": [],
+        "text": "Rapport albumine/créatinine urinaire seulement chez le diabétique sans protéinurie.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 3,
+            "quote": "Le rapport albumine/créatinine urinaire ne se justifie pas chez le patient hypertendu sauf s’il est diabétique non protéinurique.",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "examine": [
+      {
+        "id": "hta-006",
+        "refs": [],
+        "text": "Au moins 2 mesures, brassard adapté ; la première fois aux deux bras (garder le bras le plus haut), avec la fréquence cardiaque.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 2,
+            "quote": "Effectuer au minimum 2 mesures avec un brassard adapté à la circonférence du bras",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 2,
+            "quote": "Mesurer la PA la première fois aux deux bras (considérer le bras où la mesure est la plus haute) et mesurer la fréquence cardiaque (FC)",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-007",
+        "refs": [],
+        "text": "Patient assis ou allongé, au repos 3 à 5 min, au calme, sans parler.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 2,
+            "quote": "Effectuer les mesures chez un patient en position assise ou allongée, au repos durant au moins 3 à 5 min, dans le calme et sans parler",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-008",
+        "refs": [],
+        "text": "Rechercher une hypotension orthostatique à 1 et 3 min debout, au bilan et au suivi.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 2,
+            "quote": "Lors de la mesure initiale et au cours du suivi : il faut rechercher une hypotension orthostatique après 1 et 3 min au moins en position debout",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "pathway": {
+      "nodes": [
+        {
+          "id": "s0",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "s0-b0",
+              "label": "HTA confirmée, non compliquée",
+              "next_node_id": "t1"
+            },
+            {
+              "id": "s0-b1",
+              "label": "PA élevée (120 à 139 / 70 à 89)",
+              "next_node_id": "t2"
+            },
+            {
+              "id": "s0-b2",
+              "label": "Diabétique",
+              "next_node_id": "t3"
+            },
+            {
+              "id": "s0-b3",
+              "label": "Maladie rénale chronique",
+              "next_node_id": "t4"
+            },
+            {
+              "id": "s0-b4",
+              "label": "Cardiopathie ou AVC",
+              "next_node_id": "t5"
+            },
+            {
+              "id": "s0-b5",
+              "label": "Sujet âgé ou fragile",
+              "next_node_id": "t6"
+            },
+            {
+              "id": "s0-b6",
+              "label": "HTA résistante",
+              "next_node_id": "t7"
+            }
+          ],
+          "question": "Profil du patient"
+        },
+        {
+          "id": "t1",
+          "type": "decision",
+          "items": [
+            {
+              "id": "hta-017",
+              "refs": [],
+              "text": "Mesures hygiéno-diététiques et traitement médicamenteux d'emblée, quel que soit le risque cardiovasculaire.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3963,
+                  "quote": "It is recommended that in hypertensive patients with confirmed BP ≥140/90 mmHg, irrespective of CVD risk, lifestyle measures and pharmacological BP-lowering treatment are initiated promptly to reduce CVD risk.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "PA confirmée ≥ 140/90 mmHg"
+            },
+            {
+              "id": "hta-013",
+              "refs": [],
+              "text": "Objectif sous traitement : PAS 120 à 129 mmHg, si bien tolérée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3966,
+                  "quote": "To reduce CVD risk, it is recommended that treated systolic BP values in most adults be targeted to 120–129 mmHg, provided the treatment is well tolerated.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": null
+            },
+            {
+              "id": "hta-014",
+              "refs": [],
+              "text": "Si mal tolérée : PAS aussi basse que raisonnablement possible.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3966,
+                  "quote": "In cases where BP-lowering treatment is poorly tolerated and achieving a systolic of 120–129 mmHg is not possible, it is recommended to target a systolic BP level that is ‘as low as reasonably achievable’ (ALARA principle).",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t1-b0",
+              "label": "Non : bithérapie d'emblée",
+              "next_node_id": "t1bi"
+            },
+            {
+              "id": "t1-b1",
+              "label": "Oui : monothérapie possible",
+              "next_node_id": "t1mo"
+            }
+          ],
+          "question": "HTA récente, chiffres peu élevés ?"
+        },
+        {
+          "id": "t1bi",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-018",
+              "refs": [],
+              "text": "Bithérapie d'emblée : IEC ou ARA2 associé à un inhibiteur calcique dihydropyridine ou à un diurétique, au mieux en association fixe.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3962,
+                  "quote": "combination BP-lowering treatment is recommended for most patients with confirmed hypertension (BP ≥140/90 mmHg) as initial therapy.",
+                  "source_id": "esc-hta-2024"
+                },
+                {
+                  "page": 3962,
+                  "quote": "Preferred combinations are a RAS blocker (either an ACE inhibitor or an ARB) with a dihydropyridine CCB or diuretic.",
+                  "source_id": "esc-hta-2024"
+                },
+                {
+                  "page": 6,
+                  "quote": "L’adhésion est favorisée par l’utilisation d’associations fixes.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": "forte",
+              "condition": null
+            },
+            {
+              "id": "hta-022",
+              "refs": [],
+              "text": "Traitement médicamenteux sans délai, en bithérapie.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 6,
+                  "quote": "En cas d’HTA sévère confirmée (PAS > 180mmHg et/ou PAD > 110mmHg), il est recommandé d’instaurer sans délai un traitement pharmacologique.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "HTA sévère confirmée : PAS > 180 et/ou PAD > 110 mmHg"
+            },
+            {
+              "id": "hta-021",
+              "refs": [],
+              "text": "Bêtabloquants en second choix, sauf indication propre (angor, post-infarctus, insuffisance cardiaque, contrôle de la fréquence).",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 6,
+                  "quote": "Les bêtabloquants peuvent être utilisés comme antihypertenseurs mais ils semblent moins protecteurs que les autres classes thérapeutiques vis-à-vis du risque d’accident vasculaire cérébral.",
+                  "source_id": "has-hta-2016"
+                },
+                {
+                  "page": 3962,
+                  "quote": "It is recommended that beta-blockers are combined with any of the other major BP-lowering drug classes when there are other compelling indications for their use, e.g. angina, post-myocardial infarction, heart failure with reduced ejection fraction, or for heart rate control.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hta-063",
+              "refs": [],
+              "text": "Revoir le patient tous les 1 à 3 mois jusqu'au contrôle, idéalement obtenu en 3 mois.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3962,
+                  "quote": "After treatment initiation, the patient should be seen frequently (e.g. every 1–3 months with a GP or specialist) until BP is controlled. BP should be controlled, preferably within 3 months",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t1bi-b0",
+              "label": "PA contrôlée",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "t1bi-b1",
+              "label": "Non contrôlée sous bithérapie",
+              "next_node_id": "t1c"
+            }
+          ],
+          "question": "Bithérapie d'emblée"
+        },
+        {
+          "id": "t1mo",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-019",
+              "refs": [],
+              "text": "Monothérapie : IEC, ARA2, inhibiteur calcique ou thiazidique, au mieux en monoprise.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 6,
+                  "quote": "Une monothérapie peut suffire à contrôler la PA lorsque l’HTA est de découverte récente et les chiffres de la PA sont peu élevés.",
+                  "source_id": "has-hta-2016"
+                },
+                {
+                  "page": 6,
+                  "quote": "Il est recommandé de débuter un traitement pharmacologique : diurétique thiazidique, inhibiteur calcique, inhibiteur de l'enzyme de conversion (IEC) ou antagoniste des récepteurs de l'angiotensine 2 (ARA2), par une monothérapie, au mieux en monoprise.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hta-064",
+              "refs": [],
+              "text": "Mesurer la PA à domicile avant chaque modification du traitement.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 6,
+                  "quote": "Le plus souvent, une mesure tensionnelle à domicile est nécessaire pour évaluer l’efficacité du traitement. Elle est recommandée avant chaque modification thérapeutique.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t1mo-b0",
+              "label": "PA contrôlée",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "t1mo-b1",
+              "label": "Non contrôlée à 1 mois",
+              "next_node_id": "t1b"
+            }
+          ],
+          "question": "Monothérapie"
+        },
+        {
+          "id": "t1b",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-062",
+              "refs": [],
+              "text": "Passer à une bithérapie, plutôt que changer de monothérapie ou en augmenter la dose.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 6,
+                  "quote": "En pratique, à 1 mois, si l’objectif tensionnel n’est pas atteint (inefficacité, efficacité insuffisante ou mauvaise tolérance), il est préférable de passer à une bithérapie, car elle améliore l’efficacité et réduit le risque d’effet indésirable, plutôt que de changer de monothérapie ou d’augmenter la posologie de la monothérapie.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "à 1 mois sous monothérapie, objectif non atteint ou mauvaise tolérance"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t1b-b0",
+              "label": "PA contrôlée",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "t1b-b1",
+              "label": "Non contrôlée sous bithérapie",
+              "next_node_id": "t1c"
+            }
+          ],
+          "question": "Passer à la bithérapie"
+        },
+        {
+          "id": "t1c",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-020",
+              "refs": [],
+              "text": "Trithérapie : IEC ou ARA2 + inhibiteur calcique + diurétique thiazidique.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 6,
+                  "quote": "Si l’objectif tensionnel n’est toujours pas atteint, on peut recourir à une trithérapie, qui comportera idéalement l’association d’un bloqueur du système rénine-angiotensine (IEC ou ARA2), d’un inhibiteur calcique et d’un diurétique thiazidique",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "objectif toujours non atteint sous bithérapie"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t1c-b0",
+              "label": "PA contrôlée",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "t1c-b1",
+              "label": "Non contrôlée à 6 mois",
+              "next_node_id": "t1d"
+            }
+          ],
+          "question": "Passer à la trithérapie"
+        },
+        {
+          "id": "t1d",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-065",
+              "refs": [],
+              "text": "Confirmer par automesure ou MAPA ; si toujours au-dessus de l'objectif sous trithérapie : HTA résistante (voir l'onglet).",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 8,
+                  "quote": "À 6 mois, si la PA de consultation n’est pas contrôlée, il est recommandé de réaliser une AMT ou une MAPA.",
+                  "source_id": "has-hta-2016"
+                },
+                {
+                  "page": 8,
+                  "quote": "C’est seulement lorsque la PA n’est pas à l’objectif en AMT ou MAPA que l’on peut parler d’HTA non contrôlée.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "à 6 mois, PA de consultation non contrôlée"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t1d-b0",
+              "label": "Confirmée non contrôlée : HTA résistante",
+              "next_node_id": "t7"
+            }
+          ],
+          "question": "Vérifier le contrôle hors du cabinet"
+        },
+        {
+          "id": "ok",
+          "type": "end",
+          "items": [],
+          "branches": [],
+          "question": "PA contrôlée : poursuivre le traitement et le suivi"
+        },
+        {
+          "id": "t2",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "t2-b0",
+              "label": "Faible ou modéré",
+              "next_node_id": "t2a"
+            },
+            {
+              "id": "t2-b1",
+              "label": "Élevé, diabète, MRC, maladie cardiovasculaire ou atteinte d'organe",
+              "next_node_id": "t2b"
+            }
+          ],
+          "question": "Risque cardiovasculaire ?"
+        },
+        {
+          "id": "t2a",
+          "type": "end",
+          "items": [
+            {
+              "id": "hta-023",
+              "refs": [],
+              "text": "Mesures hygiéno-diététiques seules.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3963,
+                  "quote": "In adults with elevated BP and low/medium CVD risk (<10% over 10 years), BP lowering with lifestyle measures is recommended and can reduce the risk of CVD.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "risque cardiovasculaire < 10 % à 10 ans"
+            }
+          ],
+          "branches": [],
+          "question": "Mesures hygiéno-diététiques seules"
+        },
+        {
+          "id": "t2b",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-024",
+              "refs": [],
+              "text": "Après 3 mois de mesures hygiéno-diététiques, traitement si PA confirmée ≥ 130/80 mmHg.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3963,
+                  "quote": "In adults with elevated BP and sufficiently high CVD riskc, after 3 months of lifestyle intervention, BP lowering with pharmacological treatment is recommended for those with confirmed BP ≥130/80 mmHg to reduce CVD risk.",
+                  "source_id": "esc-hta-2024"
+                },
+                {
+                  "page": 3963,
+                  "quote": "10-year estimated CVD risk of ≥10%; or 10-year estimated CVD risk of 5% - ≤10% plus risk modifiers or abnormal risk tool tests; or high-risk conditions (e.g. established CVD, diabetes, moderate or severe CKD, familial hypercholesterolaemia, or hypertension-mediated organ damage).",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "risque cardiovasculaire ≥ 10 %, maladie cardiovasculaire, diabète, MRC ou atteinte d'organe"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t2b-b0",
+              "label": "Traitement débuté : suivre le plan HTA confirmée",
+              "next_node_id": "t1"
+            }
+          ],
+          "question": "Mesures hygiéno-diététiques, puis traitement"
+        },
+        {
+          "id": "t3",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-025",
+              "refs": [],
+              "text": "Traitement médicamenteux.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3975,
+                  "quote": "In most adults with elevated BP and diabetes, after a maximum of 3 months of lifestyle intervention, BP lowering with pharmacological treatment is recommended for those with confirmed office BP ≥130/80 mmHg to reduce CVD risk.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "PA confirmée ≥ 130/80 mmHg après 3 mois maximum de MHD"
+            },
+            {
+              "id": "hta-066",
+              "refs": [],
+              "text": "Cible PAS 120 à 129 mmHg si tolérée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3975,
+                  "quote": "In persons with diabetes who are receiving BP-lowering drugs, it is recommended to target systolic BP to 120–129 mmHg, if tolerated.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": null
+            },
+            {
+              "id": "hta-026",
+              "refs": [],
+              "text": "IEC ou ARA2 dans le traitement.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3976,
+                  "quote": "ACE inhibitors or ARBs are more effective at reducing albuminuria than other BP-lowering agents and should be considered as part of the treatment strategy for patients with hypertension and microalbuminuria or proteinuria.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "modérée",
+              "condition": "microalbuminurie ou protéinurie"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t3-b0",
+              "label": "Choisir le traitement initial",
+              "next_node_id": "t1"
+            }
+          ],
+          "question": "Diabétique : seuil, cible et classe à privilégier"
+        },
+        {
+          "id": "t4",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-028",
+              "refs": [],
+              "text": "Mesures hygiéno-diététiques et traitement si PA confirmée ≥ 130/80 mmHg, si bien toléré.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3976,
+                  "quote": "In patients with diabetic or non-diabetic moderate-to-severe CKD and confirmed BP ≥130/ 80 mmHg, lifestyle optimization and BP-lowering medication are recommended to reduce CVD risk, provided such treatment is well tolerated.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "MRC modérée à sévère"
+            },
+            {
+              "id": "hta-029",
+              "refs": [],
+              "text": "Cible PAS 120 à 129 mmHg si tolérée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3976,
+                  "quote": "In adults with moderate-to-severe CKD who are receiving BP-lowering drugs and who have eGFR >30 mL/min/1.73 m2, it is recommended to target systolic BP to 120–129 mmHg, if tolerated.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "DFG > 30 mL/min/1,73 m²"
+            },
+            {
+              "id": "hta-030",
+              "refs": [],
+              "text": "IEC ou ARA2 en cas de microalbuminurie ou protéinurie.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3976,
+                  "quote": "ACE inhibitors or ARBs are more effective at reducing albuminuria than other BP-lowering agents and should be considered as part of the treatment strategy for patients with hypertension and microalbuminuria or proteinuria.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "modérée",
+              "condition": null
+            },
+            {
+              "id": "hta-031",
+              "refs": [],
+              "text": "Ajouter un iSGLT2.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3976,
+                  "quote": "In hypertensive patients with CKD and eGFR >20 mL/min/1.73 m2, SGLT2 inhibitors are recommended to improve outcomes in the context of their modest BP-lowering properties.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "DFG > 20 mL/min/1,73 m²"
+            },
+            {
+              "id": "hta-032",
+              "refs": [],
+              "text": "Diurétique de l'anse à la place du thiazidique.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 6,
+                  "quote": "Les diurétiques de l’anse (à la place des diurétiques thiazidiques) peuvent être prescrits chez un patient hypertendu, en cas d’insuffisance rénale sévère (DFG estimé < 30 ml/min/1,73 m²)",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "DFG < 30 mL/min/1,73 m²"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t4-b0",
+              "label": "Choisir le traitement initial",
+              "next_node_id": "t1"
+            }
+          ],
+          "question": "Maladie rénale chronique : seuil, cible et classes"
+        },
+        {
+          "id": "t5",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-033",
+              "refs": [],
+              "text": "Bêtabloquant et bloqueur du SRA.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3978,
+                  "quote": "In patients with a history of myocardial infarction who require BP-lowering treatment, beta-blockers and RAS blockers are recommended as part of that treatment.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "antécédent d'infarctus"
+            },
+            {
+              "id": "hta-034",
+              "refs": [],
+              "text": "IEC (sinon ARA2), bêtabloquant ayant l'AMM, diurétiques.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 10,
+                  "quote": "IEC (sinon ARA2), bêtabloquants ayant l’AMM dans cette indication, diurétiques",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "insuffisance cardiaque"
+            },
+            {
+              "id": "hta-035",
+              "refs": [],
+              "text": "Thiazidique, IEC (sinon ARA2) et inhibiteur calcique.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 10,
+                  "quote": "Diurétiques thiazidiques, IEC (sinon ARA2), et inhibiteurs calciques",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "après un AVC"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t5-b0",
+              "label": "PA contrôlée",
+              "next_node_id": "ok"
+            },
+            {
+              "id": "t5-b1",
+              "label": "Non contrôlée",
+              "next_node_id": "t1c"
+            }
+          ],
+          "question": "Classes à privilégier"
+        },
+        {
+          "id": "t6",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "t6-b0",
+              "label": "Non",
+              "next_node_id": "t6a"
+            },
+            {
+              "id": "t6-b1",
+              "label": "Oui",
+              "next_node_id": "t6b"
+            }
+          ],
+          "question": "85 ans ou plus, fragilité, hypotension orthostatique ou espérance de vie limitée ?"
+        },
+        {
+          "id": "t6a",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-036",
+              "refs": [],
+              "text": "Même prise en charge que l'adulte plus jeune, si bien tolérée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3973,
+                  "quote": "It is recommended that treatment of elevated BP and hypertension among older patients aged <85 years who are not moderately to severely frail follows the same guidelines as for younger people, provided BP-lowering treatment is well tolerated.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "forte",
+              "condition": "moins de 85 ans, non fragile"
+            }
+          ],
+          "branches": [
+            {
+              "id": "t6a-b0",
+              "label": "Suivre le plan HTA confirmée",
+              "next_node_id": "t1"
+            }
+          ],
+          "question": "Même plan que l'adulte"
+        },
+        {
+          "id": "t6b",
+          "type": "end",
+          "items": [
+            {
+              "id": "hta-037",
+              "refs": [],
+              "text": "Traitement seulement à partir de 140/90 mmHg ; cible plus souple, par exemple < 140 mmHg.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3963,
+                  "quote": "BP-lowering treatment should only be considered from ≥140/90 mmHg among persons meeting the following criteria: pre-treatment symptomatic orthostatic hypotension, age ≥85 years, clinically significant moderate-to-severe frailty, and/or limited predicted lifespan (<3 years).",
+                  "source_id": "esc-hta-2024"
+                },
+                {
+                  "page": 3966,
+                  "quote": "personalized and more lenient BP targets (e.g. <140 mmHg) should be considered among patients meeting the following criteria: pre-treatment symptomatic orthostatic hypotension, and/or age ≥85 years.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": "modérée",
+              "condition": "85 ans ou plus, fragilité, hypotension orthostatique ou espérance de vie < 3 ans"
+            },
+            {
+              "id": "hta-038",
+              "refs": [],
+              "text": "Ne pas dépasser 3 antihypertenseurs dans la plupart des cas.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5,
+                  "quote": "Le fait de ne pas dépasser dans la plupart des cas 3 molécules antihypertensives après 80 ans entre dans ce cadre.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "après 80 ans"
+            },
+            {
+              "id": "hta-039",
+              "refs": [],
+              "text": "Alléger le traitement si possible.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 7,
+                  "quote": "Le traitement antihypertenseur peut être allégé chez les patients ayant une hypotension orthostatique persistante, en cas de perte de poids par dénutrition ou chez certains patients fragiles.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": "hypotension orthostatique persistante, dénutrition ou fragilité"
+            }
+          ],
+          "branches": [],
+          "question": "Seuils et cibles plus souples, traitement allégé"
+        },
+        {
+          "id": "t7",
+          "type": "action",
+          "items": [
+            {
+              "id": "hta-040",
+              "refs": [],
+              "text": "HTA résistante : PA non contrôlée malgré mesures hygiéno-diététiques et trithérapie avec thiazidique à dose optimale.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 8,
+                  "quote": "Une HTA résistante est définie par une PA non contrôlée malgré les mesures hygiéno-diététiques et une trithérapie comportant un diurétique thiazidique à dose optimale.",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "hta-041",
+              "refs": [],
+              "text": "Vérifier d'abord l'automesure ou la MAPA, la prise réelle du traitement, le sel, l'alcool, les interactions et les apnées du sommeil.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 8,
+                  "quote": "À 6 mois, si la PA de consultation n’est pas contrôlée, il est recommandé de réaliser une AMT ou une MAPA.",
+                  "source_id": "has-hta-2016"
+                },
+                {
+                  "page": 8,
+                  "quote": "Il est recommandé d’évaluer si les médicaments prescrits sont réellement pris par le patient.",
+                  "source_id": "has-hta-2016"
+                },
+                {
+                  "page": 8,
+                  "quote": "Il est recommandé de rechercher à l’interrogatoire des facteurs de résistance au traitement",
+                  "source_id": "has-hta-2016"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t7-b0",
+              "label": "Confirmée, HTA secondaire éliminée",
+              "next_node_id": "t7b"
+            }
+          ],
+          "question": "Confirmer l'HTA résistante"
+        },
+        {
+          "id": "t7b",
+          "type": "end",
+          "items": [
+            {
+              "id": "hta-042",
+              "refs": [],
+              "text": "Quatrième médicament : spironolactone 12,5 à 50 mg/j (sauf DFG < 30), surveillance Na, K, créatinine ; à défaut un bêtabloquant.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 9,
+                  "quote": "chez les patients de moins 80 ans, un quatrième médicament antihypertenseur peut être ajouté.",
+                  "source_id": "has-hta-2016"
+                },
+                {
+                  "page": 9,
+                  "quote": "Ce médicament est habituellement la spironolactone (12,5 à 50 mg/j), sauf en cas d’insuffisance rénale sévère",
+                  "source_id": "has-hta-2016"
+                },
+                {
+                  "page": 9,
+                  "quote": "(DFG < 30 ml/min/1,73 m ), à arrêter en cas de risque de déshydratation avec une surveillance du Na et du K plasmatiques et de la créatinine plasmatique. À défaut ce médicament peut être un bêtabloquant.",
+                  "source_id": "has-hta-2016"
+                },
+                {
+                  "page": 3981,
+                  "quote": "In patients with resistant hypertension and uncontrolled BP despite use of first-line BP lowering therapies, the addition of spironolactone to existing treatment should be considered.",
+                  "source_id": "esc-hta-2024"
+                }
+              ],
+              "strength": null,
+              "condition": "HTA secondaire éliminée, moins de 80 ans"
+            }
+          ],
+          "branches": [],
+          "question": "Quatrième médicament et avis spécialisé"
+        }
+      ],
+      "start_node_id": "s0"
+    },
+    "diagnosis": [
+      {
+        "id": "hta-001",
+        "refs": [],
+        "text": "PA ≥ 140/90 mmHg au cabinet, persistante dans le temps.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 2,
+            "quote": "L’HTA est définie de manière consensuelle comme une PA ≥ 140/90 mmHg mesurée en consultation et persistant dans le temps.",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-002",
+        "refs": [],
+        "text": "Confirmer hors du cabinet (automesure ou MAPA) avant tout traitement, sauf urgence hypertensive.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 2,
+            "quote": "Il est recommandé de mesurer la PA en dehors du cabinet médical, au domicile du patient afin de confirmer le diagnostic d’HTA, par automesure tensionnelle (AMT) ou par mesure ambulatoire de la PA (MAPA).",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 2,
+            "quote": "Il est recommandé de confirmer le diagnostic d’HTA avant de débuter un traitement antihypertenseur médicamenteux, sauf en cas d’urgence hypertensive.",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-003",
+        "refs": [],
+        "text": "HTA confirmée si moyenne en automesure ou MAPA diurne : PAS ≥ 135 ou PAD ≥ 85 mmHg.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 3,
+            "quote": "Moyenne des valeurs de PA en AMT ou en MAPA (diurne) correspondant à une HTA :",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "PAS ≥ 135 mmHg ou PAD ≥ 85 mmHg",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-004",
+        "refs": [],
+        "text": "Automesure : 3 mesures le matin et 3 le soir, 3 jours de suite (règle des 3).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 3,
+            "quote": "Effectuer 3 mesures le matin avant le petit déjeuner et la prise de médicaments, 3 mesures avant le coucher,",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "3 jours de suite (« règle des 3 »), en espaçant les mesures de quelques minutes",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "hta-005",
+        "refs": [],
+        "text": "HTA blouse blanche : pas de traitement habituellement, surveillance annuelle et mesures hygiéno-diététiques.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 2,
+            "quote": "La constatation d’une HTA en consultation associée à une PA normale en dehors du cabinet médical (PA diurne moyenne < 135/85 mmHg) est appelée « HTA blouse blanche ».",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 2,
+            "quote": "L’« HTA blouse blanche » ne requiert habituellement pas le recours à un traitement antihypertenseur. Elle nécessite une surveillance tensionnelle annuelle ainsi que la mise en œuvre de mesures hygiéno-diététiques",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "condition": "PA élevée au cabinet, normale à domicile (< 135/85 mmHg)"
+      }
+    ]
+  },
+  "review": {
+    "reviewer": "Mounib Zaidi",
+    "change_log": [
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Création depuis HAS 2016, ESC 2024 et le guide algérien 2015 (chapitre HTA du diabétique)"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Onglet HTA non compliquée : plan de traitement par étapes avec délais (1 mois, 3 mois, 6 mois)"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Onglets Diabétique et MRC réécrits en plan par étapes (skill fiche-protocole-v1-1)"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Guide de diabétologie algérien retiré des sources : fiche HTA sur HAS 2016 et ESC 2024 uniquement"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Arbre refait avec embranchements explicites par profil : débuter, si contrôlée, si échec et quand"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Onglet HTA non compliquée : choix initial bithérapie d'emblée ou monothérapie, une étape par traitement"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Cibles tensionnelles déplacées des examens vers le début du traitement ; onglets diabétique et MRC renvoient au choix du traitement initial"
+      },
+      {
+        "by": "Mounib Zaidi",
+        "date": "2026-10-22",
+        "summary": "Marqué corrigé sans correction : hta-009 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-010 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-006 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-006 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-007 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-008 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-001 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-002 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-002 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-003 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-003 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-004 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-004 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-005 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-005 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-011 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-011 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-011 (Evidence 3: quote not found on the given page (no PDF linked to this source)) ; hta-011 (Evidence 4: quote not found on the given page (no PDF linked to this source)) ; hta-011 (Evidence 5: quote not found on the given page (no PDF linked to this source)) ; hta-011 (Evidence 6: quote not found on the given page (no PDF linked to this source)) ; hta-011 (Evidence 7: quote not found on the given page (no PDF linked to this source)) ; hta-012 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-043 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-044 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-045 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-045 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-045 (Evidence 3: quote not found on the given page (no PDF linked to this source)) ; hta-047 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-047 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-048 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-050 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-050 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-052 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-052 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-018 (Evidence 3: quote not found on the given page (no PDF linked to this source)) ; hta-018 (Number not in the quotes: 2) ; hta-022 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-021 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-019 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-019 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-064 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-062 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-020 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-065 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-065 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-026 (Number not in the quotes: 2) ; hta-030 (Number not in the quotes: 2) ; hta-032 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-034 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-035 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-038 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-039 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-040 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-041 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-041 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-041 (Evidence 3: quote not found on the given page (no PDF linked to this source)) ; hta-042 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-042 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-042 (Evidence 3: quote not found on the given page (no PDF linked to this source)) ; hta-053 (Choose an urgency) ; hta-053 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-053 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-053 (Evidence 3: quote not found on the given page (no PDF linked to this source)) ; hta-053 (Evidence 4: quote not found on the given page (no PDF linked to this source)) ; hta-054 (Choose an urgency) ; hta-054 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-054 (Evidence 2: quote not found on the given page (no PDF linked to this source)) ; hta-055 (Choose an urgency) ; hta-055 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-056 (Choose an urgency) ; hta-056 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-057 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-058 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-059 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-060 (Evidence 1: quote not found on the given page (no PDF linked to this source)) ; hta-061 (Evidence 1: quote not found on the given page (no PDF linked to this source))"
+      }
+    ],
+    "reviewed_at": "2026-10-22",
+    "clinical_approval": true,
+    "unresolved_issues": [
+      "Cibles : ESC 2024 PAS 120 à 129 mmHg (affichée) ; HAS 2016 PAS 130 à 139 et PAD < 90. À trancher",
+      "1re intention : ESC 2024 bithérapie d'emblée (affichée) ; HAS 2016 monothérapie (affichée comme option, étiquetée HAS 2016)",
+      "Sujet âgé : HAS 2016 PAS < 150 mmHg après 80 ans ; ESC 2024 même cible que l'adulte avant 85 ans (affichée)",
+      "Sel : HAS 2016 6 à 8 g/j de sel (affiché) ; ESC 2024 < 2 g/j de sodium",
+      "Aucune fiche médicament : aucune source n'a de posologie pour IEC, ARA2, inhibiteurs calciques, thiazidiques (RCP à ajouter)",
+      "Urgence des orientations non donnée par les sources (laissée vide)",
+      "ESC : citations en anglais, texte traduit",
+      "hta-011 : citations courtes « glycémie à jeun ; » et « ECG de repos. » peut-être refusées par le contrôle"
+    ]
+  },
+  "red_box": {
+    "signs": [
+      {
+        "id": "hta-015",
+        "refs": [],
+        "text": "PA ≥ 180/110 mmHg avec céphalées, troubles visuels, douleur thoracique, dyspnée, vertiges ou déficit neurologique : urgence hypertensive.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 3943,
+            "quote": "It is recommended when BP ≥180/110 mmHg that hypertensive emergency be excluded.",
+            "source_id": "esc-hta-2024"
+          },
+          {
+            "page": 3983,
+            "quote": "Symptoms of hypertensive emergency depend on the organs affected but may include headache, visual disturbances, chest pain, shortness of breath, dizziness, and other neurological deficits.",
+            "source_id": "esc-hta-2024"
+          }
+        ],
+        "strength": "forte",
+        "condition": null
+      }
+    ],
+    "actions": [
+      {
+        "id": "hta-016",
+        "refs": [],
+        "text": "Adresser en urgence : baisse immédiate et prudente de la PA, souvent par voie IV.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 3983,
+            "quote": "Hypertensive emergencies are potentially life-threatening and require immediate and careful intervention to reduce BP, often with i.v. therapy.",
+            "source_id": "esc-hta-2024"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "has-hta-2016",
+      "url": "https://www.has-sante.fr/jcms/c_2059286/fr/prise-en-charge-de-l-hypertension-arterielle-de-l-adulte",
+      "title": "Prise en charge de l’hypertension artérielle de l’adulte (fiche mémo)",
+      "citation": "Haute Autorité de santé, fiche mémo, septembre 2016",
+      "accessed_at": "2026-10-20",
+      "page_offset": 0,
+      "organisation": "Haute Autorité de santé (HAS)",
+      "publication_date": "2016-09"
+    },
+    {
+      "id": "esc-hta-2024",
+      "url": "https://doi.org/10.1093/eurheartj/ehae178",
+      "title": "2024 ESC Guidelines for the management of elevated blood pressure and hypertension",
+      "citation": "McEvoy JW, McCarthy CP, Bruno RM, et al. Eur Heart J 2024;45:3912–4018",
+      "accessed_at": "2026-10-20",
+      "page_offset": -3911,
+      "organisation": "European Society of Cardiology (ESC)",
+      "publication_date": "2024-08-30"
+    }
+  ],
+  "refer_follow": {
+    "refer": [
+      {
+        "id": "hta-053",
+        "urgency": null,
+        "criteria": "HTA sévère d'emblée (PAS > 180 ou PAD > 110 mmHg), HTA avant 30 ans, HTA avec hypokaliémie, ou autre signe d'HTA secondaire",
+        "evidence": [
+          {
+            "page": 3,
+            "quote": "HTA sévère (PAS > 180 ou PAD > 110 mmHg) d’emblée,",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "HTA avant l’âge de 30 ans,",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "HTA avec hypokaliémie,",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 3,
+            "quote": "il est recommandé d’avoir recours à un avis spécialisé pour réaliser un complément d’explorations",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "destination": "Avis spécialisé (explorations d'HTA secondaire)"
+      },
+      {
+        "id": "hta-054",
+        "urgency": null,
+        "criteria": "créatininémie élevée ou protéinurie persistante au contrôle à 1 mois",
+        "evidence": [
+          {
+            "page": 4,
+            "quote": "Lors du bilan initial et au cours du suivi la découverte d’une créatininémie élevée et/ou d’une protéinurie doit être",
+            "source_id": "has-hta-2016"
+          },
+          {
+            "page": 4,
+            "quote": "contrôlée à 1 mois. En cas de persistance un avis néphrologique doit être demandé",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "destination": "Néphrologue"
+      },
+      {
+        "id": "hta-055",
+        "urgency": null,
+        "criteria": "anomalie cardiaque à l'interrogatoire, à l'examen ou à l'ECG",
+        "evidence": [
+          {
+            "page": 4,
+            "quote": "La découverte d’une anomalie cardiaque à l’interrogatoire, à l’examen physique ou à l’ECG nécessite de demander un avis spécialisé auprès d’un cardiologue",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "destination": "Cardiologue"
+      },
+      {
+        "id": "hta-056",
+        "urgency": null,
+        "criteria": "HTA résistante après vérification de l'observance et des facteurs de résistance",
+        "evidence": [
+          {
+            "page": 8,
+            "quote": "Après vérification de tous ces éléments, le recours à un avis spécialisé est recommandé en présence d’une HTA résistante.",
+            "source_id": "has-hta-2016"
+          }
+        ],
+        "strength": null,
+        "destination": "Avis spécialisé HTA"
+      }
+    ],
+    "follow_up": [
+      {
+        "id": "hta-057",
+        "what": "Contrôle tensionnel, tolérance, éducation",
+        "when": "Tous les mois jusqu'au contrôle de la PA",
+        "evidence": [
+          {
+            "page": 6,
+            "quote": "Il est recommandé d’évaluer le contrôle tensionnel tous les mois jusqu’à obtention de l’objectif tensionnel.",
+            "source_id": "has-hta-2016"
+          }
+        ]
+      },
+      {
+        "id": "hta-058",
+        "what": "Na, K, créatininémie",
+        "when": "1 à 4 semaines après le début d'un IEC ou ARA2, puis à chaque changement de dose",
+        "evidence": [
+          {
+            "page": 6,
+            "quote": "L’utilisation des IEC et des ARA2 nécessite un contrôle du sodium et du potassium plasmatiques et de la créatininémie dans un délai de 1 à 4 semaines après l’initiation du traitement puis lors des modifications posologiques",
+            "source_id": "has-hta-2016"
+          }
+        ]
+      },
+      {
+        "id": "hta-059",
+        "what": "Consultation : PA au cabinet et à domicile, tolérance, observance",
+        "when": "Tous les 3 à 6 mois une fois la PA contrôlée",
+        "evidence": [
+          {
+            "page": 7,
+            "quote": "Une consultation de suivi auprès du médecin généraliste est proposée tous les 3 à 6 mois.",
+            "source_id": "has-hta-2016"
+          }
+        ]
+      },
+      {
+        "id": "hta-060",
+        "what": "Na, K, créatininémie, protéinurie",
+        "when": "Tous les 1 à 2 ans (plus souvent si diabète, IR, protéinurie, sujet âgé)",
+        "evidence": [
+          {
+            "page": 7,
+            "quote": "Un contrôle biologique (Na, K, créatininémie, recherche de protéinurie quelle que soit la méthode) est souhaitable tous les 1 à 2 ans, ou plus fréquemment en cas de diabète, d’insuffisance rénale, de protéinurie",
+            "source_id": "has-hta-2016"
+          }
+        ]
+      },
+      {
+        "id": "hta-061",
+        "what": "ECG",
+        "when": "Tous les 3 à 5 ans",
+        "evidence": [
+          {
+            "page": 7,
+            "quote": "Un ECG est justifié tous les 3 à 5 ans, ou plus fréquemment en cas de symptômes cardiaques ou de cardiopathie sous-jacente.",
+            "source_id": "has-hta-2016"
+          }
+        ]
+      }
+    ]
+  },
+  "schema_version": "1.1.0"
+}

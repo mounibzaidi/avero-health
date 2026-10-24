@@ -1,0 +1,1704 @@
+{
+  "meta": {
+    "id": "eclampsie",
+    "title": "Éclampsie",
+    "motifs": [
+      "éclampsie",
+      "pré-éclampsie sévère",
+      "convulsions grossesse",
+      "sulfate de magnésium",
+      "HELLP"
+    ],
+    "status": "published",
+    "country": "DZ",
+    "version": "1.3.3",
+    "audience": [
+      "MG",
+      "urgences",
+      "sages-femmes"
+    ],
+    "language": "fr",
+    "template": "urgence",
+    "specialite": "gynécologie-obstétrique",
+    "next_review_at": null,
+    "last_reviewed_at": "2026-10-22"
+  },
+  "scope": {
+    "exclusions": [],
+    "population": "Femme enceinte après 20 SA, en cours d'accouchement ou en post-partum, avec convulsions ou trouble de la conscience"
+  },
+  "treat": {
+    "do_not": [
+      {
+        "id": "ecl-031",
+        "refs": [],
+        "text": "Ne pas transférer une patiente non stabilisée.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 1,
+            "quote": "La patiente ne doit être transférée qu’une fois stabilisée sur le plan neurologique et tensionnel",
+            "source_id": "insp-dz-eclampsie-2018"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-056",
+        "refs": [],
+        "text": "Pas d'IEC, d'ARA2 ni de diurétiques pendant la grossesse.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 50,
+            "quote": "Contre-indication : Les inhibiteurs de l’enzyme de conversion, les antagonistes des récepteurs de l’angiotensine II et les diurétiques",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-057",
+        "refs": [],
+        "text": "Pas de nifédipine en sublingual.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 50,
+            "quote": "la Nifédipine « forme sublinguale contre indiquée »",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "actions": [],
+    "medications": [
+      {
+        "id": "med-mgso4-attaque",
+        "inn": "sulfate de magnésium",
+        "dose": 4,
+        "phase": "initiation",
+        "route": "intraveineuse",
+        "missing": [
+          "duration"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 2,
+            "quote": "Diluer 4g (≈ 2,5 ampoules) de Sulfate de Magnésium dans 150 cc de SSI à passer en IV en 20 mn (présentation : ampoule de 1,5 g pour 10 ml)",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 2,
+            "quote": "En cas de récidive, injection d’une dose additionnelle de 1,5 à 2 g (1 à 1,5 ampoules) en perfusion à passer en 20 mn sans dépasser la dose cumulée de 8 g de Sulfate de Magnésium pendant la 1ère heure de traitement",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 2,
+            "quote": "Administrer immédiatement du sulfate de magnésium (MgSO4) à la dose d’attaque en 1ère intention :",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 1,
+            "quote": "Contre Indication au MgSO4 : insuffisance rénale sévère (clairance de la créatinine inférieure à 30 ml/min/1,73 m²)",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 51,
+            "quote": "Dose de charge de 4g en en perfusion au pousse seringue sur 20 minutes",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 51,
+            "quote": "Contre-indication : insuffisance rénale sévère (DFG <30), si modérée demi-dose,",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 51,
+            "quote": "Myasthénie, maladie neuro musculaire",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "max_dose": "8 g cumulés pendant la 1re heure",
+        "strength": null,
+        "condition": "crise d'éclampsie, en 1re intention",
+        "dose_unit": "g",
+        "frequency": "en 20 min, au pousse-seringue ou dans 150 cc de SSI",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Présentation : ampoule de 1,5 g pour 10 ml ; 4 g ≈ 2,5 ampoules",
+          "Récidive : 1,5 à 2 g (1 à 1,5 ampoule) en 20 min"
+        ],
+        "alternative_group": null,
+        "contraindications": [
+          "Insuffisance rénale sévère (DFG < 30) ; demi-dose si insuffisance rénale modérée",
+          "Myasthénie, maladie neuromusculaire"
+        ],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-mgso4-entretien",
+        "inn": "sulfate de magnésium",
+        "dose": 1,
+        "phase": "entretien",
+        "route": "intraveineuse",
+        "missing": [],
+        "duration": "24 h",
+        "evidence": [
+          {
+            "page": 3,
+            "quote": "La prise en charge de la patiente après arrêt de la crise tonico-clonique pour prévenir la récidive",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 3,
+            "quote": "Diluer 4 ampoules (6g) de MgSO4 dans 60 cc de SSI à passer à la seringue en 6H (vitesse de 10 cc/h ; 1 cc = 0,1g)",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 3,
+            "quote": "Diluer 2,5 ampoules (3g) de MgSO4 dans 300 cc de SSI à passer en 3H",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 1,
+            "quote": "Contre Indication au MgSO4 : insuffisance rénale sévère (clairance de la créatinine inférieure à 30 ml/min/1,73 m²)",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 51,
+            "quote": "puis 1 à 2 g/ heure pour 24 heures",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 51,
+            "quote": "Contre-indication : insuffisance rénale sévère (DFG <30), si modérée demi-dose,",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 51,
+            "quote": "Myasthénie, maladie neuro musculaire",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 51,
+            "quote": "Surveillance des signes de surdosage : Disparition des ROT, constante, état de conscience stop Sulfate Mg si persistance Gluconate de Calcium",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "max_dose": "2 g/h",
+        "strength": null,
+        "condition": "après l'arrêt de la crise, pour prévenir la récidive",
+        "dose_unit": "g/h",
+        "frequency": "perfusion continue",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Seringue électrique : 4 ampoules (6 g) dans 60 cc de SSI à 10 cc/h",
+          "Sans seringue électrique : 3 g dans 300 cc de SSI en 3 h",
+          "Arrêter si disparition des ROT, troubles de la conscience ou anomalie des constantes ; antidote : gluconate de calcium"
+        ],
+        "alternative_group": null,
+        "contraindications": [
+          "Insuffisance rénale sévère (DFG < 30) ; demi-dose si insuffisance rénale modérée",
+          "Myasthénie, maladie neuromusculaire"
+        ],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-labetalol-iv",
+        "inn": "labétalol",
+        "dose": 20,
+        "phase": "initiation",
+        "route": "intraveineuse",
+        "missing": [
+          "duration",
+          "max_dose"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 53,
+            "quote": "1er bolus: 20 mg en IV sur > 2 minutes",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "bolus: 40 mg en IV sur > 2 minutes",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "bolus: 80 mg en IV sur > 2 minutes",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "Poursuite labétalol 1 mg/Kg/h IVSE",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "Hors contre-indica- tions (asthme, BPCO, bradycardie, présence ou antécédent de trouble de conduction intra-cardiaque, an- técédent de réaction d'hypersensibilité)",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "Stratégie de titration par bolus IV (Indication: PAS ≥ 180 mmHg et/ou PAD ≥ 120 mmHg)",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "Objectif: PAS < 160 mmHg et PAD < 110 mmHg.",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "max_dose": null,
+        "strength": null,
+        "condition": "en première intention, bolus si PAS ≥ 180 et/ou PAD ≥ 120 mmHg",
+        "dose_unit": "mg",
+        "frequency": "bolus sur plus de 2 min, puis 40, 80 et 80 mg si besoin",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Puis perfusion continue 1 mg/kg/h en seringue électrique",
+          "Objectif PAS < 160 et PAD < 110 mmHg"
+        ],
+        "alternative_group": null,
+        "contraindications": [
+          "Asthme, BPCO, bradycardie, trouble de conduction intracardiaque, hypersensibilité"
+        ],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-nicardipine",
+        "inn": "nicardipine",
+        "dose": 0.5,
+        "phase": "initiation",
+        "route": "intraveineuse",
+        "missing": [
+          "duration",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 53,
+            "quote": "Bolus de 0,5 mg en IV sur > 2 minutes à ré- péter 3 fois",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "Poursuite nicardipine 4 mg/h IVSE",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "0,5 à 4 mg/h Objectif: PAS < 160 mmHg et PAD < 110 mmHg",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "À privilégier en se- conde intention ou en association",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "max_dose": "4 mg/h en entretien",
+        "strength": null,
+        "condition": "en deuxième intention ou en association au labétalol",
+        "dose_unit": "mg",
+        "frequency": "bolus sur plus de 2 min, à répéter 3 fois",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Puis perfusion continue 4 mg/h en seringue électrique, entretien 0,5 à 4 mg/h",
+          "Objectif PAS < 160 et PAD < 110 mmHg"
+        ],
+        "alternative_group": null,
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-urapidil",
+        "inn": "urapidil",
+        "dose": 6.25,
+        "phase": "initiation",
+        "route": "intraveineuse",
+        "missing": [
+          "duration",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 53,
+            "quote": "Bolus de 6,25 à 12,5 mg en IV sur > 2 mi- nutes à répéter 3 fois",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "Poursuite urapidil 50 mg/h IVSE",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "10 à 60 mg/h Objectif: PAS < 160 mmHg et PAD < 110 mmHg",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 53,
+            "quote": "À privilégier en se- conde intention ou en association",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "max_dose": "60 mg/h en entretien",
+        "strength": null,
+        "condition": "en deuxième intention ou en association au labétalol",
+        "dose_unit": "mg",
+        "frequency": "bolus de 6,25 à 12,5 mg sur plus de 2 min, à répéter 3 fois",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [
+          "Puis perfusion continue 50 mg/h en seringue électrique, entretien 10 à 60 mg/h",
+          "Objectif PAS < 160 et PAD < 110 mmHg"
+        ],
+        "alternative_group": null,
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      },
+      {
+        "id": "med-gluconate-calcium",
+        "inn": "gluconate de calcium",
+        "dose": 1,
+        "phase": "unique",
+        "route": "intraveineuse",
+        "missing": [
+          "duration",
+          "max_dose",
+          "contraindications"
+        ],
+        "duration": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "Perfuser du gluconate de calcium : 1 g dans 50 ml de SSI à faire passer en 10 mn (antagoniste du magnésium)",
+            "source_id": "insp-dz-eclampsie-2018"
+          }
+        ],
+        "max_dose": null,
+        "strength": null,
+        "condition": "surdosage en MgSO4 (antagoniste du magnésium)",
+        "dose_unit": "g",
+        "frequency": "dans 50 ml de SSI, en 10 min",
+        "dose_basis": "fixe",
+        "prescriber": null,
+        "adjustments": [],
+        "alternative_group": null,
+        "contraindications": [],
+        "local_availability": {
+          "brands": [],
+          "status": null,
+          "country": "DZ"
+        }
+      }
+    ]
+  },
+  "advise": [],
+  "assess": {
+    "ask": [],
+    "tests": [
+      {
+        "id": "ecl-050",
+        "refs": [],
+        "text": "Bilan de gravité : NFS, plaquettes, LDH, haptoglobine, schizocytes (hémolyse, HELLP).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 50,
+            "quote": "Recherche de complications viscérales, signes de gravité de la pré éclampsie.",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 50,
+            "quote": "Numération formule sanguine (NFS).",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 50,
+            "quote": "Marqueurs d’hémolyse : lactodéshydrogénase « LDH », haptoglobine, présence de schizocytes.",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-051",
+        "refs": [],
+        "text": "Fonction rénale : ionogramme, urée, créatinine, uricémie, protidémie, albuminémie ; protéinurie des 24 h ou rapport protéine/créatinine urinaire (anormal si ≥ 30 mg/mmol).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 50,
+            "quote": "Evaluation de la fonction rénale : ionogramme sanguin, urée, créatinine, uricémie, protidémie, albuminémie",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 50,
+            "quote": "le dosage du rapport protéine/créatinine urinaire « ratio anormal : ≥ 30 mg/mmol » permet de s’affranchir d’attendre 24 heures.",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-052",
+        "refs": [],
+        "text": "Bilan hépatique : ASAT, ALAT, bilirubine, glycémie.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 50,
+            "quote": "Evaluation de la fonction hépatique : transaminases aspartate aminotransférase « ASAT », alanine aminotransférase « ALAT », bilirubine, glycémie.",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-053",
+        "refs": [],
+        "text": "Hémostase : plaquettes, TP, TCA, fibrinogène ; groupe sanguin, rhésus, RAI.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 50,
+            "quote": "Hémostase : plaquettes, taux de prothrombine « TP », temps de céphaline activée « TCA », fibrinogène.",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 50,
+            "quote": "Détermination de groupe sanguin et rhésus recherche d’agglutinines irrégulières.",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-054",
+        "refs": [],
+        "text": "BNP si suspicion d'atteinte cardiaque.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 50,
+            "quote": "Dosage du brain natriuretic peptide (BNP) comme marqueur d’atteinte myocardique",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-055",
+        "refs": [],
+        "text": "Fœtus : ERCF, Doppler obstétrical, échographie obstétricale.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 50,
+            "quote": "ERCF",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 50,
+            "quote": "Doppler Obstétrical",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 50,
+            "quote": "Échographie Obstétricale",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-028",
+        "refs": [],
+        "text": "Imagerie si : coma post-critique > 6 h, signes de localisation (AVC, thrombose veineuse cérébrale), convulsions persistantes, avant 20 SA, éclampsie plus de 48 h après l'accouchement, éclampsie réfractaire au MgSO4, troubles visuels persistants (IRM).",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "Si coma post critique > 6 heures",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 5,
+            "quote": "Si apparition de signes de localisation en faveur d’un AVC ou d’une thrombose veineuse cérébrale",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 5,
+            "quote": "Si convulsions persistantes",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 5,
+            "quote": "Si convulsions survenant avant la 20ème SA",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 5,
+            "quote": "Si éclampsie survient 48 heures après l’accouchement",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 5,
+            "quote": "Si éclampsie réfractaire (récidive des convulsions) malgré un traitement adéquat par MgSO4",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 5,
+            "quote": "Si persistance des troubles visuels : IRM à la recherche d’une encéphalopathie postérieure réversible (PRES syndrome)",
+            "source_id": "insp-dz-eclampsie-2018"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "examine": [],
+    "pathway": {
+      "nodes": [
+        {
+          "id": "s0",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "s0-b0",
+              "label": "Crise en cours",
+              "next_node_id": "c1"
+            },
+            {
+              "id": "s0-b1",
+              "label": "Crise contrôlée : entretien",
+              "next_node_id": "m1"
+            },
+            {
+              "id": "s0-b2",
+              "label": "Crises répétées ou coma",
+              "next_node_id": "t2"
+            },
+            {
+              "id": "s0-b3",
+              "label": "Surdosage en MgSO4",
+              "next_node_id": "od"
+            }
+          ],
+          "question": "Situation"
+        },
+        {
+          "id": "c1",
+          "type": "action",
+          "items": [
+            {
+              "id": "ecl-005",
+              "refs": [],
+              "text": "Position latérale de sécurité sur le côté gauche, dans un endroit sans risque de chute.",
+              "basis": null,
+              "origin": "source",
+              "timing": "immediate",
+              "evidence": [
+                {
+                  "page": 2,
+                  "quote": "Disposer la patiente en position latérale de sécurité sur le côté gauche",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 2,
+                  "quote": "Mettre la patiente dans un endroit permettant d’éviter le risque traumatique",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-006",
+              "refs": [],
+              "text": "Canule de Guedel, aspiration des sécrétions.",
+              "basis": null,
+              "origin": "source",
+              "timing": "immediate",
+              "evidence": [
+                {
+                  "page": 2,
+                  "quote": "Libérer les voies aériennes : placer une Canule de Guedel si la patiente est inconsciente",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": "patiente inconsciente"
+            },
+            {
+              "id": "ecl-007",
+              "refs": [],
+              "text": "Oxygène nasal 6 à 8 L/min, ou au masque.",
+              "basis": null,
+              "origin": "source",
+              "timing": "immediate",
+              "evidence": [
+                {
+                  "page": 2,
+                  "quote": "Oxygéner par voie nasale avec un débit de 6 à 8 l/minute ou à défaut au masque",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-008",
+              "refs": [],
+              "text": "Voie veineuse périphérique 16 G ou 18 G.",
+              "basis": null,
+              "origin": "source",
+              "timing": "immediate",
+              "evidence": [
+                {
+                  "page": 2,
+                  "quote": "Poser un abord veineux périphérique : 16 G (grise) ou 18 G (verte)",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-009",
+              "refs": [],
+              "text": "Sulfate de magnésium immédiatement : dose de charge 4 g (≈ 2,5 ampoules de 1,5 g) en 20 min, au pousse-seringue ou dans 150 cc de SSI.",
+              "basis": null,
+              "origin": "source",
+              "timing": "immediate",
+              "evidence": [
+                {
+                  "page": 2,
+                  "quote": "Administrer immédiatement du sulfate de magnésium (MgSO4) à la dose d’attaque en 1ère intention :",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 2,
+                  "quote": "Diluer 4g (≈ 2,5 ampoules) de Sulfate de Magnésium dans 150 cc de SSI à passer en IV en 20 mn (présentation : ampoule de 1,5 g pour 10 ml)",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 51,
+                  "quote": "Dose de charge de 4g en en perfusion au pousse seringue sur 20 minutes",
+                  "source_id": "dz-protocole-grossesse-2025"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-010",
+              "refs": [],
+              "text": "Récidive : 1,5 à 2 g (1 à 1,5 ampoule) en 20 min, sans dépasser 8 g cumulés la 1re heure.",
+              "basis": null,
+              "origin": "source",
+              "timing": "immediate",
+              "evidence": [
+                {
+                  "page": 2,
+                  "quote": "En cas de récidive, injection d’une dose additionnelle de 1,5 à 2 g (1 à 1,5 ampoules) en perfusion à passer en 20 mn sans dépasser la dose cumulée de 8 g de Sulfate de Magnésium pendant la 1ère heure de traitement",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": "nouvelle crise"
+            },
+            {
+              "id": "ecl-011",
+              "refs": [],
+              "text": "Surveiller PA, FC, FR, SpO2 toutes les 5 min ; sonde urinaire, diurèse, urée et créatinine.",
+              "basis": null,
+              "origin": "source",
+              "timing": "immediate",
+              "evidence": [
+                {
+                  "page": 2,
+                  "quote": "Monitorer la TA, FC, FR, SPO2 toutes les 5 minutes",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 2,
+                  "quote": "Sondage vésical systématique avec surveillance de la diurèse + bilan rénal de référence (urée, créatinémie)",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "c1-b0",
+              "label": "Crise contrôlée : passer à l'entretien",
+              "next_node_id": "m1"
+            },
+            {
+              "id": "c1-b1",
+              "label": "Crises répétées, état de mal ou Glasgow ≤ 9",
+              "next_node_id": "t2"
+            },
+            {
+              "id": "c1-bod",
+              "label": "Signes de surdosage en MgSO4",
+              "next_node_id": "od"
+            }
+          ],
+          "question": "Traiter la crise, en première intention"
+        },
+        {
+          "id": "m1",
+          "type": "action",
+          "items": [
+            {
+              "id": "ecl-041",
+              "refs": [],
+              "text": "MgSO4 en entretien : 1 à 2 g/h pendant 24 h.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 51,
+                  "quote": "puis 1 à 2 g/ heure pour 24 heures",
+                  "source_id": "dz-protocole-grossesse-2025"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-012",
+              "refs": [],
+              "text": "Seringue électrique : 4 ampoules (6 g) dans 60 cc de SSI à 10 cc/h, seringue renouvelée toutes les 6 h.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3,
+                  "quote": "Diluer 4 ampoules (6g) de MgSO4 dans 60 cc de SSI à passer à la seringue en 6H (vitesse de 10 cc/h ; 1 cc = 0,1g)",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 3,
+                  "quote": "Renouveler la seringue toutes les 6H pendant 48 heures",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": "seringue électrique disponible"
+            },
+            {
+              "id": "ecl-013",
+              "refs": [],
+              "text": "Sans seringue électrique : 3 g de MgSO4 dans 300 cc de SSI en 3 h, à renouveler.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3,
+                  "quote": "Diluer 2,5 ampoules (3g) de MgSO4 dans 300 cc de SSI à passer en 3H",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 3,
+                  "quote": "A renouveler pour couvrir les 48h",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": "pas de seringue électrique"
+            },
+            {
+              "id": "ecl-016",
+              "refs": [],
+              "text": "Monitorage continu PA, FC, FR, SpO2 ; surveiller ROT, FR, diurèse horaire, urée et créatinine.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3,
+                  "quote": "Monitorer en continue la TA, FC, FR, SPO2.",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 3,
+                  "quote": "Surveiller les ROT, la FR, la diurèse horaire, l’urée et la créatinine",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "m1-b0",
+              "label": "Puis contrôler la pression artérielle",
+              "next_node_id": "p1"
+            },
+            {
+              "id": "m1-bod",
+              "label": "Signes de surdosage en MgSO4",
+              "next_node_id": "od"
+            }
+          ],
+          "question": "Prévenir la récidive : MgSO4 en entretien"
+        },
+        {
+          "id": "p1",
+          "type": "action",
+          "items": [
+            {
+              "id": "ecl-042",
+              "refs": [],
+              "text": "Objectif : PAS < 160 mmHg et PAD < 110 mmHg, sans à-coups tensionnels.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 52,
+                  "quote": "OBJECTIF PAS < 160 mmHg et PAD < 110 mmHg",
+                  "source_id": "dz-protocole-grossesse-2025"
+                },
+                {
+                  "page": 50,
+                  "quote": "éviter les à-coups tensionnels.",
+                  "source_id": "dz-protocole-grossesse-2025"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-043",
+              "refs": [],
+              "text": "Antihypertenseur IV en seringue électrique : labétalol en première intention, sinon nicardipine ou urapidil (voir les fiches médicament).",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 52,
+                  "quote": "Labetalol TRANDATE* IVSE (1ère intention) ou Nicardipine LOXEN* IVSE ou Urapidil EUPRESSYL* IVSE",
+                  "source_id": "dz-protocole-grossesse-2025"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-044",
+              "refs": [],
+              "text": "Titration par bolus IV.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 53,
+                  "quote": "Stratégie de titration par bolus IV (Indication: PAS ≥ 180 mmHg et/ou PAD ≥ 120 mmHg)",
+                  "source_id": "dz-protocole-grossesse-2025"
+                }
+              ],
+              "strength": null,
+              "condition": "PAS ≥ 180 mmHg et/ou PAD ≥ 120 mmHg"
+            }
+          ],
+          "branches": [
+            {
+              "id": "p1-b0",
+              "label": "PA contrôlée",
+              "next_node_id": "d0"
+            },
+            {
+              "id": "p1-b1",
+              "label": "PA toujours au-dessus de l'objectif",
+              "next_node_id": "t1p"
+            }
+          ],
+          "question": "Contrôler la pression artérielle"
+        },
+        {
+          "id": "t1p",
+          "type": "action",
+          "items": [
+            {
+              "id": "ecl-046",
+              "refs": [],
+              "text": "Poursuivre le labétalol en IVSE et ajouter un deuxième antihypertenseur IV (nicardipine ou urapidil).",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 53,
+                  "quote": "Poursuite labétalol 1 mg/Kg/h IVSE et ajout d'un 2ème antihy- pertenseur IVSE",
+                  "source_id": "dz-protocole-grossesse-2025"
+                },
+                {
+                  "page": 53,
+                  "quote": "À privilégier en se- conde intention ou en association",
+                  "source_id": "dz-protocole-grossesse-2025"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t1p-b0",
+              "label": "PA contrôlée",
+              "next_node_id": "d0"
+            },
+            {
+              "id": "t1p-b1",
+              "label": "Toujours non contrôlée : terminer la grossesse",
+              "next_node_id": "d0"
+            }
+          ],
+          "question": "Renforcer le traitement antihypertenseur"
+        },
+        {
+          "id": "d0",
+          "type": "action",
+          "items": [
+            {
+              "id": "ecl-045",
+              "refs": [],
+              "text": "Terminer la grossesse dès que la mère est stabilisée, par n'importe quelle voie.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 53,
+                  "quote": "Il est recommandé de terminer la grossesse pour des raisons :",
+                  "source_id": "dz-protocole-grossesse-2025"
+                },
+                {
+                  "page": 1,
+                  "quote": "Dès que l’état maternel est considéré stable, il est impératif d’évacuer l’utérus le plus rapidement possible par n’importe quelle voie.",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": "grossesse en cours"
+            }
+          ],
+          "branches": [
+            {
+              "id": "d0-b0",
+              "label": "Selon le lieu de prise en charge",
+              "next_node_id": "t1d"
+            }
+          ],
+          "question": "Terminer la grossesse"
+        },
+        {
+          "id": "t1d",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "t1d-b0",
+              "label": "Oui",
+              "next_node_id": "t1a"
+            },
+            {
+              "id": "t1d-b1",
+              "label": "Non, dilatation ≥ 6 cm",
+              "next_node_id": "t1b"
+            },
+            {
+              "id": "t1d-b2",
+              "label": "Non, dilatation < 4 cm ou accouchement non imminent",
+              "next_node_id": "t1c"
+            }
+          ],
+          "question": "Bloc opératoire sur place ?"
+        },
+        {
+          "id": "t1a",
+          "type": "end",
+          "items": [
+            {
+              "id": "ecl-017",
+              "refs": [],
+              "text": "Dès stabilisation, évacuer l'utérus (appeler le chirurgien si pas d'obstétricien), puis transfert en réanimation une fois la crise maîtrisée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3,
+                  "quote": "Dès stabilisation, procéder à l’évacuation de l’utérus - Appeler le chirurgien en cas d’absence d’obstétricien",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 3,
+                  "quote": "Transférer la patiente vers un service de réanimation, une fois la crise maitrisée et l’utérus évacué",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-018",
+              "refs": [],
+              "text": "Accouchement imminent : voie basse ; sinon, privilégier la voie haute.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3,
+                  "quote": "En cas d’accouchement imminent, on favorisera la voie basse. En dehors de ce cas de figure, c’est l’extraction par voie haute qui doit être privilégiée.",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [],
+          "question": "Évacuer l'utérus dès stabilisation, puis réanimation"
+        },
+        {
+          "id": "t1b",
+          "type": "end",
+          "items": [
+            {
+              "id": "ecl-019",
+              "refs": [],
+              "text": "Accoucher par voie basse immédiatement, sur place.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3,
+                  "quote": "Accoucher la patiente par voie basse immédiatement",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 3,
+                  "quote": "Dilatation >=6 cm",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-020",
+              "refs": [],
+              "text": "Ces seuils sont indicatifs : apprécier l'imminence de l'accouchement (vitesse du travail, présentation engagée).",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 3,
+                  "quote": "Les attitudes préconisées, en fonction de l’état d’avancement de la dilatation, sont données à titre indicatif.",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 3,
+                  "quote": "Le médecin devra apprécier l’imminence de l’accouchement (vitesse du travail, présentation engagée…)",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [],
+          "question": "Accoucher par voie basse immédiatement"
+        },
+        {
+          "id": "t1c",
+          "type": "end",
+          "items": [
+            {
+              "id": "ecl-021",
+              "refs": [],
+              "text": "Transférer seulement une fois stabilisée : FC 80 à 100, FR > 12/min, PAD 90 à 105 mmHg, PAM 105 à 125 mmHg.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "La patiente ne doit être transférée qu’une fois stabilisée sur le plan neurologique et tensionnel avec une FC (80-100 btt/mn), une FR > 12 cycles/mn et une TA : PAD (entre 90 et 105 mm de Hg) et PAM : (entre 105 -125 mm de Hg)",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-022",
+              "refs": [],
+              "text": "Pendant le transfert : deux voies veineuses, MgSO4 en entretien et antihypertenseur, oxygène, accompagnée d'un médecin ou d'une sage-femme.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 1,
+                  "quote": "munie de deux voies d’abord veineux",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 1,
+                  "quote": "sous MgSO4 en dose d’entretien et sous traitement antihypertenseur",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 1,
+                  "quote": "accompagnée d’un médecin ou éventuellement d’une sage-femme",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [],
+          "question": "Transférer vers une structure avec bloc opératoire, une fois stabilisée"
+        },
+        {
+          "id": "t2",
+          "type": "decision",
+          "items": [],
+          "branches": [
+            {
+              "id": "t2-b0",
+              "label": "Utérus plein (avant l'accouchement)",
+              "next_node_id": "t2a"
+            },
+            {
+              "id": "t2-b1",
+              "label": "Utérus vide (post-partum)",
+              "next_node_id": "t2b"
+            }
+          ],
+          "question": "Utérus plein ou vide ?"
+        },
+        {
+          "id": "t2a",
+          "type": "action",
+          "items": [
+            {
+              "id": "ecl-023",
+              "refs": [],
+              "text": "Extraction en urgence par voie haute ; sans bloc, transférer vers une structure adaptée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 4,
+                  "quote": "Extraire le fœtus en urgence par voie haute – si la structure ne dispose pas de bloc, assurer le transfert vers la structure adéquate",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t2a-b0",
+              "label": "Puis",
+              "next_node_id": "t2c"
+            }
+          ],
+          "question": "Extraire le fœtus en urgence par voie haute"
+        },
+        {
+          "id": "t2b",
+          "type": "action",
+          "items": [
+            {
+              "id": "ecl-024",
+              "refs": [],
+              "text": "Mesures de réanimation en priorité.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 4,
+                  "quote": "Les mesures de réanimation sont au 1er plan",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [
+            {
+              "id": "t2b-b0",
+              "label": "Puis",
+              "next_node_id": "t2c"
+            }
+          ],
+          "question": "Réanimation au premier plan"
+        },
+        {
+          "id": "t2c",
+          "type": "end",
+          "items": [
+            {
+              "id": "ecl-025",
+              "refs": [],
+              "text": "Anesthésie générale en induction à séquence rapide avec manœuvre de Sellick, intubation orotrachéale et ventilation assistée.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 4,
+                  "quote": "Induction à séquence rapide (morphinique : Rapifen) + manœuvre de Sellick",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 4,
+                  "quote": "Penthotal ou Diprivan + curare (Esméron)",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 4,
+                  "quote": "Intubation orotrachéale + ventilation assistée",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-026",
+              "refs": [],
+              "text": "Maintenir le MgSO4 en entretien 1 à 2 g/h et l'antihypertenseur IV, comme dans le traitement d'entretien.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 4,
+                  "quote": "Maintenir le Sulfate de Magnésium en dose d’entretien : en perfusion continue de 1 g à 2 g par heure",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 52,
+                  "quote": "Labetalol TRANDATE* IVSE (1ère intention) ou Nicardipine LOXEN* IVSE ou Urapidil EUPRESSYL* IVSE",
+                  "source_id": "dz-protocole-grossesse-2025"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            }
+          ],
+          "branches": [],
+          "question": "Anesthésie générale et intubation, puis entretien"
+        },
+        {
+          "id": "od",
+          "type": "end",
+          "items": [
+            {
+              "id": "ecl-027",
+              "refs": [],
+              "text": "Signes de surdosage : abolition des ROT, faiblesse musculaire, flush, nausées, vomissements, somnolence, diplopie, troubles de l'élocution, paralysie, arrêt respiratoire ou cardiaque.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5,
+                  "quote": "Abolition Des ROT",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Faiblesse Musculaire, Flush Cutané",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Diplopie Ou Troubles De L’élocution",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Arrêt Respiratoire, arrêt cardiaque.",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Nausées, Vomissement",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Somnolence",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Paralysie",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": null
+            },
+            {
+              "id": "ecl-029",
+              "refs": [],
+              "text": "Arrêter le MgSO4, gluconate de calcium 1 g IV en 10 min (antidote), oxygène ; intubation et ventilation si arrêt respiratoire.",
+              "basis": null,
+              "origin": "source",
+              "timing": null,
+              "evidence": [
+                {
+                  "page": 5,
+                  "quote": "Arrêter la perfusion de MgSO4",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Perfuser du gluconate de calcium : 1 g dans 50 ml de SSI à faire passer en 10 mn",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Administrer de l’oxygène",
+                  "source_id": "insp-dz-eclampsie-2018"
+                },
+                {
+                  "page": 5,
+                  "quote": "Effectuer une intubation trachéale associée à une ventilation assistée si arrêt respiratoire",
+                  "source_id": "insp-dz-eclampsie-2018"
+                }
+              ],
+              "strength": null,
+              "condition": "un de ces signes"
+            }
+          ],
+          "branches": [],
+          "question": "Surdosage en sulfate de magnésium"
+        }
+      ],
+      "start_node_id": "s0"
+    },
+    "symptoms": [
+      {
+        "id": "ecl-001",
+        "refs": [],
+        "text": "Convulsion tonico-clonique et/ou trouble de la conscience avec HTA, sans problème neurologique antérieur, après 20 SA : pendant la grossesse, l'accouchement ou le post-partum.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 1,
+            "quote": "Eclampsie = Convulsion tonico-clonique et/ou trouble de la conscience dans un contexte d’hypertension artérielle en l’absence d’un problème neurologique antérieur.",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 1,
+            "quote": "L’éclampsie survient après la 20ème semaine d’aménorrhée",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 49,
+            "quote": "Éclampsie est définie par une crise convulsive tonicoclonique dans un contexte de pathologie hypertensive de la grossesse.",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "diagnosis": [
+      {
+        "id": "ecl-002",
+        "refs": [],
+        "text": "Toute crise convulsive après le 4e mois de grossesse est une éclampsie jusqu'à preuve du contraire, et se traite comme telle.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 1,
+            "quote": "Toute crise convulsive survenant après le 4ème mois de la grossesse doit être considérée comme une éclampsie jusqu’à preuve du contraire et doit donc être traitée comme une éclampsie",
+            "source_id": "insp-dz-eclampsie-2018"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-003",
+        "refs": [],
+        "text": "La recherche d'une cause ne doit pas retarder le traitement de la crise.",
+        "basis": null,
+        "origin": "source",
+        "timing": null,
+        "evidence": [
+          {
+            "page": 1,
+            "quote": "La recherche d’une étiologie ne doit pas retarder la prise en charge de la crise convulsive",
+            "source_id": "insp-dz-eclampsie-2018"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ]
+  },
+  "review": {
+    "reviewer": "Mounib Zaidi",
+    "change_log": [
+      {
+        "by": "Claude",
+        "date": "2026-10-20",
+        "summary": "Création depuis la CAT éclampsie INSP 2018"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-21",
+        "summary": "Protocole national 2025 (chapitre HTA et grossesse) ajouté comme source principale : entretien 24 h, labétalol, nicardipine, urapidil IV, objectifs tensionnels, terminaison"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-21",
+        "summary": "Nombre d'ampoules incohérent retiré de l'affichage (grammes seuls) ; voie du MgSO4 en entretien simplifiée"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Traitement de la crise (gestes et MgSO4) déplacé de « En attendant » vers la première étape de l'arbre"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Signes et conduite à tenir du surdosage en MgSO4 regroupés dans l'étape d'entretien"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Étape d'entretien scindée : MgSO4 et surveillance, puis contrôle de la PA, puis terminaison de la grossesse ; branche d'échec ajoutée au renforcement antihypertenseur"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Départ en trois onglets (crise en cours, entretien, crises répétées) pour un affichage par étapes lisible"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Surdosage en MgSO4 : onglet dédié (signes puis conduite à tenir), lien depuis la crise et l'entretien"
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-22",
+        "summary": "Bilan maternel et fœtal (protocole 2025 p.50) ; IEC, ARA2, diurétiques et nifédipine sublinguale contre-indiqués"
+      },
+      {
+        "by": "Mounib Zaidi",
+        "date": "2026-10-22",
+        "summary": "Marqué corrigé sans correction : ecl-040 (Number not in the quotes: 4) ; ecl-055 (Evidence 1: quote not found on the given page (quote too short to check)) ; ecl-056 (Number not in the quotes: 2) ; ecl-041 (Number not in the quotes: 4) ; ecl-026 (Number not in the quotes: 4) ; ecl-027 (Evidence 6: quote not found on the given page (quote too short to check)) ; ecl-027 (Evidence 7: quote not found on the given page (quote too short to check)) ; med-gluconate-calcium (Number not in the quotes: 4)"
+      }
+    ],
+    "reviewed_at": "2026-10-22",
+    "clinical_approval": true,
+    "unresolved_issues": [
+      "MgSO4 en entretien : protocole national 2025 = 24 h (affiché) ; CAT INSP 2018 = 48 h",
+      "Nicardipine : protocole 2025 autorise des bolus de 0,5 mg (affiché) ; CAT INSP 2018 interdit le bolus et donne 1 à 6 mg/h",
+      "INSP 2018, entretien sans seringue électrique : « 2,5 ampoules (3g) » incohérent (2,5 x 1,5 g = 3,75 g). Seuls les grammes (3 g, cohérents avec 1 g/h) sont affichés ; le nombre d'ampoules est à vérifier",
+      "INSP 2018, nicardipine « 1 cc = 1 g » non reproduit",
+      "Dilatation entre 4 et 6 cm non couverte (seuils indicatifs de l'INSP)",
+      "page_offset -48 pour l'extrait du chapitre (pages 49 à 54) ; 0 si le fichier stocké est le protocole complet",
+      "Pages INSP 2018 : numéros de page du PDF"
+    ]
+  },
+  "red_box": {
+    "signs": [
+      {
+        "id": "ecl-004",
+        "refs": [],
+        "text": "Éclampsie : urgence obstétricale. Traiter sans délai ; l'état de la mère prime sur celui du fœtus.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 1,
+            "quote": "L’éclampsie est une urgence obstétricale et la 1ère priorité est de stabiliser l’état maternel",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 1,
+            "quote": "L’urgence maternelle prime sur l’état fœtal",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 1,
+            "quote": "Le traitement de la crise d’éclampsie doit se faire sans délai",
+            "source_id": "insp-dz-eclampsie-2018"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      },
+      {
+        "id": "ecl-040",
+        "refs": [],
+        "text": "Pré-éclampsie avec signes neurologiques persistants (troubles visuels ou auditifs, céphalées sévères résistantes, ROT vifs) : risque de crise imminente, MgSO4 en prévention.",
+        "basis": null,
+        "origin": "source",
+        "timing": "immediate",
+        "evidence": [
+          {
+            "page": 49,
+            "quote": "Signes neurologiques persistants « troubles visuels ou auditifs persistants, céphalées sévères ne répondant pas au traitement, réflexes ostéotendineux vifs et polycinétiques,",
+            "source_id": "dz-protocole-grossesse-2025"
+          },
+          {
+            "page": 51,
+            "quote": "Recommandée à visée maternelle en cas d’éclampsie, ou en cas de signes neurologiques faisant craindre la survenue d’une crise d’éclampsie",
+            "source_id": "dz-protocole-grossesse-2025"
+          }
+        ],
+        "strength": null,
+        "condition": null
+      }
+    ],
+    "actions": []
+  },
+  "sources": [
+    {
+      "id": "dz-protocole-grossesse-2025",
+      "url": "https://www.unicef.org/algeria/media/2481/file/Protocole%20et%20Procedures%20de%20prise%20en%20charge%20de%20la%20grossesse,%20de%20l'accouchement%20et%20de%20la%20p%C3%A9riode%20post%20natale.pdf.pdf",
+      "title": "Protocoles et procédures de prise en charge de la grossesse, de l’accouchement et de la période postnatale, chapitre HTA et grossesse",
+      "citation": "Ministère de la Santé, Algérie, édition 2025, pp. 49 à 54",
+      "accessed_at": "2026-10-21",
+      "page_offset": -48,
+      "organisation": "Ministère de la Santé (Algérie), Direction générale des services de santé et de la réforme hospitalière",
+      "publication_date": "2025"
+    },
+    {
+      "id": "insp-dz-eclampsie-2018",
+      "url": null,
+      "title": "Conduite à tenir devant une éclampsie",
+      "citation": "INSP, Ministère de la Santé, Algérie, Conduite à tenir devant une éclampsie, janvier 2018",
+      "accessed_at": "2026-10-20",
+      "page_offset": 0,
+      "organisation": "Institut National de Santé Publique (INSP), Ministère de la Santé, de la Population et de la Réforme Hospitalière (Algérie)",
+      "publication_date": "2018-01"
+    }
+  ],
+  "refer_follow": {
+    "refer": [
+      {
+        "id": "ecl-032",
+        "urgency": "urgent",
+        "criteria": "pas de bloc opératoire ni de médecin sur place",
+        "evidence": [
+          {
+            "page": 5,
+            "quote": "Que faire si dans la structure, il n’y a pas de bloc et pas de médecin",
+            "source_id": "insp-dz-eclampsie-2018"
+          },
+          {
+            "page": 5,
+            "quote": "Transférer immédiatement la patiente vers une structure disposant d’un bloc opératoire",
+            "source_id": "insp-dz-eclampsie-2018"
+          }
+        ],
+        "strength": null,
+        "destination": "Structure disposant d'un bloc opératoire, après les gestes de la crise"
+      }
+    ],
+    "follow_up": []
+  },
+  "schema_version": "1.1.0"
+}

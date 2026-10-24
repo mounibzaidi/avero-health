@@ -2,7 +2,9 @@
 
 Avero gives Algerian doctors one trusted place for up-to-date clinical protocols, with every recommendation linked to its official source.
 
-**Live demo (dashboard, open without an account):** https://avero-health-sandy.vercel.app
+**Live app (for doctors, no account needed):** https://avero-health-mobile.vercel.app
+
+**Admin dashboard (read-only without an account):** https://avero-health-sandy.vercel.app
 <!-- **Demo video:** add the link -->
 
 ## The problem
@@ -13,6 +15,7 @@ it is hard to know where a recommendation comes from or whether it is still curr
 
 ## What Avero does
 
+- Free for doctors
 - Turns official guidelines (Algerian protocols where they exist, otherwise HAS, ESC, AHA/ACC and French specialty
   societies) into short, structured protocols: one condition, one to five phone screens
 - Each protocol follows the order of a consultation: when to send to emergency (red box), assess, treat, advise, refer
@@ -45,7 +48,8 @@ Avero is a reference tool, not a diagnosis tool.
    *Done by the editor.*
 4. **Verify:** automatic checks (structure; every quote found on its PDF page; every number of a line present in its
    quote; the decision tree has no dead ends; brands only from the national register), then a person ticks each block
-   against the PDF, and a named doctor signs the clinical approval. Nothing is published before all of this passes.
+   against the PDF, and the reviewing doctor (currently the author) signs the clinical approval. Nothing is published
+   before all of this passes.
 5. **Serve:** the app shows the published protocols with their sources, and keeps them on the phone for offline use.
 
 ## Tech stack
@@ -158,10 +162,11 @@ which has a live validator.
 
 ## Current status and limitations
 
-- Published in the app: acute stroke (AVC), acute coronary syndrome. Drafts: eclampsia, acute pulmonary embolism,
-  adult hypertension
-- The guideline PDFs of the two published protocols are not yet uploaded to storage, so the dashboard shows each
-  line's quote but not the PDF page beside it
+- Published in the app: Accident vasculaire cérébral : reconnaître et orienter en urgence; Syndrome coronarien
+  aigu : conduite à tenir; Diabète de type 2 de l'adulte; Éclampsie; Hypertension artérielle de l'adulte; Œdème aigu
+  du poumon cardiogénique et IC décompensée
+- The guideline PDFs of the stroke and acute coronary syndrome protocols are not yet uploaded to storage, so the
+  dashboard shows each line's quote but not the PDF page beside it
 - Content is for professional reference and must be verified against the linked source
 
 ## Who built what
@@ -178,3 +183,5 @@ app's search and parts of the dashboard were carried over.
 - More conditions, prioritised by what GPs use most
 - Algerian protocols wherever they exist
 - Working with Algerian medical societies to publish their protocols through Avero
+- Let Algerian doctors contribute protocols through the same quote-checked editor, reviewed before publication, with
+  field practice clearly labelled and signed
