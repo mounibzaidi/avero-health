@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Button, ButtonLink, Card, Empty, ErrorNote, inputCls, PageHeader, Spinner, Tag } from "@/components/ui";
 import { api, apiForm, HAS_API } from "@/lib/api";
@@ -72,40 +72,43 @@ const decoded = (s: string) => {
 };
 const kb = (n: number | null) => (n ? `${Math.max(1, Math.round(n / 1024))} KB` : "");
 
-/** One version of a guideline: title, label, body, language, year, where it was found, and how to keep it. */
-function Version({ r, older, onKeep, busy }: { r: Rec; older?: boolean; onKeep: (link: string, single: boolean) => void; busy: boolean }) {
-  const label = r.label ? LABEL[r.label] : KIND[r.kind];
+type Keep = (link: string, single: boolean) => void;
+
+/** One version of a guideline: its tags, title (two lines, the rest on hover), body, year and where it was found, and
+ * how to keep it (only for those who can edit). */
+function Version({ r, older, onKeep, busy }: { r: Rec; older?: boolean; onKeep?: Keep; busy: boolean }) {
   const year = r.version_year;
   const published = r.year && year && r.year !== year ? r.year : null;
   const from = r.label === "derivative" ? derivedFrom(r.derived_from) : null;
+  const elsewhere = [...new Set((r.also_in ?? []).map((a) => a.journal).filter((j) => j && j !== r.journal))];
+  const meta = [
+    year && `${year}${published ? ` (published ${published})` : ""}`,
+    r.on_listing ? "the body's official page" : r.journal,
+    from && `based on ${from}`,
+    elsewhere.length > 0 && `also in ${elsewhere.join(", ")}`,
+    r.chapters?.length && `${r.chapters.length} chapter(s)`,
+  ].filter(Boolean);
+  const primary = r.label === "primary_guidance" || (!r.label && r.kind !== "article");
   return (
-    <div className={`flex items-start gap-3 py-2 ${older ? "ps-4 opacity-75" : ""}`}>
+    <div className={`flex items-start gap-4 py-3 ${older ? "border-s-2 border-line ps-3" : ""}`}>
       <div className="min-w-0 flex-1">
-        <a href={r.url} target="_blank" rel="noreferrer" className="text-sm font-medium text-ink hover:underline">{r.title}</a>
-        <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-muted">
-          <Tag>{langOf(r) === "fr" ? "FR" : "EN"}</Tag>
-          {older ? <Tag>Earlier version</Tag> : <Tag tone={r.label === "primary_guidance" || (!r.label && r.kind !== "article") ? "accent" : "neutral"}>{label}</Tag>}
-          {from && <span>based on {from}</span>}
+        <div className="mb-1 flex flex-wrap items-center gap-1.5">
+          {older ? <Tag>Earlier version</Tag> : <Tag tone={primary ? "accent" : "neutral"}>{r.label ? LABEL[r.label] : KIND[r.kind]}</Tag>}
           {!older && r.reference && <Tag tone="accent">{TIER[r.reference.tier] ?? "Reference"}</Tag>}
-          {r.relevance === "adjacent" && <Tag>related</Tag>}
-          <span className="font-medium text-soft">{r.body_name ?? "Unidentified body"}</span>
-          {year && <span>· {year}{published ? ` (published ${published})` : ""}</span>}
-          {year && THIS_YEAR - year > OLD_YEARS && <Tag>old ({year})</Tag>}
-          <span>· {r.on_listing ? "the body's official page" : r.journal}</span>
-          {r.pdf_url && <Tag tone="accent">Open PDF</Tag>}
-          {(() => {
-            const elsewhere = [...new Set((r.also_in ?? []).map((a) => a.journal).filter((j) => j && j !== r.journal))];
-            return elsewhere.length ? <span>· also published {r.on_listing ? "by" : "in"} {elsewhere.join(", ")}</span> : null;
-          })()}
-          {r.chapters?.length ? <span title={r.chapters.map((c) => c.title).join("\n")} className="cursor-help underline decoration-dotted">· {r.chapters.length} chapter(s)</span> : null}
-          <span title={r.why} className="cursor-help underline decoration-dotted">why</span>
+          {r.relevance === "adjacent" && <Tag>Related</Tag>}
+          {year && THIS_YEAR - year > OLD_YEARS && <Tag tone="caution">Over {OLD_YEARS} years old</Tag>}
         </div>
+        <a href={r.url} target="_blank" rel="noreferrer" title={r.title} className="line-clamp-2 text-sm font-medium leading-snug text-ink hover:underline">{r.title}</a>
+        <p className="mt-1 truncate text-xs text-muted" title={r.why}>
+          <span className="font-medium text-soft">{r.body_name ?? "Unidentified body"}</span>
+          {meta.map((m, i) => <span key={i}> · {m}</span>)}
+        </p>
       </div>
-      {r.pdf_url ? (
-        <Button className="h-8 shrink-0 text-xs" disabled={busy} title="Downloads the PDF and adds it to the topic's sources" onClick={() => onKeep(r.pdf_url!, true)}>Download the PDF</Button>
+      {onKeep && (r.pdf_url ? (
+        <Button className="h-8 shrink-0 text-xs" disabled={busy} title="Downloads the PDF and adds it to the topic's sources" onClick={() => onKeep(r.pdf_url!, true)}>Download PDF</Button>
       ) : r.doi ? (
-        <Button className="h-8 shrink-0 text-xs" disabled={busy} title="Keeps the reference (DOI) in the topic: the PDF is not open access" onClick={() => onKeep(r.doi!, true)}>Keep the reference</Button>
-      ) : null}
+        <Button variant="ghost" className="h-8 shrink-0 text-xs" disabled={busy} title="Keeps the reference (DOI) in the topic: the PDF is not open access" onClick={() => onKeep(r.doi!, true)}>Keep reference</Button>
+      ) : null)}
     </div>
   );
 }
@@ -124,16 +127,16 @@ function BodiesLine({ bodies }: { bodies: BodyStatus[] }) {
 /** What the librarian said beyond the verified references: its scope note, the bodies consulted, the documents it
  * named that nothing matched (with its queries, to check by hand). */
 function ShelfNote({ shelf }: { shelf: Shelf }) {
-  if (shelf.error) return <p className="text-xs text-caution">{shelf.error}</p>;
+  if (shelf.error) return <p className="text-caution">{shelf.error}</p>;
   const bodies = (shelf.bodies ?? []).filter((b) => typeof b.status === "string" && "found" in b);
   const unverified = shelf.unverified ?? [];
   return (
-    <div className="flex flex-col gap-1.5 rounded-lg bg-panel/60 px-3 py-2 text-xs text-soft">
+    <>
       {shelf.scope_note && <p>{shelf.scope_note}</p>}
       {bodies.length > 0 && <BodiesLine bodies={bodies} />}
       {unverified.length > 0 && (
         <div>
-          <span className="font-medium text-caution">Proposed, not confirmed:</span>
+          <p className="font-medium text-ink">Proposed by the librarian, not confirmed</p>
           <ul className="mt-1 flex flex-col gap-1">
             {unverified.map((u, i) => (
               <li key={i} title={u.notes ?? undefined}>
@@ -150,28 +153,69 @@ function ShelfNote({ shelf }: { shelf: Shelf }) {
         </div>
       )}
       {shelf.model && <p className="text-muted">Librarian: {shelf.model}. Its suggestions are shown as references only once found on PubMed or in the body&apos;s catalogue.</p>}
+    </>
+  );
+}
+
+/** Where the search looked, once for the whole result: unreachable sources stay in sight; the sources searched, the
+ * bodies to check by hand and the librarian's notes are folded under one line. */
+function SearchDetails({ result }: { result: Result }) {
+  const sources = result.sources ?? [];
+  const ok = sources.filter((s) => s.status === "ok");
+  const manual = sources.filter((s) => s.status === "ajout manuel");
+  const failed = sources.filter((s) => s.status === "erreur");
+  const unconfirmed = result.librarian?.unverified?.length ?? 0;
+  const summary = [`${ok.length} source(s) searched`, manual.length > 0 && `${manual.length} to check by hand`, unconfirmed > 0 && `${unconfirmed} proposal(s) not confirmed`].filter(Boolean);
+  return (
+    <div className="flex flex-col gap-2 text-xs">
+      {failed.length > 0 && <p className="text-flag">Unreachable: {failed.map((s) => `${s.name} (${s.reason})`).join(" ; ")}</p>}
+      {result.classifier_error && <p className="text-caution">{result.classifier_error}</p>}
+      <details className="group rounded-lg bg-panel/60 px-3 py-2 text-soft">
+        <summary className="cursor-pointer select-none text-muted marker:text-muted">{summary.join(" · ")}</summary>
+        <div className="mt-2 flex flex-col gap-2 leading-relaxed">
+          <p><span className="font-medium text-ink">Searched: </span>{ok.map((s) => s.name).join(", ")}</p>
+          {manual.length > 0 && (
+            <div>
+              <p className="font-medium text-ink">To check by hand</p>
+              <ul className="mt-1 flex flex-col gap-0.5">
+                {manual.map((s) => <li key={s.id}>{s.url ? <a className="underline" href={s.url} target="_blank" rel="noreferrer">{s.name}</a> : s.name}: {s.reason}</li>)}
+              </ul>
+            </div>
+          )}
+          {result.librarian && <ShelfNote shelf={result.librarian} />}
+        </div>
+      </details>
     </div>
   );
 }
 
 /** One guideline family: its current version, the "newer version" note of its body, its older versions. */
-function FamilyItem({ f, onKeep, busy }: { f: Family; onKeep: (link: string, single: boolean) => void; busy: boolean }) {
+function FamilyItem({ f, onKeep, busy }: { f: Family; onKeep?: Keep; busy: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <li className="border-t border-line first:border-0">
       {f.newer_elsewhere && (
-        <p className="mt-2 rounded-lg bg-cautionbg px-3 py-1.5 text-xs font-medium text-caution">
+        <p className="mt-3 rounded-lg bg-cautionbg px-3 py-1.5 text-xs font-medium text-caution">
           Newer version from this body: {f.newer_elsewhere.body} {f.newer_elsewhere.year}
         </p>
       )}
       <Version r={f.versions[0]} onKeep={onKeep} busy={busy} />
       {f.versions.length > 1 && (
-        <button type="button" className="mb-2 text-xs text-accentink hover:underline" onClick={() => setOpen(!open)}>
+        <button type="button" className="-mt-1 mb-3 text-xs text-accentink hover:underline" onClick={() => setOpen(!open)}>
           {open ? "Hide" : "Show"} earlier versions ({f.versions.length - 1})
         </button>
       )}
-      {open && f.versions.slice(1).map((v, k) => <Version key={k} r={v} older onKeep={onKeep} busy={busy} />)}
+      {open && <div className="mb-2">{f.versions.slice(1).map((v, k) => <Version key={k} r={v} older onKeep={onKeep} busy={busy} />)}</div>}
     </li>
+  );
+}
+
+/** A "show more" toggle under a list. */
+function More({ open, onClick, children }: { open: boolean; onClick: () => void; children: ReactNode }) {
+  return (
+    <button type="button" className="self-start py-1 text-xs font-medium text-accentink hover:underline" onClick={onClick}>
+      {open ? "Hide" : "Show"} {children}
+    </button>
   );
 }
 
@@ -183,27 +227,27 @@ const inLang = (r: Rec, lang: Lang) => lang === "all" || (lang === "fr" ? langOf
 const LANG_TITLE = { fr: "Documents in French", en: "Documents in English" } as const;
 
 /** One results page section: its families (FR/EN filtered), or when empty the crawl status of its bodies. */
-function SectionBlock({ sec, lang, showEmpty, onKeep, busy }: { sec: Section; lang: Lang; showEmpty: boolean; onKeep: (link: string, single: boolean) => void; busy: boolean }) {
+function SectionBlock({ sec, lang, showEmpty, onKeep, busy }: { sec: Section; lang: Lang; showEmpty: boolean; onKeep?: Keep; busy: boolean }) {
   const [open, setOpen] = useState(!sec.collapsed);
   const families = (sec.families ?? []).filter((f) => inLang(f.versions[0], lang));
   const groups = (sec.groups ?? []).map((g) => ({ ...g, items: g.items.filter((r) => inLang(r, lang)) })).filter((g) => g.items.length);
   const count = families.length + groups.reduce((n, g) => n + g.items.length, 0);
   if (!count && !(sec.always && showEmpty)) return null;
   return (
-    <section className="flex flex-col gap-1">
+    <section className="flex flex-col">
       <button type="button" className="flex items-baseline gap-2 text-left" onClick={() => setOpen(!open)}>
         <h3 className="text-sm font-semibold text-ink">{sec.title}</h3>
-        <span className="text-xs text-muted">{count}{sec.collapsed ? (open ? " · hide" : " · show") : ""}</span>
+        <span className="text-xs tabular-nums text-muted">{count}{sec.collapsed ? (open ? " · hide" : " · show") : ""}</span>
       </button>
       {open && families.length > 0 && <ul className="flex flex-col">{families.map((f, i) => <FamilyItem key={i} f={f} onKeep={onKeep} busy={busy} />)}</ul>}
       {open && groups.map((g) => (
         <div key={g.label} className="flex flex-col">
-          <p className="mt-1 text-xs font-medium text-soft">{g.label} ({g.items.length})</p>
-          <ul className="flex flex-col">{g.items.map((r, i) => <li key={i} className="border-t border-line"><Version r={r} onKeep={onKeep} busy={busy} /></li>)}</ul>
+          <p className="mt-2 text-xs font-medium text-soft">{g.label} ({g.items.length})</p>
+          <ul className="flex flex-col">{g.items.map((r, i) => <li key={i} className="border-t border-line first:border-0"><Version r={r} onKeep={onKeep} busy={busy} /></li>)}</ul>
         </div>
       ))}
       {open && !count && (
-        <p className="text-xs text-muted">
+        <p className="mt-1 text-xs text-muted">
           {sec.bodies?.length ? sec.bodies.map((b, i) => <span key={i}>{i ? " · " : ""}{b.body}: {b.status}</span>) : "No body consulted for this section."}
           {sec.id === "algerie" && " Add a document by its link or by uploading the PDF above."}
         </p>
@@ -213,46 +257,30 @@ function SectionBlock({ sec, lang, showEmpty, onKeep, busy }: { sec: Section; la
 }
 
 /**
- * The search result, by sections (literature.sections): international references, French bodies, Algeria, French
- * summaries, other countries, articles. A result saved before sections existed is shown the old way.
+ * The search result: a language filter and the search details once, then per language the results page sections
+ * (literature.sections), or for a result saved before sections existed, the old lists.
  */
-export function Results({ result, onKeep, busy }: { result: Result; onKeep: (link: string, single: boolean) => void; busy: boolean }) {
+export function Results({ result, onKeep, busy }: { result: Result; onKeep?: Keep; busy: boolean }) {
   const [lang, setLang] = useState<Lang>("all");
   // French documents first, English after; the filter shows one language only
   const langs = lang === "all" ? (["fr", "en"] as const) : ([lang] as const);
-  if (!result.sections) {
-    const part = (l: "fr" | "en"): Result => ({
-      ...result, families: (result.families ?? []).filter((f) => inLang(f.versions[0], l)), articles: (result.articles ?? []).filter((a) => inLang(a, l)),
-    });
-    return (
-      <div className="flex flex-col gap-6">
-        {(["fr", "en"] as const).map((l) => (
-          <div key={l} className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold text-ink">{LANG_TITLE[l]}</h3>
-            <LegacyResults result={l === "fr" ? part(l) : { ...part(l), librarian: null }} onKeep={onKeep} busy={busy} />
-          </div>
-        ))}
-      </div>
-    );
-  }
-  const sources = result.sources ?? [];
-  const failed = sources.filter((s) => s.status === "erreur");
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
-        {(["all", "fr", "en"] as const).map((l, i) => (
-          <span key={l}>{i ? "· " : ""}<button type="button" className={lang === l ? "font-semibold text-ink" : "hover:underline"} onClick={() => setLang(l)}>
-            {{ all: "All", fr: "French", en: "English" }[l]}</button></span>
+    <div className="flex flex-col gap-5">
+      <div className="inline-flex self-start rounded-lg bg-panel p-0.5 text-xs">
+        {(["all", "fr", "en"] as const).map((l) => (
+          <button key={l} type="button" onClick={() => setLang(l)}
+            className={`rounded-md px-3 py-1 font-medium ${lang === l ? "bg-surface text-ink shadow-control" : "text-soft hover:text-ink"}`}>
+            {{ all: "All", fr: "French", en: "English" }[l]}
+          </button>
         ))}
-        <span className="ms-auto">sources: {sources.filter((s) => s.status === "ok").map((s) => s.name).join(", ")}</span>
       </div>
-      {failed.length > 0 && <p className="text-xs text-flag">Unreachable: {failed.map((s) => `${s.name} (${s.reason})`).join(" ; ")}</p>}
-      {result.classifier_error && <p className="text-xs text-caution">{result.classifier_error}</p>}
-      {result.librarian && <ShelfNote shelf={result.librarian} />}
+      <SearchDetails result={result} />
       {langs.map((l) => (
-        <div key={l} className="flex flex-col gap-4">
-          {lang === "all" && <h2 className="border-b border-line pb-1 text-base font-semibold text-ink">{LANG_TITLE[l]}</h2>}
-          {result.sections!.map((sec) => <SectionBlock key={sec.id} sec={sec} lang={l} showEmpty={l === "fr"} onKeep={onKeep} busy={busy} />)}
+        <div key={l} className="flex flex-col gap-5">
+          {lang === "all" && <h2 className="border-b border-line pb-2 text-base font-semibold text-ink">{LANG_TITLE[l]}</h2>}
+          {result.sections
+            ? result.sections.map((sec) => <SectionBlock key={sec.id} sec={sec} lang={l} showEmpty={l === "fr"} onKeep={onKeep} busy={busy} />)
+            : <LegacyResults result={result} lang={l} onKeep={onKeep} busy={busy} />}
         </div>
       ))}
     </div>
@@ -260,56 +288,33 @@ export function Results({ result, onKeep, busy }: { result: Result; onKeep: (lin
 }
 
 /**
- * The search result. Main list: guidance of an identified body (shared/guideline_bodies.yaml, a body's own
- * catalogue, or a verified librarian reference). Guidance whose body is unknown and the articles are folded away.
+ * A result saved before sections, in one language. Main list: guidance of an identified body
+ * (shared/guideline_bodies.yaml, a body's own catalogue, or a verified librarian reference). Guidance whose body is
+ * unknown and the articles are folded away.
  */
-function LegacyResults({ result, onKeep, busy }: { result: Result; onKeep: (link: string, single: boolean) => void; busy: boolean }) {
+function LegacyResults({ result, lang, onKeep, busy }: { result: Result; lang: Lang; onKeep?: Keep; busy: boolean }) {
   const [articles, setArticles] = useState(false);
   const [others, setOthers] = useState(false);
   const [all, setAll] = useState(false);
   // a result saved in another format may lack a list: shown as empty, never a crash
-  const families = result.families ?? [];
+  const families = (result.families ?? []).filter((f) => inLang(f.versions[0], lang));
   const official = families.filter((f) => f.versions[0].official || f.versions[0].reference);
   const unknown = families.filter((f) => !(f.versions[0].official || f.versions[0].reference));
-  const articleList = result.articles ?? [];
-  const sources = result.sources ?? [];
-  const manual = sources.filter((s) => s.status === "ajout manuel");
-  const failed = sources.filter((s) => s.status === "erreur");
+  const articleList = (result.articles ?? []).filter((a) => inLang(a, lang));
   return (
-    <div className="flex flex-col gap-3">
-      <p className="text-xs text-muted">
-        {official.length} guideline(s) from identified bodies · {unknown.length} from unidentified bodies · {articleList.length} article(s) · sources:{" "}
-        {sources.filter((s) => s.status === "ok").map((s) => s.name).join(", ")}
-      </p>
-      {manual.length > 0 && (
-        <p className="rounded-lg bg-cautionbg px-3 py-2 text-xs text-caution">
-          Add by hand: {manual.map((s, i) => <span key={s.id}>{i ? " ; " : ""}{s.url ? <a className="underline" href={s.url} target="_blank" rel="noreferrer">{s.name}</a> : s.name} ({s.reason})</span>)}
-        </p>
-      )}
-      {failed.length > 0 && <p className="text-xs text-flag">Unreachable: {failed.map((s) => `${s.name} (${s.reason})`).join(" ; ")}</p>}
-      {result.librarian && <ShelfNote shelf={result.librarian} />}
+    <div className="flex flex-col gap-2">
       {official.length === 0 ? (
-        <Empty>No guideline from an identified body. Add it by its link, DOI or PDF.</Empty>
+        <p className="text-sm text-muted">No guideline from an identified body. Add it by its link, DOI or PDF.</p>
       ) : (
         <ul className="flex flex-col">
           {(all ? official : official.slice(0, 15)).map((f, i) => <FamilyItem key={i} f={f} onKeep={onKeep} busy={busy} />)}
         </ul>
       )}
-      {!all && official.length > 15 && (
-        <button type="button" className="self-start text-xs font-semibold text-accentink hover:underline" onClick={() => setAll(true)}>Show the {official.length - 15} others</button>
-      )}
-      {unknown.length > 0 && (
-        <button type="button" className="self-start text-xs text-accentink hover:underline" onClick={() => setOthers(!others)}>
-          {others ? "Hide" : "Show"} guidelines from unidentified bodies ({unknown.length})
-        </button>
-      )}
+      {!all && official.length > 15 && <More open={false} onClick={() => setAll(true)}>the {official.length - 15} others</More>}
+      {unknown.length > 0 && <More open={others} onClick={() => setOthers(!others)}>guidelines from unidentified bodies ({unknown.length})</More>}
       {others && <ul className="flex flex-col">{unknown.map((f, i) => <FamilyItem key={i} f={f} onKeep={onKeep} busy={busy} />)}</ul>}
-      {articleList.length > 0 && (
-        <button type="button" className="self-start text-xs text-accentink hover:underline" onClick={() => setArticles(!articles)}>
-          {articles ? "Hide" : "Show"} articles ({articleList.length}): commentaries, corrections, studies, articles about a guideline
-        </button>
-      )}
-      {articles && <ul className="flex flex-col">{articleList.map((a, i) => <li key={i} className="border-t border-line"><Version r={a} onKeep={onKeep} busy={busy} /></li>)}</ul>}
+      {articleList.length > 0 && <More open={articles} onClick={() => setArticles(!articles)}>articles ({articleList.length}): commentaries, corrections, studies</More>}
+      {articles && <ul className="flex flex-col">{articleList.map((a, i) => <li key={i} className="border-t border-line first:border-0"><Version r={a} onKeep={onKeep} busy={busy} /></li>)}</ul>}
     </div>
   );
 }
@@ -422,7 +427,7 @@ function TopicPanel({ id }: { id: string }) {
           {view.search?.searched_at && <span className="text-xs text-muted">on {dateFr(view.search.searched_at)}</span>}
         </div>
         {searching ? <p className="text-sm text-soft"><Spinner className="mr-2" />PubMed, Europe PMC and the pages of the French and Algerian bodies…</p>
-          : view.search ? <Results result={view.search} onKeep={keep} busy={busy || !isAdmin} />
+          : view.search ? <Results result={view.search} onKeep={isAdmin ? keep : undefined} busy={busy} />
           : <Empty>No search for this topic yet.</Empty>}
       </Card>
     </div>
