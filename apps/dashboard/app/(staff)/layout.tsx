@@ -10,11 +10,10 @@ import { useAuth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
 
 // Protocoles: every fiche, created from its JSON and PDF, checked block by block, published. Collecte: the source
-// PDFs of each topic. Veille: the followed bodies, checked for newer guidelines. Schema: the fiche format.
+// PDFs of each topic. Schema: the fiche format.
 const NAV = [
   { href: "/protocoles", label: "Protocols", also: ["/fiche"] },
   ...(HAS_API ? [{ href: "/collecte", label: "Sources", also: [] as string[] }] : []),
-  { href: "/veille", label: "Watch", also: [] as string[] },
   { href: "/schema", label: "Schema", also: [] as string[] },
 ];
 

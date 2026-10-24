@@ -25,7 +25,6 @@ it is hard to know where a recommendation comes from or whether it is still curr
 - Drugs are given by their international name (DCI) with the dose, and with the brands registered in Algeria (the
   national nomenclature)
 - Admin dashboard to add guidelines, check each protocol block by block against its PDF, and publish it
-- A guideline watch flags when a newer version of a source guideline is published, and the protocols built on it
 
 Avero is a reference tool, not a diagnosis tool.
 

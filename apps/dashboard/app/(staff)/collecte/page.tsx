@@ -7,7 +7,6 @@ import { api, apiForm, HAS_API } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { deleteStored } from "@/lib/delete";
 import { dateFr } from "@/lib/labels";
-import { createClient } from "@/lib/supabase/client";
 
 // Collecte: the source guidelines of each topic. The search asks the literature APIs (PubMed, Europe PMC) and the
 // listing pages of the French and Algerian bodies (services/crawler/literature.py); results are grouped into
@@ -382,7 +381,6 @@ function TopicPanel({ id }: { id: string }) {
         </div>} />
       {error && <ErrorNote>{error}</ErrorNote>}
       {isAdmin && <FicheBox topic={id} />}
-      <FollowedBodies topic={id} />
 
       <Card className="flex flex-col gap-3 p-4">
         <h2 className="text-sm font-semibold text-soft">Topic sources</h2>
@@ -431,44 +429,6 @@ function TopicPanel({ id }: { id: string }) {
           : <Empty>No search for this topic yet.</Empty>}
       </Card>
     </div>
-  );
-}
-
-interface Followed { id: string; body_id: string; current_title: string | null; current_year: number | null; current_ref: string | null; status: string }
-
-/** The bodies followed for this topic (Veille), side by side: each one's current guideline and its year. */
-function FollowedBodies({ topic }: { topic: string }) {
-  const supabase = useMemo(() => createClient(), []);
-  const [rows, setRows] = useState<Followed[] | null>(null);
-  const [names, setNames] = useState<Record<string, string>>({});
-  useEffect(() => {
-    supabase.from("topic_sources").select("id,body_id,current_title,current_year,current_ref,status").eq("topic_id", topic).then(({ data }) => setRows((data as Followed[]) ?? []));
-    api<{ id: string; name: string }[]>("/registry/bodies").then((b) => setNames(Object.fromEntries(b.map((x) => [x.id, x.name]))), () => {});
-  }, [supabase, topic]);
-  if (!rows) return null;
-  return (
-    <Card className="flex flex-col gap-2 p-4">
-      <div className="flex items-baseline gap-2">
-        <h2 className="text-sm font-semibold text-soft">Reference guidelines followed</h2>
-        <a href="/veille" className="text-xs text-accentink hover:underline">Manage in Watch</a>
-      </div>
-      {rows.length === 0 ? (
-        <p className="text-sm text-muted">No body followed for this topic: choose them in Watch.</p>
-      ) : (
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
-          {rows.map((r) => (
-            <div key={r.id} className="rounded-lg border border-line px-3 py-2">
-              <div className="flex items-center gap-2 text-sm font-semibold text-ink">
-                <span className="flex-1">{names[r.body_id] ?? r.body_id}</span>
-                <span className="tabular-nums">{r.current_year ?? "?"}</span>
-              </div>
-              <p className="text-xs text-soft">{r.current_title ?? "not set"}</p>
-              {r.status !== "actuelle" && <p className="text-xs text-caution">{r.status}</p>}
-            </div>
-          ))}
-        </div>
-      )}
-    </Card>
   );
 }
 
