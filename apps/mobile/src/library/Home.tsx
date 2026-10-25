@@ -13,10 +13,10 @@ import { Skeleton, SURFACE_STYLE } from "@/ui/ui";
 
 import { specialty, subtitle } from "./ProtocolRow";
 
-/** Home: a serif title, the search bar, how many protocols and when they were last reviewed, the specialties as a
+/** Home: a title, the search bar, how many protocols and when they were last reviewed, the specialties as a
  * numbered grid on hairlines, the fiche read last, then the protocols as a numbered list. */
 
-const MONO_LABEL = "font-mono text-[10.5px] uppercase text-muted";
+const LABEL = "text-[11px] font-semibold uppercase text-muted";
 
 export function HomeScreen() {
   const router = useRouter();
@@ -56,7 +56,7 @@ export function HomeScreen() {
 
         <View className={`items-center ${wide ? "gap-[28px]" : "gap-[22px] pt-12"}`}>
           <View className="items-center gap-3">
-            <Text accessibilityRole="header" className={`text-center font-serif text-ink ${wide ? "text-[52px] leading-[56px]" : "text-[40px] leading-[44px]"}`} style={{ letterSpacing: wide ? -0.6 : -0.4 }}>
+            <Text accessibilityRole="header" className={`text-center font-bold text-ink ${wide ? "text-[44px] leading-[50px]" : "text-[32px] leading-[38px]"}`} style={{ letterSpacing: wide ? -1.4 : -1 }}>
               {t("h_title")}
             </Text>
             <Text className={`text-center text-soft ${wide ? "text-[17px]" : "text-[15px]"}`}>{t("h_lead")}</Text>
@@ -69,32 +69,34 @@ export function HomeScreen() {
           </Pressable>
 
           {data?.offline ? <Text className="text-center text-[12px] text-caution">{t("fiches_offline")}</Text>
-            : stats ? <Text className={`text-center ${MONO_LABEL}`} style={{ letterSpacing: 0.6 }}>{stats}</Text> : null}
+            : stats ? <Text className={`text-center ${LABEL}`} style={{ letterSpacing: 0.8 }}>{stats}</Text> : null}
         </View>
 
         {specialties.length > 0 && (
           <View className={wide ? "mt-14" : "mt-10"}>
-            <Text className={`pb-3 ${MONO_LABEL}`} style={{ letterSpacing: 0.6 }}>{t("h_specialties")}</Text>
-            <View className="flex-row flex-wrap border-s border-t border-line">
+            <Text className={`pb-3 ${LABEL}`} style={{ letterSpacing: 0.8 }}>{t("h_specialties")}</Text>
+            <View className="flex-row flex-wrap overflow-hidden rounded-[18px] border-s border-t border-line" style={SURFACE_STYLE}>
               {specialties.map((s, i) => {
                 const n = all.filter((e) => e.fiche.meta.specialite === s).length;
                 return (
                   <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
                     className={`justify-between border-b border-e border-line bg-surface p-4 hover:bg-panel active:bg-panel ${wide ? "h-[136px] w-1/3" : "h-[128px] w-1/2"}`}>
                     <View className="flex-row items-start justify-between">
-                      <Text className="font-mono text-[11px] text-muted">{String(i + 1).padStart(2, "0")}</Text>
-                      <SpecialtyIcon name={s} size={22} color={c.accent} />
+                      <View className="h-9 w-9 items-center justify-center rounded-full bg-tint">
+                        <SpecialtyIcon name={s} size={20} color={c.accent} />
+                      </View>
+                      <CaretRightIcon size={13} color={c.muted} weight="bold" />
                     </View>
                     <View className="gap-1">
                       <Text className="text-[15px] font-medium leading-[19px] text-ink" numberOfLines={2}>{specialty(s)}</Text>
-                      <Text className={MONO_LABEL} style={{ letterSpacing: 0.6 }}>{t(n === 1 ? "h_protocols_one" : "h_protocols_other", { n })}</Text>
+                      <Text className={LABEL} style={{ letterSpacing: 0.8 }}>{t(n === 1 ? "h_protocols_one" : "h_protocols_other", { n })}</Text>
                     </View>
                   </Pressable>
                 );
               })}
               <Pressable accessibilityRole="link" onPress={() => router.navigate("/recherche?all=1")}
                 className={`justify-between border-b border-e border-line bg-panel p-4 hover:opacity-80 active:opacity-70 ${wide ? "h-[136px] w-1/3" : "h-[128px] w-1/2"}`}>
-                <Text className="font-mono text-[11px] text-muted">{t("h_all_label")}</Text>
+                <Text className={LABEL} style={{ letterSpacing: 0.8 }}>{t("h_all_label")}</Text>
                 <View className="flex-row items-center justify-between gap-2">
                   <Text className="text-[15px] font-medium leading-[19px] text-accent">{t("h_library")}</Text>
                   <ArrowRightIcon size={16} color={c.accent} />
@@ -106,9 +108,9 @@ export function HomeScreen() {
 
         {resume && (
           <Pressable accessibilityRole="link" onPress={() => open(resume)}
-            className="mt-10 flex-row items-center gap-4 rounded-[16px] bg-panel px-4 py-[14px] hover:opacity-90 active:opacity-80">
+            style={SURFACE_STYLE} className="mt-10 flex-row items-center gap-4 rounded-[18px] border border-line bg-surface px-4 py-[14px] hover:border-accent/30 active:opacity-80">
             <View className="min-w-0 flex-1 gap-1">
-              <Text className={MONO_LABEL} style={{ letterSpacing: 0.6 }}>{t("h_resume")}</Text>
+              <Text className={LABEL} style={{ letterSpacing: 0.8 }}>{t("h_resume")}</Text>
               <Text className="text-[15px] font-medium leading-[20px] text-ink" numberOfLines={2}>{resume.fiche.meta.title}</Text>
             </View>
             <ArrowRightIcon size={16} color={c.ink} />
@@ -129,24 +131,26 @@ export function HomeScreen() {
           ) : (
             <View>
               <View className="flex-row items-baseline justify-between pb-3">
-                <Text className={MONO_LABEL} style={{ letterSpacing: 0.6 }}>{t("h_protocols")}</Text>
+                <Text className={LABEL} style={{ letterSpacing: 0.8 }}>{t("h_protocols")}</Text>
                 {all.length > protocols.length ? (
                   <Pressable accessibilityRole="link" hitSlop={10} onPress={() => router.navigate("/recherche?all=1")} className="active:opacity-60">
                     <Text className="text-[13px] font-medium text-accent">{t("h_see_all")}</Text>
                   </Pressable>
                 ) : null}
               </View>
-              {protocols.map((e, i) => (
-                <Pressable key={e.id} accessibilityRole="link" onPress={() => open(e)}
-                  className={`flex-row items-center gap-4 border-t border-line py-4 hover:opacity-80 active:opacity-60 ${i === protocols.length - 1 ? "border-b" : ""}`}>
-                  <Text className="w-6 font-mono text-[11px] text-muted">{String(i + 1).padStart(2, "0")}</Text>
-                  <View className="min-w-0 flex-1 gap-[3px]">
-                    <Text className="text-[15px] font-medium leading-[20px] text-ink" numberOfLines={2}>{e.fiche.meta.title}</Text>
-                    <Text className="text-[12.5px] text-muted">{subtitle(e)}</Text>
-                  </View>
-                  <CaretRightIcon size={13} color={c.muted} weight="bold" />
-                </Pressable>
-              ))}
+              <View className="overflow-hidden rounded-[18px] border border-line bg-surface" style={SURFACE_STYLE}>
+                {protocols.map((e, i) => (
+                  <Pressable key={e.id} accessibilityRole="link" onPress={() => open(e)}
+                    className={`flex-row items-center gap-4 px-4 py-4 hover:bg-panel/60 active:bg-panel ${i ? "border-t border-line" : ""}`}>
+                    <Text className="w-6 text-[12px] font-medium tabular-nums text-muted">{String(i + 1).padStart(2, "0")}</Text>
+                    <View className="min-w-0 flex-1 gap-[3px]">
+                      <Text className="text-[15px] font-medium leading-[20px] text-ink" numberOfLines={2}>{e.fiche.meta.title}</Text>
+                      <Text className="text-[12.5px] text-muted">{subtitle(e)}</Text>
+                    </View>
+                    <CaretRightIcon size={13} color={c.muted} weight="bold" />
+                  </Pressable>
+                ))}
+              </View>
             </View>
           )}
         </View>

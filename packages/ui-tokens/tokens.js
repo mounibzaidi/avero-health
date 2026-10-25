@@ -33,10 +33,10 @@ const COLOR_NAMES = {
 
 const color = {
   light: {
-    bg: "255 255 255", // #FFFFFF  page
-    panel: "246 247 248", // #F6F7F8  sidebar, tiles, dose chip, segmented track
+    bg: "245 246 248", // #F5F6F8  page
+    panel: "238 240 243", // #EEF0F3  sidebar, tiles, dose chip, segmented track
     surface: "255 255 255", // #FFFFFF  cards
-    line: "233 235 238", // #E9EBEE  dividers, card borders
+    line: "228 231 235", // #E4E7EB  dividers, card borders
     edge: "23 41 35", // #172923  card and control hairline, used at /6 to /10
     ink: "23 41 35", // #172923  body text
     soft: "67 82 75", // #43524B  secondary text
@@ -101,8 +101,6 @@ const font = {
     700: "Inter_700Bold.ttf",
   },
   mono: { web: "ui-monospace, SFMono-Regular, Menlo, monospace", ios: "Menlo", default: "monospace" },
-  /** The home title (fonts/InstrumentSerif-Regular.ttf): its family on the web, its file name on a phone. */
-  serif: { web: "Instrument Serif", native: "InstrumentSerif-Regular" },
   letterSpacing: "-0.01em",
 };
 

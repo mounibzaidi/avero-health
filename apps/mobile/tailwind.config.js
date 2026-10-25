@@ -11,10 +11,7 @@ module.exports = {
   presets: [require("nativewind/preset"), require("@avero/ui-tokens/tailwind-preset")],
   theme: {
     extend: {
-      fontFamily: {
-        mono: platformSelect({ ios: font.mono.ios, android: font.mono.default, default: font.mono.web }),
-        serif: platformSelect({ ios: font.serif.native, android: font.serif.native, default: font.serif.web }),
-      },
+      fontFamily: { mono: platformSelect({ ios: font.mono.ios, android: font.mono.default, default: font.mono.web }) },
     },
   },
   plugins: [],
