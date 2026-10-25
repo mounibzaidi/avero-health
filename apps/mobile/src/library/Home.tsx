@@ -15,7 +15,7 @@ import { Skeleton, SURFACE_STYLE } from "@/ui/ui";
 import { specialty, subtitle } from "./ProtocolRow";
 
 /** Home, laid out like a contents page: the count and review date over a large title, the search, the fiche read
- * last, then the specialties and the protocols as indexes on thin rules (large icon or number, name). */
+ * last, the specialties as boxes (large icon, name), then the protocols as an index on thin rules. */
 
 const LABEL = "text-[11px] font-semibold uppercase text-muted";
 
@@ -35,6 +35,13 @@ function Section({ title, link, onPress, children }: { title: string; link?: str
     </View>
   );
 }
+
+/** Equal shares of a row, whatever each box holds. The filler of a short last row has the boxes' border and
+ * padding, which flex counts outside the shares, so its boxes keep the same widths. */
+const EQUAL = { flexGrow: 1, flexShrink: 1, flexBasis: 0 } as const;
+
+/** `items` cut into rows of `per`. */
+const rows = <T,>(items: T[], per: number) => Array.from({ length: Math.ceil(items.length / per) }, (_, i) => items.slice(i * per, i * per + per));
 
 export function HomeScreen() {
   const router = useRouter();
@@ -114,16 +121,23 @@ export function HomeScreen() {
         ) : (
           <>
             <Section title={t("h_specialties")} link={t("h_see_all")} onPress={() => router.navigate("/recherche?all=1")}>
-              <View className="flex-row flex-wrap justify-between">
-                {specialties.map((s) => (
-                  <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
-                    className={`${col} flex-row items-center gap-5 border-b border-line py-5 hover:opacity-70 active:opacity-60`}>
-                    <SpecialtyIcon name={s} size={wide ? 40 : 36} color={c.accent} />
-                    <Text className={`min-w-0 flex-1 font-semibold text-ink ${wide ? "text-[22px] leading-[27px]" : "text-[20px] leading-[25px]"}`} style={{ letterSpacing: -0.4 }} numberOfLines={2}>
-                      {specialty(s)}
-                    </Text>
-                    <ArrowRightIcon size={wide ? 20 : 18} color={c.muted} />
-                  </Pressable>
+              <View className={`pt-5 ${wide ? "gap-4" : "gap-3"}`}>
+                {rows(specialties, wide ? 3 : 2).map((row) => (
+                  <View key={row[0]} className={`flex-row ${wide ? "gap-4" : "gap-3"}`}>
+                    {row.map((s) => (
+                      <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
+                        style={EQUAL} className={`min-w-0 justify-between rounded-[20px] border border-line bg-surface hover:border-accent/40 active:opacity-80 ${wide ? "h-[156px] p-5" : "h-[140px] p-4"}`}>
+                        <View className="flex-row items-start justify-between">
+                          <SpecialtyIcon name={s} size={wide ? 44 : 40} color={c.accent} />
+                          <ArrowRightIcon size={18} color={c.muted} />
+                        </View>
+                        <Text className={`font-semibold text-ink ${wide ? "text-[20px] leading-[25px]" : "text-[15.5px] leading-[20px]"}`} style={{ letterSpacing: -0.4 }} numberOfLines={2}>
+                          {specialty(s)}
+                        </Text>
+                      </Pressable>
+                    ))}
+                    {wide && Array.from({ length: 3 - row.length }, (_, k) => <View key={k} style={EQUAL} className="border border-transparent p-5" />)}
+                  </View>
                 ))}
               </View>
             </Section>
