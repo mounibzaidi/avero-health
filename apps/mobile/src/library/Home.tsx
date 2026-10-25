@@ -6,14 +6,15 @@ import { entries, specialites, useLibrary, type Entry } from "@/lib/library";
 import { useFavorites, useRecent } from "@/lib/stored";
 import { t } from "@/strings/fr";
 import { ArrowRightIcon, CaretRightIcon, MagnifyingGlassIcon, UserIcon } from "@/ui/Icons";
+import { SpecialtyIcon } from "@/ui/MedIcons";
 import { LogoMark } from "@/ui/Logo";
 import { useColors } from "@/ui/theme";
 import { Skeleton, SURFACE_STYLE } from "@/ui/ui";
 
 import { specialty, subtitle } from "./ProtocolRow";
 
-/** Home: a serif title, the search as a large card, the specialties as chips under it, how many protocols
- * and when they were last reviewed, the fiche read last, then the protocols as a numbered list on hairlines. */
+/** Home: a serif title, the search bar, how many protocols and when they were last reviewed, the specialties as a
+ * numbered grid on hairlines, the fiche read last, then the protocols as a numbered list. */
 
 const MONO_LABEL = "font-mono text-[10.5px] uppercase text-muted";
 
@@ -55,39 +56,57 @@ export function HomeScreen() {
 
         <View className={`items-center ${wide ? "gap-[28px]" : "gap-[22px] pt-12"}`}>
           <View className="items-center gap-3">
-            <Text accessibilityRole="header" className={`text-center font-serif text-ink ${wide ? "text-[56px] leading-[60px]" : "text-[40px] leading-[44px]"}`} style={{ letterSpacing: wide ? -0.6 : -0.4 }}>
+            <Text accessibilityRole="header" className={`text-center font-serif text-ink ${wide ? "text-[52px] leading-[56px]" : "text-[40px] leading-[44px]"}`} style={{ letterSpacing: wide ? -0.6 : -0.4 }}>
               {t("h_title")}
             </Text>
             <Text className={`text-center text-soft ${wide ? "text-[17px]" : "text-[15px]"}`}>{t("h_lead")}</Text>
           </View>
 
           <Pressable accessibilityRole="search" onPress={() => router.navigate("/recherche")} style={SURFACE_STYLE}
-            className="w-full justify-between gap-6 rounded-[20px] border border-edge/[0.08] bg-surface px-4 pb-3 pt-4 hover:border-accent/30 active:opacity-90">
-            <Text className="text-[15px] text-muted">{t("h_search")}</Text>
-            <View className="h-8 w-8 items-center justify-center self-end rounded-full bg-accent">
-              <MagnifyingGlassIcon size={15} color={c.onaccent} weight="bold" />
-            </View>
+            className={`w-full flex-row items-center gap-3 rounded-full border border-edge/[0.08] bg-surface px-5 hover:border-accent/30 active:opacity-80 ${wide ? "h-[52px] max-w-[560px]" : "h-[50px]"}`}>
+            <MagnifyingGlassIcon size={18} color={c.muted} />
+            <Text className="min-w-0 flex-1 text-[15px] text-muted" numberOfLines={1}>{t("h_search")}</Text>
           </Pressable>
-
-          {specialties.length > 0 && (
-            <View className="flex-row flex-wrap justify-center gap-2">
-              {specialties.map((s) => (
-                <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
-                  className="h-9 flex-row items-center gap-2 rounded-full border border-edge/[0.1] bg-surface px-[14px] hover:border-accent/40 active:opacity-70">
-                  <Text className="text-[13px] font-medium text-ink">{specialty(s)}</Text>
-                  <Text className="font-mono text-[10.5px] text-accent">{all.filter((e) => e.fiche.meta.specialite === s).length}</Text>
-                </Pressable>
-              ))}
-            </View>
-          )}
 
           {data?.offline ? <Text className="text-center text-[12px] text-caution">{t("fiches_offline")}</Text>
             : stats ? <Text className={`text-center ${MONO_LABEL}`} style={{ letterSpacing: 0.6 }}>{stats}</Text> : null}
         </View>
 
+        {specialties.length > 0 && (
+          <View className={wide ? "mt-14" : "mt-10"}>
+            <Text className={`pb-3 ${MONO_LABEL}`} style={{ letterSpacing: 0.6 }}>{t("h_specialties")}</Text>
+            <View className="flex-row flex-wrap border-s border-t border-line">
+              {specialties.map((s, i) => {
+                const n = all.filter((e) => e.fiche.meta.specialite === s).length;
+                return (
+                  <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
+                    className={`justify-between border-b border-e border-line bg-surface p-4 hover:bg-panel active:bg-panel ${wide ? "h-[136px] w-1/3" : "h-[128px] w-1/2"}`}>
+                    <View className="flex-row items-start justify-between">
+                      <Text className="font-mono text-[11px] text-muted">{String(i + 1).padStart(2, "0")}</Text>
+                      <SpecialtyIcon name={s} size={22} color={c.accent} />
+                    </View>
+                    <View className="gap-1">
+                      <Text className="text-[15px] font-medium leading-[19px] text-ink" numberOfLines={2}>{specialty(s)}</Text>
+                      <Text className={MONO_LABEL} style={{ letterSpacing: 0.6 }}>{t(n === 1 ? "h_protocols_one" : "h_protocols_other", { n })}</Text>
+                    </View>
+                  </Pressable>
+                );
+              })}
+              <Pressable accessibilityRole="link" onPress={() => router.navigate("/recherche?all=1")}
+                className={`justify-between border-b border-e border-line bg-panel p-4 hover:opacity-80 active:opacity-70 ${wide ? "h-[136px] w-1/3" : "h-[128px] w-1/2"}`}>
+                <Text className="font-mono text-[11px] text-muted">{t("h_all_label")}</Text>
+                <View className="flex-row items-center justify-between gap-2">
+                  <Text className="text-[15px] font-medium leading-[19px] text-accent">{t("h_library")}</Text>
+                  <ArrowRightIcon size={16} color={c.accent} />
+                </View>
+              </Pressable>
+            </View>
+          </View>
+        )}
+
         {resume && (
           <Pressable accessibilityRole="link" onPress={() => open(resume)}
-            className={`flex-row items-center gap-4 rounded-[16px] bg-panel px-4 py-[14px] hover:opacity-90 active:opacity-80 ${wide ? "mt-14" : "mt-10"}`}>
+            className="mt-10 flex-row items-center gap-4 rounded-[16px] bg-panel px-4 py-[14px] hover:opacity-90 active:opacity-80">
             <View className="min-w-0 flex-1 gap-1">
               <Text className={MONO_LABEL} style={{ letterSpacing: 0.6 }}>{t("h_resume")}</Text>
               <Text className="text-[15px] font-medium leading-[20px] text-ink" numberOfLines={2}>{resume.fiche.meta.title}</Text>
@@ -96,7 +115,7 @@ export function HomeScreen() {
           </Pressable>
         )}
 
-        <View className={resume ? "mt-10" : wide ? "mt-14" : "mt-10"}>
+        <View className="mt-10">
           {loading ? (
             <View className="gap-3">
               <Skeleton className="h-[12px] w-[30%]" />
