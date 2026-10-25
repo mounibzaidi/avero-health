@@ -78,10 +78,11 @@ export function useLibrary() {
   return { data: live.data ?? cache.data, loading: !live.data && !cache.data, syncing: live.isFetching, refetch: live.refetch };
 }
 
-export type Entry = { id: string; fiche: Protocol };
+/** `published`: when its current version was published (from `rev`), null for a copy saved without it. */
+export type Entry = { id: string; fiche: Protocol; published: string | null };
 export const entries = (lib: Library | undefined): Entry[] =>
   Object.entries(lib?.fiches ?? {})
-    .map(([id, f]) => ({ id, fiche: f.content }))
+    .map(([id, f]) => ({ id, fiche: f.content, published: f.rev.split("@")[1] || null }))
     .sort((a, b) => a.fiche.meta.title.localeCompare(b.fiche.meta.title, "fr"));
 
 /** Specialties that hold a fiche, alphabetical. */

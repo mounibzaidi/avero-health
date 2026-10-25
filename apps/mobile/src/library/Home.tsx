@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { Pressable, RefreshControl, ScrollView, Text, useWindowDimensions, View } from "react-native";
 
 import { entries, specialites, useLibrary, type Entry } from "@/lib/library";
-import { useFavorites, useRecent } from "@/lib/stored";
+import { useRecent } from "@/lib/stored";
 import { t } from "@/strings/fr";
 import { ArrowRightIcon, MagnifyingGlassIcon, UserIcon } from "@/ui/Icons";
 import { SpecialtyIcon } from "@/ui/MedIcons";
@@ -15,7 +15,7 @@ import { Skeleton, SURFACE_STYLE } from "@/ui/ui";
 import { specialty, subtitle } from "./ProtocolRow";
 
 /** Home, laid out like a contents page: the count and review date over a large title, the search, the fiche read
- * last, the specialties as boxes (large icon, name), then the protocols as an index on thin rules. */
+ * last, the specialties as boxes (large icon, name), then the protocols published last as an index on thin rules. */
 
 const LABEL = "text-[11px] font-semibold uppercase text-muted";
 
@@ -49,14 +49,13 @@ export function HomeScreen() {
   const wide = useWindowDimensions().width >= breakpoint.library;
   const { data, loading, syncing, refetch } = useLibrary();
   const { ids: recentIds } = useRecent();
-  const { ids: favoriteIds } = useFavorites();
 
   const all = entries(data);
   const byId = (id: string) => all.find((e) => e.id === id);
   const resume = recentIds.map(byId).find((e): e is Entry => !!e);
   const specialties = specialites(all);
-  // favourites first, then the others in the library's order
-  const protocols = [...new Set([...favoriteIds.map(byId), ...all])].filter((e): e is Entry => !!e).slice(0, 8);
+  // the latest published first
+  const protocols = [...all].sort((a, b) => (b.published ?? "").localeCompare(a.published ?? "")).slice(0, 8);
   const reviewed = all.map((e) => e.fiche.meta.last_reviewed_at).filter((d): d is string => !!d).sort().at(-1);
   const open = (e: Entry) => router.push(`/fiche/${e.id}`);
   const stats = [
@@ -150,7 +149,7 @@ export function HomeScreen() {
                     <Text className="w-7 pt-[3px] text-[13px] font-semibold tabular-nums text-accent">{String(i + 1).padStart(2, "0")}</Text>
                     <View className="min-w-0 flex-1 gap-1">
                       <Text className="text-[17px] font-semibold leading-[23px] text-ink" style={{ letterSpacing: -0.2 }} numberOfLines={3}>{e.fiche.meta.title}</Text>
-                      <Text className="text-[13px] text-muted">{subtitle(e)}</Text>
+                      <Text className="text-[13px] text-muted">{[subtitle(e), e.published && t("h_added", { date: new Date(e.published).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) })].filter(Boolean).join(" · ")}</Text>
                     </View>
                   </Pressable>
                 ))}
