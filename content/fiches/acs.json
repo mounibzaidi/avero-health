@@ -11,7 +11,7 @@
     ],
     "language": "fr",
     "template": "urgence",
-    "specialite": "Cardiovasculaire",
+    "specialite": "cardiologie",
     "next_review_at": null,
     "last_reviewed_at": "2026-10-17"
   },
@@ -1115,6 +1115,11 @@
         "by": "Mounib Zaidi",
         "date": "2026-10-17",
         "summary": "Validation clinique et publication de la version v1.1."
+      },
+      {
+        "by": "Claude",
+        "date": "2026-10-25",
+        "summary": "Spécialité : Cardiovasculaire remplacé par cardiologie, comme les autres fiches de cardiologie"
       }
     ],
     "reviewed_at": "2026-10-17",
