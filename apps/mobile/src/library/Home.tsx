@@ -39,6 +39,8 @@ function Section({ title, link, onPress, children }: { title: string; link?: str
 /** Equal shares of a row, whatever each box holds. The filler of a short last row has the boxes' border and
  * padding, which flex counts outside the shares, so its boxes keep the same widths. */
 const EQUAL = { flexGrow: 1, flexShrink: 1, flexBasis: 0 } as const;
+/** Specialty boxes per row. */
+const PER_ROW = (wide: boolean) => (wide ? 4 : 2);
 
 /** `items` cut into rows of `per`. */
 const rows = <T,>(items: T[], per: number) => Array.from({ length: Math.ceil(items.length / per) }, (_, i) => items.slice(i * per, i * per + per));
@@ -65,7 +67,7 @@ export function HomeScreen() {
 
   return (
     <ScrollView className="flex-1" refreshControl={<RefreshControl refreshing={syncing} onRefresh={() => refetch()} />}>
-      <View className={`mx-auto w-full ${wide ? "max-w-[1000px] gap-[64px] px-10 pb-20 pt-16" : "max-w-[560px] gap-[44px] px-5 pb-12 pt-3"}`}>
+      <View className={`mx-auto w-full ${wide ? "max-w-[1080px] gap-[44px] px-10 pb-16 pt-10" : "max-w-[560px] gap-[44px] px-5 pb-12 pt-3"}`}>
         <View className="gap-[22px]">
           {!wide && (
             <View className="flex-row items-center justify-between">
@@ -82,14 +84,14 @@ export function HomeScreen() {
           <View className={`gap-3 ${wide ? "max-w-[720px]" : "pt-8"}`}>
             {data?.offline ? <Text className="text-[12px] text-caution">{t("fiches_offline")}</Text>
               : stats ? <Text className={LABEL} style={{ letterSpacing: 1 }}>{stats}</Text> : null}
-            <Text accessibilityRole="header" className={`font-bold text-ink ${wide ? "text-[64px] leading-[66px]" : "text-[44px] leading-[46px]"}`} style={{ letterSpacing: wide ? -2.4 : -1.6 }}>
+            <Text accessibilityRole="header" className={`font-bold text-ink ${wide ? "text-[46px] leading-[50px]" : "text-[44px] leading-[46px]"}`} style={{ letterSpacing: -1.6 }}>
               {t("h_title")}
             </Text>
-            <Text className={`text-soft ${wide ? "text-[19px] leading-[28px]" : "text-[16px] leading-[24px]"}`}>{t("h_lead")}</Text>
+            <Text className="text-[16px] leading-[24px] text-soft">{t("h_lead")}</Text>
           </View>
 
           <Pressable accessibilityRole="search" onPress={() => router.navigate("/recherche")} style={SURFACE_STYLE}
-            className={`flex-row items-center gap-3 rounded-full border border-edge/[0.08] bg-surface px-5 hover:border-accent/30 active:opacity-80 ${wide ? "h-[54px] max-w-[560px]" : "h-[50px]"}`}>
+            className={`flex-row items-center gap-3 rounded-full border border-edge/[0.08] bg-surface px-5 hover:border-accent/30 active:opacity-80 ${wide ? "h-[48px] max-w-[520px]" : "h-[50px]"}`}>
             <MagnifyingGlassIcon size={18} color={c.muted} />
             <Text className="min-w-0 flex-1 text-[15px] text-muted" numberOfLines={1}>{t("h_search")}</Text>
           </Pressable>
@@ -119,21 +121,21 @@ export function HomeScreen() {
           <>
             <Section title={t("h_specialties")} link={t("h_see_all")} onPress={() => router.navigate("/recherche?all=1")}>
               <View className={`pt-5 ${wide ? "gap-4" : "gap-3"}`}>
-                {rows(specialties, wide ? 3 : 2).map((row) => (
+                {rows(specialties, PER_ROW(wide)).map((row) => (
                   <View key={row[0]} className={`flex-row ${wide ? "gap-4" : "gap-3"}`}>
                     {row.map((s) => (
                       <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
-                        style={EQUAL} className={`min-w-0 justify-between rounded-[20px] border border-line bg-surface hover:border-accent/40 active:opacity-80 ${wide ? "h-[156px] p-5" : "h-[140px] p-4"}`}>
+                        style={EQUAL} className={`min-w-0 justify-between rounded-[20px] border border-line bg-surface hover:border-accent/40 active:opacity-80 ${wide ? "h-[120px] p-4" : "h-[140px] p-4"}`}>
                         <View className="flex-row items-start justify-between">
-                          <SpecialtyIcon name={s} size={wide ? 44 : 40} color={c.accent} />
+                          <SpecialtyIcon name={s} size={wide ? 34 : 40} color={c.accent} />
                           <ArrowRightIcon size={18} color={c.muted} />
                         </View>
-                        <Text className={`font-semibold text-ink ${wide ? "text-[20px] leading-[25px]" : "text-[15.5px] leading-[20px]"}`} style={{ letterSpacing: -0.4 }} numberOfLines={2}>
+                        <Text className={`font-semibold text-ink ${wide ? "text-[16px] leading-[21px]" : "text-[15.5px] leading-[20px]"}`} style={{ letterSpacing: -0.4 }} numberOfLines={2}>
                           {specialty(s)}
                         </Text>
                       </Pressable>
                     ))}
-                    {wide && Array.from({ length: 3 - row.length }, (_, k) => <View key={k} style={EQUAL} className="border border-transparent p-5" />)}
+                    {wide && Array.from({ length: PER_ROW(wide) - row.length }, (_, k) => <View key={k} style={EQUAL} className="border border-transparent p-4" />)}
                   </View>
                 ))}
               </View>
@@ -143,10 +145,10 @@ export function HomeScreen() {
               <View className="flex-row flex-wrap justify-between">
                 {protocols.map((e, i) => (
                   <Pressable key={e.id} accessibilityRole="link" onPress={() => open(e)}
-                    className={`${col} flex-row items-start gap-5 border-b border-line py-5 hover:opacity-70 active:opacity-60`}>
+                    className={`${col} flex-row items-start gap-5 border-b border-line hover:opacity-70 active:opacity-60 ${wide ? "py-4" : "py-5"}`}>
                     <Text className="w-7 pt-[3px] text-[13px] font-semibold tabular-nums text-accent">{String(i + 1).padStart(2, "0")}</Text>
                     <View className="min-w-0 flex-1 gap-1">
-                      <Text className="text-[17px] font-semibold leading-[23px] text-ink" style={{ letterSpacing: -0.2 }} numberOfLines={3}>{e.fiche.meta.title}</Text>
+                      <Text className={`font-semibold text-ink ${wide ? "text-[15px] leading-[21px]" : "text-[17px] leading-[23px]"}`} style={{ letterSpacing: -0.2 }} numberOfLines={3}>{e.fiche.meta.title}</Text>
                       <Text className="text-[13px] text-muted">{[subtitle(e), e.published && t("h_added", { date: new Date(e.published).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) })].filter(Boolean).join(" · ")}</Text>
                     </View>
                   </Pressable>
