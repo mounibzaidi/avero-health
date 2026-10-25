@@ -12,6 +12,7 @@ export declare const font: {
   weights: number[];
   files: Record<400 | 500 | 600 | 700, string>;
   mono: { web: string; ios: string; default: string };
+  serif: { web: string; native: string };
   letterSpacing: string;
 };
 export declare const radius: Record<

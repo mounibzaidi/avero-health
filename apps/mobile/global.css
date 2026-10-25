@@ -8,6 +8,8 @@
 @font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url("/fonts/Inter_500Medium.ttf") format("truetype"); }
 @font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url("/fonts/Inter_600SemiBold.ttf") format("truetype"); }
 @font-face { font-family: "Inter"; font-weight: 700; font-display: swap; src: url("/fonts/Inter_700Bold.ttf") format("truetype"); }
+/* Instrument Serif: the home title only. */
+@font-face { font-family: "Instrument Serif"; font-weight: 400; font-display: swap; src: url("/fonts/InstrumentSerif-Regular.ttf") format("truetype"); }
 
 @layer base {
   html, body, [class*="css-text"], [class*="css-textinput"] {
@@ -18,6 +20,7 @@
   }
   /* Doses, transfer criteria, target values. Placed after the Inter rule so it wins on web. */
   .font-mono, .font-mono * { font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important; }
+  .font-serif, .font-serif * { font-family: "Instrument Serif", Georgia, serif !important; letter-spacing: normal; }
   .tabular-nums { font-variant-numeric: tabular-nums; }
   /* Visible keyboard focus everywhere (web). */
   *:focus-visible {

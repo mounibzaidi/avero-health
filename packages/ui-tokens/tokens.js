@@ -101,6 +101,8 @@ const font = {
     700: "Inter_700Bold.ttf",
   },
   mono: { web: "ui-monospace, SFMono-Regular, Menlo, monospace", ios: "Menlo", default: "monospace" },
+  /** The home title (fonts/InstrumentSerif-Regular.ttf): its family on the web, its file name on a phone. */
+  serif: { web: "Instrument Serif", native: "InstrumentSerif-Regular" },
   letterSpacing: "-0.01em",
 };
 

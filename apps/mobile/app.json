@@ -33,7 +33,8 @@
               "../../packages/ui-tokens/fonts/Inter_400Regular.ttf",
               "../../packages/ui-tokens/fonts/Inter_500Medium.ttf",
               "../../packages/ui-tokens/fonts/Inter_600SemiBold.ttf",
-              "../../packages/ui-tokens/fonts/Inter_700Bold.ttf"
+              "../../packages/ui-tokens/fonts/Inter_700Bold.ttf",
+              "../../packages/ui-tokens/fonts/InstrumentSerif-Regular.ttf"
             ]
           },
           "android": {
@@ -58,7 +59,8 @@
                     "weight": 700
                   }
                 ]
-              }
+              },
+              "../../packages/ui-tokens/fonts/InstrumentSerif-Regular.ttf"
             ]
           }
         }

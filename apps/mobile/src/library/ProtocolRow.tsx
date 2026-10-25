@@ -9,7 +9,9 @@ import { Body, joinMeta, Muted } from "@/ui/ui";
 import { StarButton } from "../fiche/StarButton";
 
 export const CARD = "overflow-hidden rounded-xl border border-edge/[0.06] bg-surface";
-export const subtitle = (e: Entry) => joinMeta([e.fiche.meta.specialite, e.fiche.meta.template === "urgence" ? t("urgences") : null]);
+/** A specialty as a label: some fiches store it lower case ("cardiologie"). */
+export const specialty = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+export const subtitle = (e: Entry) => joinMeta([specialty(e.fiche.meta.specialite), e.fiche.meta.template === "urgence" ? t("urgences") : null]);
 
 /** One protocol in a list: specialty tile, title, subtitle; a star or a caret at the end. */
 export function ProtocolRow({ entry, first, star, onPress }: { entry: Entry; first: boolean; star?: boolean; onPress: () => void }) {
