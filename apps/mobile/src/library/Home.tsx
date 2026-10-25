@@ -15,7 +15,7 @@ import { Skeleton, SURFACE_STYLE } from "@/ui/ui";
 import { specialty, subtitle } from "./ProtocolRow";
 
 /** Home, laid out like a contents page: the count and review date over a large title, the search, the fiche read
- * last, the specialties as white boxes, then the protocols as an index on thin rules. */
+ * last, then the specialties and the protocols as indexes on thin rules (large icon or number, name). */
 
 const LABEL = "text-[11px] font-semibold uppercase text-muted";
 
@@ -36,43 +36,6 @@ function Section({ title, link, onPress, children }: { title: string; link?: str
   );
 }
 
-type Box = "tile" | "bar";
-
-/** One specialty box: a white square, or a white strip (icon beside the name) for a specialty alone on its row. */
-function SpecialtyBox({ name, kind, onPress, className = "" }: { name: string; kind: Box; onPress: () => void; className?: string }) {
-  const c = useColors();
-  const wide = useWindowDimensions().width >= breakpoint.library;
-  return (
-    <Pressable accessibilityRole="link" onPress={onPress}
-      className={`rounded-[22px] border border-line bg-surface p-5 hover:border-accent/40 active:opacity-80 ${kind === "bar" ? "flex-row items-center gap-4" : "justify-between"} ${className}`}>
-      <SpecialtyIcon name={name} size={kind === "bar" ? 32 : 40} color={c.accent} />
-      <Text className={`font-semibold text-ink ${wide ? "text-[18px] leading-[23px]" : "text-[16px] leading-[21px]"} ${kind === "bar" ? "min-w-0 flex-1" : ""}`}
-        style={{ letterSpacing: -0.3 }} numberOfLines={2}>
-        {specialty(name)}
-      </Text>
-    </Pressable>
-  );
-}
-
-/** The specialties as white boxes, the one with the most protocols first: pairs on a phone, rows of three on a wide
- * screen; a box alone on the last phone row becomes a strip. */
-function SpecialtyBoxes({ specialties, wide, onOpen }: { specialties: string[]; wide: boolean; onOpen: (s: string) => void }) {
-  const per = wide ? 3 : 2;
-  const rows = Array.from({ length: Math.ceil(specialties.length / per) }, (_, i) => specialties.slice(i * per, i * per + per));
-  return (
-    <View className="gap-3 pt-5">
-      {rows.map((row) => (
-        <View key={row[0]} className="flex-row gap-3">
-          {row.map((s) => (
-            <SpecialtyBox key={s} name={s} kind={row.length === 1 && !wide ? "bar" : "tile"} onPress={() => onOpen(s)}
-              className={row.length === 1 && !wide ? "h-[84px] flex-1" : `flex-1 ${wide ? "h-[150px]" : "h-[140px]"}`} />
-          ))}
-        </View>
-      ))}
-    </View>
-  );
-}
-
 export function HomeScreen() {
   const router = useRouter();
   const c = useColors();
@@ -84,8 +47,7 @@ export function HomeScreen() {
   const all = entries(data);
   const byId = (id: string) => all.find((e) => e.id === id);
   const resume = recentIds.map(byId).find((e): e is Entry => !!e);
-  const count = (s: string) => all.filter((e) => e.fiche.meta.specialite === s).length;
-  const specialties = specialites(all).sort((a, b) => count(b) - count(a));
+  const specialties = specialites(all);
   // favourites first, then the others in the library's order
   const protocols = [...new Set([...favoriteIds.map(byId), ...all])].filter((e): e is Entry => !!e).slice(0, 8);
   const reviewed = all.map((e) => e.fiche.meta.last_reviewed_at).filter((d): d is string => !!d).sort().at(-1);
@@ -94,7 +56,7 @@ export function HomeScreen() {
     all.length > 0 && t(all.length === 1 ? "h_protocols_one" : "h_protocols_other", { n: all.length }),
     reviewed && t("h_reviewed", { date: new Date(reviewed).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" }) }),
   ].filter(Boolean).join(" · ");
-  // two columns of protocol rows on a wide screen
+  // two columns of index rows on a wide screen
   const col = wide ? "w-[47%]" : "w-full";
 
   return (
@@ -152,7 +114,18 @@ export function HomeScreen() {
         ) : (
           <>
             <Section title={t("h_specialties")} link={t("h_see_all")} onPress={() => router.navigate("/recherche?all=1")}>
-              <SpecialtyBoxes specialties={specialties} wide={wide} onOpen={(s) => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)} />
+              <View className="flex-row flex-wrap justify-between">
+                {specialties.map((s) => (
+                  <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
+                    className={`${col} flex-row items-center gap-5 border-b border-line py-5 hover:opacity-70 active:opacity-60`}>
+                    <SpecialtyIcon name={s} size={wide ? 40 : 36} color={c.accent} />
+                    <Text className={`min-w-0 flex-1 font-semibold text-ink ${wide ? "text-[22px] leading-[27px]" : "text-[20px] leading-[25px]"}`} style={{ letterSpacing: -0.4 }} numberOfLines={2}>
+                      {specialty(s)}
+                    </Text>
+                    <ArrowRightIcon size={wide ? 20 : 18} color={c.muted} />
+                  </Pressable>
+                ))}
+              </View>
             </Section>
 
             <Section title={t("h_protocols")} link={all.length > protocols.length ? t("h_see_all") : undefined} onPress={() => router.navigate("/recherche?all=1")}>
