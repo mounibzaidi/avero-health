@@ -33,10 +33,10 @@ const COLOR_NAMES = {
 
 const color = {
   light: {
-    bg: "251 252 248", // #FBFCF8  page
-    panel: "244 246 242", // #F4F6F2  sidebar, tiles, dose chip, segmented track
+    bg: "255 255 255", // #FFFFFF  page
+    panel: "246 247 248", // #F6F7F8  sidebar, tiles, dose chip, segmented track
     surface: "255 255 255", // #FFFFFF  cards
-    line: "232 236 231", // #E8ECE7  dividers, card borders
+    line: "233 235 238", // #E9EBEE  dividers, card borders
     edge: "23 41 35", // #172923  card and control hairline, used at /6 to /10
     ink: "23 41 35", // #172923  body text
     soft: "67 82 75", // #43524B  secondary text
@@ -44,7 +44,7 @@ const color = {
     accent: "36 92 73", // #245C49  links, icons, active states
     accentink: "31 79 63", // #1F4F3F  text on tint
     tint: "227 238 231", // #E3EEE7  badges, number circles, lit chip
-    input: "240 243 239", // #F0F3EF  text fields
+    input: "243 244 246", // #F3F4F6  text fields
     onaccent: "255 255 255",
     num: "36 92 73",
     warn: "155 89 72", // #9B5948  escalation icons
