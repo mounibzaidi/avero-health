@@ -14,7 +14,7 @@ import { Skeleton, SURFACE_STYLE } from "@/ui/ui";
 
 import { specialty, subtitle } from "./ProtocolRow";
 
-/** Home, laid out like a contents page: the count and review date over a large title, the search, the fiche read
+/** Home, laid out like a contents page: the last review date over a large title, the search, the fiche read
  * last, the specialties as boxes (large icon, name), then the protocols published last as an index on thin rules. */
 
 const LABEL = "text-[11px] font-semibold uppercase text-muted";
@@ -58,10 +58,8 @@ export function HomeScreen() {
   const protocols = [...all].sort((a, b) => (b.published ?? "").localeCompare(a.published ?? "")).slice(0, 8);
   const reviewed = all.map((e) => e.fiche.meta.last_reviewed_at).filter((d): d is string => !!d).sort().at(-1);
   const open = (e: Entry) => router.push(`/fiche/${e.id}`);
-  const stats = [
-    all.length > 0 && t(all.length === 1 ? "h_protocols_one" : "h_protocols_other", { n: all.length }),
-    reviewed && t("h_reviewed", { date: new Date(reviewed).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" }) }),
-  ].filter(Boolean).join(" · ");
+  // the last review date, alone over the title
+  const stats = reviewed ? new Date(reviewed).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "";
   // two columns of index rows on a wide screen
   const col = wide ? "w-[47%]" : "w-full";
 
