@@ -10,7 +10,6 @@ import { useColors } from "./theme";
  */
 
 export { ArrowRightIcon } from "phosphor-react-native/src/icons/ArrowRight";
-export { ArrowUpRightIcon } from "phosphor-react-native/src/icons/ArrowUpRight";
 export { BookOpenIcon } from "phosphor-react-native/src/icons/BookOpen";
 export { CalendarCheckIcon } from "phosphor-react-native/src/icons/CalendarCheck";
 export { CaretDownIcon } from "phosphor-react-native/src/icons/CaretDown";

@@ -6,7 +6,7 @@ import { Pressable, RefreshControl, ScrollView, Text, useWindowDimensions, View 
 import { entries, specialites, useLibrary, type Entry } from "@/lib/library";
 import { useFavorites, useRecent } from "@/lib/stored";
 import { t } from "@/strings/fr";
-import { ArrowRightIcon, ArrowUpRightIcon, MagnifyingGlassIcon, UserIcon } from "@/ui/Icons";
+import { ArrowRightIcon, MagnifyingGlassIcon, UserIcon } from "@/ui/Icons";
 import { SpecialtyIcon } from "@/ui/MedIcons";
 import { LogoMark } from "@/ui/Logo";
 import { useColors } from "@/ui/theme";
@@ -15,7 +15,7 @@ import { Skeleton, SURFACE_STYLE } from "@/ui/ui";
 import { specialty, subtitle } from "./ProtocolRow";
 
 /** Home, laid out like a contents page: the count and review date over a large title, the search, the fiche read
- * last, the specialties as boxes of different sizes, then the protocols as an index on thin rules. */
+ * last, the specialties as white boxes, then the protocols as an index on thin rules. */
 
 const LABEL = "text-[11px] font-semibold uppercase text-muted";
 
@@ -36,57 +36,39 @@ function Section({ title, link, onPress, children }: { title: string; link?: str
   );
 }
 
-type Box = "hero" | "tile" | "bar";
+type Box = "tile" | "bar";
 
-/** One specialty box. hero: the largest, in the accent colour; tile: a white square; bar: a white strip, icon beside
- * the name, for a specialty left alone on its row. */
+/** One specialty box: a white square, or a white strip (icon beside the name) for a specialty alone on its row. */
 function SpecialtyBox({ name, kind, onPress, className = "" }: { name: string; kind: Box; onPress: () => void; className?: string }) {
   const c = useColors();
   const wide = useWindowDimensions().width >= breakpoint.library;
-  const hero = kind === "hero";
   return (
     <Pressable accessibilityRole="link" onPress={onPress}
-      className={`rounded-[22px] p-5 active:opacity-80 ${hero ? "bg-accent hover:opacity-95" : "border border-line bg-surface hover:border-accent/40"} ${kind === "bar" ? "flex-row items-center gap-4" : "justify-between"} ${className}`}>
-      <View className="flex-row items-start justify-between">
-        <SpecialtyIcon name={name} size={hero ? 56 : kind === "bar" ? 32 : 40} color={hero ? c.onaccent : c.accent} />
-        {hero ? <ArrowUpRightIcon size={20} color={c.onaccent} /> : null}
-      </View>
-      <Text className={`font-semibold ${hero ? "text-[28px] leading-[32px] text-onaccent" : `${wide ? "text-[18px] leading-[23px]" : "text-[16px] leading-[21px]"} text-ink`} ${kind === "bar" ? "min-w-0 flex-1" : ""}`}
-        style={{ letterSpacing: hero ? -0.8 : -0.3 }} numberOfLines={2}>
+      className={`rounded-[22px] border border-line bg-surface p-5 hover:border-accent/40 active:opacity-80 ${kind === "bar" ? "flex-row items-center gap-4" : "justify-between"} ${className}`}>
+      <SpecialtyIcon name={name} size={kind === "bar" ? 32 : 40} color={c.accent} />
+      <Text className={`font-semibold text-ink ${wide ? "text-[18px] leading-[23px]" : "text-[16px] leading-[21px]"} ${kind === "bar" ? "min-w-0 flex-1" : ""}`}
+        style={{ letterSpacing: -0.3 }} numberOfLines={2}>
         {specialty(name)}
       </Text>
     </Pressable>
   );
 }
 
-/** The specialties as boxes of different sizes, the one with the most protocols first and largest. Phone: the large
- * box, then pairs, a lone last one as a strip. Wide: the large box beside two stacked ones, then rows of three. */
+/** The specialties as white boxes, the one with the most protocols first: pairs on a phone, rows of three on a wide
+ * screen; a box alone on the last phone row becomes a strip. */
 function SpecialtyBoxes({ specialties, wide, onOpen }: { specialties: string[]; wide: boolean; onOpen: (s: string) => void }) {
-  const [first, ...rest] = specialties;
-  if (!first) return null;
-  const box = (s: string, kind: Box, className?: string) => <SpecialtyBox key={s} name={s} kind={kind} className={className} onPress={() => onOpen(s)} />;
-  const rows = (items: string[], per: number) =>
-    Array.from({ length: Math.ceil(items.length / per) }, (_, i) => items.slice(i * per, i * per + per)).map((row) => (
-      <View key={row[0]} className="flex-row gap-3">
-        {row.length === 1 && !wide ? box(row[0], "bar", "h-[84px] flex-1") : row.map((s) => box(s, "tile", `flex-1 ${wide ? "h-[150px]" : "h-[140px]"}`))}
-      </View>
-    ));
-  if (wide) {
-    const side = rest.slice(0, 2);
-    return (
-      <View className="gap-3 pt-6">
-        <View className="flex-row gap-3">
-          {box(first, "hero", "h-[312px] flex-[2]")}
-          {side.length > 0 && <View className="flex-1 gap-3">{side.map((s) => box(s, "tile", "flex-1"))}</View>}
-        </View>
-        {rows(rest.slice(2), 3)}
-      </View>
-    );
-  }
+  const per = wide ? 3 : 2;
+  const rows = Array.from({ length: Math.ceil(specialties.length / per) }, (_, i) => specialties.slice(i * per, i * per + per));
   return (
     <View className="gap-3 pt-5">
-      {box(first, "hero", "h-[200px]")}
-      {rows(rest, 2)}
+      {rows.map((row) => (
+        <View key={row[0]} className="flex-row gap-3">
+          {row.map((s) => (
+            <SpecialtyBox key={s} name={s} kind={row.length === 1 && !wide ? "bar" : "tile"} onPress={() => onOpen(s)}
+              className={row.length === 1 && !wide ? "h-[84px] flex-1" : `flex-1 ${wide ? "h-[150px]" : "h-[140px]"}`} />
+          ))}
+        </View>
+      ))}
     </View>
   );
 }
