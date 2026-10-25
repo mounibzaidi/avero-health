@@ -101,7 +101,6 @@ const fr = {
   h_resume: "Reprendre",
   h_protocols: "Protocoles",
   h_specialties: "Spécialités",
-  h_all_label: "TOUT",
   h_library: "Toute la bibliothèque",
   h_see_all: "Tout voir",
   fiches_offline: "Hors ligne : protocoles enregistrés sur l'appareil.",

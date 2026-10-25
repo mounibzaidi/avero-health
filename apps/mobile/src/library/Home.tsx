@@ -5,7 +5,7 @@ import { Pressable, RefreshControl, ScrollView, Text, useWindowDimensions, View 
 import { entries, specialites, useLibrary, type Entry } from "@/lib/library";
 import { useFavorites, useRecent } from "@/lib/stored";
 import { t } from "@/strings/fr";
-import { ArrowRightIcon, CaretRightIcon, MagnifyingGlassIcon, UserIcon } from "@/ui/Icons";
+import { ArrowRightIcon, BookOpenIcon, CaretRightIcon, MagnifyingGlassIcon, UserIcon } from "@/ui/Icons";
 import { SpecialtyIcon } from "@/ui/MedIcons";
 import { LogoMark } from "@/ui/Logo";
 import { useColors } from "@/ui/theme";
@@ -13,8 +13,8 @@ import { Skeleton, SURFACE_STYLE } from "@/ui/ui";
 
 import { specialty, subtitle } from "./ProtocolRow";
 
-/** Home: a title, the search bar, how many protocols and when they were last reviewed, the specialties as a
- * numbered grid on hairlines, the fiche read last, then the protocols as a numbered list. */
+/** Home: a title, the search bar, how many protocols and when they were last reviewed, the specialties as
+ * cards with a large icon, the fiche read last, then the protocols as a numbered list. */
 
 const LABEL = "text-[11px] font-semibold uppercase text-muted";
 
@@ -75,31 +75,33 @@ export function HomeScreen() {
         {specialties.length > 0 && (
           <View className={wide ? "mt-14" : "mt-10"}>
             <Text className={`pb-3 ${LABEL}`} style={{ letterSpacing: 0.8 }}>{t("h_specialties")}</Text>
-            <View className="flex-row flex-wrap overflow-hidden rounded-[18px] border-s border-t border-line" style={SURFACE_STYLE}>
-              {specialties.map((s, i) => {
+            <View className={`flex-row flex-wrap ${wide ? "gap-4" : "gap-3"}`}>
+              {specialties.map((s) => {
                 const n = all.filter((e) => e.fiche.meta.specialite === s).length;
                 return (
-                  <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)}
-                    className={`justify-between border-b border-e border-line bg-surface p-4 hover:bg-panel active:bg-panel ${wide ? "h-[136px] w-1/3" : "h-[128px] w-1/2"}`}>
-                    <View className="flex-row items-start justify-between">
-                      <View className="h-9 w-9 items-center justify-center rounded-full bg-tint">
-                        <SpecialtyIcon name={s} size={20} color={c.accent} />
-                      </View>
-                      <CaretRightIcon size={13} color={c.muted} weight="bold" />
+                  <Pressable key={s} accessibilityRole="link" onPress={() => router.navigate(`/recherche?cat=${encodeURIComponent(s)}`)} style={SURFACE_STYLE}
+                    className={`flex-1 justify-between rounded-[22px] border border-line bg-surface p-[18px] hover:border-accent/30 active:opacity-80 ${wide ? "h-[168px] min-w-[30%]" : "h-[160px] min-w-[45%]"}`}>
+                    <View className="h-[56px] w-[56px] items-center justify-center rounded-[18px] bg-tint">
+                      <SpecialtyIcon name={s} size={32} color={c.accent} />
                     </View>
-                    <View className="gap-1">
-                      <Text className="text-[15px] font-medium leading-[19px] text-ink" numberOfLines={2}>{specialty(s)}</Text>
-                      <Text className={LABEL} style={{ letterSpacing: 0.8 }}>{t(n === 1 ? "h_protocols_one" : "h_protocols_other", { n })}</Text>
+                    <View className="gap-[2px]">
+                      <Text className="text-[16px] font-semibold leading-[20px] text-ink" numberOfLines={2}>{specialty(s)}</Text>
+                      <Text className="text-[13px] text-muted">{t(n === 1 ? "h_protocols_one" : "h_protocols_other", { n })}</Text>
                     </View>
                   </Pressable>
                 );
               })}
               <Pressable accessibilityRole="link" onPress={() => router.navigate("/recherche?all=1")}
-                className={`justify-between border-b border-e border-line bg-panel p-4 hover:opacity-80 active:opacity-70 ${wide ? "h-[136px] w-1/3" : "h-[128px] w-1/2"}`}>
-                <Text className={LABEL} style={{ letterSpacing: 0.8 }}>{t("h_all_label")}</Text>
-                <View className="flex-row items-center justify-between gap-2">
-                  <Text className="text-[15px] font-medium leading-[19px] text-accent">{t("h_library")}</Text>
-                  <ArrowRightIcon size={16} color={c.accent} />
+                className={`flex-1 justify-between rounded-[22px] bg-accent p-[18px] hover:opacity-95 active:opacity-85 ${wide ? "h-[168px] min-w-[30%]" : "h-[160px] min-w-[45%]"}`}>
+                <View className="h-[56px] w-[56px] items-center justify-center rounded-[18px] bg-onaccent/15">
+                  <BookOpenIcon size={30} color={c.onaccent} />
+                </View>
+                <View className="flex-row items-end justify-between gap-2">
+                  <View className="min-w-0 flex-1 gap-[2px]">
+                    <Text className="text-[16px] font-semibold leading-[20px] text-onaccent" numberOfLines={2}>{t("h_library")}</Text>
+                    <Text className="text-[13px] text-onaccent/75">{t(all.length === 1 ? "h_protocols_one" : "h_protocols_other", { n: all.length })}</Text>
+                  </View>
+                  <ArrowRightIcon size={18} color={c.onaccent} />
                 </View>
               </Pressable>
             </View>
