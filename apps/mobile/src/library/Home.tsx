@@ -93,7 +93,7 @@ export function HomeScreen() {
       </Pressable>
 
       {resume && (
-        <Pressable accessibilityRole="link" onPress={() => open(resume)} className="mt-2 flex-row items-center gap-4 border-l-2 border-accent py-1 ps-4 active:opacity-60">
+        <Pressable accessibilityRole="link" onPress={() => open(resume)} className="mt-2 flex-row items-center gap-4 py-1 active:opacity-60">
           <View className="min-w-0 flex-1 gap-1">
             <Text className={LABEL} style={{ letterSpacing: 1 }}>{t("h_resume")}</Text>
             <Text className="text-[17px] font-semibold leading-[22px] text-ink" numberOfLines={2}>{resume.fiche.meta.title}</Text>
